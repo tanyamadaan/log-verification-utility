@@ -1,0 +1,88 @@
+{
+    "context": {
+        "domain": "nic2004:52110",
+        "country": "IND",
+        "city": "std:080",
+        "action": "init",
+        "core_version": "1.1.0",
+        "bap_id": "buyer-app-preprod.ondc.org",
+        "bap_uri": "https://buyer-app-preprod.ondc.org/protocol/v1",
+        "bpp_id": "seller.ondc.digiledge.in",
+        "bpp_uri": "https://seller.ondc.digiledge.in/v1/preprod",
+        "transaction_id": "4e9efc55-ee66-4185-8f4d-14e343957734",
+        "message_id": "b3afcb48-e6e8-41c2-a551-23488cbc36df",
+        "timestamp": "2023-04-06T06:18:08.843Z",
+        "ttl": "PT30S"
+    },
+    "message": {
+        "order": {
+            "provider": {
+                "id": "DIGLE98081",
+                "locations": [
+                    {
+                        "id": "99068efe-7501-4a9b-9999-26b6ca944a77"
+                    }
+                ]
+            },
+            "items": [
+                {
+                    "id": "6c83b156-4df5-4994-8ef8-1bbac6a79ae2",
+                    "fulfillment_id": "470f9cc8-9b52-4f6c-9e5c-2465ecc64a21",
+                    "quantity": {
+                        "count": 2
+                    }
+                },
+                {
+                    "id": "a420b045-e3dd-4360-a7fb-3bcacab64bf0",
+                    "fulfillment_id": "470f9cc8-9b52-4f6c-9e5c-2465ecc64a21",
+                    "quantity": {
+                        "count": 2
+                    }
+                }
+            ],
+            "billing": {
+                "name": "shabirahamed",
+                "address": {
+                    "door": "Sri sakthi",
+                    "name": "shabirahamed",
+                    "building": "Sri sakthi",
+                    "locality": "Nallur",
+                    "city": "Bengaluru",
+                    "state": "Karnataka",
+                    "country": "IND",
+                    "area_code": "560006"
+                },
+                "email": "shabir@gmail.com",
+                "phone": "8979879897",
+                "created_at": "2023-04-06T06:18:08.843Z",
+                "updated_at": "2023-04-06T06:18:08.843Z"
+            },
+            "fulfillments": [
+                {
+                    "id": "470f9cc8-9b52-4f6c-9e5c-2465ecc64a21",
+                    "type": "Delivery",
+                    "end": {
+                        "location": {
+                            "gps": "13.011325, 77.591942",
+                            "address": {
+                                "name": "shabirahamed",
+                                "building": "Sri sakthi",
+                                "locality": "Nallur",
+                                "city": "Bengaluru",
+                                "state": "Karnataka",
+                                "country": "IND",
+                                "area_code": "560006"
+                            }
+                        },
+                        "contact": {
+                            "phone": "8979879897",
+                            "email": "shabir@gmail.com"
+                        }
+                    }
+                }
+            ],
+            "created_at": "0001-01-01T00:00:00Z",
+            "updated_at": "0001-01-01T00:00:00Z"
+        }
+    }
+}

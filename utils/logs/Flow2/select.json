@@ -1,0 +1,59 @@
+{
+    "context": {
+        "domain": "nic2004:52110",
+        "country": "IND",
+        "city": "std:080",
+        "action": "select",
+        "core_version": "1.1.0",
+        "bap_id": "buyer-app-preprod.ondc.org",
+        "bap_uri": "https://buyer-app-preprod.ondc.org/protocol/v1",
+        "bpp_id": "seller.ondc.digiledge.in",
+        "bpp_uri": "https://seller.ondc.digiledge.in/v1/preprod",
+        "transaction_id": "4e9efc55-ee66-4185-8f4d-14e343957734",
+        "message_id": "5d426131-b01f-4d7c-85f2-c3e895cd694d",
+        "timestamp": "2023-04-06T06:17:36.352Z",
+        "ttl": "PT30S"
+    },
+    "message": {
+        "order": {
+            "provider": {
+                "id": "DIGLE98081",
+                "locations": [
+                    {
+                        "id": "99068efe-7501-4a9b-9999-26b6ca944a77"
+                    }
+                ]
+            },
+            "items": [
+                {
+                    "id": "6c83b156-4df5-4994-8ef8-1bbac6a79ae2",
+                    "location_id": "99068efe-7501-4a9b-9999-26b6ca944a77",
+                    "quantity": {
+                        "count": 2
+                    }
+                },
+                {
+                    "id": "a420b045-e3dd-4360-a7fb-3bcacab64bf0",
+                    "location_id": "99068efe-7501-4a9b-9999-26b6ca944a77",
+                    "quantity": {
+                        "count": 2
+                    }
+                }
+            ],
+            "fulfillments": [
+                {
+                    "end": {
+                        "location": {
+                            "gps": "13.011325, 77.591942",
+                            "address": {
+                                "area_code": "560006"
+                            }
+                        }
+                    }
+                }
+            ],
+            "created_at": "0001-01-01T00:00:00Z",
+            "updated_at": "0001-01-01T00:00:00Z"
+        }
+    }
+}

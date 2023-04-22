@@ -6,7 +6,7 @@ const fs = require("fs");
 
 const validateLog = async (domain, dirPath) => {
   domain = "retail"
-  dirPath = "./"
+  //dirPath = "./"
   console.log("Inside Log Validation Service...");
   const logsPath = path.join(__dirname, "..", dirPath);
   switch (domain) {

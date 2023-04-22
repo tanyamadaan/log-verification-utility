@@ -19,7 +19,7 @@ const validateLogs = (dirPath) => {
 
   // Sort Merge
   const mergefile = path.join(dirPath, 'test.json')
-  let merge = sortMerge(directory, mergefile)
+  let merge = sortMerge(dirPath, mergefile)
 
   // Schema Validation
 
@@ -48,10 +48,10 @@ const validateLogs = (dirPath) => {
   console.log("Report Generated Successfully!!");
 };
 
-//module.exports = { validateLogs };
+module.exports = { validateLogs };
 
-const cwd = __dirname
-//const destination = path.join(cwd, 'test.json')
-const directory = path.join(cwd, './logs/Flow2')
-console.log(directory)
-validateLogs(directory)
+// const cwd = __dirname
+// //const destination = path.join(cwd, 'test.json')
+// const directory = path.join(cwd, './logs/Flow2')
+// console.log(directory)
+// validateLogs(directory)

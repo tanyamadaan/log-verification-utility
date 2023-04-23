@@ -32,7 +32,7 @@ jobs:
         with:
           repository: tanya-ondc/verification-logs
           token: ${{ secrets.ACTIONS_TOKEN }}
-          path: logs/${{ github.event.client_payload.ref }}
+          path: .
           fetch-depth: 1
       - run: ls logs/${{ github.event.client_payload.ref }}
       - run: node index.js 'retail' './utils/logs/Flow2'

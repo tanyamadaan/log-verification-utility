@@ -36,9 +36,8 @@ jobs:
           path: ./logs
       - run: pwd
       - run: ls
-      #- run: ls logs/${{ github.event.client_payload.ref }}
-      - run: ls
-      - run: node index.js 'retail' './utils/logs'
+      - run: ls logs/${{ github.event.client_payload.ref }}
+      - run: node index.js 'retail' logs/logs/${{ github.event.client_payload.ref }}
       - run: jq -s 'flatten' logFlow*.json > merged_log.json
       - name: create an issue
         uses: peter-evans/create-issue-from-file@v4

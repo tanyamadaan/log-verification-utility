@@ -35,10 +35,11 @@ jobs:
           path: .
       - run: ls logs/${{ github.event.client_payload.ref }}
       - run: node index.js 'retail' logs/${{ github.event.client_payload.ref }}
+      - run: jq -s 'flatten' logFlow*.json > merged_log.json
       - name: create an issue
         uses: peter-evans/create-issue-from-file@v4
         with:
           token: ${{ secrets.ACTIONS_TOKEN }}
           title: ${{ github.event.client_payload.ref }}
-          content-filepath: log*.md
+          content-filepath: merged_log.json
           repository: tanya-ondc/verification-logs

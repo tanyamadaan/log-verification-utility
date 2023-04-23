@@ -42,8 +42,8 @@ jobs:
       - name: Release log artifact
         uses: softprops/action-gh-release@v1
         with:
-          repository: tanya-ondc/verification-logs
           token: ${{ secrets.ACTIONS_TOKEN }}
+          repository: tanya-ondc/verification-logs
           tag_name: test
           
       #- name: Download all workflow run artifacts

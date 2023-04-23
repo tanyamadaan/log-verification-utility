@@ -33,8 +33,9 @@ jobs:
         with:
           repository: tanya-ondc/verification-logs
           token: ${{ secrets.ACTIONS_TOKEN }}
-          path: .
+          path: ./logs
       - run: pwd
+      - run: ls ../
       - run: ls logs/${{ github.event.client_payload.ref }}
       - run: ls
       - run: node index.js 'retail' './utils/logs'

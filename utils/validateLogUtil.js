@@ -43,15 +43,13 @@ const validateLogs = (dirPath) => {
     console.log("Error while removing LMDB");
   }
 
-  fs.writeFileSync('log_report.md', JSON.stringify(ErrorObj, null, 2) , 'utf-8');
+  outputfile = `log${dirPath.split('/').at(-1)}.json`
+
+  fs.writeFileSync(outputfile, JSON.stringify(ErrorObj, null, 2) , 'utf-8');
 
   console.log("Report Generated Successfully!!");
 };
 
 module.exports = { validateLogs };
 
-// const cwd = __dirname
-// //const destination = path.join(cwd, 'test.json')
-// const directory = path.join(cwd, './logs/Flow2')
-// console.log(directory)
-// validateLogs(directory)
+

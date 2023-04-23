@@ -1,5 +1,6 @@
 const { validateLog } = require("./services/cbCheck.service");
 const fs = require("fs");
+const path = require("path");
 
 try {
   if (process.argv.length < 3) {
@@ -10,16 +11,21 @@ try {
   }
 
   const domain = process.argv[2] || "retail";
-  const path = process.argv[3] || "./public/logs/";
+  const logpath = process.argv[3] || "./public/logs/";
 
-  fs.readdir(path, function (err, files) {
+  fs.readdir(logpath, function (err, files) {
     try {
       if (err) {
         console.log(`Some error occurred while reading files from ${path}`);
       } else if (!files.length) {
         console.log(`${path} folder is empty!!`);
       } else {
-        validateLog(domain, path);
+        files.forEach((file, i) => {
+          if (file.includes('Flow')) {
+            const flowpath = path.join(logpath, file);
+            validateLog(domain, flowpath);
+          }
+        }) 
       }
     } catch (error) {
       console.log(`Error while reading logs folder`, error);

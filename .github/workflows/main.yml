@@ -44,6 +44,7 @@ jobs:
         with:
           repository: tanya-ondc/verification-logs
           token: ${{ secrets.ACTIONS_TOKEN }}
+          tag_name: test
           
       #- name: Download all workflow run artifacts
         #uses: actions/download-artifact@v3

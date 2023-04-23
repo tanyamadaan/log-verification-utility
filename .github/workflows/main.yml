@@ -37,7 +37,7 @@ jobs:
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
-          name: log-report
+          name: ${{ github.event.client_payload.ref }}
           path: ./log_report.md
       #- name: Release log artifact
         #uses: softprops/action-gh-release@v1

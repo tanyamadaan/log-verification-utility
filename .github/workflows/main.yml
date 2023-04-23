@@ -39,17 +39,25 @@ jobs:
         with:
           name: log-report
           path: ./log_report.md
-      - name: Release log artifact
-        uses: softprops/action-gh-release@v1
-        with:
-          token: ${{ secrets.ACTIONS_TOKEN }}
-          tag_name: log-report
-          files: log_report.md
-        env:
-          GITHUB_REPOSITORY: tanya-ondc/verification-logs
+      #- name: Release log artifact
+        #uses: softprops/action-gh-release@v1
+        #with:
+         # token: ${{ secrets.ACTIONS_TOKEN }}
+          #tag_name: log-report
+          #files: log_report.md
+        #env:
+         # GITHUB_REPOSITORY: tanya-ondc/verification-logs
           
       #- name: Download all workflow run artifacts
         #uses: actions/download-artifact@v3
+        
+      - name: create an issue
+        uses: dacbd/create-issue-action@main
+        with:
+          token: ${{ secrets.ACTIONS_TOKEN }}
+          title: test
+          filename: log_report.md
+          repo: tanya-ondc/verification-logs
 
 # Runs a set of commands using the runners shell
 #      - name: Run a multi-line script

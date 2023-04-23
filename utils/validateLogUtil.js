@@ -16,6 +16,10 @@ const validateLogs = (dirPath) => {
 
   let msgIdSet = new Set();
   let ErrorObj = {};
+  flowId = dirPath.split('/').at(-1)
+  console.log(flowId)
+  flowError = ErrorObj[flowId] = {}
+
 
   // Sort Merge
   const mergefile = path.join(dirPath, 'test.json')
@@ -23,10 +27,10 @@ const validateLogs = (dirPath) => {
 
   // Schema Validation
 
-  let schemaVal = schemaValidate(mergefile, msgIdSet, ErrorObj)
+  let schemaVal = schemaValidate(mergefile, msgIdSet, flowError)
 
   // Business Flows Validation
-  flowObj = ErrorObj['Business Flows Validation'] = {}
+  flowObj = flowError['Business Flows Validation'] = {}
   let businessVal = flowVal(mergefile, flowObj)
   
 
@@ -43,7 +47,7 @@ const validateLogs = (dirPath) => {
     console.log("Error while removing LMDB");
   }
 
-  outputfile = `log${dirPath.split('/').at(-1)}.json`
+  outputfile = `log${flowId}.json`
 
   fs.writeFileSync(outputfile, JSON.stringify(ErrorObj, null, 2) , 'utf-8');
 

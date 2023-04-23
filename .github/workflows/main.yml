@@ -33,6 +33,8 @@ jobs:
           repository: tanya-ondc/verification-logs
           token: ${{ secrets.ACTIONS_TOKEN }}
           path: logs/${{ github.event.client_payload.ref }}
+          fetch-depth: 1
+      - run: ls logs/${{ github.event.client_payload.ref }}
       - run: node index.js 'retail' './utils/logs/Flow2'
       - name: create an issue
         uses: peter-evans/create-issue-from-file@v4

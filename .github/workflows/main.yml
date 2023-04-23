@@ -27,6 +27,12 @@ jobs:
             node-version: ${{ matrix.node-version }}
       - run: npm install
       - run: npm run build --if-present
+      - name: Check out logs repo
+        uses: actions/checkout@v2
+        with:
+          repository: tanya-ondc/verification-logs
+          token: ${{ secrets.ACTIONS_TOKEN }}
+          path: logs/${{ github.event.client_payload.ref }}
       - run: node index.js 'retail' './utils/logs/Flow2'
       - name: create an issue
         uses: peter-evans/create-issue-from-file@v4

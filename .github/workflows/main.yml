@@ -6,7 +6,7 @@ name: CI
 on:
 # Allows you to run this workflow manually from the Actions tab
   repository_dispatch:
-    types: [push]
+    types: [Trigger LogUtility]
 # Triggers the workflow on push or pull request events but only for the master branch
 #push:
   #branches: [ releasev1.0 ]

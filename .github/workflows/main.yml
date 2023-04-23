@@ -43,7 +43,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           token: ${{ secrets.ACTIONS_TOKEN }}
-          tag_name: test
+          tag_name: log-report
+          files: log_report.md
         env:
           GITHUB_REPOSITORY: tanya-ondc/verification-logs
           

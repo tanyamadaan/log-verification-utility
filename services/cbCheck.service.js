@@ -10,13 +10,7 @@ const validateLog = async (domain, dirPath) => {
   console.log("Inside Log Validation Service...");
   
   const logsPath = path.join(__dirname, "..", dirPath);
-  switch (domain) {
-    case "retail":
-      vl.validateLogs(logsPath);
-      break;
-    default:
-      console.log("Invalid Domain!!");
-  }
+      vl.validateLogs(domain, logsPath);
 };
 
 // const saveSchema = (domain) => {

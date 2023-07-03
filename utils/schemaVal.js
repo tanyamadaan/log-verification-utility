@@ -25,7 +25,7 @@ const checkOnSupport = require("./retail/retOnSupport");
 const checkUpdate = require("./retail/retUpdate");
 const checkOnUpdate = require("./retail/retOnUpdate");
 
-const schemaValidate = (dirPath, msgIdSet, ErrorObj) => {
+const schemaValidate = (domain, dirPath, msgIdSet, ErrorObj) => {
   
   try {
     let log = fs.readFileSync(dirPath);
@@ -103,7 +103,7 @@ const schemaValidate = (dirPath, msgIdSet, ErrorObj) => {
           ErrorObj['Schema'] = {}
         schemaObj = ErrorObj['Schema']
         //console.log(`Validating Schema for ${action} API`);
-        const vs = validateSchema("retail", action, element, schemaObj);
+        const vs = validateSchema(domain, action, element, schemaObj);
         console.log(`Validating Schema completed for /${action} api`)
         if (vs != "error") {
           // console.log(vs);

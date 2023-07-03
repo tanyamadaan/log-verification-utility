@@ -11,7 +11,7 @@ const clean = require("./clean")
 //TAT in on_select = sumof(time to ship in /on_search and TAT by LSP in logistics /on_search)
 // If non-serviceable in /on_select, there should be domain-error
 
-const validateLogs = (dirPath) => {
+const validateLogs = (domain, dirPath) => {
   // const dirPath = path.join(__dirname, "test_logs");
 
   let msgIdSet = new Set();
@@ -26,8 +26,8 @@ const validateLogs = (dirPath) => {
   let merge = sortMerge(dirPath, mergefile)
 
   // Schema Validation
-
-  let schemaVal = schemaValidate(mergefile, msgIdSet, flowError)
+      let retailSchemaVal = schemaValidate(domain, mergefile, msgIdSet, flowError);
+  //let schemaVal = schemaValidate(mergefile, msgIdSet, flowError)
 
   // Business Flows Validation
   flowObj = flowError['Business Flows Validation'] = {}

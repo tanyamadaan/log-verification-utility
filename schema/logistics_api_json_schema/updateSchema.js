@@ -346,10 +346,16 @@ module.exports = {
       required: ["update_target", "order"],
     },
     confirm: {
-      $ref: "confirmSchema#"
+      type: "array",
+      items: {
+          $ref: "confirmSchema#"
+        }
     },
     on_confirm: {
-      $ref: "onConfirmSchema#"
+      type: "array",
+      items: {
+          $ref: "onConfirmSchema#"
+        } 
     }
   },
   required: ["context", "message"],

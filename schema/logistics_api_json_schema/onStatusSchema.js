@@ -523,7 +523,10 @@ module.exports = {
       required: ["order"],
     },
     status: {
-      $ref: "statusSchema#"
+      type: "array",
+      items: {
+          $ref: "statusSchema#"
+        }
     }
   },
   required: ["context", "message"],

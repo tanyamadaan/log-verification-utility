@@ -248,25 +248,46 @@ module.exports = {
       required: ["order"],
     },
     search: {
-      $ref: "searchSchema#"
+      type: "array",
+      items: {
+          $ref: "searchSchema#"
+      } 
     },
     on_search: {
-      $ref: "onSearchSchema#"
+      type: "array",
+      items: {
+          $ref: "onSearchSchema#"
+      } 
     },
     init: {
-      $ref: "initSchema#"
+      type: "array",
+      items: {
+          $ref: "initSchema#"
+      } 
     },
     on_init: {
-      $ref: "onInitSchema#"
+      type: "array",
+      items: {
+          $ref: "onInitSchema#"
+      } 
     },
     confirm: {
-      $ref: "confirmSchema#"
+      type: "array",
+      items: {
+          $ref: "confirmSchema#"
+        }
     },
     on_confirm: {
-      $ref: "onConfirmSchema#"
+      type: "array",
+      items: {
+          $ref: "onConfirmSchema#"
+      } 
     },
     update: {
-      $ref: "updateSchema#"
+      type: "array",
+      items: {
+          $ref: "updateSchema#"
+      } 
     }
   },
   required: ["context", "message"],

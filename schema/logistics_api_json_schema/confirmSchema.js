@@ -7,23 +7,22 @@ module.exports = {
       properties: {
         domain: {
           type: "string",
-          const: "nic2004:60232"
+          const: "nic2004:60232",
         },
         country: {
           type: "string",
-          
         },
         city: {
           type: "string",
-          const: {$data: "/on_search/context/city"}
+          const: { $data: "/on_search/context/city" },
         },
         action: {
           type: "string",
-          const:"confirm"
+          const: "confirm",
         },
         core_version: {
           type: "string",
-          const:"1.1.0"
+          const: "1.1.0",
         },
         bap_id: {
           type: "string",
@@ -39,18 +38,18 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: {$data: "/on_init/context/transaction_id"}
+          const: { $data: "/on_init/context/transaction_id" },
         },
         message_id: {
           type: "string",
         },
         timestamp: {
           type: "string",
-          format:"date-time"
+          format: "date-time",
         },
         ttl: {
           type: "string",
-          const:"PT30S"
+          const: "PT30S",
         },
       },
       required: [
@@ -80,7 +79,7 @@ module.exports = {
             },
             state: {
               type: "string",
-              const: "Created"
+              const: "Created",
             },
             provider: {
               type: "object",
@@ -90,94 +89,110 @@ module.exports = {
                 },
                 locations: {
                   type: "array",
-                  items: 
-                    {
-                      type: "object",
-                      properties: {
-                        id: {
-                          type: "string",
-                        },
+                  items: {
+                    type: "object",
+                    properties: {
+                      id: {
+                        type: "string",
                       },
                     },
-                  
+                  },
                 },
               },
               required: ["id"],
               oneOf: [
                 {
-                  required: ["/on_search/message/catalog/bpp~1providers/0/locations", "locations"]
+                  required: [
+                    "/on_search/message/catalog/bpp~1providers/0/locations",
+                    "locations",
+                  ],
                 },
                 {
                   not: {
-                    required: ["/on_search/message/catalog/bpp~1providers/0/locations"]
-                  }
-                }
-              ]
+                    required: [
+                      "/on_search/message/catalog/bpp~1providers/0/locations",
+                    ],
+                  },
+                },
+              ],
             },
             items: {
               type: "array",
-              items: 
-                {
-                  type: "object",
-                  properties: {
-                    id: {
-                      type: "string",
-                    },
-                    category_id: {
-                      type: "string",
-                    },
-                    descriptor: {
-                      type: "object",
-                      properties: {
-                        code: {
-                          type: "string",
-                          const: {$data: "/on_search/message/catalog/bpp~1providers/0/items/0/descriptor/code"}
+              items: {
+                type: "object",
+                properties: {
+                  id: {
+                    type: "string",
+                  },
+                  category_id: {
+                    type: "string",
+                  },
+                  descriptor: {
+                    type: "object",
+                    properties: {
+                      code: {
+                        type: "string",
+                        const: {
+                          $data:
+                            "/on_search/message/catalog/bpp~1providers/0/items/0/descriptor/code",
                         },
                       },
-                      required: ["code"],
                     },
+                    required: ["code"],
                   },
-                  required: ["id", "category_id", "descriptor"],
-                  anyOf: [
-                    {
-                      allOf: [
-                        {
-                          properties: {
-                            id: {
-                              const: {$data: "/on_search/message/catalog/bpp~1providers/0/items/0/id"}
-                            }
-                          }
-                        },
-                        {
-                          properties: {
-                            category_id: {
-                              const: {$data: "/on_search/message/catalog/bpp~1providers/0/items/0/category_id"}
-                            }
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      allOf: [
-                        {
-                          properties: {
-                            id: {
-                              const: {$data: "/on_search/message/catalog/bpp~1providers/1/items/0/id"}
-                            }
-                          }
-                        },
-                        {
-                          properties: {
-                            category_id: {
-                              const: {$data: "/on_search/message/catalog/bpp~1providers/1/items/0/category_id"}
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  ]
                 },
-              
+                required: ["id", "category_id", "descriptor"],
+                anyOf: [
+                  {
+                    allOf: [
+                      {
+                        properties: {
+                          id: {
+                            const: {
+                              $data:
+                                "/on_search/message/catalog/bpp~1providers/0/items/0/id",
+                            },
+                          },
+                        },
+                      },
+                      {
+                        properties: {
+                          category_id: {
+                            const: {
+                              $data:
+                                "/on_search/message/catalog/bpp~1providers/0/items/0/category_id",
+                            },
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    allOf: [
+                      {
+                        properties: {
+                          id: {
+                            const: {
+                              $data:
+                                "/on_search/message/catalog/bpp~1providers/1/items/0/id",
+                            },
+                          },
+                        },
+                      },
+                      {
+                        properties: {
+                          category_id: {
+                            const: {
+                              $data:
+                                "/on_search/message/catalog/bpp~1providers/1/items/0/category_id",
+                            },
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
             },
             quote: {
               type: "object",
@@ -196,333 +211,317 @@ module.exports = {
                 },
                 breakup: {
                   type: "array",
-                  items:
-                    {
-                      type: "object",
-                      properties: {
-                        "@ondc/org/item_id": {
-                          type: "string",
-                          const: {$data: "/on_init/message/order/items/0/id"}
-                        },
-                        "@ondc/org/title_type": {
-                          type: "string",
-                          enum:["Delivery Charge","Tax"],
-                          errorMessage: "breakup should not include ${1/@ondc~1org~1title_type}"
-                        },
-                        price: {
-                          type: "object",
-                          properties: {
-                            currency: {
-                              type: "string",
-                              const: "INR"
-                            },
-                            value: {
-                              type: "string",
-                            },
-                          },
-                          required: ["currency", "value"],
-                        },
+                  items: {
+                    type: "object",
+                    properties: {
+                      "@ondc/org/item_id": {
+                        type: "string",
+                        const: { $data: "/on_init/message/order/items/0/id" },
                       },
-                      required: [
-                        "@ondc/org/item_id",
-                        "@ondc/org/title_type",
-                        "price",
-                      ],
+                      "@ondc/org/title_type": {
+                        type: "string",
+                        enum: ["Delivery Charge", "Tax"],
+                        errorMessage:
+                          "breakup should not include ${1/@ondc~1org~1title_type}",
+                      },
+                      price: {
+                        type: "object",
+                        properties: {
+                          currency: {
+                            type: "string",
+                            const: "INR",
+                          },
+                          value: {
+                            type: "string",
+                          },
+                        },
+                        required: ["currency", "value"],
+                      },
                     },
-                  
+                    required: [
+                      "@ondc/org/item_id",
+                      "@ondc/org/title_type",
+                      "price",
+                    ],
+                  },
                 },
               },
               required: ["price", "breakup"],
             },
             fulfillments: {
               type: "array",
-              items: 
-                {
-                  type: "object",
-                  properties: {
-                    id: {
-                      type: "string",
-                      const: {$data: "/init/message/order/fulfillments/0/id"}
-                    },
-                    type: {
-                      type: "string",
-                      const: {$data: "/init/message/order/fulfillments/0/type"}
-                    },
-                    "@ondc/org/awb_no": {
-                      type: "string",
-                      minLength: 11,
-                      maxLength: 16
-                    },
-                    start: {
-                      type: "object",
-                      properties: {
-                        person: {
-                          type: "object",
-                          properties: {
-                            name: {
-                              type: "string",
-                            },
+              items: {
+                type: "object",
+                properties: {
+                  id: {
+                    type: "string",
+                    const: { $data: "/init/message/order/fulfillments/0/id" },
+                  },
+                  type: {
+                    type: "string",
+                    const: { $data: "/init/message/order/fulfillments/0/type" },
+                  },
+                  "@ondc/org/awb_no": {
+                    type: "string",
+                    minLength: 11,
+                    maxLength: 16,
+                  },
+                  start: {
+                    type: "object",
+                    properties: {
+                      person: {
+                        type: "object",
+                        properties: {
+                          name: {
+                            type: "string",
                           },
-                          required: ["name"],
                         },
-                        location: {
-                          type: "object",
-                          properties: {
-                            gps: {
-                              type: "string",
-                            },
-                            address: {
-                              type: "object",
-                              properties: {
-                                name: {
-                                  type: "string",
-                                  minLength: 3,
-                                  not: { const: {$data: "1/locality"} }
-                                },
-                                building: {
-                                  type: "string",
-                                  "minLength": 3
-                                },
-                                locality: {
-                                  type: "string",
-                                  "minLength": 3
-                                },
-                                city: {
-                                  type: "string",
-                                },
-                                state: {
-                                  type: "string",
-                                },
-                                country: {
-                                  type: "string",
-                                },
-                                area_code: {
-                                  type: "string",
-                                },
+                        required: ["name"],
+                      },
+                      location: {
+                        type: "object",
+                        properties: {
+                          gps: {
+                            type: "string",
+                          },
+                          address: {
+                            type: "object",
+                            properties: {
+                              name: {
+                                type: "string",
+                                minLength: 3,
+                                not: { const: { $data: "1/locality" } },
                               },
-                              required: [
-                                "name",
-                                "building",
-                                "locality",
-                                "city",
-                                "state",
-                                "country",
-                                "area_code",
-                              ],
+                              building: {
+                                type: "string",
+                                minLength: 3,
+                              },
+                              locality: {
+                                type: "string",
+                                minLength: 3,
+                              },
+                              city: {
+                                type: "string",
+                              },
+                              state: {
+                                type: "string",
+                              },
+                              country: {
+                                type: "string",
+                              },
+                              area_code: {
+                                type: "string",
+                              },
                             },
+                            required: [
+                              "name",
+                              "building",
+                              "locality",
+                              "city",
+                              "state",
+                              "country",
+                              "area_code",
+                            ],
                           },
-                          required: ["gps", "address"],
                         },
-                        contact: {
-                          type: "object",
-                          properties: {
-                            phone: {
-                              type: "string",
-                            },
-                            email: {
-                              type: "string",
-                            },
+                        required: ["gps", "address"],
+                      },
+                      contact: {
+                        type: "object",
+                        properties: {
+                          phone: {
+                            type: "string",
                           },
-                          required: ["phone", "email"],
+                          email: {
+                            type: "string",
+                          },
                         },
-                        instructions: {
-                          type: "object",
-                          properties: {
-                            short_desc: {
+                        required: ["phone", "email"],
+                      },
+                      instructions: {
+                        type: "object",
+                        properties: {
+                          short_desc: {
+                            type: "string",
+                          },
+                          long_desc: {
+                            type: "string",
+                          },
+                          images: {
+                            type: "array",
+                            items: {
                               type: "string",
-                            },
-                            long_desc: {
-                              type: "string",
-                            },
-                            images: {
-                              type: "array",
-                              items: 
-                                {
-                                  type: "string",
-                                },
-                              
                             },
                           },
-                          //required: ["long_desc", "images"],
+                        },
+                        //required: ["long_desc", "images"],
+                      },
+                    },
+                    required: ["person", "location", "contact"],
+                  },
+                  end: {
+                    type: "object",
+                    properties: {
+                      person: {
+                        type: "object",
+                        properties: {
+                          name: {
+                            type: "string",
+                          },
+                        },
+                        required: ["name"],
+                      },
+                      location: {
+                        type: "object",
+                        properties: {
+                          gps: {
+                            type: "string",
+                          },
+                          address: {
+                            type: "object",
+                            properties: {
+                              name: {
+                                type: "string",
+                                minLength: 3,
+                                not: { const: { $data: "1/locality" } },
+                                errorMessage:
+                                  "name + building + locality < 190 chars & each of name / building / locality > 3 chars; name != locality",
+                              },
+                              building: {
+                                type: "string",
+                                minLength: 3,
+                              },
+                              locality: {
+                                type: "string",
+                                minLength: 3,
+                              },
+                              city: {
+                                type: "string",
+                              },
+                              state: {
+                                type: "string",
+                              },
+                              country: {
+                                type: "string",
+                              },
+                              area_code: {
+                                type: "string",
+                              },
+                            },
+                            required: [
+                              "name",
+                              "building",
+                              "locality",
+                              "city",
+                              "state",
+                              "country",
+                              "area_code",
+                            ],
+                          },
+                        },
+                        required: ["gps", "address"],
+                      },
+                      contact: {
+                        type: "object",
+                        properties: {
+                          phone: {
+                            type: "string",
+                          },
+                          email: {
+                            type: "string",
+                          },
+                        },
+                        required: ["phone"],
+                      },
+                      instructions: {
+                        type: "object",
+                        properties: {
+                          short_desc: {
+                            type: "string",
+                          },
+                          long_desc: {
+                            type: "string",
+                          },
+                          additional_desc: {
+                            type: "object",
+                            properties: {
+                              content_type: {
+                                type: "string",
+                              },
+                              url: {
+                                type: "string",
+                              },
+                            },
+                            required: ["content_type", "url"],
+                          },
+                        },
+                        // required: [
+                        //   "long_desc",
+                        //   "additional_desc",
+                        // ],
+                      },
+                    },
+                    required: ["person", "location", "contact"],
+                  },
+                  "@ondc/org/ewaybillno": {
+                    type: "string",
+                  },
+                  "@ondc/org/ebnexpirydate": {
+                    type: "string",
+                    format: "date-time",
+                  },
+                  tags: {
+                    type: "object",
+                    properties: {
+                      "@ondc/org/order_ready_to_ship": {
+                        type: "string",
+                        enum: ["yes", "no", "Yes", "No"],
+                      },
+                    },
+                    required: ["@ondc/org/order_ready_to_ship"],
+                  },
+                },
+                required: ["id", "type", "start", "end", "tags"],
+                anyOf: [
+                  {
+                    properties: {
+                      start: {
+                        properties: {
+                          instructions: {
+                            required: ["short_desc"],
+                            errorMessage: "PCC required when RTS is Yes",
+                          },
+                        },
+                        required: ["instructions"],
+                        errorMessage: "instructions required when RTS is Yes",
+                      },
+                      tags: {
+                        properties: {
+                          "@ondc/org/order_ready_to_ship": {
+                            enum: ["yes", "Yes"],
+                          },
                         },
                       },
-                      required: [
-                        "person",
-                        "location",
-                        "contact",
-                      ],
                     },
-                    end: {
-                      type: "object",
-                      properties: {
-                        person: {
-                          type: "object",
-                          properties: {
-                            name: {
-                              type: "string",
-                            },
+                    required: ["start", "end"],
+                  },
+                  {
+                    properties: {
+                      tags: {
+                        properties: {
+                          "@ondc/org/order_ready_to_ship": {
+                            enum: ["no", "No"],
+                            errorMessage:
+                              "Fulfillment object should include start instructions if ready_to_ship is Yes",
                           },
-                          required: ["name"],
-                        },
-                        location: {
-                          type: "object",
-                          properties: {
-                            gps: {
-                              type: "string",
-                            },
-                            address: {
-                              type: "object",
-                              properties: {
-                                name: {
-                                  type: "string",
-                                  minLength: 3,
-                                  not: { const: {$data: "1/locality"} },
-                                  errorMessage: "name + building + locality < 190 chars & each of name / building / locality > 3 chars; name != locality"
-                                },
-                                building: {
-                                  type: "string",
-                                  minLength: 3,
-                                },
-                                locality: {
-                                  type: "string",
-                                  minLength: 3,
-                                },
-                                city: {
-                                  type: "string",
-                                },
-                                state: {
-                                  type: "string",
-                                },
-                                country: {
-                                  type: "string",
-                                },
-                                area_code: {
-                                  type: "string",
-                                },
-                              },
-                              required: [
-                                "name",
-                                "building",
-                                "locality",
-                                "city",
-                                "state",
-                                "country",
-                                "area_code",
-                              ],
-                            },
-                          },
-                          required: ["gps", "address"],
-                        },
-                        contact: {
-                          type: "object",
-                          properties: {
-                            phone: {
-                              type: "string",
-                            },
-                            email: {
-                              type: "string",
-                            },
-                          },
-                          required: ["phone"],
-                        },
-                        instructions: {
-                          type: "object",
-                          properties: {
-                            short_desc: {
-                              type: "string",
-                            },
-                            long_desc: {
-                              type: "string",
-                            },
-                            additional_desc: {
-                              type: "object",
-                              properties: {
-                                content_type: {
-                                  type: "string",
-                                },
-                                url: {
-                                  type: "string",
-                                },
-                              },
-                              required: ["content_type", "url"],
-                            },
-                          },
-                          // required: [
-                          //   "long_desc",
-                          //   "additional_desc",
-                          // ],
                         },
                       },
-                      required: [
-                        "person",
-                        "location",
-                        "contact",
-                      ],
-                    },
-                    "@ondc/org/ewaybillno": {
-                      type: "string",
-                    },
-                    "@ondc/org/ebnexpirydate": {
-                      type: "string",
-                      format: "date-time"
-                    },
-                    tags: {
-                      type: "object",
-                      properties: {
-                        "@ondc/org/order_ready_to_ship": {
-                          type: "string",
-                          enum: ["yes", "no", "Yes", "No"]
-                        },
-                      },
-                      required: ["@ondc/org/order_ready_to_ship"],
                     },
                   },
-                  required: [
-                    "id",
-                    "type",
-                    "start",
-                    "end",
-                    "tags",
-                  ],
-                  anyOf: [
-                    {
-                      properties: {
-                        start: {
-                          properties: {
-                            instructions: {
-                              required: ["short_desc"],
-                              errorMessage: "PCC required when RTS is Yes"
-                            }
-                          },
-                          required: ["instructions"],
-                          errorMessage: "instructions required when RTS is Yes"
-                        },
-                        tags: {
-                          properties: {
-                            "@ondc/org/order_ready_to_ship": {
-                              enum: ["yes", "Yes"]
-                            }
-                          }
-                        }
-                      },
-                      required: ["start", "end"]
-                    },
-                    {
-                      properties: {
-                        tags: {
-                          properties: {
-                            "@ondc/org/order_ready_to_ship": {
-                              enum: ["no", "No"],
-                              errorMessage: "Fulfillment object should include start instructions if ready_to_ship is Yes"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ],
-                  errorMessage: "Fulfillment object should include start instructions if ready_to_ship is Yes"
-                },
-              
+                ],
+                errorMessage:
+                  "Fulfillment object should include start instructions if ready_to_ship is Yes",
+              },
             },
             billing: {
               type: "object",
@@ -535,16 +534,16 @@ module.exports = {
                   properties: {
                     name: {
                       type: "string",
-                      "minLength": 3,
-                      not: { const: {$data: "1/locality"} }
+                      minLength: 3,
+                      not: { const: { $data: "1/locality" } },
                     },
                     building: {
                       type: "string",
-                      "minLength": 3,
+                      minLength: 3,
                     },
                     locality: {
                       type: "string",
-                      "minLength": 3,
+                      minLength: 3,
                     },
                     city: {
                       type: "string",
@@ -605,67 +604,62 @@ module.exports = {
                 },
                 type: {
                   type: "string",
-                  enum: ["ON-FULFILLMENT", "POST-FULFILLMENT", "ON-ORDER"]
+                  enum: ["ON-FULFILLMENT", "POST-FULFILLMENT", "ON-ORDER"],
                 },
                 "@ondc/org/settlement_details": {
                   type: "array",
-                  items: 
-                    {
-                      type: "object",
-                      properties: {
-                        settlement_counterparty: {
-                          type: "string",
+                  items: {
+                    type: "object",
+                    properties: {
+                      settlement_counterparty: {
+                        type: "string",
+                      },
+                      settlement_type: {
+                        type: "string",
+                      },
+                      upi_address: {
+                        type: "string",
+                      },
+                      settlement_bank_account_no: {
+                        type: "string",
+                      },
+                      settlement_ifsc_code: {
+                        type: "string",
+                      },
+                    },
+                    allOf: [
+                      {
+                        if: {
+                          properties: {
+                            settlement_type: {
+                              const: "upi",
+                            },
+                          },
                         },
-                        settlement_type: {
-                          type: "string",
-                        },
-                        upi_address: {
-                          type: "string",
-                        },
-                        settlement_bank_account_no: {
-                          type: "string",
-                        },
-                        settlement_ifsc_code: {
-                          type: "string",
+                        then: {
+                          required: ["upi_address"],
                         },
                       },
-                      allOf: [
-                        {
-                          if: {
-                            properties: {
-                              settlement_type: {
-                                const: "upi",
-                              },
+                      {
+                        if: {
+                          properties: {
+                            settlement_type: {
+                              const: ["neft", "rtgs"],
                             },
                           },
-                          then: {
-                            required: ["upi_address"],
-                          },
                         },
-                        {
-                          if: {
-                            properties: {
-                              settlement_type: {
-                                const: ["neft","rtgs"]
-                              },
-                            },
-                          },
-                          then: {
-                            required: [
-                              "settlement_ifsc_code",
-                              "settlement_bank_account_no",
-                              "bank_name",
-                              "branch_name",
-                            ],
-                          },
+                        then: {
+                          required: [
+                            "settlement_ifsc_code",
+                            "settlement_bank_account_no",
+                            "bank_name",
+                            "branch_name",
+                          ],
                         },
+                      },
                     ],
-                      required: [
-                        "settlement_counterparty",
-                        "settlement_type",
-                      ],
-                    },
-                  
+                    required: ["settlement_counterparty", "settlement_type"],
+                  },
                 },
               },
               required: [
@@ -679,65 +673,73 @@ module.exports = {
               properties: {
                 items: {
                   type: "array",
-                  items: 
-                    {
-                      type: "object",
-                      properties: {
-                        category_id: {
-                          type: "string",
-                          enum: ["Grocery", "F&B", "Fashion", "BPC", "Electronics", "Home & Decor", "Pharma", "Agriculture", "Mobility"]
-                        },
-                        descriptor: {
-                          type: "object",
-                          properties: {
-                            name: {
-                              type: "string",
-                            },
-                          },
-                          required: ["name"],
-                        },
-                        quantity: {
-                          type: "object",
-                          properties: {
-                            count: {
-                              type: "integer",
-                            },
-                            measure: {
-                              type: "object",
-                              properties: {
-                                unit: {
-                                  type: "string",
-                                },
-                                value: {
-                                  type: "number",
-                                },
-                              },
-                              required: ["unit", "value"],
-                            },
-                          },
-                          required: ["count", "measure"],
-                        },
-                        price: {
-                          type: "object",
-                          properties: {
-                            currency: {
-                              type: "string",
-                            },
-                            value: {
-                              type: "string",
-                            },
-                          },
-                          required: ["currency", "value"],
-                        },
+                  items: {
+                    type: "object",
+                    properties: {
+                      category_id: {
+                        type: "string",
+                        enum: [
+                          "Grocery",
+                          "F&B",
+                          "Fashion",
+                          "BPC",
+                          "Electronics",
+                          "Home & Decor",
+                          "Pharma",
+                          "Agriculture",
+                          "Mobility",
+                        ],
                       },
-                      required: [
-                        "category_id",
-                        "descriptor",
-                        "quantity",
-                        "price",
-                      ],
+                      descriptor: {
+                        type: "object",
+                        properties: {
+                          name: {
+                            type: "string",
+                          },
+                        },
+                        required: ["name"],
+                      },
+                      quantity: {
+                        type: "object",
+                        properties: {
+                          count: {
+                            type: "integer",
+                          },
+                          measure: {
+                            type: "object",
+                            properties: {
+                              unit: {
+                                type: "string",
+                              },
+                              value: {
+                                type: "number",
+                              },
+                            },
+                            required: ["unit", "value"],
+                          },
+                        },
+                        required: ["count", "measure"],
+                      },
+                      price: {
+                        type: "object",
+                        properties: {
+                          currency: {
+                            type: "string",
+                          },
+                          value: {
+                            type: "string",
+                          },
+                        },
+                        required: ["currency", "value"],
+                      },
                     },
-                  
+                    required: [
+                      "category_id",
+                      "descriptor",
+                      "quantity",
+                      "price",
+                    ],
+                  },
                 },
                 provider: {
                   type: "object",
@@ -811,13 +813,15 @@ module.exports = {
             },
             created_at: {
               type: "string",
-              const: {$data: "3/context/timestamp"},
-              errorMessage: "created_at does not match context timestamp - ${3/context/timestamp}"
+              const: { $data: "3/context/timestamp" },
+              errorMessage:
+                "created_at does not match context timestamp - ${3/context/timestamp}",
             },
             updated_at: {
               type: "string",
-              const: {$data: "3/context/timestamp"},
-              errorMessage: "updated_at does not match context timestamp - ${3/context/timestamp}"
+              const: { $data: "3/context/timestamp" },
+              errorMessage:
+                "updated_at does not match context timestamp - ${3/context/timestamp}",
             },
           },
           required: [
@@ -881,28 +885,28 @@ module.exports = {
           //     }
           //   }
           // ],
-          "anyOf": [
+          anyOf: [
             {
-                properties: {
-                  fulfillment: {
-                    type: "object",
-                    properties: {
-                      type: {
-                        const: "CoD"
-                      }
-                    }
-                  },
-                  payment: {
-                    type: "object",
-                    properties: {
-                      "@ondc/org/collection_amount": {
-                        type: "string",
-                      },
+              properties: {
+                fulfillment: {
+                  type: "object",
+                  properties: {
+                    type: {
+                      const: "CoD",
                     },
-                    required: ["@ondc/org/collection_amount"],
                   },
                 },
-                required: ["payment"]
+                payment: {
+                  type: "object",
+                  properties: {
+                    "@ondc/org/collection_amount": {
+                      type: "string",
+                    },
+                  },
+                  required: ["@ondc/org/collection_amount"],
+                },
+              },
+              required: ["payment"],
             },
             {
               properties: {
@@ -910,25 +914,34 @@ module.exports = {
                   type: "object",
                   properties: {
                     type: {
-                      enum: ["Prepaid", "Reverse QC"]
-                    }
-                  }
-                }
-              }
-            }
+                      enum: ["Prepaid", "Reverse QC"],
+                    },
+                  },
+                },
+              },
+            },
           ],
         },
       },
       required: ["order"],
     },
     on_search: {
-      $ref: "onSearchSchema#"
+      type: "array",
+      items: {
+          $ref: "onSearchSchema#",
+      },
     },
     init: {
-      $ref: "initSchema#"
+      type: "array",
+      items: {
+        $ref: "initSchema#",
+      },
     },
     on_init: {
-      $ref: "onInitSchema#"
+      type: "array",
+      items: {
+        $ref: "onInitSchema#",
+      },
     },
   },
   required: ["context", "message"],

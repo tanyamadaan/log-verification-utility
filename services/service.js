@@ -24,9 +24,7 @@ const checkContext = (data, path) => {
   if (data.transaction_id === data.message_id) {
     errObj.id_err = "transaction_id and message id can't be same";
   }
-  if (data.action != path) {
-    errObj.action_err = `context.action should be ${path}`;
-  }
+
   if (data.ttl && data.ttl != constants.RET_CONTEXT_TTL) {
     {
       errObj.ttl_err = `ttl = ${constants.RET_CONTEXT_TTL} as per the API Contract`;

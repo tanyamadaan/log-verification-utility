@@ -254,10 +254,16 @@ module.exports = {
       required: ["order"],
     },
     init: {
-      $ref: "initSchema#"
+      type: "array",
+      items: {
+          $ref: "initSchema#"
+        }
     },
     on_search: {
-      $ref: "onSearchSchema#"
+      type: "array",
+      items: {
+          $ref: "onSearchSchema#"
+        }
     }
   },
   required: ["context", "message"],

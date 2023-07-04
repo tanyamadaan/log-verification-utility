@@ -7,22 +7,22 @@ module.exports = {
       properties: {
         domain: {
           type: "string",
-          const: "nic2004:60232"
+          const: "nic2004:60232",
         },
         country: {
           type: "string",
         },
         city: {
           type: "string",
-          const: {$data: "/on_search/context/city"}
+          const: { $data: "/on_search/context/city" },
         },
         action: {
           type: "string",
-          const:"init"
+          const: "init",
         },
         core_version: {
           type: "string",
-          const:"1.1.0"
+          const: "1.1.0",
         },
         bap_id: {
           type: "string",
@@ -44,11 +44,11 @@ module.exports = {
         },
         timestamp: {
           type: "string",
-          format:"date-time"
+          format: "date-time",
         },
         ttl: {
           type: "string",
-          const:"PT30S"
+          const: "PT30S",
         },
       },
       required: [
@@ -81,272 +81,285 @@ module.exports = {
                 },
                 locations: {
                   type: "array",
-                  items: 
-                    {
-                      type: "object",
-                      properties: {
-                        id: {
-                          type: "string",
-                        },
+                  items: {
+                    type: "object",
+                    properties: {
+                      id: {
+                        type: "string",
                       },
-                      required: ["id"],
                     },
-                  
+                    required: ["id"],
+                  },
                 },
               },
               required: ["id"],
               oneOf: [
                 {
-                  required: ["/on_search/message/catalog/bpp~1providers/0/locations", "locations"]
+                  required: [
+                    "/on_search/message/catalog/bpp~1providers/0/locations",
+                    "locations",
+                  ],
                 },
                 {
                   not: {
-                    required: ["/on_search/message/catalog/bpp~1providers/0/locations"]
-                  }
-                }
-              ]
+                    required: [
+                      "/on_search/message/catalog/bpp~1providers/0/locations",
+                    ],
+                  },
+                },
+              ],
             },
             items: {
               type: "array",
-              items:
-                {
-                  type: "object",
-                  properties: {
-                    id: {
-                      type: "string",
-                      // const: {$data: "/on_search/message/catalog/bpp~1providers/0/items/0/id"},
-                      // errorMessage: "${/on_search/message/catalog/bpp~1providers/0/items/0/id}"
-                    },
-                    category_id: {
-                      type: "string",
-                      // const: {$data: "/on_search/message/catalog/bpp~1providers/0/items/0/category_id"},
-                      // errorMessage: "${/on_search/message/catalog/bpp~1providers/0/items/0/category_id}"
-                    },
-                    descriptor: {
-                      type: "object",
-                      properties: {
-                        code: {
-                          type: "string",
-                          const: {$data: "/on_search/message/catalog/bpp~1providers/0/items/0/descriptor/code"}
+              items: {
+                type: "object",
+                properties: {
+                  id: {
+                    type: "string",
+                    // const: {$data: "/on_search/message/catalog/bpp~1providers/0/items/0/id"},
+                    // errorMessage: "${/on_search/message/catalog/bpp~1providers/0/items/0/id}"
+                  },
+                  category_id: {
+                    type: "string",
+                    // const: {$data: "/on_search/message/catalog/bpp~1providers/0/items/0/category_id"},
+                    // errorMessage: "${/on_search/message/catalog/bpp~1providers/0/items/0/category_id}"
+                  },
+                  descriptor: {
+                    type: "object",
+                    properties: {
+                      code: {
+                        type: "string",
+                        const: {
+                          $data:
+                            "/on_search/message/catalog/bpp~1providers/0/items/0/descriptor/code",
                         },
                       },
-                      required: ["code"],
                     },
+                    required: ["code"],
                   },
-                  required: ["id", "category_id", "descriptor"],
-                  anyOf: [
-                    {
-                      allOf: [
-                        {
-                          properties: {
-                            id: {
-                              const: {$data: "/on_search/message/catalog/bpp~1providers/0/items/0/id"}
-                            }
-                          }
-                        },
-                        {
-                          properties: {
-                            category_id: {
-                              const: {$data: "/on_search/message/catalog/bpp~1providers/0/items/0/category_id"}
-                            }
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      allOf: [
-                        {
-                          properties: {
-                            id: {
-                              const: {$data: "/on_search/message/catalog/bpp~1providers/1/items/0/id"}
-                            }
-                          }
-                        },
-                        {
-                          properties: {
-                            category_id: {
-                              const: {$data: "/on_search/message/catalog/bpp~1providers/1/items/0/category_id"}
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  ]
                 },
+                required: ["id", "category_id", "descriptor"],
+                anyOf: [
+                  {
+                    allOf: [
+                      {
+                        properties: {
+                          id: {
+                            const: {
+                              $data:
+                                "/on_search/message/catalog/bpp~1providers/0/items/0/id",
+                            },
+                          },
+                        },
+                      },
+                      {
+                        properties: {
+                          category_id: {
+                            const: {
+                              $data:
+                                "/on_search/message/catalog/bpp~1providers/0/items/0/category_id",
+                            },
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    allOf: [
+                      {
+                        properties: {
+                          id: {
+                            const: {
+                              $data:
+                                "/on_search/message/catalog/bpp~1providers/1/items/0/id",
+                            },
+                          },
+                        },
+                      },
+                      {
+                        properties: {
+                          category_id: {
+                            const: {
+                              $data:
+                                "/on_search/message/catalog/bpp~1providers/1/items/0/category_id",
+                            },
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
             },
             fulfillments: {
               type: "array",
-              items: 
-                {
-                  type: "object",
-                  properties: {
-                    id: {
-                      type: "string",
-                    },
-                    type: {
-                      type: "string",
-                      enum: ["CoD", "Prepaid"]
-                    },
-                    start: {
-                      type: "object",
-                      properties: {
-                        location: {
-                          type: "object",
-                          properties: {
-                            gps: {
-                              type: "string",
-                            },
-                            address: {
-                              type: "object",
-                              properties: {
-                                name: {
-                                  type: "string",
-                                  minLength: 3,
-                                  not: { const: {$data: "1/locality"} }
-                                },
-                                building: {
-                                  type: "string",
-                                  "minLength": 3
-                                },
-                                locality: {
-                                  type: "string",
-                                  "minLength": 3
-                                },
-                                city: {
-                                  type: "string",
-                                },
-                                state: {
-                                  type: "string",
-                                },
-                                country: {
-                                  type: "string",
-                                },
-                                area_code: {
-                                  type: "string",
-                                },
-                              },
-                              required: [
-                                "name",
-                                "building",
-                                "locality",
-                                "city",
-                                "state",
-                                "country",
-                                "area_code",
-                              ],
-                            },
-                          },
-                          required: ["gps", "address"],
-                        },
-                        contact: {
-                          type: "object",
-                          properties: {
-                            phone: {
-                              type: "string",
-                            },
-                            email: {
-                              type: "string",
-                            },
-                          },
-                          required: ["phone"],
-                        },
-                      },
-                      required: ["location", "contact"],
-                    },
-                    end: {
-                      type: "object",
-                      properties: {
-                        location: {
-                          type: "object",
-                          properties: {
-                            gps: {
-                              type: "string",
-                            },
-                            address: {
-                              type: "object",
-                              properties: {
-                                name: {
-                                  type: "string",
-                                  minLength: 3,
-                                  not: { const: {$data: "1/locality"} }
-                                },
-                                building: {
-                                  type: "string",
-                                  "minLength": 3
-                                },
-                                locality: {
-                                  type: "string",
-                                  "minLength": 3
-                                },
-                                city: {
-                                  type: "string",
-                                },
-                                state: {
-                                  type: "string",
-                                },
-                                country: {
-                                  type: "string",
-                                },
-                                area_code: {
-                                  type: "string",
-                                },
-                              },
-                              required: [
-                                "name",
-                                "building",
-                                "locality",
-                                "city",
-                                "state",
-                                "country",
-                                "area_code",
-                              ],
-                            },
-                          },
-                          required: ["gps", "address"],
-                        },
-                        contact: {
-                          type: "object",
-                          properties: {
-                            phone: {
-                              type: "string",
-                            },
-                            email: {
-                              type: "string",
-                            },
-                          },
-                          required: ["phone", "email"],
-                        },
-                      },
-                      required: ["location", "contact"],
-                    },
+              items: {
+                type: "object",
+                properties: {
+                  id: {
+                    type: "string",
                   },
-                  required: ["id", "type", "start", "end"],
-                  
+                  type: {
+                    type: "string",
+                    enum: ["CoD", "Prepaid"],
+                  },
+                  start: {
+                    type: "object",
+                    properties: {
+                      location: {
+                        type: "object",
+                        properties: {
+                          gps: {
+                            type: "string",
+                          },
+                          address: {
+                            type: "object",
+                            properties: {
+                              name: {
+                                type: "string",
+                                minLength: 3,
+                                not: { const: { $data: "1/locality" } },
+                              },
+                              building: {
+                                type: "string",
+                                minLength: 3,
+                              },
+                              locality: {
+                                type: "string",
+                                minLength: 3,
+                              },
+                              city: {
+                                type: "string",
+                              },
+                              state: {
+                                type: "string",
+                              },
+                              country: {
+                                type: "string",
+                              },
+                              area_code: {
+                                type: "string",
+                              },
+                            },
+                            required: [
+                              "name",
+                              "building",
+                              "locality",
+                              "city",
+                              "state",
+                              "country",
+                              "area_code",
+                            ],
+                          },
+                        },
+                        required: ["gps", "address"],
+                      },
+                      contact: {
+                        type: "object",
+                        properties: {
+                          phone: {
+                            type: "string",
+                          },
+                          email: {
+                            type: "string",
+                          },
+                        },
+                        required: ["phone"],
+                      },
+                    },
+                    required: ["location", "contact"],
+                  },
+                  end: {
+                    type: "object",
+                    properties: {
+                      location: {
+                        type: "object",
+                        properties: {
+                          gps: {
+                            type: "string",
+                          },
+                          address: {
+                            type: "object",
+                            properties: {
+                              name: {
+                                type: "string",
+                                minLength: 3,
+                                not: { const: { $data: "1/locality" } },
+                              },
+                              building: {
+                                type: "string",
+                                minLength: 3,
+                              },
+                              locality: {
+                                type: "string",
+                                minLength: 3,
+                              },
+                              city: {
+                                type: "string",
+                              },
+                              state: {
+                                type: "string",
+                              },
+                              country: {
+                                type: "string",
+                              },
+                              area_code: {
+                                type: "string",
+                              },
+                            },
+                            required: [
+                              "name",
+                              "building",
+                              "locality",
+                              "city",
+                              "state",
+                              "country",
+                              "area_code",
+                            ],
+                          },
+                        },
+                        required: ["gps", "address"],
+                      },
+                      contact: {
+                        type: "object",
+                        properties: {
+                          phone: {
+                            type: "string",
+                          },
+                          email: {
+                            type: "string",
+                          },
+                        },
+                        required: ["phone", "email"],
+                      },
+                    },
+                    required: ["location", "contact"],
+                  },
                 },
-              
+                required: ["id", "type", "start", "end"],
+              },
             },
             billing: {
               type: "object",
               properties: {
                 name: {
                   type: "string",
-                  
                 },
                 address: {
                   type: "object",
                   properties: {
                     name: {
                       type: "string",
-                      "minLength": 3,
-                      not: { const: {$data: "1/locality"} }
+                      minLength: 3,
+                      not: { const: { $data: "1/locality" } },
                     },
                     building: {
                       type: "string",
-                      "minLength": 3
+                      minLength: 3,
                     },
                     locality: {
                       type: "string",
-                      "minLength": 3
+                      minLength: 3,
                     },
                     city: {
                       type: "string",
@@ -382,13 +395,15 @@ module.exports = {
                 },
                 created_at: {
                   type: "string",
-                  const: {$data: "4/context/timestamp"},
-                  errorMessage: "created_at - ${4/context/timestamp} does not match context timestamp"
+                  const: { $data: "4/context/timestamp" },
+                  errorMessage:
+                    "created_at - ${4/context/timestamp} does not match context timestamp",
                 },
                 updated_at: {
                   type: "string",
-                  const: {$data: "4/context/timestamp"},
-                  errorMessage: "updated_at - ${4/context/timestamp} does not match context timestamp"
+                  const: { $data: "4/context/timestamp" },
+                  errorMessage:
+                    "updated_at - ${4/context/timestamp} does not match context timestamp",
                 },
               },
               required: [
@@ -405,94 +420,92 @@ module.exports = {
               properties: {
                 "@ondc/org/settlement_details": {
                   type: "array",
-                  items: 
-                    {
-                      type: "object",
-                      properties: {
-                        settlement_counterparty: {
-                          type: "string",
+                  items: {
+                    type: "object",
+                    properties: {
+                      settlement_counterparty: {
+                        type: "string",
+                      },
+                      settlement_type: {
+                        type: "string",
+                        enum: ["upi", "neft", "rtgs"],
+                      },
+                      beneficiary_name: {
+                        type: "string",
+                      },
+                      upi_address: {
+                        type: "string",
+                      },
+                      settlement_bank_account_no: {
+                        type: "string",
+                      },
+                      settlement_ifsc_code: {
+                        type: "string",
+                      },
+                    },
+                    allOf: [
+                      {
+                        if: {
+                          properties: {
+                            settlement_type: {
+                              const: "upi",
+                            },
+                          },
                         },
-                        settlement_type: {
-                          type: "string",
-                          enum :["upi","neft","rtgs"]
-                        },
-                        beneficiary_name: {
-                          type: "string",
-                        },
-                        upi_address: {
-                          type: "string",
-                        },
-                        settlement_bank_account_no: {
-                          type: "string",
-                        },
-                        settlement_ifsc_code: {
-                          type: "string",
+                        then: {
+                          required: ["upi_address"],
                         },
                       },
-                      allOf: [
-                        {
-                          if: {
-                            properties: {
-                              settlement_type: {
-                                const: "upi",
-                              },
+                      {
+                        if: {
+                          properties: {
+                            settlement_type: {
+                              const: ["neft", "rtgs"],
                             },
                           },
-                          then: {
-                            required: ["upi_address"],
-                          },
                         },
-                        {
-                          if: {
-                            properties: {
-                              settlement_type: {
-                                const: ["neft","rtgs"]
-                              },
-                            },
-                          },
-                          then: {
-                            required: [
-                              "settlement_ifsc_code",
-                              "settlement_bank_account_no",
-                            ],
-                          },
+                        then: {
+                          required: [
+                            "settlement_ifsc_code",
+                            "settlement_bank_account_no",
+                          ],
                         },
+                      },
                     ],
-                      required: [
-                        "settlement_counterparty",
-                        "settlement_type",
-                        "beneficiary_name",
-                      ],
-                    },
-                
+                    required: [
+                      "settlement_counterparty",
+                      "settlement_type",
+                      "beneficiary_name",
+                    ],
+                  },
                 },
               },
               required: ["@ondc/org/settlement_details"],
             },
           },
           required: ["provider", "items", "fulfillments", "billing"],
-          "oneOf": [
+          oneOf: [
             {
-                properties: {
-                  fulfillment: {
-                    type: "object",
-                    properties: {
-                      type: {
-                        const: "CoD"
-                      }
-                    }
-                  },
-                  payment: {
-                    type: "object",
-                    properties: {
-                      "@ondc/org/collection_amount": {
-                        type: "string",
-                      },
+              properties: {
+                fulfillment: {
+                  type: "object",
+                  properties: {
+                    type: {
+                      const: "CoD",
                     },
-                    required: ["@ondc/org/collection_amount"],
                   },
                 },
-                required: ["payment"]
+                payment: {
+                  type: "object",
+                  properties: {
+                    "@ondc/org/collection_amount": {
+                      type: "string",
+                    },
+                  },
+                  required: ["@ondc/org/collection_amount"],
+                },
+              },
+              required: ["payment"],
             },
             {
               properties: {
@@ -500,20 +513,21 @@ module.exports = {
                   type: "object",
                   properties: {
                     type: {
-                      enum: ["Prepaid", "Reverse QC"]
-                    }
-                  }
-                }
-              }
-            }
+                      enum: ["Prepaid", "Reverse QC"],
+                    },
+                  },
+                },
+              },
+            },
           ],
         },
       },
       required: ["order"],
     },
     on_search: {
-      $ref: "onSearchSchema#",
-      properties: {
+      type: "array",
+      items: {
+        $ref: "onSearchSchema#",
         message: {
           properties: {
             catalog: {
@@ -523,20 +537,20 @@ module.exports = {
                     properties: {
                       type: {
                         enum: ["CoD", "Prepaid"],
-                        const: {$data: "/message/order/fulfillments/0/type"},
+                        const: { $data: "/message/order/fulfillments/0/type" },
                       },
                       id: {
-                        const: {$data: "/message/order/fulfillments/0/id"}
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+                        const: { $data: "/message/order/fulfillments/0/id" },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
   required: ["context", "message"],
 };

@@ -26,7 +26,7 @@ const validateLogs = (domain, dirPath) => {
   let merge = sortMerge(dirPath, mergefile)
 
   // Schema Validation
-      let retailSchemaVal = schemaValidate(domain, mergefile, msgIdSet, flowError);
+  let retailSchemaVal = schemaValidate(domain, mergefile, msgIdSet, flowError);
   //let schemaVal = schemaValidate(mergefile, msgIdSet, flowError)
 
   // Business Flows Validation

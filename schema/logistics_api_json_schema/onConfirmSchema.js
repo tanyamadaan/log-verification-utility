@@ -42,7 +42,18 @@ module.exports = {
         },
         message_id: {
           type: "string",
-          const: {$data: "/confirm/context/message_id"}
+          allOf: [
+            {
+              const: {$data: "/confirm/context/message_id"}
+            },
+            {
+              not: {
+                const: {$data: "1/transaction_id"}
+              },
+              errorMessage: "${1/transaction_id}"
+            }
+          ]
+          
         },
         timestamp: {
           type: "string",
@@ -520,19 +531,34 @@ module.exports = {
       required: ["order"],
     },
     search: {
-      $ref: "searchSchema#"
+      type: "array",
+      items: {
+          $ref: "searchSchema#"
+      } 
     },
     on_search: {
-      $ref: "onSearchSchema#"
+      type: "array",
+      items: {
+          $ref: "onSearchSchema#"
+      } 
     },
     init: {
-      $ref: "initSchema#"
+      type: "array",
+      items: {
+          $ref: "initSchema#"
+      } 
     },
     on_init: {
-      $ref: "onInitSchema#"
+      type: "array",
+      items: {
+          $ref: "onInitSchema#"
+      } 
     },
     confirm: {
-      $ref: "confirmSchema#"
+      type: "array",
+      items: {
+          $ref: "confirmSchema#"
+        }
     }
   },
   required: ["context", "message"],

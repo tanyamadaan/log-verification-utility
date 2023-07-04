@@ -8,6 +8,7 @@ const onCancelSchema = require("./onCancelSchema");
 const onUpdateSchema = require("./onUpdateSchema");
 const searchSchema = require("./searchSchema");
 const initSchema = require("./initSchema");
+const masterSchema= require("./masterSchema")
 const confirmSchema = require("./confirmSchema");
 const statusSchema = require("./statusSchema");
 const updateSchema = require("./updateSchema");
@@ -28,6 +29,8 @@ const ajv = new Ajv({
   $data: true
 });
 const addFormats = require("ajv-formats");
+const masterSchemacopy = require("./masterSchemacopy");
+
 addFormats(ajv);
 require("ajv-errors")(ajv);
 
@@ -55,7 +58,7 @@ const formatted_error = (errors) => {
 
 const validate_schema = (data, schema, addSchema) => {
   let error_list = [];
-  validate = ajv.addSchema(searchSchema).addSchema(onSearchSchema).addSchema(initSchema).addSchema(onInitSchema).addSchema(confirmSchema).addSchema(onConfirmSchema).addSchema(updateSchema).addSchema(onUpdateSchema)
+  validate = ajv.addSchema(searchSchema).addSchema(onSearchSchema).addSchema(initSchema).addSchema(onInitSchema).addSchema(confirmSchema).addSchema(onConfirmSchema).addSchema(updateSchema).addSchema(onUpdateSchema).addSchema(statusSchema).addSchema(onStatusSchema).addSchema(supportSchema).addSchema(onSupportSchema).addSchema(trackSchema).addSchema(onTrackSchema)
   validate = validate.compile(schema);
   
   const valid = validate(data);
@@ -65,6 +68,11 @@ const validate_schema = (data, schema, addSchema) => {
   return error_list;
 };
 
+const validate_schema_master =(data)=>{
+  error_list = validate_schema(data, (schema = masterSchemacopy));
+  console.log(error_list)
+  return formatted_error(error_list);
+}
 const validate_schema_search_logistics_for_json = (data) => {
   error_list = validate_schema(data, (schema = searchSchema));
   console.log(error_list)
@@ -171,39 +179,39 @@ const validate_schema_on_support_logistics_for_json = (data) => {
   return formatted_error(error_list);
 };
 
-const cwd = __dirname
-const curFile = path.join(cwd, '../../utils/logs/logistics/xpressbazar/Logistics')
-const on_update = path.join(curFile, 'on_update.json')
-let data=fs.readFileSync(on_update)
-data=JSON.parse(data)
-const update = path.join(curFile, 'update.json')
-let val_data6=fs.readFileSync(update)
-data["update"]=JSON.parse(val_data6)
-const curFile1 = path.join(curFile, 'on_confirm.json')
-let val_data7=fs.readFileSync(curFile1)
-data["on_confirm"]=JSON.parse(val_data7)
-const valData = path.join(curFile, 'init.json')
-let val_data=fs.readFileSync(valData)
-val_data=JSON.parse(val_data)
-data["init"] = val_data
-const valData1 = path.join(curFile, 'on_search.json')
-let val_data1 = fs.readFileSync(valData1)
-val_data=JSON.parse(val_data1)
-data["on_search"] = val_data
-const valData2 = path.join(curFile, 'on_init.json')
-let val_data2 = fs.readFileSync(valData2)
-val_data=JSON.parse(val_data2)
-data["on_init"] = val_data
-const valData3 = path.join(curFile, 'confirm.json')
-let val_data3 = fs.readFileSync(valData3)
-val_data=JSON.parse(val_data3)
-data["confirm"] = val_data
-const valData4 = path.join(curFile, 'search.json')
-let val_data4 = fs.readFileSync(valData4)
-val_data=JSON.parse(val_data4)
-data["search"] = val_data
-console.log(data)
-validate_schema_on_update_logistics_for_json(data)
+// const cwd = __dirname
+// const curFile = path.join(cwd, '../../utils/logs/logistics/xpressbazar/Logistics')
+// const on_update = path.join(curFile, 'on_update.json')
+// let data=fs.readFileSync(on_update)
+// data=JSON.parse(data)
+// const update = path.join(curFile, 'update.json')
+// let val_data6=fs.readFileSync(update)
+// data["update"]=JSON.parse(val_data6)
+// const curFile1 = path.join(curFile, 'on_confirm.json')
+// let val_data7=fs.readFileSync(curFile1)
+// data["on_confirm"]=JSON.parse(val_data7)
+// const valData = path.join(curFile, 'init.json')
+// let val_data=fs.readFileSync(valData)
+// val_data=JSON.parse(val_data)
+// data["init"] = val_data
+// const valData1 = path.join(curFile, 'on_search.json')
+// let val_data1 = fs.readFileSync(valData1)
+// val_data=JSON.parse(val_data1)
+// data["on_search"] = val_data
+// const valData2 = path.join(curFile, 'on_init.json')
+// let val_data2 = fs.readFileSync(valData2)
+// val_data=JSON.parse(val_data2)
+// data["on_init"] = val_data
+// const valData3 = path.join(curFile, 'confirm.json')
+// let val_data3 = fs.readFileSync(valData3)
+// val_data=JSON.parse(val_data3)
+// data["confirm"] = val_data
+// const valData4 = path.join(curFile, 'search.json')
+// let val_data4 = fs.readFileSync(valData4)
+// val_data=JSON.parse(val_data4)
+// data["search"] = val_data
+// console.log(data)
+// validate_schema_on_update_logistics_for_json(data)
 
 // const valData1 = path.join(curFile, 'on_search.json')
 // let val_data1 = fs.readFileSync(valData1)
@@ -217,6 +225,17 @@ validate_schema_on_update_logistics_for_json(data)
 // data["search"] = val_data
 // console.log(data)
 // validate_schema_on_status_logistics_for_json()
+
+let testData=fs.readFileSync("../../utils/testCopy.json")
+testData=JSON.parse(testData)
+try {
+  const errors=validate_schema_master(testData)
+  console.log(errors);
+} catch (error) {
+  console.log(`ERROR!!:`,error)
+}
+
+
 
 module.exports = {
   validate_schema_search_logistics_for_json,
@@ -237,4 +256,5 @@ module.exports = {
   validate_schema_on_support_logistics_for_json,
   validate_schema_on_track_logistics_for_json,
   validate_schema_on_update_logistics_for_json,
+  validate_schema_master
 };

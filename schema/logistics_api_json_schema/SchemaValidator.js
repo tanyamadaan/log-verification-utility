@@ -8,13 +8,13 @@ const onCancelSchema = require("./onCancelSchema");
 const onUpdateSchema = require("./onUpdateSchema");
 const searchSchema = require("./searchSchema");
 const initSchema = require("./initSchema");
-const masterSchema= require("./masterSchema")
+const masterSchema = require("./masterSchema");
 const confirmSchema = require("./confirmSchema");
 const statusSchema = require("./statusSchema");
 const updateSchema = require("./updateSchema");
 const cancelSchema = require("./cancelSchema");
-const supportSchema=require("./supportSchema");
-const trackSchema=require("./trackSchema");
+const supportSchema = require("./supportSchema");
+const trackSchema = require("./trackSchema");
 const fs = require("fs");
 //const async = require("async");
 const path = require("path");
@@ -26,7 +26,7 @@ const ajv = new Ajv({
   strictRequired: false,
   strictTypes: false,
   //verbose: true,
-  $data: true
+  $data: true,
 });
 const addFormats = require("ajv-formats");
 const masterSchemacopy = require("./masterSchemacopy");
@@ -56,128 +56,160 @@ const formatted_error = (errors) => {
   return error_json;
 };
 
-const validate_schema = (data, schema, addSchema) => {
+const validate_schema = (data, schema) => {
   let error_list = [];
-  validate = ajv.addSchema(searchSchema).addSchema(onSearchSchema).addSchema(initSchema).addSchema(onInitSchema).addSchema(confirmSchema).addSchema(onConfirmSchema).addSchema(updateSchema).addSchema(onUpdateSchema).addSchema(statusSchema).addSchema(onStatusSchema).addSchema(supportSchema).addSchema(onSupportSchema).addSchema(trackSchema).addSchema(onTrackSchema)
+  try {
+    validate = ajv
+    .addSchema(searchSchema)
+    .addSchema(onSearchSchema)
+    .addSchema(initSchema)
+    .addSchema(onInitSchema)
+    .addSchema(confirmSchema)
+    .addSchema(onConfirmSchema)
+    .addSchema(updateSchema)
+    .addSchema(onUpdateSchema)
+    .addSchema(statusSchema)
+    .addSchema(onStatusSchema)
+    .addSchema(supportSchema)
+    .addSchema(onSupportSchema)
+    .addSchema(trackSchema)
+    .addSchema(onTrackSchema);
+  
   validate = validate.compile(schema);
   
-  const valid = validate(data);
-  if (!valid) {
-    error_list = validate.errors;
+    const valid = validate(data);
+    if (!valid) {
+      error_list = validate.errors;
+    }
+  } catch (error) {
+    console.log("ERROR!! validating schema")
   }
+ 
+ 
   return error_list;
 };
 
-const validate_schema_master =(data)=>{
-  error_list = validate_schema(data, (schema = masterSchemacopy));
-  console.log(error_list)
+const validate_schema_master = (data) => {
+  error_list = validate_schema(data, masterSchema);
   return formatted_error(error_list);
+};
+try {
+  const cwd = __dirname;
+  const destination = path.join(cwd, "../../public/logs/test.json");
+  let testData = fs.readFileSync(destination);
+  testData = JSON.parse(testData);
+
+  const errors = validate_schema_master(testData);
+  console.log(errors);
+} catch (error) {
+  console.log(`ERROR reading file!!:`, error);
 }
-const validate_schema_search_logistics_for_json = (data) => {
-  error_list = validate_schema(data, (schema = searchSchema));
-  console.log(error_list)
-  return formatted_error(error_list);
-};
 
-const validate_schema_on_search_logistics_for_json = (data) => {
-  // transformed_item_data = transform_on_search_schema(data);
-  error_list = validate_schema(data, (schema = onSearchSchema));
-  console.log(error_list)
-  return formatted_error(error_list);
-};
+// const validate_schema_search_logistics_for_json = (data) => {
+//   error_list = validate_schema(data, (schema = searchSchema));
+//   console.log(error_list)
+//   return formatted_error(error_list);
+// };
 
-const validate_schema_select_logistics_for_json = (data) => {
-  error_list = validate_schema(data, (schema = selectSchema));
-  return formatted_error(error_list);
-};
+// const validate_schema_on_search_logistics_for_json = (data) => {
+//   // transformed_item_data = transform_on_search_schema(data);
+//   error_list = validate_schema(data, (schema = onSearchSchema));
+//   console.log(error_list)
+//   return formatted_error(error_list);
+// };
 
-const validate_schema_on_select_logistics_for_json = (data) => {
+// const validate_schema_select_logistics_for_json = (data) => {
+//   error_list = validate_schema(data, (schema = selectSchema));
+//   return formatted_error(error_list);
+// };
 
-  error_list = validate_schema(data, (schema = onSelectSchema));
-  return formatted_error(error_list);
-};
+// const validate_schema_on_select_logistics_for_json = (data) => {
 
-const validate_schema_init_logistics_for_json = (data) => {
-  addSchema = onSearchSchema
-  error_list = validate_schema(data, (schema = initSchema), addSchema = onSearchSchema);
-  console.log(error_list)
-  return formatted_error(error_list);
-};
+//   error_list = validate_schema(data, (schema = onSelectSchema));
+//   return formatted_error(error_list);
+// };
 
-const validate_schema_on_init_logistics_for_json = (data) => {
-  error_list = validate_schema(data, (schema = onInitSchema), addSchema = initSchema);
-  console.log(error_list)
-  return formatted_error(error_list);
-};
+// const validate_schema_init_logistics_for_json = (data) => {
+//   addSchema = onSearchSchema
+//   error_list = validate_schema(data, (schema = initSchema), addSchema = onSearchSchema);
+//   console.log(error_list)
+//   return formatted_error(error_list);
+// };
 
-const validate_schema_confirm_logistics_for_json = (data) => {
-  error_list = validate_schema(data, (schema = confirmSchema));
-  console.log(error_list)
-  return formatted_error(error_list);
-};
+// const validate_schema_on_init_logistics_for_json = (data) => {
+//   error_list = validate_schema(data, (schema = onInitSchema), addSchema = initSchema);
+//   console.log(error_list)
+//   return formatted_error(error_list);
+// };
 
-const validate_schema_on_confirm_logistics_for_json = (data) => {
+// const validate_schema_confirm_logistics_for_json = (data) => {
+//   error_list = validate_schema(data, (schema = confirmSchema));
+//   console.log(error_list)
+//   return formatted_error(error_list);
+// };
 
-  error_list = validate_schema(data, (schema = onConfirmSchema));
-  console.log(error_list)
-  return formatted_error(error_list);
-};
+// const validate_schema_on_confirm_logistics_for_json = (data) => {
 
-const validate_schema_status_logistics_for_json = (data) => {
-  error_list = validate_schema(data, (schema = statusSchema));
-  return formatted_error(error_list);
-};
+//   error_list = validate_schema(data, (schema = onConfirmSchema));
+//   console.log(error_list)
+//   return formatted_error(error_list);
+// };
 
-const validate_schema_on_status_logistics_for_json = (data) => {
+// const validate_schema_status_logistics_for_json = (data) => {
+//   error_list = validate_schema(data, (schema = statusSchema));
+//   return formatted_error(error_list);
+// };
 
-  error_list = validate_schema(data, (schema = onStatusSchema));
-  return formatted_error(error_list);
-};
+// const validate_schema_on_status_logistics_for_json = (data) => {
 
-const validate_schema_cancel_logistics_for_json = (data) => {
-  error_list = validate_schema(data, (schema = cancelSchema));
-  return formatted_error(error_list);
-};
+//   error_list = validate_schema(data, (schema = onStatusSchema));
+//   return formatted_error(error_list);
+// };
 
-const validate_schema_on_cancel_logistics_for_json = (data) => {
+// const validate_schema_cancel_logistics_for_json = (data) => {
+//   error_list = validate_schema(data, (schema = cancelSchema));
+//   return formatted_error(error_list);
+// };
 
-  error_list = validate_schema(data, (schema = onCancelSchema));
-  return formatted_error(error_list);
-};
+// const validate_schema_on_cancel_logistics_for_json = (data) => {
 
-const validate_schema_update_logistics_for_json = (data) => {
-  error_list = validate_schema(data, (schema = updateSchema));
-  return formatted_error(error_list);
-};
+//   error_list = validate_schema(data, (schema = onCancelSchema));
+//   return formatted_error(error_list);
+// };
 
-const validate_schema_on_update_logistics_for_json = (data) => {
+// const validate_schema_update_logistics_for_json = (data) => {
+//   error_list = validate_schema(data, (schema = updateSchema));
+//   return formatted_error(error_list);
+// };
 
-  error_list = validate_schema(data, (schema = onUpdateSchema));
-  console.log(error_list)
-  return formatted_error(error_list);
-};
+// const validate_schema_on_update_logistics_for_json = (data) => {
 
-const validate_schema_track_logistics_for_json = (data) => {
-  error_list = validate_schema(data, (schema = trackSchema));
-  return formatted_error(error_list);
-};
+//   error_list = validate_schema(data, (schema = onUpdateSchema));
+//   console.log(error_list)
+//   return formatted_error(error_list);
+// };
 
-const validate_schema_on_track_logistics_for_json = (data) => {
- 
-  error_list = validate_schema(data, (schema = onTrackSchema));
-  return formatted_error(error_list);
-};
+// const validate_schema_track_logistics_for_json = (data) => {
+//   error_list = validate_schema(data, (schema = trackSchema));
+//   return formatted_error(error_list);
+// };
 
-const validate_schema_support_logistics_for_json = (data) => {
-  error_list = validate_schema(data, (schema = supportSchema));
-  return formatted_error(error_list);
-};
+// const validate_schema_on_track_logistics_for_json = (data) => {
 
-const validate_schema_on_support_logistics_for_json = (data) => {
+//   error_list = validate_schema(data, (schema = onTrackSchema));
+//   return formatted_error(error_list);
+// };
 
-  error_list = validate_schema(data, (schema = onSupportSchema));
-  return formatted_error(error_list);
-};
+// const validate_schema_support_logistics_for_json = (data) => {
+//   error_list = validate_schema(data, (schema = supportSchema));
+//   return formatted_error(error_list);
+// };
+
+// const validate_schema_on_support_logistics_for_json = (data) => {
+
+//   error_list = validate_schema(data, (schema = onSupportSchema));
+//   return formatted_error(error_list);
+// };
 
 // const cwd = __dirname
 // const curFile = path.join(cwd, '../../utils/logs/logistics/xpressbazar/Logistics')
@@ -226,35 +258,6 @@ const validate_schema_on_support_logistics_for_json = (data) => {
 // console.log(data)
 // validate_schema_on_status_logistics_for_json()
 
-let testData=fs.readFileSync("../../utils/testCopy.json")
-testData=JSON.parse(testData)
-try {
-  const errors=validate_schema_master(testData)
-  console.log(errors);
-} catch (error) {
-  console.log(`ERROR!!:`,error)
-}
-
-
-
 module.exports = {
-  validate_schema_search_logistics_for_json,
-  validate_schema_select_logistics_for_json,
-  validate_schema_init_logistics_for_json,
-  validate_schema_confirm_logistics_for_json,
-  validate_schema_update_logistics_for_json,
-  validate_schema_status_logistics_for_json,
-  validate_schema_track_logistics_for_json,
-  validate_schema_cancel_logistics_for_json,
-  validate_schema_support_logistics_for_json,
-  validate_schema_on_cancel_logistics_for_json,
-  validate_schema_on_confirm_logistics_for_json,
-  validate_schema_on_init_logistics_for_json,
-  validate_schema_on_search_logistics_for_json,
-  validate_schema_on_select_logistics_for_json,
-  validate_schema_on_status_logistics_for_json,
-  validate_schema_on_support_logistics_for_json,
-  validate_schema_on_track_logistics_for_json,
-  validate_schema_on_update_logistics_for_json,
   validate_schema_master
 };

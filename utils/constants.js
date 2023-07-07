@@ -5,7 +5,7 @@ module.exports = Object.freeze({
   DB_Keys: {"search": {"context": ['timestamp', 'transaction_id', 'message_id', 'city'],
             "message": {"intent": {"payment": ['@ondc/org/buyer_app_finder_fee_amount']}}},
             "on_search": {"context": ['bap_id', 'bpp_id'], "message": ['catalog']}},
-  SORTED_INDEX: ['search','select', 'init', 'confirm'],
+  SORTED_INDEX: ['search','init', 'confirm'],
   RET_SEARCH: "search",
   RET_ONSEARCH: "on_search",
   RET_SELECT: "select",

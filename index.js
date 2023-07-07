@@ -13,7 +13,7 @@ try {
   const domain = process.argv[2] || "retail";
   const logpath = process.argv[3] || "./public/logs/";
 
-  fs.readdir(logpath, function (err, files) {
+  fs.readdir(logpath, (err, files) =>{
     try {
       if (err) {
         console.log(`Some error occurred while reading files from ${path}`);

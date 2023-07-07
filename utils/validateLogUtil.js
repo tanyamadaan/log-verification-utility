@@ -3,7 +3,7 @@ const _ = require("lodash");
 const dao = require("../dao/dao");
 const path = require("path");
 const { getObjValues } = require("./utils");
-const sortMerge = require("./mergeSort");
+const {sortMerge} = require("./mergeSort");
 const schemaValidate = require("./schemaVal");
 const flowVal = require("./retail/businessVal")
 const clean = require("./clean")
@@ -22,8 +22,8 @@ const validateLogs = (domain, dirPath) => {
 
 
   // Sort Merge
-  const mergefile = path.join(dirPath, 'test.json')
-  let merge = sortMerge(dirPath, mergefile)
+  const mergefile = path.join(dirPath, '../test.json')
+  sortMerge(dirPath, mergefile)
 
   // Schema Validation
   let retailSchemaVal = schemaValidate(domain, mergefile, msgIdSet, flowError);
@@ -46,10 +46,14 @@ const validateLogs = (domain, dirPath) => {
   } catch (error) {
     console.log("Error while removing LMDB");
   }
-
+try {
   outputfile = `log${flowId}.json`
 
   fs.writeFileSync(outputfile, JSON.stringify(ErrorObj, null, 2) , 'utf-8');
+} catch (error) {
+  console.log("!!ERROR writing output file",)
+}
+ 
 
   console.log("Report Generated Successfully!!");
 };

@@ -5,11 +5,12 @@ const vl = require("../utils/validateLogUtil");
 const fs = require("fs");
 
 const validateLog = async (domain, dirPath) => {
-  domain = "retail"
+  // domain = "retail"
   //dirPath = "./"
   console.log("Inside Log Validation Service...");
-  
+  console.log(dirPath)
   const logsPath = path.join(__dirname, "..", dirPath);
+ 
       vl.validateLogs(domain, logsPath);
 };
 

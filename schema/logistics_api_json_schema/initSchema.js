@@ -211,6 +211,8 @@ module.exports = {
                         properties: {
                           gps: {
                             type: "string",
+                            const: {$data: "/search/0/message/intent/fulfillment/start/location/gps"},
+                            errorMessage: "Start location does not match location in search"
                           },
                           address: {
                             type: "object",
@@ -277,6 +279,8 @@ module.exports = {
                         properties: {
                           gps: {
                             type: "string",
+                            const: {$data: "/search/0/message/intent/fulfillment/end/location/gps"},
+                            errorMessage: "End location does not match location in search"
                           },
                           address: {
                             type: "object",

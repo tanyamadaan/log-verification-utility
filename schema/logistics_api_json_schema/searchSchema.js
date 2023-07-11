@@ -285,6 +285,7 @@ module.exports = {
                 },
               },
               required: ["weight", "category", "value"],
+              
             },
           }, 
           required:["category","provider","fulfillment","@ondc/org/payload_details"],

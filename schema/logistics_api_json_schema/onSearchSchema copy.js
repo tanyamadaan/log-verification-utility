@@ -1,5 +1,3 @@
-const { error } = require("ajv/dist/vocabularies/applicator/dependencies");
-
 module.exports = {
   $id: "http://example.com/schema/onSearchSchema",
   type: "object",
@@ -84,19 +82,6 @@ module.exports = {
                   },
                 },
                 required: ["id", "type"],
-                if: {
-                  properties: {
-                    type: {enum: ["Prepaid", "CoD"]},
-                  }
-                },
-                then: {
-                  properties: {
-                    id: {
-                      const: {$data: "3/bpp~1providers/0/items/0/fulfillment_id"}
-                    },
-                  }
-                },
-                errorMessage: "Item Fulfilment id - ${2/bpp~1providers/0/items/0/fulfillment_id} does not match id - ${0/id} for ${0/type} defined under bpp/fulfillments",
               },
             },
             "bpp/descriptor": {
@@ -167,7 +152,7 @@ module.exports = {
                                 duration: {
                                   type: "string",
                                   pattern:
-                                    "^PT([1-5][1-9]|60)?M$",
+                                    "^PT([1-9]|[1-9][0-9])?(D|H)$|^PT([1-5][1-9]|60)?M$",
                                   errorMessage:
                                     "Duration is not correct as per Immediate Delivery",
                                 },
@@ -266,21 +251,6 @@ module.exports = {
                             },
                           },
                           required: ["code", "name", "short_desc", "long_desc"],
-                          anyOf: [
-                            {
-                              properties: {
-                                code: {const: "P2H2P"}
-                              },
-                              required: ["/search/0/message/intent/@ondc~1org~1payload_details/dimensions"],
-                              errorMessage: "@ondc/org/payload_details/dimensions required for P2H2P"
-                            },
-                            {
-                              properties: {
-                                code: {const: "P2P", errorMessage: "@ondc/org/payload_details/dimensions required for P2H2P"},
-                              },
-                            }
-                          ],
-                          errorMessage: "@ondc/org/payload_details/dimensions required for P2H2P"
                         },
                         price: {
                           type: "object",
@@ -364,6 +334,109 @@ module.exports = {
             },
           },
           required: ["bpp/fulfillments", "bpp/descriptor", "bpp/providers"],
+          if: {
+            properties: {
+              "bpp/fulfillments": {
+                type: "array",
+                items: {
+                  type: "object",
+                    properties: {
+                      type: {enum: ["Prepaid", "CoD"]}
+                    }
+                  }
+                }
+              },  
+            },
+          then: {
+            oneOf: [
+              {
+                properties: {
+                  "bpp/fulfillments": {
+                    type: "array",
+                    items: {
+                      type: "object",
+                        properties: {
+                          id: {const: {$data: "2/bpp~1providers/0/items/0/fulfillment_id"}} 
+                        }
+                      }
+                    }
+                }
+              },
+              {
+                properties: {
+                  "bpp/fulfillments": {
+                    type: "array",
+                    items: {
+                      type: "object",
+                        properties: {
+                          id: {const: {$data: "2/bpp~1providers/0/items/0/fulfillment_id"}} 
+                        }
+                      }
+                    }
+                }
+              }
+            ]
+          },
+          else: {
+            properties: {
+              "bpp/fulfillments": {
+                type: "array",
+                items: {
+                  type: "object",
+                    properties: {
+                      type: {enum: ["RTO"]}
+                    }
+                  }
+                }
+              }
+          },
+          allOf: [
+            {
+              oneOf: [
+                {
+                  properties: {
+                    parent_item_id: {
+                      const: "",
+                      errorMessage:
+                        "Parent_item_id should not be equal to ${1/parent_item_id}",
+                    },
+                  },
+                },
+                {
+                  properties: {
+                    parent_item_id: {
+                      const: {$data: "2/items/0/id"},
+                      errorMessage:
+                        "Parent_item_id should not be equal to ${2/items/0/id}",
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              properties: {
+                fulfillment_id: {
+                  type: "string",
+                  const: {
+                    $data:
+                      "7/message/catalog/bpp~1fulfillments/2/id",
+                  },
+                  errorMessage:
+                    "${7/message/catalog/bpp~1fulfillments/2/id}",
+                },
+                parent_item_id: {
+                  const: {
+                    $data:
+                      "7/message/catalog/bpp~1providers/0/items/0/id",
+                  },
+                  errorMessage:
+                    "Parent_item_id should not be equal to ${1/parent_item_id}",
+                },
+              },
+            },
+          ],
+          errorMessage:
+            "Fulfilment_id should be equal to ${6/message/catalog/bpp~1fulfillments/0/id} or ${6/message/catalog/bpp~1fulfillments/1/id} or ${6/message/catalog/bpp~1fulfillments/2/id}",
         },
       },
       required: ["catalog"],

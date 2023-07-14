@@ -19,7 +19,9 @@ const validateSchema = (domain, data, errObj) => {
       errObj[key] = `${res[i].details} ${res[i].message}`;
       i++;
     }
+    console.log(`Validating Schema completed`);
     return errObj;
+
   } else return "error";
 };
 

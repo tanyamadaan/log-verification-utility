@@ -196,6 +196,8 @@ module.exports = {
             },
             quote: {
               type: "object",
+              const: { $data: "/on_init/message/order/quote" },
+              errorMessage: "Quote object mismatches in /init and /confirm.",
               properties: {
                 price: {
                   type: "object",
@@ -928,7 +930,7 @@ module.exports = {
     on_search: {
       type: "array",
       items: {
-          $ref: "onSearchSchema#",
+        $ref: "onSearchSchema#",
       },
     },
     init: {

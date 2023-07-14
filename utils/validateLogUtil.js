@@ -4,7 +4,7 @@ const dao = require("../dao/dao");
 const path = require("path");
 const { getObjValues } = require("./utils");
 const {sortMerge} = require("./mergeSort");
-const schemaValidate = require("./schemaVal");
+const Validate = require("./schemaVal");
 const flowVal = require("./retail/businessVal")
 const clean = require("./clean")
 
@@ -16,28 +16,31 @@ const validateLogs = (domain, dirPath) => {
 
   let msgIdSet = new Set();
   let ErrorObj = {};
-  flowId = dirPath.split('/').at(-1)
-  console.log(flowId)
-  flowError = ErrorObj[flowId] = {}
+  // flowId = dirPath.split('/').at(-1)
+  // console.log(flowId)
+  // flowError = ErrorObj[flowId] = {}
 
 
   // Sort Merge
+  console.log(dirPath)
   const mergefile = path.join(dirPath, '../test.json')
+  console.log(mergefile)
   sortMerge(dirPath, mergefile)
+  console.log("Merged File created")
 
-  // Schema Validation
-  let retailSchemaVal = schemaValidate(domain, mergefile, msgIdSet, flowError);
+  //  Validation
+  let retailSchemaVal = Validate(domain, mergefile, msgIdSet,ErrorObj);
+
   //let schemaVal = schemaValidate(mergefile, msgIdSet, flowError)
 
   // Business Flows Validation
-  flowObj = flowError['Business Flows Validation'] = {}
-  let businessVal = flowVal(mergefile, flowObj)
+  // flowObj = flowError['Business Flows Validation'] = {}
+  // let businessVal = flowVal(mergefile, flowObj)
   
 
   // Cleaning output report
 
   let log = clean(ErrorObj)
-  console.log(ErrorObj)
 
   // Drop DB
   try {
@@ -47,11 +50,12 @@ const validateLogs = (domain, dirPath) => {
     console.log("Error while removing LMDB");
   }
 try {
-  outputfile = `log${flowId}.json`
+  // outputfile = `log${flowId}.json`
+  outputfile= 'log_report.json'
 
   fs.writeFileSync(outputfile, JSON.stringify(ErrorObj, null, 2) , 'utf-8');
 } catch (error) {
-  console.log("!!ERROR writing output file",)
+  console.log("!!ERROR writing output file",error)
 }
  
 

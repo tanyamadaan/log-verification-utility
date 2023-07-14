@@ -8,7 +8,6 @@ const validate_schema_for_domain_json = (vertical, data) => {
     case "logistics":
       res = validate_schema_master(data);
       return res;
-      break;
     default:
       console.log("Invalid Domain!!");
   }

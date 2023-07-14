@@ -8,7 +8,6 @@ const validateLog = async (domain, dirPath) => {
   // domain = "retail"
   //dirPath = "./"
   console.log("Inside Log Validation Service...");
-  console.log(dirPath)
   const logsPath = path.join(__dirname, "..", dirPath);
  
       vl.validateLogs(domain, logsPath);

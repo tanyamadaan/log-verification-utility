@@ -14,7 +14,7 @@ module.exports = {
         },
         city: {
           type: "string",
-          const: {$data: "/on_search/context/city"}
+          const: { $data: "/on_search/context/city" },
         },
         action: {
           type: "string",
@@ -22,7 +22,7 @@ module.exports = {
         },
         core_version: {
           type: "string",
-          const:"1.1.0"
+          const: "1.1.0",
         },
         bap_id: {
           type: "string",
@@ -38,26 +38,25 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: {$data: "/confirm/context/transaction_id"}
+          const: { $data: "/confirm/context/transaction_id" },
         },
         message_id: {
           type: "string",
           allOf: [
             {
-              const: {$data: "/confirm/context/message_id"}
+              const: { $data: "/confirm/context/message_id" },
             },
             {
               not: {
-                const: {$data: "1/transaction_id"}
+                const: { $data: "1/transaction_id" },
               },
-              errorMessage: "${1/transaction_id}"
-            }
-          ]
-          
+              errorMessage: "${1/transaction_id}",
+            },
+          ],
         },
         timestamp: {
           type: "string",
-          format: "date-time" 
+          format: "date-time",
         },
       },
       required: [
@@ -86,7 +85,7 @@ module.exports = {
             },
             state: {
               type: "string",
-              enum:["Created","Accepted","Cancelled"]
+              enum: ["Created", "Accepted", "Cancelled"],
             },
             provider: {
               type: "object",
@@ -96,59 +95,63 @@ module.exports = {
                 },
                 locations: {
                   type: "array",
-                  items: 
-                    {
-                      type: "object",
-                      properties: {
-                        id: {
-                          type: "string",
-                        },
+                  items: {
+                    type: "object",
+                    properties: {
+                      id: {
+                        type: "string",
                       },
-                      required: ["id"],
                     },
-                
+                    required: ["id"],
+                  },
                 },
               },
               required: ["id"],
               oneOf: [
                 {
-                  required: ["/confirm/message/order/provider/locations", "locations"]
+                  required: [
+                    "/confirm/message/order/provider/locations",
+                    "locations",
+                  ],
                 },
                 {
                   not: {
-                    required: ["/confirm/message/order/provider/locations", "locations"]
-                  }
-                }
-              ]
+                    required: [
+                      "/confirm/message/order/provider/locations",
+                      "locations",
+                    ],
+                  },
+                },
+              ],
             },
             items: {
               type: "array",
-              items: 
-                {
-                  type: "object",
-                  properties: {
-                    id: {
-                      type: "string",
-                    },
-                    category_id: {
-                      type: "string",
-                    },
-                    descriptor: {
-                      type: "object",
-                      properties: {
-                        code: {
-                          type: "string",
-                        },
-                      },
-                      required: ["code"],
-                    },
+              items: {
+                type: "object",
+                properties: {
+                  id: {
+                    type: "string",
                   },
-                  required: ["id", "category_id", "descriptor"],
+                  category_id: {
+                    type: "string",
+                  },
+                  descriptor: {
+                    type: "object",
+                    properties: {
+                      code: {
+                        type: "string",
+                      },
+                    },
+                    required: ["code"],
+                  },
                 },
-            
+                required: ["id", "category_id", "descriptor"],
+              },
             },
             quote: {
               type: "object",
+              const: { $data: "/on_init/message/order/quote" },
+              errorMessage: "Quote object mismatches in /init and /on_confirm.",
               properties: {
                 price: {
                   type: "object",
@@ -164,168 +167,187 @@ module.exports = {
                 },
                 breakup: {
                   type: "array",
-                  items: 
-                    {
-                      type: "object",
-                      properties: {
-                        "@ondc/org/item_id": {
-                          type: "string",
-                        },
-                        "@ondc/org/title_type": {
-                          type: "string",
-                        },
-                        price: {
-                          type: "object",
-                          properties: {
-                            currency: {
-                              type: "string",
-                            },
-                            value: {
-                              type: "string",
-                            },
-                          },
-                          required: ["currency", "value"],
-                        },
+                  items: {
+                    type: "object",
+                    properties: {
+                      "@ondc/org/item_id": {
+                        type: "string",
                       },
-                      required: [
-                        "@ondc/org/item_id",
-                        "@ondc/org/title_type",
-                        "price",
-                      ],
+                      "@ondc/org/title_type": {
+                        type: "string",
+                      },
+                      price: {
+                        type: "object",
+                        properties: {
+                          currency: {
+                            type: "string",
+                          },
+                          value: {
+                            type: "string",
+                          },
+                        },
+                        required: ["currency", "value"],
+                      },
                     },
-                  
+                    required: [
+                      "@ondc/org/item_id",
+                      "@ondc/org/title_type",
+                      "price",
+                    ],
+                  },
                 },
               },
               required: ["price", "breakup"],
             },
             fulfillments: {
               type: "array",
-              items: 
-                {
-                  type: "object",
-                  properties: {
-                    id: {
-                      type: "string",
-                      const: {$data: "/confirm/message/order/fulfillments/0/id"}
-                    },
-                    type: {
-                      type: "string",
-                      const: {$data: "/confirm/message/order/fulfillments/0/type"}
-                    },
-                    state: {
-                      type: "object",
-                      properties: {
-                        descriptor: {
-                          type: "object",
-                          properties: {
-                            code: {
-                              type: "string",
-                              const: "Pending"
-                            },
-                          },
-                          required: ["code"],
-                        },
-                      },
-                      required: ["descriptor"],
-                    },
-                    "@ondc/org/awb_no": {
-                      type: "string",
-                      minLength: 11,
-                      maxLength: 16
-                    },
-                    tracking: {
-                      type: "boolean",
-                    },
-                    start: {
-                      type: "object",
-                      properties: {
-                        time: {
-                          type: "object",
-                          properties: {
-                            range: {
-                              type: "object",
-                              properties: {
-                                start: {
-                                  type: "string",
-                                },
-                                end: {
-                                  type: "string",
-                                },
-                              },
-                              required: ["start", "end"],
-                            },
-                          },
-                          required: ["range"],
-                        },
-                      },
-                      required: [],
-                    },
-                    end: {
-                      type: "object",
-                      properties: {
-                        time: {
-                          type: "object",
-                          properties: {
-                            range: {
-                              type: "object",
-                              properties: {
-                                start: {
-                                  type: "string",
-                                },
-                                end: {
-                                  type: "string",
-                                },
-                              },
-                              required: ["start", "end"],
-                            },
-                          },
-                          required: ["range"],
-                        },
-                      },
-                      required: ["time"],
-                    },
-                    agent: {
-                      type: "object",
-                      properties: {
-                        name: {
-                          type: "string",
-                        },
-                        phone: {
-                          type: "string",
-                        },
-                      },
-                      required: ["name", "phone"],
-                    },
-                    vehicle: {
-                      type: "object",
-                      properties: {
-                        category: {
-                          type: "string",
-                        },
-                        size: {
-                          type: "string",
-                        },
-                        registration: {
-                          type: "string",
-                        },
-                      },
-                      required: ["category", "size", "registration"],
-                    },
-                    "@ondc/org/ewaybillno": {
-                      type: "string",
-                    },
-                    "@ondc/org/ebnexpirydate": {
-                      type: "string",
+              items: {
+                type: "object",
+                properties: {
+                  id: {
+                    type: "string",
+                    const: {
+                      $data: "/confirm/message/order/fulfillments/0/id",
                     },
                   },
-                  required: [
-                    "id",
-                    "type",
-                    "state",
-                    "tracking",
-                  ],
-                  anyOf: [
-                    {
+                  type: {
+                    type: "string",
+                    const: {
+                      $data: "/confirm/message/order/fulfillments/0/type",
+                    },
+                  },
+                  state: {
+                    type: "object",
+                    properties: {
+                      descriptor: {
+                        type: "object",
+                        properties: {
+                          code: {
+                            type: "string",
+                            const: "Pending",
+                          },
+                        },
+                        required: ["code"],
+                      },
+                    },
+                    required: ["descriptor"],
+                  },
+                  "@ondc/org/awb_no": {
+                    type: "string",
+                    minLength: 11,
+                    maxLength: 16,
+                  },
+                  tracking: {
+                    type: "boolean",
+                  },
+                  start: {
+                    type: "object",
+                    properties: {
+                      time: {
+                        type: "object",
+                        properties: {
+                          range: {
+                            type: "object",
+                            properties: {
+                              start: {
+                                type: "string",
+                              },
+                              end: {
+                                type: "string",
+                              },
+                            },
+                            required: ["start", "end"],
+                          },
+                        },
+                        required: ["range"],
+                      },
+                    },
+                    required: [],
+                  },
+                  end: {
+                    type: "object",
+                    properties: {
+                      time: {
+                        type: "object",
+                        properties: {
+                          range: {
+                            type: "object",
+                            properties: {
+                              start: {
+                                type: "string",
+                              },
+                              end: {
+                                type: "string",
+                              },
+                            },
+                            required: ["start", "end"],
+                          },
+                        },
+                        required: ["range"],
+                      },
+                    },
+                    required: ["time"],
+                  },
+                  agent: {
+                    type: "object",
+                    properties: {
+                      name: {
+                        type: "string",
+                      },
+                      phone: {
+                        type: "string",
+                      },
+                    },
+                    required: ["name", "phone"],
+                  },
+                  vehicle: {
+                    type: "object",
+                    properties: {
+                      category: {
+                        type: "string",
+                      },
+                      size: {
+                        type: "string",
+                      },
+                      registration: {
+                        type: "string",
+                      },
+                    },
+                    required: ["category", "size", "registration"],
+                  },
+                  "@ondc/org/ewaybillno": {
+                    type: "string",
+                  },
+                  "@ondc/org/ebnexpirydate": {
+                    type: "string",
+                  },
+                },
+                required: ["id", "type", "state", "tracking"],
+                anyOf: [
+                  {
+                    confirm: {
+                      properties: {
+                        message: {
+                          properties: {
+                            order: {
+                              fulfillments: {
+                                items: {
+                                  properties: {
+                                    "@ondc/org/order_ready_to_ship": {
+                                      enum: ["yes", "Yes"],
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                    required: ["start"],
+                  },
+                  {
+                    not: {
                       confirm: {
                         properties: {
                           message: {
@@ -335,59 +357,42 @@ module.exports = {
                                   items: {
                                     properties: {
                                       "@ondc/org/order_ready_to_ship": {
-                                        enum: ["yes", "Yes"]
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
+                                        enum: ["yes", "Yes"],
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                       },
-                      required: ["start"]
                     },
-                    {
-                      not: {
-                        confirm: {
-                          properties: {
-                            message: {
-                              properties: {
-                                order: {
-                                  fulfillments: {
-                                    items: {
-                                      properties: {
-                                        "@ondc/org/order_ready_to_ship": {
-                                          enum: ["yes", "Yes"]
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ],
-                  errorMessage: "Fulfillment object should include start instructions if ready_to_ship is Yes",
-                  anyOf: [
-                    {
-                      required: ["/confirm/message/order/fulfillments/0/start", "start"],
+                  },
+                ],
+                errorMessage:
+                  "Fulfillment object should include start instructions if ready_to_ship is Yes",
+                anyOf: [
+                  {
+                    required: [
+                      "/confirm/message/order/fulfillments/0/start",
+                      "start",
+                    ],
+                  },
+                  {
+                    not: {
+                      required: [
+                        "/confirm/message/order/fulfillments/0/start",
+                        "start",
+                      ],
                     },
-                    {
-                      not: {
-                        required: ["/confirm/message/order/fulfillments/0/start", "start"],
-                      }
-                    }
-                  ]
-                },
-              
+                  },
+                ],
+              },
             },
             billing: {
               type: "object",
-              const: {$data: "/init/message/order/billing"},
+              const: { $data: "/init/message/order/billing" },
               properties: {
                 name: {
                   type: "string",
@@ -454,8 +459,9 @@ module.exports = {
             },
             created_at: {
               type: "string",
-              const: {$data: "/confirm/context/timestamp"},
-              errorMessage: "created_at does not match confirm context timestamp - ${/confirm/context/timestamp}"
+              const: { $data: "/confirm/context/timestamp" },
+              errorMessage:
+                "created_at does not match confirm context timestamp - ${/confirm/context/timestamp}",
             },
             updated_at: {
               type: "string",
@@ -484,29 +490,37 @@ module.exports = {
                         properties: {
                           descriptor: {
                             properties: {
-                              code: {const: "P2H2P"}
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+                              code: { const: "P2H2P" },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
                 },
                 {
                   anyOf: [
                     {
                       properties: {
                         fulfillments: {
-                          required: ["@ondc/org/awb_no", "@ondc/org/ewaybillno", "@ondc/org/ebnexpirydate"]
-                        }
-                      }
+                          required: [
+                            "@ondc/org/awb_no",
+                            "@ondc/org/ewaybillno",
+                            "@ondc/org/ebnexpirydate",
+                          ],
+                        },
+                      },
                     },
                     {
-                      required: ["/confirm/message/order/fulfillments/@ondc/org/awb_no", "/confirm/message/order/fulfillments/@ondc/org/ewaybillno", "/confirm/message/order/fulfillments/@ondc/org/ebnexpirydate"]
-                    }
-                  ]
-                }
-              ]
+                      required: [
+                        "/confirm/message/order/fulfillments/@ondc/org/awb_no",
+                        "/confirm/message/order/fulfillments/@ondc/org/ewaybillno",
+                        "/confirm/message/order/fulfillments/@ondc/org/ebnexpirydate",
+                      ],
+                    },
+                  ],
+                },
+              ],
             },
             {
               properties: {
@@ -517,15 +531,15 @@ module.exports = {
                     properties: {
                       descriptor: {
                         properties: {
-                          code: {const: "P2P"}
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ]
+                          code: { const: "P2P" },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          ],
         },
       },
       required: ["order"],
@@ -533,33 +547,33 @@ module.exports = {
     search: {
       type: "array",
       items: {
-          $ref: "searchSchema#"
-      } 
+        $ref: "searchSchema#",
+      },
     },
     on_search: {
       type: "array",
       items: {
-          $ref: "onSearchSchema#"
-      } 
+        $ref: "onSearchSchema#",
+      },
     },
     init: {
       type: "array",
       items: {
-          $ref: "initSchema#"
-      } 
+        $ref: "initSchema#",
+      },
     },
     on_init: {
       type: "array",
       items: {
-          $ref: "onInitSchema#"
-      } 
+        $ref: "onInitSchema#",
+      },
     },
     confirm: {
       type: "array",
       items: {
-          $ref: "confirmSchema#"
-        }
-    }
+        $ref: "confirmSchema#",
+      },
+    },
   },
   required: ["context", "message"],
   anyOf: [
@@ -577,20 +591,20 @@ module.exports = {
                           tags: {
                             properties: {
                               "@ondc/org/order_ready_to_ship": {
-                                enum: ["No", "no"]
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+                                enum: ["No", "no"],
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
     {
       properties: {
@@ -599,13 +613,13 @@ module.exports = {
             order: {
               properties: {
                 fulfillments: {
-                  required: ["start", "end"]
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+                  required: ["start", "end"],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  ],
 };

@@ -1,5 +1,11 @@
 const config = require("../config/config");
 const constants = require("../utils/constants");
+const checkConfirm = require("../utils/logs/logConfirm");
+const checkInit = require("../utils/logs/logInit");
+const checkOnConfirm = require("../utils/logs/logOnConfirm");
+const checkOnInit = require("../utils/logs/logOnInit");
+const checkOnSearch = require("../utils/logs/logOnSearch");
+const checkSearch = require("../utils/logs/logSearch");
 const validateSchema = require("../utils/schemaValidation");
 const utils = require("../utils/utils");
 const _ = require("lodash");
@@ -12,13 +18,7 @@ const checkContext = (data, path) => {
   if (!data) return;
   let errObj = {};
 
-  //Transaction ID - UUID Validity check
-  if (data.transaction_id) {
-    const result = utils.uuidCheck(data.transaction_id);
-    if (!result) {
-      errObj.tId_err = "Transaction id is not a valid uuid";
-    }
-  }
+
 
   //Transaction ID != Message ID
   if (data.transaction_id === data.message_id) {
@@ -53,4 +53,30 @@ const checkContext = (data, path) => {
   }
 };
 
-module.exports = { checkContext };
+const checkMessage = (element,action,msgIdSet)=>{
+  // let msgIdSet={};
+  const busnsErr={};
+  switch(action){
+    case 'search':
+      return checkSearch(element,msgIdSet)
+      
+    case 'on_search':
+    return checkOnSearch(element,msgIdSet)
+
+    case 'init':
+     return checkInit(element,msgIdSet)
+
+    case 'on_init':
+     return checkOnInit(element,msgIdSet)
+
+    case 'confirm':
+    return checkConfirm(element,msgIdSet)
+
+    case 'on_confirm':
+      return  checkOnConfirm(element,msgIdSet)
+
+  }
+  return busnsErr;
+}
+
+module.exports = { checkContext , checkMessage};

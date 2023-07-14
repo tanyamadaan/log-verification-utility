@@ -2,6 +2,7 @@ const fs = require("fs");
 const _ = require("lodash");
 const dao = require("../dao/dao");
 const constants = require("./constants");
+const utils= require("./utils")
 const { checkContext } = require("../services/service");
 const validateSchema = require("./schemaValidation");
 
@@ -31,6 +32,7 @@ const checkContextVal = (payload, Obj, msgIdSet) => {
       console.log(
         `Comparing timestamp of /${action}`
       );
+      console.log(dao.getValue("tmpstmp"), payload.context.timestamp)
       if (_.gte(dao.getValue("tmpstmp"), payload.context.timestamp)) {
         if (action === "status" || action === "support" || action === "track" || action === "update")  {
             dao.setValue(`${action}Tmpstmp`, payload.context.timestamp);
@@ -39,33 +41,24 @@ const checkContextVal = (payload, Obj, msgIdSet) => {
             if (_.gte(dao.getValue(`${action.replace('on_', '')}Tmpstmp`), payload.context.timestamp)) {
                 Obj[action].tmpstmp = `Timestamp for /${action.replace('on_', '')} api cannot be greater than or equal to /${action} api`;
               }
-        }
+        } 
         Obj[action].tmpstmp = `Timestamp mismatch for /${action} `;
+      } else {
+        if (action === "on_search" || action === "on_init" || action === "on_confirm"){
+        const timeDiff = utils.timeDiff(payload.context.timestamp, dao.getValue("tmpstmp"));
+        console.log(timeDiff);
+        if (timeDiff > 1000) {
+          Obj[action].tmpstmp = `context/timestamp difference between ${action} and ${action.replace('on_', '')} should be smaller than 1 sec`;
+        }
       }
+    }
       dao.setValue("tmpstmp", payload.context.timestamp);
-    } catch (error) {
+    }
+    catch (error) {
       console.log(
         `Error while comparing timestamp for /${action} api`
       );
-    }
-
-    try {
-      console.log(
-        `Comparing transaction Ids of /${action}`
-      );
-      if (action === "select") {
-        dao.setValue("txnId", payload.context.transaction_id);
-      }
-      else {
-      if (!_.isEqual(dao.getValue("txnId"), payload.context.transaction_id)) {
-        Obj[action].txnId = `Transaction Id for /${action} api does not match`;
-      }
-    }
-    } catch (error) {
-      console.log(
-        `Error while comparing transaction id /${action} api`,
-        error
-      );
+      console.trace(error)
     }
 
     try {
@@ -101,5 +94,6 @@ const checkContextVal = (payload, Obj, msgIdSet) => {
     }
   }
 };
+
 
 module.exports = checkContextVal;

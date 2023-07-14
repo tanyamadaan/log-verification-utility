@@ -83,6 +83,7 @@ const validate_schema = (data, schema) => {
     }
   } catch (error) {
     console.log("ERROR!! validating schema")
+    console.trace(error)
   }
  
  
@@ -93,17 +94,17 @@ const validate_schema_master = (data) => {
   error_list = validate_schema(data, masterSchema);
   return formatted_error(error_list);
 };
-try {
-  const cwd = __dirname;
-  const destination = path.join(cwd, "../../public/logs/test.json");
-  let testData = fs.readFileSync(destination);
-  testData = JSON.parse(testData);
+// try {
+//   const cwd = __dirname;
+//   const destination = path.join(cwd, "../../public/logs/test.json");
+//   let testData = fs.readFileSync(destination);
+//   testData = JSON.parse(testData);
 
-  const errors = validate_schema_master(testData);
-  console.log(errors);
-} catch (error) {
-  console.log(`ERROR reading file!!:`, error);
-}
+//   const errors = validate_schema_master(testData);
+//   console.log(errors);
+// } catch (error) {
+//   console.log(`ERROR reading file!!:`, error);
+// }
 
 // const validate_schema_search_logistics_for_json = (data) => {
 //   error_list = validate_schema(data, (schema = searchSchema));

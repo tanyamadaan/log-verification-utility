@@ -103,7 +103,10 @@ const bpp_provider_days = [
   "1,2,3,4,5,6",
   "1,2,3,4,5,6,7",
 ];
-
+const categoriesMap = [
+  { "Standard Delivery": ["Immediate Delivery", "Next Day Delivery", "Same Day Delivery"] },
+  { "Express Delivery": [] }
+];
 const grocery_categories_id = [
   "Fruits and Vegetables",
   "Masala & Seasoning",
@@ -196,6 +199,14 @@ const getObjValues = (obj) => {
   return values;
 };
 
+const timeDiff = (time1, time2) => {
+  const dtime1 = new Date(time1);
+  const dtime2 = new Date(time2);
+
+  if (isNaN(dtime1 - dtime2)) return 0;
+  else return dtime1 - dtime2;
+};
+
 const isArrayEqual = (x, y) => {
   flag = _(x).xorWith(y, _.isEqual).isEmpty();
   console.log("FLAG*********", _(x).xorWith(y, _.isEqual).isEmpty());
@@ -206,6 +217,62 @@ const countDecimalDigits = (num) => {
   return num.toString().split(".")[1].length;
 };
 
+const isObjectEqual = (obj1, obj2, parentKey = "") => {
+  const typeOfObj1 = typeof obj1;
+  const typeOfObj2 = typeof obj2;
+
+  if (typeOfObj1 !== typeOfObj2) {
+    return [parentKey];
+  }
+
+  if (typeOfObj1 !== "object" || obj1 === null || obj2 === null) {
+    return obj1 === obj2 ? [] : [parentKey];
+  }
+
+  if (Array.isArray(obj1) && Array.isArray(obj2)) {
+    if (obj1.length !== obj2.length) {
+      return [parentKey];
+    }
+
+    const sortedObj1 = [...obj1].sort();
+    const sortedObj2 = [...obj2].sort();
+
+    for (let i = 0; i < sortedObj1.length; i++) {
+      const nestedKeys = isObjectEqual(sortedObj1[i], sortedObj2[i], `${parentKey}[${i}]`);
+      if (nestedKeys.length > 0) {
+        return nestedKeys;
+      }
+    }
+
+    return [];
+  }
+
+  const obj1Keys = Object.keys(obj1);
+  const obj2Keys = Object.keys(obj2);
+
+  const allKeys = [...new Set([...obj1Keys, ...obj2Keys])];
+
+  const notEqualKeys = [];
+
+  for (let key of allKeys) {
+    if (!obj2.hasOwnProperty(key) || !obj1.hasOwnProperty(key)) {
+      notEqualKeys.push(parentKey ? `${parentKey}/${key}` : key);
+      continue;
+    }
+
+    const nestedKeys = isObjectEqual(
+      obj1[key],
+      obj2[key],
+      parentKey ? `${parentKey}/${key}` : key
+    );
+
+    if (nestedKeys.length > 0) {
+      notEqualKeys.push(...nestedKeys);
+    }
+  }
+
+  return notEqualKeys;
+};
 module.exports = {
   uuidCheck,
   timestampCheck,
@@ -219,8 +286,11 @@ module.exports = {
   bpp_provider_days,
   cancellation_rid,
   getObjValues,
+  isObjectEqual,
   retailPaymentType,
   retailPymntTtl,
+  categoriesMap,
+  timeDiff,
   taxNotInlcusive,
   isArrayEqual,
   countDecimalDigits,

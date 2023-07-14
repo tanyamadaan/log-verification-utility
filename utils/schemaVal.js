@@ -2,56 +2,35 @@ const dao = require("../dao/dao");
 const fs = require("fs");
 const utils = require("./utils");
 const constants = require("./constants");
-const { checkContext } = require("../services/service");
+const { checkContext, checkMessage } = require("../services/service");
 const validateSchema = require("./schemaValidation");
 const path = require("path");
 const checkContextVal = require("./ContextVal");
-const checkSearch = require("./retail/retSearch");
-const checkOnSearch = require("./retail/retOnSearch");
-const checkSelect = require("./retail/retSelect");
-const checkOnSelect = require("./retail/retOnSelect");
-const checkInit = require("./retail/retInit");
-const checkOnInit = require("./retail/retOnInit");
-const checkConfirm = require("./retail/retConfirm");
-const checkOnConfirm = require("./retail/retOnConfirm");
-const checkStatus = require("./retail/retStatus");
-const checkOnStatus = require("./retail/retOnStatus");
-const checkTrack = require("./retail/retTrack");
-const checkOnTrack = require("./retail/retOnTrack");
-const checkCancel = require("./retail/retCancel");
-const checkOnCancel = require("./retail/retOnCancel");
-const checkSupport = require("./retail/retSupport");
-const checkOnSupport = require("./retail/retOnSupport");
-const checkUpdate = require("./retail/retUpdate");
-const checkOnUpdate = require("./retail/retOnUpdate");
-const { forEach } = require("lodash");
 
-const schemaValidate = (domain, dirPath, msgIdSet, ErrorObj) => {
+const Validate = (domain, dirPath, msgIdSet, ErrorObj) => {
   try {
     let log = fs.readFileSync(dirPath);
     log = JSON.parse(log);
     count = 0;
-   
-     // Validating Schema
-     try {
+
+    console.log("Inside validation service");
+    // Validating Schema
+    try {
       if (!("Schema" in ErrorObj)) ErrorObj["Schema"] = {};
       schemaObj = ErrorObj["Schema"];
       //console.log(`Validating Schema for ${action} API`);
       const vs = validateSchema(domain, log, schemaObj);
-      console.log(`Validating Schema completed`);
+      console.log(vs);
       if (vs != "error") {
         // console.log(vs);
         Object.assign(schemaObj, vs);
       }
     } catch (error) {
-      console.log(
-        `!!Error occurred while performing schema validation`,
-        error
-      );
+      console.log(`!!Error occurred while performing schema validation`, error);
     }
     Object.entries(log).forEach(([action, elements]) => {
       // Validate schema for each element in the array associated with the action
-      elements.forEach((element) => {
+      elements.forEach((element, i) => {
         // Validate context
         try {
           res = checkContext(element.context, action);
@@ -62,6 +41,7 @@ const schemaValidate = (domain, dirPath, msgIdSet, ErrorObj) => {
             error
           );
         }
+
         // Storing Values to DB
         try {
           if (!("DB Errors" in ErrorObj)) {
@@ -73,6 +53,7 @@ const schemaValidate = (domain, dirPath, msgIdSet, ErrorObj) => {
           if (dbKeys.hasOwnProperty(action)) {
             if (!DBObj.hasOwnProperty(action)) DBObj[action] = {};
             obj = dbKeys[action];
+
             const iterate = (obj) => {
               Object.keys(obj).forEach((key) => {
                 if (key == "context" || key == "message") {
@@ -98,6 +79,7 @@ const schemaValidate = (domain, dirPath, msgIdSet, ErrorObj) => {
                 }
               });
             };
+
             iterate(obj);
             console.log(`DB insert completed for /${action}`);
           }
@@ -110,7 +92,7 @@ const schemaValidate = (domain, dirPath, msgIdSet, ErrorObj) => {
             error
           );
         }
-       
+
         // Validating action context level checks
         try {
           if (!("Context" in ErrorObj)) ErrorObj["Context"] = {};
@@ -122,6 +104,29 @@ const schemaValidate = (domain, dirPath, msgIdSet, ErrorObj) => {
         } catch (error) {
           console.log(
             `!!Error occurred while performing ${action} context values validation`,
+            error
+          );
+        }
+
+        //Business validations
+        try {
+          if (!("Message" in ErrorObj)) ErrorObj["Message"] = {};
+
+          if (i > 0)
+            ErrorObj["Message"][`${action}_${i}`] = checkMessage(
+              element,
+              action,
+              msgIdSet
+            );
+          else
+            ErrorObj["Message"][`${action}`] = checkMessage(
+              element,
+              action,
+              msgIdSet
+            );
+        } catch (error) {
+          console.log(
+            `!!Some error occurred while checking /${action} api message`,
             error
           );
         }
@@ -140,8 +145,8 @@ const schemaValidate = (domain, dirPath, msgIdSet, ErrorObj) => {
             })
             .replace("_", "");
 
-          valFunc = `check${action}(element, msgObj)`;
-          let msgVal = eval(valFunc);
+          // valFunc = `check${action}(element, msgObj)`;
+          // let msgVal = eval(valFunc);
         } catch (error) {
           console.log(
             `!!Error occurred while performing ${action} specific validation`,
@@ -164,4 +169,4 @@ const schemaValidate = (domain, dirPath, msgIdSet, ErrorObj) => {
 // ErrorObj = {}
 // //           //"select": ['provider.id', 'provider.location', 'itemsIdList', 'itemsCtgrs', 'selectedPrice', 'itemsTat', 'buyerGps', 'buyerAddr']}
 // let srchResp = schemaValidate(destination, msgIdSet, ErrorObj);
-module.exports = schemaValidate;
+module.exports = Validate;

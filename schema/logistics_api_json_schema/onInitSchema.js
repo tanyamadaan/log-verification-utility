@@ -7,22 +7,22 @@ module.exports = {
       properties: {
         domain: {
           type: "string",
-          const: "nic2004:60232"
+          const: "nic2004:60232",
         },
         country: {
           type: "string",
         },
         city: {
           type: "string",
-          const: {$data: "/init/context/city"}
+          const: { $data: "/init/context/city" },
         },
         action: {
           type: "string",
-          const:"on_init"
+          const: "on_init",
         },
         core_version: {
           type: "string",
-          const:"1.1.0"
+          const: "1.1.0",
         },
         bap_id: {
           type: "string",
@@ -38,15 +38,15 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: {$data: "/init/context/transaction_id"}
+          const: { $data: "/init/context/transaction_id" },
         },
         message_id: {
           type: "string",
-          const: {$data: "/init/context/message_id"}
+          const: { $data: "/init/context/message_id" },
         },
         timestamp: {
           type: "string",
-          format: "date-time" 
+          format: "date-time",
         },
       },
       required: [
@@ -89,17 +89,15 @@ module.exports = {
             },
             items: {
               type: "array",
-              items: 
-                {
-                  type: "object",
-                  properties: {
-                    id: {
-                      type: "string",
-                    },
+              items: {
+                type: "object",
+                properties: {
+                  id: {
+                    type: "string",
                   },
-                  required: ["id"],
                 },
-              
+                required: ["id"],
+              },
             },
             quote: {
               type: "object",
@@ -112,45 +110,49 @@ module.exports = {
                     },
                     value: {
                       type: "string",
+                      pattern: "^[0-9]+(\\.[0-9]{2})?$",
+                      errorMessage:
+                        "String must represent a number with a maximum of two decimal digits.",
                     },
                   },
                   required: ["currency", "value"],
                 },
                 breakup: {
                   type: "array",
-                  items:
-                    {
-                      type: "object",
-                      properties: {
-                        "@ondc/org/item_id": {
-                          type: "string",
-                          const: {$data: "2/items/0/id"},
-                          errorMessage: "${2/items/0/id}"
-                        },
-                        "@ondc/org/title_type": {
-                          type: "string",
-                          enum:["Delivery Charge","Tax"]
-                        },
-                        price: {
-                          type: "object",
-                          properties: {
-                            currency: {
-                              type: "string",
-                            },
-                            value: {
-                              type: "string",
-                            },
-                          },
-                          required: ["currency", "value"],
-                        },
+                  items: {
+                    type: "object",
+                    properties: {
+                      "@ondc/org/item_id": {
+                        type: "string",
+                        const: { $data: "2/items/0/id" },
+                        errorMessage: "${2/items/0/id}",
                       },
-                      required: [
-                        "@ondc/org/item_id",
-                        "@ondc/org/title_type",
-                        "price",
-                      ],
+                      "@ondc/org/title_type": {
+                        type: "string",
+                        enum: ["Delivery Charge", "Tax"],
+                      },
+                      price: {
+                        type: "object",
+                        properties: {
+                          currency: {
+                            type: "string",
+                          },
+                          value: {
+                            type: "string",
+                            pattern: "^[0-9]+(\\.[0-9]{2})?$",
+                            errorMessage:
+                              "String must represent a number with a maximum of two decimal digits.",
+                          },
+                        },
+                        required: ["currency", "value"],
+                      },
                     },
-                  
+                    required: [
+                      "@ondc/org/item_id",
+                      "@ondc/org/title_type",
+                      "price",
+                    ],
+                  },
                 },
               },
               required: ["price", "breakup"],
@@ -160,95 +162,87 @@ module.exports = {
               properties: {
                 type: {
                   type: "string",
-                  enum: ["ON-FULFILLMENT", "POST-FULFILLMENT", "ON-ORDER"]
+                  enum: ["ON-FULFILLMENT", "POST-FULFILLMENT", "ON-ORDER"],
                 },
                 collected_by: {
                   type: "string",
                 },
                 "@ondc/org/settlement_details": {
                   type: "array",
-                  items: 
-                    {
-                      type: "object",
-                      properties: {
-                        settlement_counterparty: {
-                          type: "string",
+                  items: {
+                    type: "object",
+                    properties: {
+                      settlement_counterparty: {
+                        type: "string",
+                      },
+                      settlement_type: {
+                        type: "string",
+                      },
+                      beneficiary_name: {
+                        type: "string",
+                      },
+                      upi_address: {
+                        type: "string",
+                      },
+                      settlement_bank_account_no: {
+                        type: "string",
+                      },
+                      settlement_ifsc_code: {
+                        type: "string",
+                      },
+                    },
+                    allOf: [
+                      {
+                        if: {
+                          properties: {
+                            settlement_type: {
+                              const: "upi",
+                            },
+                          },
                         },
-                        settlement_type: {
-                          type: "string",
-                        },
-                        beneficiary_name: {
-                          type: "string",
-                        },
-                        upi_address: {
-                          type: "string",
-                        },
-                        settlement_bank_account_no: {
-                          type: "string",
-                        },
-                        settlement_ifsc_code: {
-                          type: "string",
+                        then: {
+                          required: ["upi_address"],
                         },
                       },
-                      allOf: [
-                        {
-                          if: {
-                            properties: {
-                              settlement_type: {
-                                const: "upi",
-                              },
+                      {
+                        if: {
+                          properties: {
+                            settlement_type: {
+                              const: ["neft", "rtgs"],
                             },
                           },
-                          then: {
-                            required: ["upi_address"],
-                          },
                         },
-                        {
-                          if: {
-                            properties: {
-                              settlement_type: {
-                                const: ["neft","rtgs"]
-                              },
-                            },
-                          },
-                          then: {
-                            required: [
-                              "settlement_ifsc_code",
-                              "settlement_bank_account_no",
-                            ],
-                          },
+                        then: {
+                          required: [
+                            "settlement_ifsc_code",
+                            "settlement_bank_account_no",
+                          ],
                         },
+                      },
                     ],
-                      required: [
-                        "settlement_counterparty",
-                        "settlement_type"
-                      ],
-                    },
-                
+                    required: ["settlement_counterparty", "settlement_type"],
+                  },
                 },
               },
-              required: [
-                "type",
-                "collected_by"
-              ],
+              required: ["type", "collected_by"],
             },
           },
-          required: [
-            "provider",
-            "items",
-            "quote",
-            "payment",
-          ],
+          required: ["provider", "items", "quote", "payment"],
           oneOf: [
             {
-              required: ["/on_search/message/catalog/bpp~1providers/0/locations", "provider_location"]
+              required: [
+                "/on_search/message/catalog/bpp~1providers/0/locations",
+                "provider_location",
+              ],
             },
             {
               not: {
-                required: ["/on_search/message/catalog/bpp~1providers/0/locations"]
-              }
-            }
-          ]
+                required: [
+                  "/on_search/message/catalog/bpp~1providers/0/locations",
+                ],
+              },
+            },
+          ],
         },
       },
       required: ["order"],
@@ -256,15 +250,15 @@ module.exports = {
     init: {
       type: "array",
       items: {
-          $ref: "initSchema#"
-        }
+        $ref: "initSchema#",
+      },
     },
     on_search: {
       type: "array",
       items: {
-          $ref: "onSearchSchema#"
-        }
-    }
+        $ref: "onSearchSchema#",
+      },
+    },
   },
   required: ["context", "message"],
 };

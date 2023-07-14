@@ -13,6 +13,11 @@ const sortMerge = (directory, destination) => {
       try {
         let data = fs.readFileSync(`${directory}/${item}`);
         data = JSON.parse(data);
+        const context = data.context;
+        if (!context || !context.action) {
+          console.log(`Error in file ${item}: Missing 'context' or 'action' property`);
+          return acc; // Skip this data and continue with the next iteration
+        }
         const { action } = data.context;
         if (acc.hasOwnProperty(action)) {
           acc[action].push(data);

@@ -1,0 +1,51 @@
+{
+  "Schema": {
+    "schemaErr0": "/on_search/0/message/catalog/bpp~1providers/0/items/0/time/duration undefined",
+    "schemaErr1": "/on_search/0/message/catalog/bpp~1providers/0/items/1/time/duration undefined",
+    "schemaErr2": "/on_init/0/message/order/quote/price/value String must represent a number with a maximum of two decimal digits.",
+    "schemaErr3": "/on_init/0/message/order/quote/breakup/0/price/value String must represent a number with a maximum of two decimal digits.",
+    "schemaErr4": "/update/0/message/order/fulfillments/0/start/instructions must have required property 'additional_desc'",
+    "schemaErr5": "/on_update/0/message/order/fulfillments/0/@ondc~1org~1awb_no must NOT have fewer than 11 characters",
+    "schemaErr6": "/on_status/0/message/order/payment must have required property '@ondc/org/settlement_details'",
+    "schemaErr7": "/on_status/1/message/order/payment must have required property '@ondc/org/settlement_details'",
+    "schemaErr8": "/on_status/2/message/order/payment must have required property '@ondc/org/settlement_details'",
+    "schemaErr9": "/on_status/3/message/order/payment must have required property '@ondc/org/settlement_details'"
+  },
+  "DB Errors": {
+    "search": {
+      "0": "p",
+      "1": "a",
+      "2": "y",
+      "3": "m",
+      "4": "e",
+      "5": "n",
+      "6": "t",
+      "7": " ",
+      "8": "d",
+      "9": "o",
+      "10": "e",
+      "11": "s",
+      "12": " ",
+      "13": "n",
+      "14": "o",
+      "15": "t",
+      "16": " ",
+      "17": "e",
+      "18": "x",
+      "19": "i",
+      "20": "s",
+      "21": "t"
+    }
+  },
+  "Context": {
+    "on_status": {
+      "msgId": "Message Id for /status and /on_status api should be same"
+    },
+    "update": {
+      "tmpstmp": "Timestamp mismatch for /update "
+    },
+    "on_cancel": {
+      "msgId": "Message Id for /cancel and /on_cancel api should be same"
+    }
+  }
+}

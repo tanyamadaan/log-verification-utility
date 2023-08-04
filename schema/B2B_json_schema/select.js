@@ -17,6 +17,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/city/code" },
                 },
               },
               required: ["code"],
@@ -26,6 +27,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/country/code" },
                 },
               },
               required: ["code"],
@@ -111,7 +113,7 @@ module.exports = {
                   type: "string",
                 },
               },
-              required: ["id", "locations", "ttl"],
+              required: ["id", "locations"],
             },
             items: {
               type: "array",
@@ -164,6 +166,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
+                              enum: ["BUYER_TERMS"],
                             },
                           },
                           required: ["code"],
@@ -178,6 +181,7 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
+                                    enum: ["ITEM_REQ", "PACKAGING_REQ"],
                                   },
                                 },
                                 required: ["code"],
@@ -194,7 +198,7 @@ module.exports = {
                     },
                   },
                 },
-                required: ["id", "location_ids", "quantity", "add-ons", "tags"],
+                required: ["id", "location_ids", "quantity"],
               },
             },
             fulfillments: {
@@ -242,6 +246,12 @@ module.exports = {
                                 },
                                 type: {
                                   type: "string",
+                                  enum: [
+                                    "License",
+                                    "Badge",
+                                    "Permit",
+                                    "Certificate",
+                                  ],
                                 },
                                 desc: {
                                   type: "string",
@@ -251,9 +261,11 @@ module.exports = {
                                 },
                                 url: {
                                   type: "string",
+                                  pattern:
+                                    "^https://[\\w.-]+(\\.[a-zA-Z]{2,})?(:[0-9]+)?(/\\S*)?$",
                                 },
                               },
-                              required: ["id", "type", "desc", "icon", "url"],
+                              required: ["id", "type", "desc", "url"],
                             },
                           },
                         },
@@ -272,6 +284,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
+                              enum:["DELIVERY_TERMS"]
                             },
                           },
                           required: ["code"],
@@ -286,6 +299,7 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
+                                    enum:["INCOTERMS","DELIVERY_DUTY"]
                                   },
                                 },
                                 required: ["code"],
@@ -302,7 +316,7 @@ module.exports = {
                     },
                   },
                 },
-                required: ["stops", "customer", "tags"],
+                required: ["stops"],
               },
             },
             payments: {
@@ -329,6 +343,7 @@ module.exports = {
                 properties: {
                   code: {
                     type: "string",
+                    enum: ["buyer_id", "COMM_CHANNEL"],
                   },
                   list: {
                     type: "array",
@@ -337,6 +352,7 @@ module.exports = {
                       properties: {
                         code: {
                           type: "string",
+                          enum: ["buyer_id_code", "buyer_id_no", "chat_url"],
                         },
                         value: {
                           type: "string",
@@ -354,6 +370,18 @@ module.exports = {
         },
       },
       required: ["order"],
+    },
+    search: {
+      type: "array",
+      items: {
+        $ref: "searchSchema#",
+      },
+    },
+    on_search: {
+      type: "array",
+      items: {
+        $ref: "onSearchSchema#",
+      },
     },
   },
   required: ["context", "message"],

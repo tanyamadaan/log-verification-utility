@@ -17,6 +17,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/city/code" },
                 },
               },
               required: ["code"],
@@ -26,6 +27,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/country/code" },
                 },
               },
               required: ["code"],
@@ -55,9 +57,11 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/select/0/context/transaction_id" },
         },
         message_id: {
           type: "string",
+          const: { $data: "/confirm/0/context/message_id" },
         },
         timestamp: {
           type: "string",
@@ -91,6 +95,7 @@ module.exports = {
           properties: {
             id: {
               type: "string",
+              const: { $data: "/confirm/0/message/order/id" },
             },
             state: {
               type: "string",
@@ -101,6 +106,7 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
+                  const: { $data: "/select/0/message/order/provider/id" },
                 },
                 locations: {
                   type: "array",
@@ -171,6 +177,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
+                              enum: ["BUYER_TERMS"],
                             },
                           },
                           required: ["code"],
@@ -185,6 +192,7 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
+                                    enum: ["ITEM_REQ", "PACKAGING_REQ"],
                                   },
                                 },
                                 required: ["code"],
@@ -201,7 +209,7 @@ module.exports = {
                     },
                   },
                 },
-                required: ["id", "fulfillment_ids", "quantity", "tags"],
+                required: ["id", "fulfillment_ids", "quantity"],
               },
             },
             billing: {
@@ -209,15 +217,18 @@ module.exports = {
               properties: {
                 name: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/name" },
                 },
                 address: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/address" },
                 },
                 state: {
                   type: "object",
                   properties: {
                     name: {
                       type: "string",
+                      const: { $data: "/init/0/message/order/billing/state/name" },
                     },
                   },
                   required: ["name"],
@@ -227,27 +238,31 @@ module.exports = {
                   properties: {
                     name: {
                       type: "string",
+                      const: { $data: "/init/0/message/order/billing/city/name" },
                     },
                   },
                   required: ["name"],
                 },
                 tax_id: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/tax_id" },
                 },
                 email: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/email" },
                 },
                 phone: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/phone" },
                 },
               },
+              "additionalProperties": false,
               required: [
                 "name",
                 "address",
                 "state",
                 "city",
                 "tax_id",
-                "email",
                 "phone",
               ],
             },
@@ -409,6 +424,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
+                              enum:["DELIVERY_TERMS"]
                             },
                           },
                           required: ["code"],
@@ -423,6 +439,7 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
+                                    enum:["INCOTERMS","DELIVERY_DUTY"]
                                   },
                                 },
                                 required: ["code"],
@@ -444,10 +461,7 @@ module.exports = {
                   "@ondc/org/provider_name",
                   "state",
                   "type",
-
-                  "stops",
-
-                  "tags",
+                  "stops"
                 ],
               },
             },
@@ -462,6 +476,7 @@ module.exports = {
                     },
                     value: {
                       type: "string",
+                      const: { $data: "/on_init/0/message/order/quote/price/value" },
                     },
                   },
                   required: ["currency", "value"],
@@ -640,10 +655,11 @@ module.exports = {
                         settlement_phase: {
                           type: "string",
                         },
-                        beneficiary_name: {
-                          type: "string",
-                        },
                         settlement_type: {
+                          type: "string",
+                          enum: ["upi", "neft", "rtgs"],
+                        },
+                        beneficiary_name: {
                           type: "string",
                         },
                         upi_address: {
@@ -662,6 +678,35 @@ module.exports = {
                           type: "string",
                         },
                       },
+                      allOf: [
+                        {
+                          if: {
+                            properties: {
+                              settlement_type: {
+                                const: "upi",
+                              },
+                            },
+                          },
+                          then: {
+                            required: ["upi_address"],
+                          },
+                        },
+                        {
+                          if: {
+                            properties: {
+                              settlement_type: {
+                                const: ["neft", "rtgs"],
+                              },
+                            },
+                          },
+                          then: {
+                            required: [
+                              "settlement_ifsc_code",
+                              "settlement_bank_account_no",
+                            ],
+                          },
+                        },
+                      ],
                       required: ["settlement_counterparty", "settlement_type"],
                     },
                   },
@@ -683,6 +728,7 @@ module.exports = {
                 properties: {
                   code: {
                     type: "string",
+                    enum:["buyer_id"]
                   },
                   list: {
                     type: "array",
@@ -691,6 +737,7 @@ module.exports = {
                       properties: {
                         code: {
                           type: "string",
+                          enum:["buyer_id_code","buyer_id_no"]
                         },
                         value: {
                           type: "string",
@@ -706,10 +753,16 @@ module.exports = {
             created_at: {
               type: "string",
               format: "date-time",
+              const: { $data: "/confirm/0/message/order/created_at" },
+              errorMessage:
+                "order/created_at should remain same as in /confirm - ${/confirm/0/message/order/created_at}",
             },
             updated_at: {
               type: "string",
               format: "date-time",
+              const: { $data: "3/context/timestamp" },
+              errorMessage:
+              "order/updated_at should be updated as per context/timestamp - ${3/context/timestamp}",
             },
           },
           required: [
@@ -745,6 +798,18 @@ module.exports = {
       type: "array",
       items: {
         $ref: "initSchema#",
+      },
+    },
+    select: {
+      type: "array",
+      items: {
+        $ref: "selectSchema#",
+      },
+    },
+    on_select: {
+      type: "array",
+      items: {
+        $ref: "onSelectSchema#",
       },
     },
     on_init: {

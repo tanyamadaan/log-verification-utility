@@ -17,6 +17,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/city/code" },
                 },
               },
               required: ["code"],
@@ -26,6 +27,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/country/code" },
                 },
               },
               required: ["code"],
@@ -55,6 +57,7 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/select/0/context/transaction_id" },
         },
         message_id: {
           type: "string",
@@ -101,6 +104,7 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
+                  const: { $data: "/select/0/message/order/provider/id" },
                 },
                 locations: {
                   type: "array",
@@ -168,6 +172,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
+                              enum:["BUYER_TERMS"]
                             },
                           },
                           required: ["code"],
@@ -182,6 +187,7 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
+                                    enum:["ITEM_REQ","PACKAGING_REQ"]
                                   },
                                 },
                                 required: ["code"],
@@ -198,7 +204,7 @@ module.exports = {
                     },
                   },
                 },
-                required: ["id", "fulfillment_ids", "quantity", "tags"],
+                required: ["id", "fulfillment_ids", "quantity"],
               },
             },
             billing: {
@@ -206,15 +212,18 @@ module.exports = {
               properties: {
                 name: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/name" },
                 },
                 address: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/address" },
                 },
                 state: {
                   type: "object",
                   properties: {
                     name: {
                       type: "string",
+                      const: { $data: "/init/0/message/order/billing/state/name" },
                     },
                   },
                   required: ["name"],
@@ -224,27 +233,31 @@ module.exports = {
                   properties: {
                     name: {
                       type: "string",
+                      const: { $data: "/init/0/message/order/billing/city/name" },
                     },
                   },
                   required: ["name"],
                 },
                 tax_id: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/tax_id" },
                 },
                 email: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/email" },
                 },
                 phone: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/phone" },
                 },
               },
+              "additionalProperties": false,
               required: [
                 "name",
                 "address",
                 "state",
                 "city",
                 "tax_id",
-                "email",
                 "phone",
               ],
             },
@@ -347,7 +360,7 @@ module.exports = {
                           required: ["person"],
                         },
                       },
-                      required: ["type", "location", "contact", "customer"],
+                      required: ["type", "location", "contact"],
                     },
                   },
                   tags: {
@@ -360,6 +373,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
+                              enum:["BUYER_TERMS"]
                             },
                           },
                           required: ["code"],
@@ -374,6 +388,7 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
+                                    enum:["ITEM_REQ","PACKAGING_REQ"]
                                   },
                                 },
                                 required: ["code"],
@@ -390,7 +405,7 @@ module.exports = {
                     },
                   },
                 },
-                required: ["id", "type", "tracking", "stops", "tags"],
+                required: ["id", "type","stops"],
               },
             },
             quote: {
@@ -404,6 +419,7 @@ module.exports = {
                     },
                     value: {
                       type: "string",
+                      const: { $data: "/on_init/0/message/order/quote/price/value" },
                     },
                   },
                   required: ["currency", "value"],
@@ -462,14 +478,42 @@ module.exports = {
                         required: ["price"],
                       },
                     },
-                    required: [
-                      "@ondc/org/item_id",
-                      "@ondc/org/item_quantity",
-                      "title",
-                      "@ondc/org/title_type",
-                      "price",
-                      "item",
-                    ],
+                    if: {
+                      properties: {
+                        "@ondc/org/title_type": {
+                          const: "item",
+                        },
+                      },
+                    },
+                    then: {
+                      required: [
+                        "@ondc/org/item_id",
+                        "@ondc/org/item_quantity",
+                        "title",
+                        "@ondc/org/title_type",
+                        "price",
+                        "item",
+                      ],
+                    },
+                    else: {
+                      properties: {
+                        "@ondc/org/title_type": {
+                          enum: [
+                            "delivery",
+                            "packing",
+                            "tax",
+                            "discount",
+                            "misc",
+                          ],
+                        },
+                      },
+                      required: [
+                        "@ondc/org/item_id",
+                        "title",
+                        "@ondc/org/title_type",
+                        "price",
+                      ],
+                    },
                   },
                 },
                 ttl: {
@@ -553,7 +597,36 @@ module.exports = {
                           type: "string",
                         },
                       },
-                      required: [],
+                      allOf: [
+                        {
+                          if: {
+                            properties: {
+                              settlement_type: {
+                                const: "upi",
+                              },
+                            },
+                          },
+                          then: {
+                            required: ["upi_address"],
+                          },
+                        },
+                        {
+                          if: {
+                            properties: {
+                              settlement_type: {
+                                const: ["neft", "rtgs"],
+                              },
+                            },
+                          },
+                          then: {
+                            required: [
+                              "settlement_ifsc_code",
+                              "settlement_bank_account_no",
+                            ],
+                          },
+                        },
+                      ],
+                      required: ["settlement_counterparty", "settlement_type"],
                     },
                   },
                 },
@@ -574,6 +647,7 @@ module.exports = {
                 properties: {
                   code: {
                     type: "string",
+                    enum:["buyer_id"]
                   },
                   list: {
                     type: "array",
@@ -582,6 +656,7 @@ module.exports = {
                       properties: {
                         code: {
                           type: "string",
+                          enum:["buyer_id_code","buyer_id_no"]
                         },
                         value: {
                           type: "string",
@@ -596,9 +671,15 @@ module.exports = {
             },
             created_at: {
               type: "string",
+              const: { $data: "3/context/timestamp" },
+              errorMessage:
+                "created_at does not match context timestamp - ${3/context/timestamp}",
             },
             updated_at: {
               type: "string",
+              const: { $data: "3/context/timestamp" },
+              errorMessage:
+                "updated_at does not match context timestamp - ${3/context/timestamp}",
             },
           },
           required: [
@@ -610,7 +691,6 @@ module.exports = {
             "fulfillments",
             "quote",
             "payments",
-            "tags",
             "created_at",
             "updated_at",
           ],
@@ -618,10 +698,28 @@ module.exports = {
       },
       required: ["order"],
     },
+    search: {
+      type: "array",
+      items: {
+        $ref: "searchSchema#",
+      },
+    },
     on_search: {
       type: "array",
       items: {
         $ref: "onSearchSchema#",
+      },
+    },
+    select: {
+      type: "array",
+      items: {
+        $ref: "selectSchema#",
+      },
+    },
+    on_select: {
+      type: "array",
+      items: {
+        $ref: "onSelectSchema#",
       },
     },
     init: {

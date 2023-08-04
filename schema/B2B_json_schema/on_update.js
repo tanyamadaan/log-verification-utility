@@ -17,6 +17,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/city/code" },
                 },
               },
               required: ["code"],
@@ -26,6 +27,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/country/code" },
                 },
               },
               required: ["code"],
@@ -55,9 +57,11 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+           const: { $data: "/select/0/context/transaction_id" },
         },
         message_id: {
           type: "string",
+             const: { $data: "/update/0/context/message_id" },
         },
         timestamp: {
           type: "string",
@@ -91,15 +95,14 @@ module.exports = {
           properties: {
             id: {
               type: "string",
+               const: { $data: "/confirm/0/message/order/id" },
             },
             state: {
               type: "string",
               enum: [
                 "Created",
                 "Accepted",
-                "In-progress",
-                "Cancelled",
-                "Completed",
+                "In-progress"
               ],
             },
             provider: {
@@ -107,6 +110,7 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
+                   const: { $data: "/select/0/message/order/provider/id" },
                 },
               },
               required: ["id"],
@@ -196,6 +200,10 @@ module.exports = {
                       },
                       settlement_type: {
                         type: "string",
+                        enum: ["upi", "neft", "rtgs"],
+                      },
+                      beneficiary_name: {
+                        type: "string",
                       },
                       upi_address: {
                         type: "string",
@@ -206,9 +214,6 @@ module.exports = {
                       settlement_ifsc_code: {
                         type: "string",
                       },
-                      beneficiary_name: {
-                        type: "string",
-                      },
                       bank_name: {
                         type: "string",
                       },
@@ -216,13 +221,40 @@ module.exports = {
                         type: "string",
                       },
                     },
+                    allOf: [
+                      {
+                        if: {
+                          properties: {
+                            settlement_type: {
+                              const: "upi",
+                            },
+                          },
+                        },
+                        then: {
+                          required: ["upi_address"],
+                        },
+                      },
+                      {
+                        if: {
+                          properties: {
+                            settlement_type: {
+                              const: ["neft", "rtgs"],
+                            },
+                          },
+                        },
+                        then: {
+                          required: [
+                            "settlement_ifsc_code",
+                            "settlement_bank_account_no",
+                          ],
+                        },
+                      },
+                    ],
                     required: ["settlement_counterparty", "settlement_type"],
                   },
                 },
               },
               required: [
-                "uri",
-                "tl_method",
                 "params",
                 "status",
                 "type",
@@ -250,6 +282,7 @@ module.exports = {
                         properties: {
                           code: {
                             type: "string",
+                            enum:["Pending","Agent-assigned","Order-picked-up","Out-for-delivery","Delivered"]
                           },
                         },
                         required: ["code"],
@@ -390,6 +423,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
+                              enum:["ITEM_DETAILS"]
                             },
                           },
                           required: ["code"],
@@ -404,6 +438,7 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
+                                    enum:["ITEM_ID","COUNT","MEASURE_UNIT","MEASURE_VALUE"]
                                   },
                                 },
                                 required: ["code"],
@@ -425,8 +460,7 @@ module.exports = {
                   "@ondc/org/provider_name",
                   "state",
                   "type",
-                  "stops",
-                  "tags",
+                  "stops"
                 ],
               },
             },

@@ -29,7 +29,7 @@ const validateLogs = (domain, dirPath) => {
   console.log("Merged File created")
 
   //  Validation
-  let retailSchemaVal = Validate(domain, mergefile, msgIdSet,ErrorObj);
+   Validate(domain, mergefile, msgIdSet,ErrorObj);
 
   //let schemaVal = schemaValidate(mergefile, msgIdSet, flowError)
 

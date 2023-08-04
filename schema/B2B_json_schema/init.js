@@ -17,6 +17,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/city/code" },
                 },
               },
               required: ["code"],
@@ -26,6 +27,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/country/code" },
                 },
               },
               required: ["code"],
@@ -55,6 +57,7 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/select/0/context/transaction_id" },
         },
         message_id: {
           type: "string",
@@ -94,6 +97,7 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
+                  const: { $data: "/select/0/message/order/provider/id" },
                 },
                 locations: {
                   type: "array",
@@ -164,6 +168,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
+                              enum:["DELIVERY_TERMS"]
                             },
                           },
                           required: ["code"],
@@ -178,6 +183,7 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
+                                    enum:["INCOTERMS","DELIVERY_DUTY"]
                                   },
                                 },
                                 required: ["code"],
@@ -194,10 +200,10 @@ module.exports = {
                     },
                   },
                 },
-                required: ["id", "fulfillment_ids", "quantity", "tags"],
+                required: ["id", "quantity"],
               },
             },
-            billing: {
+            billing: { 
               type: "object",
               properties: {
                 name: {
@@ -234,13 +240,13 @@ module.exports = {
                   type: "string",
                 },
               },
+              "additionalProperties": false,
               required: [
                 "name",
                 "address",
                 "state",
                 "city",
                 "tax_id",
-                "email",
                 "phone",
               ],
             },
@@ -401,7 +407,7 @@ module.exports = {
                     },
                   },
                 },
-                required: ["id", "type", "stops", "customer", "tags"],
+                required: ["id", "type", "stops"],
               },
             },
             payments: {
@@ -430,6 +436,7 @@ module.exports = {
                 properties: {
                   code: {
                     type: "string",
+                    enum:["buyer_id"]
                   },
                   list: {
                     type: "array",
@@ -438,6 +445,7 @@ module.exports = {
                       properties: {
                         code: {
                           type: "string",
+                          enum:["buyer_id_code","buyer_id_no"]
                         },
                         value: {
                           type: "string",
@@ -463,10 +471,28 @@ module.exports = {
       },
       required: ["order"],
     },
+    search: {
+      type: "array",
+      items: {
+        $ref: "searchSchema#",
+      },
+    },
     on_search: {
       type: "array",
       items: {
         $ref: "onSearchSchema#",
+      },
+    },
+    select: {
+      type: "array",
+      items: {
+        $ref: "selectSchema#",
+      },
+    },
+    on_select: {
+      type: "array",
+      items: {
+        $ref: "onSelectSchema#",
       },
     },
   },

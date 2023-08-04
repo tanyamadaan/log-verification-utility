@@ -17,6 +17,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/on_confirm/0/context/location/city/code" },
                 },
               },
               required: ["code"],
@@ -26,6 +27,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/on_confirm/0/context/location/city/code" },
                 },
               },
               required: ["code"],
@@ -55,6 +57,7 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/on_confirm/0/context/transaction_id" },
         },
         message_id: {
           type: "string",
@@ -88,9 +91,16 @@ module.exports = {
       properties: {
         order_id: {
           type: "string",
+          const: { $data: "/on_confirm/0/message/order/id" },
         },
       },
       required: ["order_id"],
+    },
+    on_confirm: {
+      type: "array",
+      items: {
+        $ref: "onConfirmSchema#",
+      },
     },
   },
   required: ["context", "message"],

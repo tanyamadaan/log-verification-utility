@@ -17,6 +17,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/city/code" },
                 },
               },
               required: ["code"],
@@ -26,6 +27,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/country/code" },
                 },
               },
               required: ["code"],
@@ -199,14 +201,7 @@ module.exports = {
                         },
                       },
                     },
-                    required: [
-                      "name",
-                      "code",
-                      "short_desc",
-                      "long_desc",
-                      "additional_desc",
-                      "images",
-                    ],
+                    required: ["name", "code"],
                   },
                   rating: {
                     type: "string",
@@ -283,12 +278,15 @@ module.exports = {
                         },
                         type: {
                           type: "string",
+                          enum: ["License", "Badge", "Permit", "Certificate"],
                         },
                         desc: {
                           type: "string",
                         },
                         url: {
                           type: "string",
+                          pattern:
+                            "^https://[\\w.-]+(\\.[a-zA-Z]{2,})?(:[0-9]+)?(/\\S*)?$",
                         },
                       },
                       required: ["id", "type", "desc", "url"],
@@ -381,7 +379,6 @@ module.exports = {
                             "short_desc",
                             "long_desc",
                             "images",
-                            "media",
                           ],
                         },
                         creator: {
@@ -444,12 +441,7 @@ module.exports = {
                               type: "string",
                             },
                           },
-                          required: [
-                            "currency",
-                            "value",
-                            "offered_value",
-                            "maximum_value",
-                          ],
+                          required: ["currency", "value", "maximum_value"],
                         },
                         quantity: {
                           type: "object",
@@ -799,8 +791,7 @@ module.exports = {
                         "replacement_terms",
                         "time",
                         "matched",
-                        "recommended",
-                        "tags",
+                        "recommended"
                       ],
                     },
                   },
@@ -919,7 +910,6 @@ module.exports = {
                   "descriptor",
                   "ttl",
                   "locations",
-                  "creds",
                   "tags",
                   "items",
                   "fulfillments",

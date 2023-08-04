@@ -17,6 +17,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/city/code" },
                 },
               },
               required: ["code"],
@@ -26,6 +27,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/country/code" },
                 },
               },
               required: ["code"],
@@ -55,6 +57,7 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/select/0/context/transaction_id" },
         },
         message_id: {
           type: "string",
@@ -88,12 +91,14 @@ module.exports = {
       properties: {
         update_target: {
           type: "string",
+          enum:["fulfillment","item"]
         },
         order: {
           type: "object",
           properties: {
             id: {
               type: "string",
+              const: { $data: "/confirm/0/message/order/id" },
             },
             state: {
               type: "string",
@@ -103,6 +108,7 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
+                  const: { $data: "/select/0/message/order/provider/id" },
                 },
               },
               required: ["id"],
@@ -218,6 +224,35 @@ module.exports = {
                               type: "string",
                             },
                           },
+                          allOf: [
+                            {
+                              if: {
+                                properties: {
+                                  settlement_type: {
+                                    const: "upi",
+                                  },
+                                },
+                              },
+                              then: {
+                                required: ["upi_address"],
+                              },
+                            },
+                            {
+                              if: {
+                                properties: {
+                                  settlement_type: {
+                                    const: ["neft", "rtgs"],
+                                  },
+                                },
+                              },
+                              then: {
+                                required: [
+                                  "settlement_ifsc_code",
+                                  "settlement_bank_account_no",
+                                ],
+                              },
+                            },
+                          ],
                           required: [
                             "settlement_counterparty",
                             "settlement_type",
@@ -244,6 +279,42 @@ module.exports = {
         },
       },
       required: ["update_target", "order"],
+    },
+    search: {
+      type: "array",
+      items: {
+        $ref: "searchSchema#",
+      },
+    },
+    on_search: {
+      type: "array",
+      items: {
+        $ref: "onSearchSchema#",
+      },
+    },
+    select: {
+      type: "array",
+      items: {
+        $ref: "selectSchema#",
+      },
+    },
+    on_select: {
+      type: "array",
+      items: {
+        $ref: "onSelectSchema#",
+      },
+    },
+    init: {
+      type: "array",
+      items: {
+        $ref: "initSchema#",
+      },
+    },
+    on_init: {
+      type: "array",
+      items: {
+        $ref: "onInitSchema#",
+      },
     },
     confirm: {
       type: "array",

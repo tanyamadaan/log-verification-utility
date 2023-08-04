@@ -194,7 +194,7 @@ const timestampCheck = (date) => {
 const getObjValues = (obj) => {
   let values = "";
   Object.values(obj).forEach((value) => {
-    values += value + "\n";
+    values += `- ${value}\n`;
   });
   return values;
 };

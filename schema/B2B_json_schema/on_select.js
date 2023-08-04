@@ -17,6 +17,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/city/code" },
                 },
               },
               required: ["code"],
@@ -26,6 +27,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/country/code" },
                 },
               },
               required: ["code"],
@@ -55,9 +57,11 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/select/0/context/transaction_id" },
         },
         message_id: {
           type: "string",
+          const: { $data: "/select/0/context/message_id" },
         },
         timestamp: {
           type: "string",
@@ -94,6 +98,8 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
+                  const: { $data: "/select/0/message/order/provider/id" },
+
                 },
               },
               required: ["id"],
@@ -113,7 +119,7 @@ module.exports = {
                     type: "string",
                   },
                 },
-                required: ["fulfillment_ids", "id"],
+                required: ["id"],
               },
             },
             fulfillments: {
@@ -135,6 +141,7 @@ module.exports = {
                   },
                   "@ondc/org/TAT": {
                     type: "string",
+                    format: "duration"
                   },
                   state: {
                     type: "object",
@@ -301,10 +308,28 @@ module.exports = {
               required: ["price", "breakup", "ttl"],
             },
           },
-          required: ["provider", "items", "fulfillments", "quote"],
+          required: ["provider", "items", "quote"],
         },
       },
       required: ["order"],
+    },
+    search: {
+      type: "array",
+      items: {
+        $ref: "searchSchema#",
+      },
+    },
+    on_search: {
+      type: "array",
+      items: {
+        $ref: "onSearchSchema#",
+      },
+    },
+    select: {
+      type: "array",
+      items: {
+        $ref: "selectSchema#",
+      },
     },
   },
   required: ["context", "message"],

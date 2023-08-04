@@ -14,6 +14,18 @@ module.exports = {
         $ref: "onSearchSchema#",
       },
     },
+    select: {
+      type: "array",
+      items: {
+        $ref: "selectSchema#",
+      },
+    },
+    on_select: {
+      type: "array",
+      items: {
+        $ref: "onSelectSchema#",
+      },
+    },
     init: {
       type: "array",
       items: {
@@ -61,30 +73,6 @@ module.exports = {
       items: {
         $ref: "onStatusSchema#",
       },
-    },
-    support: {
-      type: "array",
-      items: {
-        $ref: "supportSchema#",
-      },
-    },
-    on_support: {
-      type: "array",
-      items: {
-        $ref: "onSupportSchema#",
-      },
-    },
-    track: {
-      type: "array",
-      items: {
-        $ref: "trackSchema#",
-      },
-    },
-    on_track: {
-      type: "array",
-      items: {
-        $ref: "onTrackSchema#",
-      },
-    },
+    }
   },
 };

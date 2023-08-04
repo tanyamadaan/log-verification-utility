@@ -17,6 +17,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/city/code" },
                 },
               },
               required: ["code"],
@@ -26,6 +27,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
+                  const: { $data: "/search/0/context/location/country/code" },
                 },
               },
               required: ["code"],
@@ -55,9 +57,11 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/select/0/context/transaction_id" },
         },
         message_id: {
           type: "string",
+          const: { $data: "/status/0/context/message_id" },
         },
         timestamp: {
           type: "string",
@@ -91,15 +95,18 @@ module.exports = {
           properties: {
             id: {
               type: "string",
+              const: { $data: "/confirm/0/message/order/id" },
             },
             state: {
               type: "string",
+              enum: ["Created", "Accepted", "In-progress","Cancelled","Completed"],
             },
             provider: {
               type: "object",
               properties: {
                 id: {
                   type: "string",
+                  const: { $data: "/select/0/message/order/provider/id" },
                 },
                 locations: {
                   type: "array",
@@ -210,6 +217,7 @@ module.exports = {
                         properties: {
                           code: {
                             type: "string",
+                            enum:["Pending","Agent-assigned","Order-picked-up","Out-for-delivery","Delivered"]
                           },
                         },
                         required: ["code"],
@@ -244,7 +252,7 @@ module.exports = {
                                   },
                                 },
                               },
-                              required: ["name", "images"],
+                              required: ["name"],
                             },
                             gps: {
                               type: "string",
@@ -271,7 +279,7 @@ module.exports = {
                               type: "string",
                             },
                           },
-                          required: ["range", "timestamp"],
+                          required: ["range"],
                         },
                         instructions: {
                           type: "object",
@@ -543,58 +551,72 @@ module.exports = {
                     },
                     "@ondc/org/settlement_details": {
                       type: "array",
-                      items: [
-                        {
-                          type: "object",
-                          properties: {
-                            settlement_counterparty: {
-                              type: "string",
+                      items: {
+                        type: "object",
+                        properties: {
+                          settlement_counterparty: {
+                            type: "string",
+                          },
+                          settlement_phase: {
+                            type: "string",
+                          },
+                          settlement_type: {
+                            type: "string",
+                            enum: ["upi", "neft", "rtgs"],
+                          },
+                          beneficiary_name: {
+                            type: "string",
+                          },
+                          upi_address: {
+                            type: "string",
+                          },
+                          settlement_bank_account_no: {
+                            type: "string",
+                          },
+                          settlement_ifsc_code: {
+                            type: "string",
+                          },
+                          bank_name: {
+                            type: "string",
+                          },
+                          branch_name: {
+                            type: "string",
+                          },
+                        },
+                        allOf: [
+                          {
+                            if: {
+                              properties: {
+                                settlement_type: {
+                                  const: "upi",
+                                },
+                              },
                             },
-                            settlement_phase: {
-                              type: "string",
-                            },
-                            beneficiary_name: {
-                              type: "string",
-                            },
-                            settlement_reference: {
-                              type: "string",
-                            },
-                            settlement_status: {
-                              type: "string",
-                            },
-                            settlement_timestamp: {
-                              type: "string",
-                            },
-                            settlement_type: {
-                              type: "string",
-                            },
-                            upi_address: {
-                              type: "string",
-                            },
-                            settlement_bank_account_no: {
-                              type: "string",
-                            },
-                            settlement_ifsc_code: {
-                              type: "string",
-                            },
-                            bank_name: {
-                              type: "string",
-                            },
-                            branch_name: {
-                              type: "string",
+                            then: {
+                              required: ["upi_address"],
                             },
                           },
-                          required: [
-                            "settlement_counterparty",
-                            "settlement_type",
-                          ],
-                        },
-                      ],
+                          {
+                            if: {
+                              properties: {
+                                settlement_type: {
+                                  const: ["neft", "rtgs"],
+                                },
+                              },
+                            },
+                            then: {
+                              required: [
+                                "settlement_ifsc_code",
+                                "settlement_bank_account_no",
+                              ],
+                            },
+                          },
+                        ],
+                        required: ["settlement_counterparty", "settlement_type"],
+                      },
                     },
                   },
                   required: [
-                    "uri",
-                    "tl_method",
                     "params",
                     "status",
                     "type",
@@ -625,6 +647,9 @@ module.exports = {
             created_at: {
               type: "string",
               format: "date-time",
+              const: { $data: "/confirm/0/message/order/created_at" },
+              errorMessage:
+                "order/created_at should remain same as in /confirm - ${/confirm/message/order/created_at}",
             },
             updated_at: {
               type: "string",
@@ -647,6 +672,66 @@ module.exports = {
         },
       },
       required: ["order"],
+    },
+    search: {
+      type: "array",
+      items: {
+        $ref: "searchSchema#",
+      },
+    },
+    on_search: {
+      type: "array",
+      items: {
+        $ref: "onSearchSchema#",
+      },
+    },
+    select: {
+      type: "array",
+      items: {
+        $ref: "selectSchema#",
+      },
+    },
+    on_select: {
+      type: "array",
+      items: {
+        $ref: "onSelectSchema#",
+      },
+    },
+    init: {
+      type: "array",
+      items: {
+        $ref: "initSchema#",
+      },
+    },
+    on_init: {
+      type: "array",
+      items: {
+        $ref: "onInitSchema#",
+      },
+    },
+    confirm: {
+      type: "array",
+      items: {
+        $ref: "confirmSchema#",
+      },
+    },
+    on_confirm: {
+      type: "array",
+      items: {
+        $ref: "onConfirmSchema#",
+      },
+    },
+    update: {
+      type: "array",
+      items: {
+        $ref: "updateSchema#",
+      },
+    },
+    on_update: {
+      type: "array",
+      items: {
+        $ref: "onUpdateSchema#",
+      },
     },
     status: {
       type: "array",

@@ -14,7 +14,7 @@ module.exports = {
         },
         city: {
           type: "string",
-          const: { $data: "/init/context/city" },
+          const: { $data: "/search/0/context/city" },
         },
         action: {
           type: "string",
@@ -38,11 +38,26 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: { $data: "/init/context/transaction_id" },
+          const: { $data: "/init/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same as /init: ${/init/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
-          const: { $data: "/init/context/message_id" },
+          allOf: [
+            {
+              const: { $data: "/init/0/context/message_id" },
+              errorMessage:
+                "Message ID should be same as /init: ${/init/0/context/message_id}",
+            },
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            },
+          ],
         },
         timestamp: {
           type: "string",
@@ -231,14 +246,14 @@ module.exports = {
           oneOf: [
             {
               required: [
-                "/on_search/message/catalog/bpp~1providers/0/locations",
+                "/on_search/0/message/catalog/bpp~1providers/0/locations",
                 "provider_location",
               ],
             },
             {
               not: {
                 required: [
-                  "/on_search/message/catalog/bpp~1providers/0/locations",
+                  "/on_search/0/message/catalog/bpp~1providers/0/locations",
                 ],
               },
             },
@@ -246,6 +261,12 @@ module.exports = {
         },
       },
       required: ["order"],
+    },
+    search: {
+      type: "array",
+      items: {
+        $ref: "searchSchema#",
+      },
     },
     init: {
       type: "array",

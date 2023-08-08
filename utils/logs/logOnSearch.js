@@ -57,9 +57,9 @@ const checkOnSearch = (data, msgIdSet) => {
       if (hasForwardShipment && hasBackwardShipment) {
         console.log("Both forward and backward shipments are present.");
       } else if (!hasForwardShipment) {
-        onSrchObj.frwrdShpmnt = `Forward shipment is missing in ${constants.LOG_ONSEARCH} api`;
+        onSrchObj.frwrdShpmnt = `Forward shipment (Prepaid or CoD) is missing in ${constants.LOG_ONSEARCH} api`;
       } else if (!hasBackwardShipment) {
-        onSrchObj.bkwrdshmpnt = `Backward shipment is missing in ${constants.LOG_ONSEARCH} api`;
+        onSrchObj.bkwrdshmpnt = `Backward shipment (RTO or Reverse QC) is missing in ${constants.LOG_ONSEARCH} api`;
       }
     }
   } catch (error) {

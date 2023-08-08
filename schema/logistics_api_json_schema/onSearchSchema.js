@@ -16,7 +16,7 @@ module.exports = {
         },
         city: {
           type: "string",
-          const: { $data: "/search/context/city" },
+          const: { $data: "/search/0/context/city" },
         },
         action: {
           type: "string",
@@ -304,9 +304,7 @@ module.exports = {
                             duration: {
                               type: "string",
                               format: "duration",
-                              pattern: "^PT([1-5][1-9]|60)?M$",
-                              const: "tst",
-                              errorMessage: "${3/categories/time/duration}",
+                              errorMessage: "${2/time/duration}",
                             },
                             timestamp: {
                               type: "string",

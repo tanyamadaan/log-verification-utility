@@ -14,7 +14,7 @@ module.exports = {
         },
         city: {
           type: "string",
-          const: { $data: "/on_search/context/city" },
+          const: { $data: "/on_search/0/context/city" },
         },
         action: {
           type: "string",
@@ -38,19 +38,29 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: { $data: "/confirm/context/transaction_id" },
+          const: { $data: "/confirm/0/context/transaction_id" },
         },
         message_id: {
           type: "string",
           allOf: [
             {
-              const: { $data: "/confirm/context/message_id" },
+              const: { $data: "/confirm/0/context/message_id" },
+              errorMessage:
+              "Message ID should be same as /confirm: ${/confirm/0/context/message_id}",
             },
             {
               not: {
                 const: { $data: "1/transaction_id" },
               },
-              errorMessage: "${1/transaction_id}",
+              errorMessage:
+              "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            },
+            {
+              not: {
+                const: { $data: "/init/0/context/message_id" },
+              },
+              errorMessage:
+              "Message ID should be unique",
             },
           ],
         },
@@ -110,14 +120,14 @@ module.exports = {
               oneOf: [
                 {
                   required: [
-                    "/confirm/message/order/provider/locations",
+                    "/confirm/0/message/order/provider/locations",
                     "locations",
                   ],
                 },
                 {
                   not: {
                     required: [
-                      "/confirm/message/order/provider/locations",
+                      "/confirm/0/message/order/provider/locations",
                       "locations",
                     ],
                   },
@@ -150,7 +160,7 @@ module.exports = {
             },
             quote: {
               type: "object",
-              const: { $data: "/on_init/message/order/quote" },
+              const: { $data: "/on_init/0/message/order/quote" },
               errorMessage: "Quote object mismatches in /init and /on_confirm.",
               properties: {
                 price: {
@@ -207,13 +217,13 @@ module.exports = {
                   id: {
                     type: "string",
                     const: {
-                      $data: "/confirm/message/order/fulfillments/0/id",
+                      $data: "/confirm/0/message/order/fulfillments/0/id",
                     },
                   },
                   type: {
                     type: "string",
                     const: {
-                      $data: "/confirm/message/order/fulfillments/0/type",
+                      $data: "/confirm/0/message/order/fulfillments/0/type",
                     },
                   },
                   state: {
@@ -235,7 +245,6 @@ module.exports = {
                   "@ondc/org/awb_no": {
                     type: "string",
                     minLength: 11,
-                    maxLength: 16,
                   },
                   tracking: {
                     type: "boolean",
@@ -375,14 +384,14 @@ module.exports = {
                 anyOf: [
                   {
                     required: [
-                      "/confirm/message/order/fulfillments/0/start",
+                      "/confirm/0/message/order/fulfillments/0/start",
                       "start",
                     ],
                   },
                   {
                     not: {
                       required: [
-                        "/confirm/message/order/fulfillments/0/start",
+                        "/confirm/0/message/order/fulfillments/0/start",
                         "start",
                       ],
                     },
@@ -392,7 +401,7 @@ module.exports = {
             },
             billing: {
               type: "object",
-              const: { $data: "/init/message/order/billing" },
+              const: { $data: "/init/0/message/order/billing" },
               properties: {
                 name: {
                   type: "string",
@@ -459,7 +468,7 @@ module.exports = {
             },
             created_at: {
               type: "string",
-              const: { $data: "/confirm/context/timestamp" },
+              const: { $data: "/confirm/0/context/timestamp" },
               errorMessage:
                 "created_at does not match confirm context timestamp - ${/confirm/context/timestamp}",
             },
@@ -513,9 +522,9 @@ module.exports = {
                     },
                     {
                       required: [
-                        "/confirm/message/order/fulfillments/@ondc/org/awb_no",
-                        "/confirm/message/order/fulfillments/@ondc/org/ewaybillno",
-                        "/confirm/message/order/fulfillments/@ondc/org/ebnexpirydate",
+                        "/confirm/0/message/order/fulfillments/@ondc/org/awb_no",
+                        "/confirm/0/message/order/fulfillments/@ondc/org/ewaybillno",
+                        "/confirm/0/message/order/fulfillments/@ondc/org/ebnexpirydate",
                       ],
                     },
                   ],

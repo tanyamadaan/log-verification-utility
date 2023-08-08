@@ -14,6 +14,7 @@ module.exports = {
         },
         city: {
           type: "string",
+          const: { $data: "/search/0/context/city" },
         },
         action: {
           type: "string",
@@ -37,7 +38,6 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          format:"uuid"
         },
         message_id: {
           type: "string",
@@ -76,6 +76,18 @@ module.exports = {
         },
       },
       required: ["phone", "email", "uri"],
+    },
+  },
+  search: {
+    type: "array",
+    items: {
+      $ref: "searchSchema#",
+    },
+  },
+  on_search: {
+    type: "array",
+    items: {
+      $ref: "onSearchSchema#",
     },
   },
   required: ["context", "message"],

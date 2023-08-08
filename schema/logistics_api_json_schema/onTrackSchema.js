@@ -14,6 +14,7 @@ module.exports = {
         },
         city: {
           type: "string",
+          const: { $data: "/search/0/context/city" },
         },
         action: {
           type: "string",
@@ -79,6 +80,18 @@ module.exports = {
         },
       },
       required: ["tracking"],
+    },
+  },
+  search: {
+    type: "array",
+    items: {
+      $ref: "searchSchema#",
+    },
+  },
+  on_search: {
+    type: "array",
+    items: {
+      $ref: "onSearchSchema#",
     },
   },
   required: ["context", "message"],

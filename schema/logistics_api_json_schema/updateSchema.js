@@ -14,7 +14,7 @@ module.exports = {
         },
         city: {
           type: "string",
-          const: {$data: "/on_search/context/city"}
+          const: {$data: "/on_search/0/context/city"}
         },
         action: {
           type: "string",
@@ -41,6 +41,22 @@ module.exports = {
         },
         message_id: {
           type: "string",
+          allOf: [
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+              "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            },
+            {
+              not: {
+                const: { $data: "/init/0/context/message_id" },
+              },
+              errorMessage:
+              "Message ID should be unique",
+            },
+          ],
         },
         timestamp: {
           type: "string",

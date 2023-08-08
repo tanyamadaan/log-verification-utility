@@ -14,7 +14,7 @@ module.exports = {
         },
         city: {
           type: "string",
-          const: { $data: "/on_search/context/city" },
+          const: { $data: "/on_search/0/context/city" },
         },
         action: {
           type: "string",
@@ -38,10 +38,26 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: { $data: "/on_init/context/transaction_id" },
+          const: { $data: "/on_init/0/context/transaction_id" },
         },
         message_id: {
           type: "string",
+          allOf: [
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+              "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            },
+            {
+              not: {
+                const: { $data: "/init/0/context/message_id" },
+              },
+              errorMessage:
+              "Message ID should be unique",
+            },
+          ],
         },
         timestamp: {
           type: "string",
@@ -103,14 +119,14 @@ module.exports = {
               oneOf: [
                 {
                   required: [
-                    "/on_search/message/catalog/bpp~1providers/0/locations",
+                    "/on_search/0/message/catalog/bpp~1providers/0/locations",
                     "locations",
                   ],
                 },
                 {
                   not: {
                     required: [
-                      "/on_search/message/catalog/bpp~1providers/0/locations",
+                      "/on_search/0/message/catalog/bpp~1providers/0/locations",
                     ],
                   },
                 },
@@ -134,7 +150,7 @@ module.exports = {
                         type: "string",
                         const: {
                           $data:
-                            "/on_search/message/catalog/bpp~1providers/0/items/0/descriptor/code",
+                            "/on_search/0/message/catalog/bpp~1providers/0/items/0/descriptor/code",
                         },
                       },
                     },
@@ -150,7 +166,7 @@ module.exports = {
                           id: {
                             const: {
                               $data:
-                                "/on_search/message/catalog/bpp~1providers/0/items/0/id",
+                                "/on_search/0/message/catalog/bpp~1providers/0/items/0/id",
                             },
                           },
                         },
@@ -160,7 +176,7 @@ module.exports = {
                           category_id: {
                             const: {
                               $data:
-                                "/on_search/message/catalog/bpp~1providers/0/items/0/category_id",
+                                "/on_search/0/message/catalog/bpp~1providers/0/items/0/category_id",
                             },
                           },
                         },
@@ -174,7 +190,7 @@ module.exports = {
                           id: {
                             const: {
                               $data:
-                                "/on_search/message/catalog/bpp~1providers/1/items/0/id",
+                                "/on_search/0/message/catalog/bpp~1providers/1/items/0/id",
                             },
                           },
                         },
@@ -184,7 +200,7 @@ module.exports = {
                           category_id: {
                             const: {
                               $data:
-                                "/on_search/message/catalog/bpp~1providers/1/items/0/category_id",
+                                "/on_search/0/message/catalog/bpp~1providers/1/items/0/category_id",
                             },
                           },
                         },
@@ -196,7 +212,7 @@ module.exports = {
             },
             quote: {
               type: "object",
-              const: { $data: "/on_init/message/order/quote" },
+              const: { $data: "/on_init/0/message/order/quote" },
               errorMessage: "Quote object mismatches in /init and /confirm.",
               properties: {
                 price: {
@@ -218,13 +234,12 @@ module.exports = {
                     properties: {
                       "@ondc/org/item_id": {
                         type: "string",
-                        const: { $data: "/on_init/message/order/items/0/id" },
+                        const: { $data: "/on_init/0/message/order/items/0/id" },
                       },
                       "@ondc/org/title_type": {
                         type: "string",
                         enum: ["Delivery Charge", "Tax"],
-                        errorMessage:
-                          "breakup should not include ${1/@ondc~1org~1title_type}",
+          
                       },
                       price: {
                         type: "object",
@@ -257,16 +272,15 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
-                    const: { $data: "/init/message/order/fulfillments/0/id" },
+                    const: { $data: "/init/0/message/order/fulfillments/0/id" },
                   },
                   type: {
                     type: "string",
-                    const: { $data: "/init/message/order/fulfillments/0/type" },
+                    const: { $data: "/init/0/message/order/fulfillments/0/type" },
                   },
                   "@ondc/org/awb_no": {
                     type: "string",
-                    minLength: 11,
-                    maxLength: 16,
+                    minLength: 11
                   },
                   start: {
                     type: "object",

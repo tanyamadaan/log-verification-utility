@@ -16,20 +16,6 @@ const checkContextVal = (payload, Obj, msgIdSet) => {
 
     try {
       console.log(
-        `Comparing city of /${action}`
-      );
-      if (!_.isEqual(dao.getValue("city"), payload.context.city)) {
-        Obj[action].city = `City code mismatch in /${action}`;
-      }
-    } catch (error) {
-      console.log(
-        `Error while comparing city in /${action}`,
-        error
-      );
-    }
-
-    try {
-      console.log(
         `Comparing timestamp of /${action}`
       );
       console.log(dao.getValue("tmpstmp"), payload.context.timestamp)
@@ -61,28 +47,28 @@ const checkContextVal = (payload, Obj, msgIdSet) => {
       console.trace(error)
     }
 
-    try {
-      console.log(
-        `Comparing Message Id of /${action}`
-      );
-      if (action.includes("on_")) {
-        if (!_.isEqual(dao.getValue("msgId"), payload.context.message_id)) {
-            Obj[action].msgId = `Message Id for /${action.replace('on_', '')} and /${action} api should be same`;
-        }
-        msgIdSet.add(payload.context.message_id);
-    }
-    else {
-        if (msgIdSet.has(payload.context.message_id)) {
-            Obj[action].msgId2 = "Message Id cannot be same for different sets of APIs";
-          }
-        dao.setValue("msgId", payload.context.message_id);
-    }
-    } catch (error) {
-      console.log(
-        `Error while comparing message id for /${action} api`,
-        error
-      );
-    }
+    // try {
+    //   console.log(
+    //     `Comparing Message Id of /${action}`
+    //   );
+    //   if (action.includes("on_")) {
+    //     if (!_.isEqual(dao.getValue("msgId"), payload.context.message_id)) {
+    //         Obj[action].msgId = `Message Id for /${action.replace('on_', '')} and /${action} api should be same`;
+    //     }
+    //     msgIdSet.add(payload.context.message_id);
+    // }
+    // else {
+    //     if (msgIdSet.has(payload.context.message_id)) {
+    //         Obj[action].msgId2 = "Message Id cannot be same for different sets of APIs";
+    //       }
+    //     dao.setValue("msgId", payload.context.message_id);
+    // }
+    // } catch (error) {
+    //   console.log(
+    //     `Error while comparing message id for /${action} api`,
+    //     error
+    //   );
+    // }
   } catch (err) {
     if (err.code === "ENOENT") {
       console.log(`!!File not found for /${action} API!`);

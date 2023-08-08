@@ -2,7 +2,7 @@ const dao = require("../dao/dao");
 const fs = require("fs");
 const utils = require("./utils");
 const constants = require("./constants");
-const { checkContext, checkMessage } = require("../services/service");
+const {checkMessage } = require("../services/service");
 const validateSchema = require("./schemaValidation");
 const path = require("path");
 const checkContextVal = require("./ContextVal");
@@ -32,15 +32,15 @@ const Validate = (domain, dirPath, msgIdSet, ErrorObj) => {
       // Validate schema for each element in the array associated with the action
       elements.forEach((element, i) => {
         // Validate context
-        try {
-          res = checkContext(element.context, action);
-          console.log(`Context check completed for ${action}`);
-        } catch (error) {
-          console.log(
-            `!!Some error occurred while checking /${action} context`,
-            error
-          );
-        }
+        // try {
+        //   res = checkContext(element.context, action);
+        //   console.log(`Context check completed for ${action}`);
+        // } catch (error) {
+        //   console.log(
+        //     `!!Some error occurred while checking /${action} context`,
+        //     error
+        //   );
+        // }
 
         // Storing Values to DB
         try {

@@ -21,7 +21,7 @@ module.exports = {
         },
         core_version: {
           type: "string",
-          const:"1.1.0"
+          const: "1.1.0",
         },
         bap_id: {
           type: "string",
@@ -36,14 +36,29 @@ module.exports = {
           type: "string",
         },
         transaction_id: {
-          type: "string",      
+          type: "string",
         },
         message_id: {
           type: "string",
+          allOf: [
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            },
+            {
+              not: {
+                const: { $data: "/confirm/0/context/message_id" },
+              },
+              errorMessage: "Message ID should be unique",
+            },
+          ],
         },
         timestamp: {
           type: "string",
-          format:"date-time"
+          format: "date-time",
         },
       },
       required: [
@@ -75,53 +90,69 @@ module.exports = {
             },
             fulfillments: {
               type: "array",
-              items: 
-                {
-                  type: "object",
-                  properties: {
-                    id: {
-                      type: "string",
-                    },
-                    type: {
-                      type: "string",
-                    },
-                    state: {
-                      type: "object",
-                      properties: {
-                        descriptor: {
-                          type: "object",
-                          properties: {
-                            code: {
-                              type: "string",
-                            },
-                          },
-                          required: ["code"],
-                        },
-                      },
-                      required: ["descriptor"],
-                    },
-                    tags: {
-                      type: "object",
-                      properties: {
-                        cancellation_reason_id: {
-                          type: "string",
-                        },
-                        "AWB no": {
-                          type: "string",
-                        },
-                      },
-                      required: ["cancellation_reason_id"],
-                    },
+              items: {
+                type: "object",
+                properties: {
+                  id: {
+                    type: "string",
                   },
-                  required: ["id", "type", "state", "tags"],
+                  type: {
+                    type: "string",
+                  },
+                  state: {
+                    type: "object",
+                    properties: {
+                      descriptor: {
+                        type: "object",
+                        properties: {
+                          code: {
+                            type: "string",
+                          },
+                        },
+                        required: ["code"],
+                      },
+                    },
+                    required: ["descriptor"],
+                  },
+                  tags: {
+                    type: "object",
+                    properties: {
+                      cancellation_reason_id: {
+                        type: "string",
+                      },
+                      "AWB no": {
+                        type: "string",
+                      },
+                    },
+                    required: ["cancellation_reason_id"],
+                  },
                 },
-            
+                required: ["id", "type", "state", "tags"],
+              },
             },
           },
           required: ["id", "state", "fulfillments"],
         },
       },
       required: ["order"],
+    },
+  },
+  confirm: {
+    type: "array",
+    items: {
+      $ref: "confirmSchema#",
+    },
+  },
+  search: {
+    type: "array",
+    items: {
+      $ref: "searchSchema#",
+    },
+  },
+  on_search: {
+    type: "array",
+    items: {
+      $ref: "onSearchSchema#",
     },
   },
   required: ["context", "message"],

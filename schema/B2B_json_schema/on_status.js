@@ -348,7 +348,6 @@ module.exports = {
                         "type",
                         "location",
                         "time",
-                        "instructions",
                         "contact",
                       ],
                     },
@@ -649,7 +648,7 @@ module.exports = {
               format: "date-time",
               const: { $data: "/confirm/0/message/order/created_at" },
               errorMessage:
-                "order/created_at should remain same as in /confirm - ${/confirm/message/order/created_at}",
+                "order/created_at should remain same as in /confirm - ${/confirm/0/message/order/created_at}",
             },
             updated_at: {
               type: "string",

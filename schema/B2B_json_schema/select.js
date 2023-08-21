@@ -284,7 +284,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
-                              enum:["DELIVERY_TERMS"]
+                              enum: ["DELIVERY_TERMS"],
                             },
                           },
                           required: ["code"],
@@ -299,7 +299,7 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
-                                    enum:["INCOTERMS","DELIVERY_DUTY"]
+                                    enum: ["INCOTERMS", "DELIVERY_DUTY"],
                                   },
                                 },
                                 required: ["code"],
@@ -341,28 +341,41 @@ module.exports = {
               items: {
                 type: "object",
                 properties: {
-                  code: {
-                    type: "string",
-                    enum: ["buyer_id", "COMM_CHANNEL"],
+                  descriptor: {
+                    properties: {
+                      code: {
+                        type: "string",
+                        enum: ["buyer_id", "COMM_CHANNEL"],
+                      },
+                    },
                   },
+
                   list: {
                     type: "array",
                     items: {
                       type: "object",
                       properties: {
-                        code: {
-                          type: "string",
-                          enum: ["buyer_id_code", "buyer_id_no", "chat_url"],
+                        descriptor: {
+                          properties: {
+                            code: {
+                              type: "string",
+                              enum: [
+                                "buyer_id_code",
+                                "buyer_id_no",
+                                "chat_url",
+                              ],
+                            },
+                          },
                         },
                         value: {
                           type: "string",
                         },
                       },
-                      required: ["code", "value"],
+                      required: ["descriptor", "value"],
                     },
                   },
                 },
-                required: ["code", "list"],
+                required: ["descriptor", "list"],
               },
             },
           },

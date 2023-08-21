@@ -38,7 +38,9 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: { $data: "/on_init/0/context/transaction_id" },
+          const: { $data: "/init/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same as /init: ${/init/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -48,14 +50,13 @@ module.exports = {
                 const: { $data: "1/transaction_id" },
               },
               errorMessage:
-              "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
             },
             {
               not: {
                 const: { $data: "/init/0/context/message_id" },
               },
-              errorMessage:
-              "Message ID should be unique",
+              errorMessage: "Message ID should be unique",
             },
           ],
         },
@@ -139,9 +140,11 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
+                    const: { $data: "/init/0/message/order/items/0/id" },
                   },
                   category_id: {
                     type: "string",
+                    const: { $data: "/init/0/message/order/items/0/category_id" },
                   },
                   descriptor: {
                     type: "object",
@@ -150,7 +153,7 @@ module.exports = {
                         type: "string",
                         const: {
                           $data:
-                            "/on_search/0/message/catalog/bpp~1providers/0/items/0/descriptor/code",
+                            "/init/0/message/order/items/0/descriptor/code",
                         },
                       },
                     },
@@ -212,8 +215,6 @@ module.exports = {
             },
             quote: {
               type: "object",
-              const: { $data: "/on_init/0/message/order/quote" },
-              errorMessage: "Quote object mismatches in /init and /confirm.",
               properties: {
                 price: {
                   type: "object",
@@ -223,6 +224,10 @@ module.exports = {
                     },
                     value: {
                       type: "string",
+                      const: {
+                        $data: "/on_init/0/message/order/quote/price/value",
+                      },
+                      errorMessage: "mismatches in /on_init and /confirm.",
                     },
                   },
                   required: ["currency", "value"],
@@ -234,12 +239,10 @@ module.exports = {
                     properties: {
                       "@ondc/org/item_id": {
                         type: "string",
-                        const: { $data: "/on_init/0/message/order/items/0/id" },
                       },
                       "@ondc/org/title_type": {
                         type: "string",
                         enum: ["Delivery Charge", "Tax"],
-          
                       },
                       price: {
                         type: "object",
@@ -272,15 +275,12 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
-                    const: { $data: "/init/0/message/order/fulfillments/0/id" },
                   },
                   type: {
                     type: "string",
-                    const: { $data: "/init/0/message/order/fulfillments/0/type" },
                   },
                   "@ondc/org/awb_no": {
                     type: "string",
-                    minLength: 11
                   },
                   start: {
                     type: "object",
@@ -352,7 +352,7 @@ module.exports = {
                             type: "string",
                           },
                         },
-                        required: ["phone", "email"],
+                        required: ["phone"],
                       },
                       instructions: {
                         type: "object",
@@ -479,6 +479,7 @@ module.exports = {
                     },
                     required: ["person", "location", "contact"],
                   },
+
                   "@ondc/org/ewaybillno": {
                     type: "string",
                   },
@@ -491,52 +492,24 @@ module.exports = {
                     properties: {
                       "@ondc/org/order_ready_to_ship": {
                         type: "string",
-                        enum: ["yes", "no", "Yes", "No"],
+                        enum: ["yes", "no"],
                       },
                     },
+                    if: {
+                      properties: {
+                        "@ondc/org/order_ready_to_ship": { const: "yes" },
+                      },
+                    },
+                    then: {
+                      required: ["1/start/instructions"],
+                      errorMessage:
+                        "Pickup code (fulfillments/start/instructions), mandatory  if order_ready_to_ship = yes in /confirm",
+                    },
+
                     required: ["@ondc/org/order_ready_to_ship"],
                   },
                 },
                 required: ["id", "type", "start", "end", "tags"],
-                anyOf: [
-                  {
-                    properties: {
-                      start: {
-                        properties: {
-                          instructions: {
-                            required: ["short_desc"],
-                            errorMessage: "PCC required when RTS is Yes",
-                          },
-                        },
-                        required: ["instructions"],
-                        errorMessage: "instructions required when RTS is Yes",
-                      },
-                      tags: {
-                        properties: {
-                          "@ondc/org/order_ready_to_ship": {
-                            enum: ["yes", "Yes"],
-                          },
-                        },
-                      },
-                    },
-                    required: ["start", "end"],
-                  },
-                  {
-                    properties: {
-                      tags: {
-                        properties: {
-                          "@ondc/org/order_ready_to_ship": {
-                            enum: ["no", "No"],
-                            errorMessage:
-                              "Fulfillment object should include start instructions if ready_to_ship is Yes",
-                          },
-                        },
-                      },
-                    },
-                  },
-                ],
-                errorMessage:
-                  "Fulfillment object should include start instructions if ready_to_ship is Yes",
               },
             },
             billing: {
@@ -544,36 +517,72 @@ module.exports = {
               properties: {
                 name: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/name" },
+                  errorMessage: "mismatches in /billing in /init and /confirm",
                 },
                 address: {
                   type: "object",
                   properties: {
                     name: {
                       type: "string",
-                      minLength: 3,
                       not: { const: { $data: "1/locality" } },
+                      const: {
+                        $data: "/init/0/message/order/billing/address/name",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /init and /confirm",
                     },
                     building: {
                       type: "string",
-                      minLength: 3,
+                      const: {
+                        $data: "/init/0/message/order/billing/address/building",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /init and /confirm",
                     },
                     locality: {
                       type: "string",
-                      minLength: 3,
+                      const: {
+                        $data: "/init/0/message/order/billing/address/locality",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /init and /confirm",
                     },
                     city: {
                       type: "string",
+                      const: {
+                        $data: "/init/0/message/order/billing/address/city",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /init and /confirm",
                     },
                     state: {
                       type: "string",
+                      const: {
+                        $data: "/init/0/message/order/billing/address/state",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /init and /confirm",
                     },
                     country: {
                       type: "string",
+                      const: {
+                        $data: "/init/0/message/order/billing/address/country",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /init and /confirm",
                     },
                     area_code: {
                       type: "string",
+                      const: {
+                        $data:
+                          "/init/0/message/order/billing/address/area code",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /init and /confirm",
                     },
                   },
+                  additionalProperties: false,
                   required: [
                     "name",
                     "building",
@@ -586,25 +595,42 @@ module.exports = {
                 },
                 tax_number: {
                   type: "string",
+                  const: {
+                    $data: "/init/0/message/order/billing/tax_number",
+                  },
+                  errorMessage: "mismatches in /billing in /init and /confirm",
                 },
                 phone: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/phone" },
+                  errorMessage: "mismatches in /billing in /init and /confirm",
                 },
                 email: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/email" },
+                  errorMessage: "mismatches in /billing in /init and /confirm",
                 },
                 created_at: {
                   type: "string",
+                  const: {
+                    $data: "/init/0/message/order/billing/created_at",
+                  },
+                  errorMessage: "mismatches in /billing in /init and /confirm",
                 },
                 updated_at: {
                   type: "string",
+                  const: {
+                    $data: "/init/0/message/order/billing/updated_at",
+                  },
+                  errorMessage: "mismatches in /billing in /init and /confirm",
                 },
               },
+              additionalProperties: false,
               required: [
                 "name",
                 "address",
                 "phone",
-                "email",
+                "tax_number",
                 "created_at",
                 "updated_at",
               ],
@@ -791,9 +817,9 @@ module.exports = {
                           type: "string",
                         },
                       },
+  
                       required: [
                         "name",
-                        "street",
                         "locality",
                         "city",
                         "state",
@@ -852,90 +878,6 @@ module.exports = {
             "@ondc/org/linked_order",
             "created_at",
             "updated_at",
-          ],
-          // oneOf: [
-          //   {
-          //     allOf: [
-          //       {
-          //         properties: {
-          //           items: {
-          //             type: "array",
-          //             items: {
-          //               type: "object",
-          //               properties: {
-          //                 descriptor: {
-          //                   properties: {
-          //                     code: {const: "P2H2P"}
-          //                   }
-          //                 }
-          //               }
-          //             }
-          //           }
-          //         }
-          //       },
-          //       {
-          //         properties: {
-          //           fulfillments: {
-          //             required: ["@ondc/org/awb_no", "@ondc/org/ewaybillno", "@ondc/org/ebnexpirydate"],
-          //             errorMessage: "@ondc/org/awb_no, @ondc/org/ewaybillno, @ondc/org/ebnexpirydate required if Fulfilklment is P2H2P"
-          //           }
-          //         }
-          //       }
-          //     ]
-          //   },
-          //   {
-          //     properties: {
-          //       items: {
-          //         type: "array",
-          //         items: {
-          //           type: "object",
-          //           properties: {
-          //             descriptor: {
-          //               properties: {
-          //                 code: {const: "P2P"}
-          //               }
-          //             }
-          //           }
-          //         }
-          //       }
-          //     }
-          //   }
-          // ],
-          anyOf: [
-            {
-              properties: {
-                fulfillment: {
-                  type: "object",
-                  properties: {
-                    type: {
-                      const: "CoD",
-                    },
-                  },
-                },
-                payment: {
-                  type: "object",
-                  properties: {
-                    "@ondc/org/collection_amount": {
-                      type: "string",
-                    },
-                  },
-                  required: ["@ondc/org/collection_amount"],
-                },
-              },
-              required: ["payment"],
-            },
-            {
-              properties: {
-                fulfillment: {
-                  type: "object",
-                  properties: {
-                    type: {
-                      enum: ["Prepaid", "Reverse QC"],
-                    },
-                  },
-                },
-              },
-            },
           ],
         },
       },

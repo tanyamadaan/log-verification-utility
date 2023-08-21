@@ -285,8 +285,7 @@ module.exports = {
                         },
                         url: {
                           type: "string",
-                          pattern:
-                            "^https://[\\w.-]+(\\.[a-zA-Z]{2,})?(:[0-9]+)?(/\\S*)?$",
+                          format: "uri",
                         },
                       },
                       required: ["id", "type", "desc", "url"],
@@ -297,26 +296,34 @@ module.exports = {
                     items: {
                       type: "object",
                       properties: {
-                        code: {
-                          type: "string",
+                        descriptor: {
+                          properties: {
+                            code: {
+                              type: "string",
+                            },
+                          },
                         },
                         list: {
                           type: "array",
                           items: {
                             type: "object",
                             properties: {
-                              code: {
-                                type: "string",
+                              descriptor: {
+                                properties: {
+                                  code: {
+                                    type: "string",
+                                  },
+                                },
                               },
                               value: {
                                 type: "string",
                               },
                             },
-                            required: ["code", "value"],
+                            required: ["descriptor", "value"],
                           },
                         },
                       },
-                      required: ["code", "list"],
+                      required: ["descriptor", "list"],
                     },
                   },
                   items: {
@@ -412,12 +419,7 @@ module.exports = {
                                       type: "string",
                                     },
                                   },
-                                  required: [
-                                    "name",
-                                    "address",
-                                    "phone",
-                                    "email",
-                                  ],
+                                  required: ["address", "phone"],
                                 },
                               },
                               required: ["name", "contact"],
@@ -753,32 +755,41 @@ module.exports = {
                           items: {
                             type: "object",
                             properties: {
-                              code: {
-                                type: "string",
+                              descriptor: {
+                                properties: {
+                                  code: {
+                                    type: "string",
+                                  },
+                                },
                               },
+
                               list: {
                                 type: "array",
                                 items: {
                                   type: "object",
                                   properties: {
-                                    code: {
-                                      type: "string",
+                                    descriptor: {
+                                      properties: {
+                                        code: {
+                                          type: "string",
+                                        },
+                                      },
                                     },
                                     value: {
                                       type: "string",
                                     },
                                   },
-                                  required: ["code", "value"],
+                                  required: ["descriptor", "value"],
                                 },
                               },
                             },
-                            required: ["code", "list"],
+                            required: ["descriptor", "list"],
                           },
                         },
                       },
                       required: [
                         "id",
-                        "parent_item_id",
+
                         "descriptor",
                         "creator",
                         "price",
@@ -789,9 +800,9 @@ module.exports = {
                         "payment_ids",
                         "cancellation_terms",
                         "replacement_terms",
-                        "time",
+
                         "matched",
-                        "recommended"
+                        "recommended",
                       ],
                     },
                   },

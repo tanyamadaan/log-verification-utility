@@ -47,14 +47,13 @@ module.exports = {
                 const: { $data: "1/transaction_id" },
               },
               errorMessage:
-              "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
             },
             {
               not: {
                 const: { $data: "/search/0/context/message_id" },
               },
-              errorMessage:
-              "Message ID should be unique",
+              errorMessage: "Message ID should be unique",
             },
           ],
         },
@@ -109,21 +108,6 @@ module.exports = {
                 },
               },
               required: ["id"],
-              oneOf: [
-                {
-                  required: [
-                    "/on_search/message/catalog/bpp~1providers/0/locations",
-                    "locations",
-                  ],
-                },
-                {
-                  not: {
-                    required: [
-                      "/on_search/message/catalog/bpp~1providers/0/locations",
-                    ],
-                  },
-                },
-              ],
             },
             items: {
               type: "array",
@@ -132,79 +116,22 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
-                    // const: {$data: "/on_search/message/catalog/bpp~1providers/0/items/0/id"},
-                    // errorMessage: "${/on_search/message/catalog/bpp~1providers/0/items/0/id}"
                   },
                   category_id: {
                     type: "string",
-                    // const: {$data: "/on_search/message/catalog/bpp~1providers/0/items/0/category_id"},
-                    // errorMessage: "${/on_search/message/catalog/bpp~1providers/0/items/0/category_id}"
                   },
                   descriptor: {
                     type: "object",
                     properties: {
                       code: {
                         type: "string",
-                        const: {
-                          $data:
-                            "/on_search/message/catalog/bpp~1providers/0/items/0/descriptor/code",
-                        },
                       },
                     },
+
                     required: ["code"],
                   },
                 },
                 required: ["id", "category_id", "descriptor"],
-                anyOf: [
-                  {
-                    allOf: [
-                      {
-                        properties: {
-                          id: {
-                            const: {
-                              $data:
-                                "/on_search/message/catalog/bpp~1providers/0/items/0/id",
-                            },
-                          },
-                        },
-                      },
-                      {
-                        properties: {
-                          category_id: {
-                            const: {
-                              $data:
-                                "/on_search/message/catalog/bpp~1providers/0/items/0/category_id",
-                            },
-                          },
-                        },
-                      },
-                    ],
-                  },
-                  {
-                    allOf: [
-                      {
-                        properties: {
-                          id: {
-                            const: {
-                              $data:
-                                "/on_search/message/catalog/bpp~1providers/1/items/0/id",
-                            },
-                          },
-                        },
-                      },
-                      {
-                        properties: {
-                          category_id: {
-                            const: {
-                              $data:
-                                "/on_search/message/catalog/bpp~1providers/1/items/0/category_id",
-                            },
-                          },
-                        },
-                      },
-                    ],
-                  },
-                ],
               },
             },
             fulfillments: {
@@ -227,8 +154,12 @@ module.exports = {
                         properties: {
                           gps: {
                             type: "string",
-                            const: {$data: "/search/0/message/intent/fulfillment/start/location/gps"},
-                            errorMessage: "Start location does not match location in search"
+                            const: {
+                              $data:
+                                "/search/0/message/intent/fulfillment/start/location/gps",
+                            },
+                            errorMessage:
+                              "does not match start location in search",
                           },
                           address: {
                             type: "object",
@@ -295,8 +226,12 @@ module.exports = {
                         properties: {
                           gps: {
                             type: "string",
-                            const: {$data: "/search/0/message/intent/fulfillment/end/location/gps"},
-                            errorMessage: "End location does not match location in search"
+                            const: {
+                              $data:
+                                "/search/0/message/intent/fulfillment/end/location/gps",
+                            },
+                            errorMessage:
+                              "does not match end location in search",
                           },
                           address: {
                             type: "object",
@@ -305,10 +240,13 @@ module.exports = {
                                 type: "string",
                                 minLength: 3,
                                 not: { const: { $data: "1/locality" } },
+                                errorMessage:"cannot be equal to locality"
                               },
                               building: {
                                 type: "string",
                                 minLength: 3,
+                                not: { const: { $data: "1/locality" } },
+                                errorMessage:"cannot be equal to locality"
                               },
                               locality: {
                                 type: "string",
@@ -372,10 +310,14 @@ module.exports = {
                       type: "string",
                       minLength: 3,
                       not: { const: { $data: "1/locality" } },
+                      errorMessage:"cannot be equal to locality"
+                      
                     },
                     building: {
                       type: "string",
                       minLength: 3,
+                      not: { const: { $data: "1/locality" } },
+                      errorMessage:"cannot be equal to locality"
                     },
                     locality: {
                       type: "string",
@@ -394,6 +336,7 @@ module.exports = {
                       type: "string",
                     },
                   },
+                  additionalProperties: false,
                   required: [
                     "name",
                     "building",
@@ -430,7 +373,6 @@ module.exports = {
                 "name",
                 "address",
                 "phone",
-                "email",
                 "created_at",
                 "updated_at",
               ],
@@ -495,7 +437,6 @@ module.exports = {
                     required: [
                       "settlement_counterparty",
                       "settlement_type",
-                      "beneficiary_name",
                     ],
                   },
                 },
@@ -503,43 +444,7 @@ module.exports = {
               required: ["@ondc/org/settlement_details"],
             },
           },
-          required: ["provider", "items", "fulfillments", "billing"],
-          oneOf: [
-            {
-              properties: {
-                fulfillment: {
-                  type: "object",
-                  properties: {
-                    type: {
-                      const: "CoD",
-                    },
-                  },
-                },
-                payment: {
-                  type: "object",
-                  properties: {
-                    "@ondc/org/collection_amount": {
-                      type: "string",
-                    },
-                  },
-                  required: ["@ondc/org/collection_amount"],
-                },
-              },
-              required: ["payment"],
-            },
-            {
-              properties: {
-                fulfillment: {
-                  type: "object",
-                  properties: {
-                    type: {
-                      enum: ["Prepaid", "Reverse QC"],
-                    },
-                  },
-                },
-              },
-            },
-          ],
+          required: ["provider", "items", "fulfillments", "billing"]
         },
       },
       required: ["order"],
@@ -547,36 +452,16 @@ module.exports = {
     search: {
       type: "array",
       items: {
-          $ref: "searchSchema#"
-      } 
+        $ref: "searchSchema#",
+      },
     },
     on_search: {
       type: "array",
       items: {
         $ref: "onSearchSchema#",
-        message: {
-          properties: {
-            catalog: {
-              properties: {
-                "bpp/fulfillments": {
-                  items: {
-                    properties: {
-                      type: {
-                        enum: ["CoD", "Prepaid"],
-                        const: { $data: "/message/order/fulfillments/0/type" },
-                      },
-                      id: {
-                        const: { $data: "/message/order/fulfillments/0/id" },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
       },
     },
+  
   },
   required: ["context", "message"],
 };

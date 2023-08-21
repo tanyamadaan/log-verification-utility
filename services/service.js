@@ -6,6 +6,9 @@ const checkOnConfirm = require("../utils/logs/logOnConfirm");
 const checkOnInit = require("../utils/logs/logOnInit");
 const checkOnSearch = require("../utils/logs/logOnSearch");
 const checkSearch = require("../utils/logs/logSearch");
+const checkOnUpdate = require("../utils/logs/logOnUpdate");
+const checkUpdate = require("../utils/logs/logUpdate");
+const checkOnStatus = require("../utils/logs/logOnStatus");
 const validateSchema = require("../utils/schemaValidation");
 const utils = require("../utils/utils");
 const _ = require("lodash");
@@ -18,7 +21,6 @@ const _ = require("lodash");
 //   if (!data) return;
 //   let errObj = {};
 
-
 //   if (_.isEmpty(errObj)) {
 //     const result = { valid: true, SUCCESS: "Context Valid" };
 //     console.log(result);
@@ -30,30 +32,38 @@ const _ = require("lodash");
 //   }
 // };
 
-const checkMessage = (element,action,msgIdSet)=>{
+const checkMessage = (element, action, msgIdSet) => {
   // let msgIdSet={};
-  const busnsErr={};
-  switch(action){
-    case 'search':
-      return checkSearch(element,msgIdSet)
-      
-    case 'on_search':
-    return checkOnSearch(element,msgIdSet)
+  const busnsErr = {};
+  switch (action) {
+    case "search":
+      return checkSearch(element, msgIdSet);
 
-    case 'init':
-     return checkInit(element,msgIdSet)
+    case "on_search":
+      return checkOnSearch(element, msgIdSet);
 
-    case 'on_init':
-     return checkOnInit(element,msgIdSet)
+    case "init":
+      return checkInit(element, msgIdSet);
 
-    case 'confirm':
-    return checkConfirm(element,msgIdSet)
+    case "on_init":
+      return checkOnInit(element, msgIdSet);
 
-    case 'on_confirm':
-      return  checkOnConfirm(element,msgIdSet)
+    case "confirm":
+      return checkConfirm(element, msgIdSet);
 
+    case "on_confirm":
+      return checkOnConfirm(element, msgIdSet);
+
+    case "update":
+      return checkUpdate(element,msgIdSet);
+
+    case "on_update":
+      return checkOnUpdate(element,msgIdSet)
+
+    case "on_status":
+      return checkOnStatus(element,msgIdSet)
   }
   return busnsErr;
-}
+};
 
-module.exports = { checkMessage};
+module.exports = { checkMessage };

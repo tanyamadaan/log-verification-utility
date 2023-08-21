@@ -37,6 +37,9 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/init/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same as /init: ${/init/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -81,12 +84,15 @@ module.exports = {
       properties: {
         order: {
           type: "object",
+        
           properties: {
             id: {
               type: "string",
+              const: { $data: "/on_confirm/0/message/order/id" },
             },
             state: {
               type: "string",
+              enum:["Cancelled"]
             },
             fulfillments: {
               type: "array",
@@ -95,9 +101,11 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
+                    $data: "/on_confirm/0/message/order/fulfillments/0/id",
                   },
                   type: {
                     type: "string",
+                    $data: "/on_confirm/0/message/order/fulfillments/0/type",
                   },
                   state: {
                     type: "object",
@@ -107,6 +115,7 @@ module.exports = {
                         properties: {
                           code: {
                             type: "string",
+                            enum:["Cancelled"]
                           },
                         },
                         required: ["code"],
@@ -127,10 +136,12 @@ module.exports = {
                     required: ["cancellation_reason_id"],
                   },
                 },
+                additionalProperties: false,
                 required: ["id", "type", "state", "tags"],
               },
             },
           },
+          additionalProperties: false,
           required: ["id", "state", "fulfillments"],
         },
       },
@@ -147,6 +158,12 @@ module.exports = {
     type: "array",
     items: {
       $ref: "searchSchema#",
+    },
+  },
+  init: {
+    type: "array",
+    items: {
+      $ref: "initSchema#",
     },
   },
   on_search: {

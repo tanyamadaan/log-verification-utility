@@ -38,7 +38,9 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: { $data: "/confirm/0/context/transaction_id" },
+          const: { $data: "/init/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same as /init: ${/init/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -46,21 +48,20 @@ module.exports = {
             {
               const: { $data: "/confirm/0/context/message_id" },
               errorMessage:
-              "Message ID should be same as /confirm: ${/confirm/0/context/message_id}",
+                "Message ID should be same as /confirm: ${/confirm/0/context/message_id}",
             },
             {
               not: {
                 const: { $data: "1/transaction_id" },
               },
               errorMessage:
-              "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
             },
             {
               not: {
                 const: { $data: "/init/0/context/message_id" },
               },
-              errorMessage:
-              "Message ID should be unique",
+              errorMessage: "Message ID should be unique",
             },
           ],
         },
@@ -92,6 +93,7 @@ module.exports = {
           properties: {
             id: {
               type: "string",
+              const: { $data: "/confirm/0/message/order/id" },
             },
             state: {
               type: "string",
@@ -102,6 +104,7 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/provider/id" },
                 },
                 locations: {
                   type: "array",
@@ -110,6 +113,7 @@ module.exports = {
                     properties: {
                       id: {
                         type: "string",
+                        const: { $data: "/init/0/message/order/provider/locations/0/id" },
                       },
                     },
                     required: ["id"],
@@ -141,15 +145,18 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
+                    const: { $data: "/init/0/message/order/items/0/id" },
                   },
                   category_id: {
                     type: "string",
+                    const: { $data: "/init/0/message/order/items/0/category_id" },
                   },
                   descriptor: {
                     type: "object",
                     properties: {
                       code: {
                         type: "string",
+                        const: { $data: "/init/0/message/order/items/0/descriptor/code" },
                       },
                     },
                     required: ["code"],
@@ -161,7 +168,7 @@ module.exports = {
             quote: {
               type: "object",
               const: { $data: "/on_init/0/message/order/quote" },
-              errorMessage: "Quote object mismatches in /init and /on_confirm.",
+              errorMessage: "object mismatches in /confirm and /on_confirm.",
               properties: {
                 price: {
                   type: "object",
@@ -244,7 +251,7 @@ module.exports = {
                   },
                   "@ondc/org/awb_no": {
                     type: "string",
-                    minLength: 11,
+
                   },
                   tracking: {
                     type: "boolean",
@@ -271,7 +278,7 @@ module.exports = {
                         required: ["range"],
                       },
                     },
-                    required: [],
+                    required: ["time"],
                   },
                   end: {
                     type: "object",
@@ -326,111 +333,92 @@ module.exports = {
                   },
                   "@ondc/org/ewaybillno": {
                     type: "string",
+                    const: { $data: "/confirm/0/message/order/fulfillments/0/@ondc~1org~1ewaybillno" },
+                   
+
                   },
                   "@ondc/org/ebnexpirydate": {
                     type: "string",
+                    format: "date-time",
+                    const: { $data: "/confirm/0/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate"},
+                   
                   },
                 },
                 required: ["id", "type", "state", "tracking"],
-                anyOf: [
-                  {
-                    confirm: {
-                      properties: {
-                        message: {
-                          properties: {
-                            order: {
-                              fulfillments: {
-                                items: {
-                                  properties: {
-                                    "@ondc/org/order_ready_to_ship": {
-                                      enum: ["yes", "Yes"],
-                                    },
-                                  },
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                    required: ["start"],
-                  },
-                  {
-                    not: {
-                      confirm: {
-                        properties: {
-                          message: {
-                            properties: {
-                              order: {
-                                fulfillments: {
-                                  items: {
-                                    properties: {
-                                      "@ondc/org/order_ready_to_ship": {
-                                        enum: ["yes", "Yes"],
-                                      },
-                                    },
-                                  },
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                ],
-                errorMessage:
-                  "Fulfillment object should include start instructions if ready_to_ship is Yes",
-                anyOf: [
-                  {
-                    required: [
-                      "/confirm/0/message/order/fulfillments/0/start",
-                      "start",
-                    ],
-                  },
-                  {
-                    not: {
-                      required: [
-                        "/confirm/0/message/order/fulfillments/0/start",
-                        "start",
-                      ],
-                    },
-                  },
-                ],
               },
             },
             billing: {
               type: "object",
-              const: { $data: "/init/0/message/order/billing" },
               properties: {
                 name: {
                   type: "string",
+                  const: { $data: "/confirm/0/message/order/billing/name" },
+                  errorMessage:
+                    "mismatches in /billing in /confirm and /on_confirm",
                 },
                 address: {
                   type: "object",
                   properties: {
                     name: {
                       type: "string",
+                      not: { const: { $data: "1/locality" } },
+                      const: {
+                        $data: "/confirm/0/message/order/billing/address/name",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
                     },
                     building: {
                       type: "string",
+                      const: {
+                        $data: "/confirm/0/message/order/billing/address/building",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
                     },
                     locality: {
                       type: "string",
+                      const: {
+                        $data: "/confirm/0/message/order/billing/address/locality",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
                     },
                     city: {
                       type: "string",
+                      const: {
+                        $data: "/confirm/0/message/order/billing/address/city",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
                     },
                     state: {
                       type: "string",
+                      const: {
+                        $data: "/confirm/0/message/order/billing/address/state",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
                     },
                     country: {
                       type: "string",
+                      const: {
+                        $data: "/confirm/0/message/order/billing/address/country",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
                     },
                     area_code: {
                       type: "string",
+                      const: {
+                        $data:
+                          "/confirm/0/message/order/billing/address/area code",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
                     },
                   },
+                  additionalProperties: false,
                   required: [
                     "name",
                     "building",
@@ -443,25 +431,41 @@ module.exports = {
                 },
                 tax_number: {
                   type: "string",
+                  const: { $data: "/confirm/0/message/order/billing/tax_number" },
+                  errorMessage:
+                    "mismatches in /billing in /confirm and /on_confirm",
                 },
                 phone: {
                   type: "string",
+                  const: { $data: "/confirm/0/message/order/billing/phone" },
+                  errorMessage:
+                    "mismatches in /billing in /confirm and /on_confirm",
                 },
                 email: {
                   type: "string",
+                  const: { $data: "/confirm/0/message/order/billing/email" },
+                  errorMessage:
+                    "mismatches in /billing in /confirm and /on_confirm",
                 },
                 created_at: {
                   type: "string",
+                  const: { $data: "/confirm/0/message/order/billing/created_at" },
+                  errorMessage:
+                    "mismatches in /billing in /confirm and /on_confirm",
                 },
                 updated_at: {
                   type: "string",
+                  const: { $data: "/confirm/0/message/order/billing/updated_at" },
+                  errorMessage:
+                    "mismatches in /billing in /confirm and /on_confirm",
                 },
               },
+              additionalProperties: false,
               required: [
                 "name",
                 "address",
                 "phone",
-                "email",
+                "tax_number",
                 "created_at",
                 "updated_at",
               ],
@@ -470,10 +474,13 @@ module.exports = {
               type: "string",
               const: { $data: "/confirm/0/context/timestamp" },
               errorMessage:
-                "created_at does not match confirm context timestamp - ${/confirm/context/timestamp}",
+                "does not match confirm context timestamp - ${/confirm/0/context/timestamp}",
             },
             updated_at: {
               type: "string",
+              const: { $data: "3/context/timestamp" },
+              errorMessage:
+                "does not match context timestamp - ${3/context/timestamp}",
             },
           },
           required: [
@@ -486,68 +493,6 @@ module.exports = {
             "billing",
             "created_at",
             "updated_at",
-          ],
-          oneOf: [
-            {
-              allOf: [
-                {
-                  properties: {
-                    items: {
-                      type: "array",
-                      items: {
-                        type: "object",
-                        properties: {
-                          descriptor: {
-                            properties: {
-                              code: { const: "P2H2P" },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-                {
-                  anyOf: [
-                    {
-                      properties: {
-                        fulfillments: {
-                          required: [
-                            "@ondc/org/awb_no",
-                            "@ondc/org/ewaybillno",
-                            "@ondc/org/ebnexpirydate",
-                          ],
-                        },
-                      },
-                    },
-                    {
-                      required: [
-                        "/confirm/0/message/order/fulfillments/@ondc/org/awb_no",
-                        "/confirm/0/message/order/fulfillments/@ondc/org/ewaybillno",
-                        "/confirm/0/message/order/fulfillments/@ondc/org/ebnexpirydate",
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              properties: {
-                items: {
-                  type: "array",
-                  items: {
-                    type: "object",
-                    properties: {
-                      descriptor: {
-                        properties: {
-                          code: { const: "P2P" },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
           ],
         },
       },
@@ -585,50 +530,4 @@ module.exports = {
     },
   },
   required: ["context", "message"],
-  anyOf: [
-    {
-      properties: {
-        confirm: {
-          properties: {
-            message: {
-              properties: {
-                order: {
-                  properties: {
-                    fulfillments: {
-                      items: {
-                        properties: {
-                          tags: {
-                            properties: {
-                              "@ondc/org/order_ready_to_ship": {
-                                enum: ["No", "no"],
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    {
-      properties: {
-        message: {
-          properties: {
-            order: {
-              properties: {
-                fulfillments: {
-                  required: ["start", "end"],
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  ],
 };

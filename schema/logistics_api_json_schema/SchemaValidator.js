@@ -25,9 +25,10 @@ const ajv = new Ajv({
   strict: "log",
   strictRequired: false,
   strictTypes: false,
-  //verbose: true,
+  verbose: true,
   $data: true,
 });
+
 const addFormats = require("ajv-formats");
 const masterSchemacopy = require("./masterSchemacopy");
 
@@ -60,33 +61,34 @@ const validate_schema = (data, schema) => {
   let error_list = [];
   try {
     validate = ajv
-    .addSchema(searchSchema)
-    .addSchema(onSearchSchema)
-    .addSchema(initSchema)
-    .addSchema(onInitSchema)
-    .addSchema(confirmSchema)
-    .addSchema(onConfirmSchema)
-    .addSchema(updateSchema)
-    .addSchema(onUpdateSchema)
-    .addSchema(statusSchema)
-    .addSchema(onStatusSchema)
-    .addSchema(supportSchema)
-    .addSchema(onSupportSchema)
-    .addSchema(trackSchema)
-    .addSchema(onTrackSchema);
-  
-  validate = validate.compile(schema);
-  
+      .addSchema(searchSchema)
+      .addSchema(onSearchSchema)
+      .addSchema(initSchema)
+      .addSchema(onInitSchema)
+      .addSchema(confirmSchema)
+      .addSchema(onConfirmSchema)
+      .addSchema(updateSchema)
+      .addSchema(onUpdateSchema)
+      .addSchema(statusSchema)
+      .addSchema(onStatusSchema)
+      .addSchema(supportSchema)
+      .addSchema(onSupportSchema)
+      .addSchema(trackSchema)
+      .addSchema(onTrackSchema)
+      .addSchema(cancelSchema)
+      .addSchema(onCancelSchema);
+
+    validate = validate.compile(schema);
+
     const valid = validate(data);
     if (!valid) {
       error_list = validate.errors;
     }
   } catch (error) {
-    console.log("ERROR!! validating schema")
-    console.trace(error)
+    console.log("ERROR!! validating schema");
+    console.trace(error);
   }
- 
- 
+
   return error_list;
 };
 
@@ -96,7 +98,7 @@ const validate_schema_master = (data) => {
 };
 // try {
 //   const cwd = __dirname;
-//   const destination = path.join(cwd, "../../public/logs/test.json");
+//   const destination = path.join(cwd, "../../public/test.json");
 //   let testData = fs.readFileSync(destination);
 //   testData = JSON.parse(testData);
 
@@ -260,5 +262,5 @@ const validate_schema_master = (data) => {
 // validate_schema_on_status_logistics_for_json()
 
 module.exports = {
-  validate_schema_master
+  validate_schema_master,
 };

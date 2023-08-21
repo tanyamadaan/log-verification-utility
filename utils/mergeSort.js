@@ -15,7 +15,9 @@ const sortMerge = (directory, destination) => {
         data = JSON.parse(data);
         const context = data.context;
         if (!context || !context.action) {
-          console.log(`Error in file ${item}: Missing 'context' or 'action' property`);
+          console.log(
+            `Error in file ${item}: Missing 'context' or 'action' property`
+          );
           return acc; // Skip this data and continue with the next iteration
         }
         const { action } = data.context;
@@ -31,6 +33,7 @@ const sortMerge = (directory, destination) => {
       }
     }, {});
 
+    
     // Sort the arrays within each action based on context.timestamp
     for (const action in mergedlogs) {
       const array = mergedlogs[action];
@@ -39,8 +42,10 @@ const sortMerge = (directory, destination) => {
           (a, b) =>
             new Date(a.context.timestamp) - new Date(b.context.timestamp)
         );
+       
       }
     }
+   
 
     // Sort the mergedlogs object based on the first element of each array's context.timestamp
     const sortedmergedlogs = {};
@@ -56,6 +61,7 @@ const sortMerge = (directory, destination) => {
 
     // Assign the sorted data back to mergedlogs
     mergedlogs = sortedmergedlogs;
+
     Object.entries(mergedlogs).forEach(([action], i, entries) => {
       const curAction = action.replace("on_", "");
 

@@ -14,7 +14,7 @@ module.exports = {
         },
         city: {
           type: "string",
-          const: {$data: "/on_search/0/context/city"}
+          const: { $data: "/on_search/0/context/city" },
         },
         action: {
           type: "string",
@@ -38,6 +38,9 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/init/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same as /init: ${/init/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -47,14 +50,13 @@ module.exports = {
                 const: { $data: "1/transaction_id" },
               },
               errorMessage:
-              "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
             },
             {
               not: {
                 const: { $data: "/init/0/context/message_id" },
               },
-              errorMessage:
-              "Message ID should be unique",
+              errorMessage: "Message ID should be unique",
             },
           ],
         },
@@ -94,11 +96,11 @@ module.exports = {
           properties: {
             id: {
               type: "string",
-              const: {$data: "/confirm/message/order/id"}
+              const: { $data: "/confirm/message/order/id" },
             },
             state: {
               type: "string",
-              enum:["Created","Accepted","In-progress"]
+              enum: ["Created", "Accepted", "In-progress"],
             },
             items: {
               type: "array",
@@ -107,18 +109,23 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
-                    const: {$data: "/confirm/message/order/items/0/id"}
+                    const: { $data: "/confirm/message/order/items/0/id" },
                   },
                   category_id: {
                     type: "string",
-                    const: {$data: "/confirm/message/order/items/0/category_id"}
+                    const: {
+                      $data: "/confirm/message/order/items/0/category_id",
+                    },
                   },
                   descriptor: {
                     type: "object",
                     properties: {
                       code: {
                         type: "string",
-                        const: {$data: "/confirm/message/order/items/0/descriptor/code"}
+                        const: {
+                          $data:
+                            "/confirm/message/order/items/0/descriptor/code",
+                        },
                       },
                     },
                     required: ["code"],
@@ -140,14 +147,13 @@ module.exports = {
                   },
                   "@ondc/org/awb_no": {
                     type: "string",
-                    minLength: 11,
-                    maxLength: 16
                   },
                   tags: {
                     type: "object",
                     properties: {
                       "@ondc/org/order_ready_to_ship": {
                         type: "string",
+                        enum: ["yes", "no"],
                       },
                     },
                     required: ["@ondc/org/order_ready_to_ship"],
@@ -177,11 +183,6 @@ module.exports = {
                             required: ["content_type", "url"],
                           },
                         },
-                        required: [
-                          "short_desc",
-                          "long_desc",
-                          "additional_desc",
-                        ],
                       },
                     },
                     required: ["instructions"],
@@ -211,57 +212,88 @@ module.exports = {
                             required: ["content_type", "url"],
                           },
                         },
-                        required: [
-                          "short_desc",
-                          "long_desc"
-                        ],
+                        required: ["short_desc", "long_desc"],
                       },
                     },
                     required: ["instructions"],
                   },
                   "@ondc/org/ewaybillno": {
                     type: "string",
+                    const: { $data: "/confirm/0/message/order/fulfillments/0/@ondc~1org~1ewaybillno" },
                   },
                   "@ondc/org/ebnexpirydate": {
                     type: "string",
                     format: "date-time",
+                    const: { $data: "/confirm/0/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate"},
                   },
                 },
                 required: ["id", "type", "tags"],
-                anyOf: [
-                  {
-                    properties: {
-                      start: {
-                        properties: {
-                          instructions: {
-                            required: ["short_desc"],
-                          }
-                        }
-                      },
-                      tags: {
-                        properties: {
-                          "@ondc/org/order_ready_to_ship": {
-                            enum: ["yes", "Yes"]
-                          }
-                        }
-                      }
-                    },
-                    required: ["start"]
-                  },
-                  {
-                    properties: {
-                      tags: {
-                        properties: {
-                          "@ondc/org/order_ready_to_ship": {
-                            enum: ["no", "No"],
-                            errorMessage: "Fulfillment object should include start instructions if ready_to_ship is Yes"
-                          }
-                        }
-                      }
-                    }
-                  }
-                ],
-                errorMessage: "Fulfillment object should include start instructions if ready_to_ship is Yes"
+
+                // if: {
+                //   properties: {
+                //     tags: {
+                //       properties: {
+                //         "@ondc/org/order_ready_to_ship": { const: "yes" },
+                //       },
+                //     },
+                //   },
+                // },
+                // then: {
+                //   required: ["0/start/instructions"],
+                //   errorMessage:
+                //     "start/instructions are required when ready_to_ship = yes",
+                // },
+
+                // if: {
+                //   properties: {
+                //     tags: {
+                //       properties: {
+                //         "@ondc/org/order_ready_to_ship": { const: "yes" },
+                //       },
+                //     },
+                //   },
+                // },
+                // then: {
+                //   required: [
+                //     "/on_update/message/order/fulfillments/0/start/time/range",
+                //     "/on_update/message/order/fulfillments/0/end/time/range",
+                //   ],
+                //   errorMessage:
+                //     "start and end time range is required when ready_to_ship=yes",
+                // },
+
+                // anyOf: [
+                //   {
+                //     properties: {
+                //       start: {
+                //         properties: {
+                //           instructions: {
+                //             required: ["short_desc"],
+                //           },
+                //         },
+                //       },
+                //       tags: {
+                //         properties: {
+                //           "@ondc/org/order_ready_to_ship": {
+                //             enum: ["yes"],
+                //           },
+                //         },
+                //       },
+                //     },
+                //     required: ["start"],
+                //   },
+                //   {
+                //     properties: {
+                //       tags: {
+                //         properties: {
+                //           "@ondc/org/order_ready_to_ship": {
+                //             enum: ["no"],
+                //           },
+                //         },
+                //       },
+                //     },
+                //   },
+                // ],
               },
             },
             "@ondc/org/linked_order": {
@@ -352,8 +384,9 @@ module.exports = {
             },
             updated_at: {
               type: "string",
-              const: {$data: "3/context/timestamp"},
-              errorMessage: "updated_at does not match context timestamp - ${3/context/timestamp}"
+              const: { $data: "3/context/timestamp" },
+              errorMessage:
+                "updated_at does not match context timestamp - ${3/context/timestamp}",
             },
           },
           required: ["id", "state", "items", "fulfillments", "updated_at"],
@@ -364,15 +397,21 @@ module.exports = {
     confirm: {
       type: "array",
       items: {
-          $ref: "confirmSchema#"
-        }
+        $ref: "confirmSchema#",
+      },
     },
     on_confirm: {
       type: "array",
       items: {
-          $ref: "onConfirmSchema#"
-        } 
-    }
+        $ref: "onConfirmSchema#",
+      },
+    },
+    on_update: {
+      type: "array",
+      items: {
+        $ref: "onUpdateSchema#",
+      },
+    },
   },
   required: ["context", "message"],
 };

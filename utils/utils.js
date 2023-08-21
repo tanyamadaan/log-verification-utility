@@ -191,6 +191,17 @@ const timestampCheck = (date) => {
   }
 };
 
+const hasTwoOrLessDecimalPlaces = (inputString) =>{
+  const parts = inputString.split(".");
+  
+  if (parts.length === 2) {
+      const decimalPart = parts[1];
+      return decimalPart.length <= 2;
+  } else {
+      return true; // No decimal part, automatically satisfies the condition
+  }
+}
+
 const getObjValues = (obj) => {
   let values = "";
   Object.values(obj).forEach((value) => {
@@ -290,6 +301,7 @@ module.exports = {
   retailPaymentType,
   retailPymntTtl,
   categoriesMap,
+  hasTwoOrLessDecimalPlaces,
   timeDiff,
   taxNotInlcusive,
   isArrayEqual,

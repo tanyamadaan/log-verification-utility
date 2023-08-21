@@ -84,19 +84,6 @@ module.exports = {
                   },
                 },
                 required: ["id", "type"],
-                if: {
-                  properties: {
-                    type: {enum: ["Prepaid", "CoD"]},
-                  }
-                },
-                then: {
-                  properties: {
-                    id: {
-                      const: {$data: "3/bpp~1providers/0/items/0/fulfillment_id"}
-                    },
-                  }
-                },
-                errorMessage: "Item Fulfilment id - ${2/bpp~1providers/0/items/0/fulfillment_id} does not match id - ${0/id} for ${0/type} defined under bpp/fulfillments",
               },
             },
             "bpp/descriptor": {
@@ -148,9 +135,7 @@ module.exports = {
                             },
                             duration: {
                               type: "string",
-                              pattern:
-                                "^PT([1-9]|[1-9][0-9])?(D|H)$|^PT([1-5][1-9]|60)?M$",
-                              errorMessage: "Duration is not correct",
+                              format: "duration",
                             },
                           },
                           required: ["label", "duration"],
@@ -166,8 +151,7 @@ module.exports = {
                               properties: {
                                 duration: {
                                   type: "string",
-                                  pattern:
-                                    "^PT([1-5][1-9]|60)?M$",
+                                  pattern: "^PT([1-5][1-9]|60)?M$",
                                   errorMessage:
                                     "Duration is not correct as per Immediate Delivery",
                                 },
@@ -266,21 +250,14 @@ module.exports = {
                             },
                           },
                           required: ["code", "name", "short_desc", "long_desc"],
-                          anyOf: [
-                            {
-                              properties: {
-                                code: {const: "P2H2P"}
-                              },
-                              required: ["/search/0/message/intent/@ondc~1org~1payload_details/dimensions"],
-                              errorMessage: "@ondc/org/payload_details/dimensions required for P2H2P"
-                            },
-                            {
-                              properties: {
-                                code: {const: "P2P", errorMessage: "@ondc/org/payload_details/dimensions required for P2H2P"},
-                              },
-                            }
-                          ],
-                          errorMessage: "@ondc/org/payload_details/dimensions required for P2H2P"
+                          // if: { properties: { code: { const: "P2H2P" } } },
+                          // then: {
+                          //   required: [
+                          //     "/search/0/message/intent/@ondc~1org~1payload_details/dimensions",
+                          //   ],
+                          //   errorMessage:
+                          //     "dimensions are required in /search for P2H2P shipments ${/search/0/message/intent/@ondc~1org~1payload_details/dimensions}",
+                          // },
                         },
                         price: {
                           type: "object",
@@ -366,12 +343,14 @@ module.exports = {
       },
       required: ["catalog"],
     },
-    search: {
-      type: "array",
-      items: {
-        $ref: "searchSchema#",
-      },
+  },
+
+  search: {
+    type: "array",
+    items: {
+      $ref: "searchSchema#",
     },
   },
+
   required: ["context", "message"],
 };

@@ -54,8 +54,8 @@ try {
   outputfile= 'log_report.json'
 
   // let out = getObjValues(ErrorObj['Schema'])
-
-  fs.writeFileSync(outputfile, JSON.stringify(ErrorObj,null,4) , 'utf-8');
+let out = JSON.stringify(ErrorObj,null,4)
+  fs.writeFileSync(outputfile, out , 'utf-8');
 } catch (error) {
   console.log("!!ERROR writing output file",error)
 }

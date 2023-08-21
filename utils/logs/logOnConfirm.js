@@ -7,62 +7,31 @@ const utils = require("../utils");
 const constants = require("../constants");
 
 const checkOnConfirm = (data, msgIdSet) => {
-    let on_confirm = data
-    const onCnfrmObj = {};
+  let on_confirm = data;
+  const onCnfrmObj = {};
 
-    // try {
-    //   console.log(
-    //     `Comparing timestamp of /${constants.LOG_CONFIRM} and /${constants.LOG_ONCONFIRM}`
-    //   );
-    //   if (_.gte(dao.getValue("tmpstmp"), on_confirm.context.timestamp)) {
-    //     onCnfrmObj.tmpstmpErr = `Timestamp for /${constants.LOG_CONFIRM} api cannot be greater than or equal to /${constants.LOG_ONCONFIRM} api`;
-    //   }else {
-    //     const timeDiff = utils.timeDiff(on_confirm.context.timestamp, dao.getValue("tmpstmp"));
-    //     console.log(timeDiff);
-    //     if (timeDiff > 1000) {
-    //       onCnfrmObj.tmpstmp = `context/timestamp difference between /${constants.RET_ONCONFIRM} and /${constants.RET_CONFIRM} should be smaller than 1 sec`;
-    //     }
-    //   }
-
-    //   dao.setValue("tmpstmp", on_confirm.context.timestamp);
-    // } catch (error) {
-    //   console.log(
-    //     `Error while comparing timestamp for /${constants.LOG_CONFIRM} and /${constants.LOG_ONCONFIRM} api`,
-    //     error
-    //   );
-    // }
-
-    // try {
-    //   console.log(
-    //     `Comparing Message Ids of /${constants.LOG_CONFIRM} and /${constants.LOG_ONCONFIRM}`
-    //   );
-    //   if (!_.isEqual(dao.getValue("msgId"), on_confirm.context.message_id)) {
-    //     onCnfrmObj.msgIdErr = `Message Ids for /${constants.LOG_CONFIRM} and /${constants.LOG_ONCONFIRM} apis should be same`;
-    //   }
-    //   msgIdSet.add(on_confirm.context.message_id);
-    // } catch (error) {
-    //   console.log(
-    //     `Error while checking message id for /${constants.LOG_ONCONFIRM}`,
-    //     error
-    //   );
-    // }
-
-    on_confirm = on_confirm.message.order;
-  
-    try {
-      console.log(
-        `Comparing billing object in /${constants.LOG_INIT} and /${constants.LOG_ONCONFIRM}`
-      );
-      const billing = dao.getValue("billing");
-      if (utils.isObjectEqual(billing, on_confirm.billing).length>0) {
-        const billingMismatch= utils.isObjectEqual(billing, on_confirm.billing);
-        onCnfrmObj.bill = `${billingMismatch.join(", ")} mismatches in /billing in /${constants.LOG_INIT} and /${constants.LOG_ONCONFIRM}`;
+  on_confirm = on_confirm.message.order;
+  let fulfillments = on_confirm.fulfillments;
+  let rts = dao.getValue("rts");
+  let p2h2p = dao.getValue("p2h2p")
+  let awbNo= dao.getValue("awbNo");
+  try {
+    console.log(`checking start and end time range in fulfillments`);
+    fulfillments.forEach((fulfillment) => {
+      if(fulfillment["@ondc/org/awb_no"] && p2h2p) awbNo= true;
+      if (rts === "yes" && !fulfillment?.start?.time?.range) {
+        onCnfrmObj.strtRangeErr = `start/time/range is required in /fulfillments when ready_to_ship = yes in /update`;
       }
-    } catch (error) {
-      console.log(
-        `!!Error while comparing billing object in /${constants.LOG_INIT} and /${constants.LOG_ONCONFIRM}`
-      );
-    };
-   return onCnfrmObj;
-  };
+      if (rts === "yes" && !fulfillment?.end?.time?.range) {
+        onCnfrmObj.endRangeErr = `end/time/range is required in /fulfillments when ready_to_ship = yes in /update`;
+      }
+    });
+
+  } catch (error) {
+    console.log(`Error checking fulfillment object in /on_confirm`);
+  }
+ 
+  dao.setValue("awbNo",awbNo);
+  return onCnfrmObj;
+};
 module.exports = checkOnConfirm;

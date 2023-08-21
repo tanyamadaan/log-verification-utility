@@ -14,7 +14,7 @@ module.exports = {
         },
         city: {
           type: "string",
-          const: {$data: "/search/0/context/city"}
+          const: { $data: "/search/0/context/city" },
         },
         action: {
           type: "string",
@@ -38,7 +38,7 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: {$data: "/init/0/context/transaction_id"}
+          const: { $data: "/init/0/context/transaction_id" },
         },
         message_id: {
           type: "string",
@@ -46,21 +46,20 @@ module.exports = {
             {
               const: { $data: "/update/0/context/message_id" },
               errorMessage:
-              "Message ID should be same as /confirm: ${/update/0/context/message_id}",
+                "Message ID should be same as /update: ${/update/0/context/message_id}",
             },
             {
               not: {
                 const: { $data: "1/transaction_id" },
               },
               errorMessage:
-              "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
             },
             {
               not: {
                 const: { $data: "/confirm/0/context/message_id" },
               },
-              errorMessage:
-              "Message ID should be unique",
+              errorMessage: "Message ID should be unique",
             },
           ],
         },
@@ -92,11 +91,11 @@ module.exports = {
           properties: {
             id: {
               type: "string",
-              const: {$data: "/confirm/message/order/id"}
+              const: { $data: "/confirm/0/message/order/id" },
             },
             state: {
               type: "string",
-              enum:["Created","Accepted","Cancelled", "In-progress"]
+              enum: ["Created", "Accepted", "Cancelled", "In-progress"],
             },
             items: {
               type: "array",
@@ -105,21 +104,17 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
-                    const: {$data: "/confirm/message/order/items/0/id"}
                   },
                   category_id: {
                     type: "string",
-                    const: {$data: "/confirm/message/order/items/0/category_id"}
                   },
                   descriptor: {
                     type: "object",
                     properties: {
                       code: {
                         type: "string",
-                        const: {$data: "/confirm/message/order/items/0/descriptor/code"}
                       },
                     },
-                    required: ["code"],
                   },
                 },
                 required: ["id", "category_id", "descriptor"],
@@ -138,8 +133,6 @@ module.exports = {
                   },
                   "@ondc/org/awb_no": {
                     type: "string",
-                    minLength: 11,
-                    maxLength: 16
                   },
                   start: {
                     type: "object",
@@ -152,8 +145,8 @@ module.exports = {
                             properties: {
                               start: {
                                 type: "string",
-                                minimum: {$data: "7/context/timestamp"},
-                                errorMessage: "${7/context/timestamp}"
+                                minimum: { $data: "7/context/timestamp" },
+                                errorMessage: "${7/context/timestamp}",
                               },
                               end: {
                                 type: "string",
@@ -177,10 +170,8 @@ module.exports = {
                             },
                           },
                         },
-                        required: ["short_desc"],
                       },
                     },
-                    required: [],
                   },
                   agent: {
                     type: "object",
@@ -196,9 +187,12 @@ module.exports = {
                   },
                   "@ondc/org/ewaybillno": {
                     type: "string",
+                    const: { $data: "/on_confirm/0/message/order/fulfillments/0/@ondc~1org~1ewaybillno" },
                   },
                   "@ondc/org/ebnexpirydate": {
                     type: "string",
+                    format: "date-time",
+                    const: { $data: "/on_confirm/0/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate"},
                   },
                 },
                 required: ["id", "type", "start"],
@@ -209,106 +203,104 @@ module.exports = {
             },
           },
           required: ["id", "state", "items", "fulfillments", "updated_at"],
-          oneOf: [
-            {
-              allOf: [
-                {
-                  properties: {
-                    items: {
-                      type: "array",
-                      items: {
-                        type: "object",
-                        properties: {
-                          descriptor: {
-                            properties: {
-                              code: {const: "P2H2P"}
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  anyOf: [
-                    {
-                      properties: {
-                        fulfillments: {
-                          required: ["@ondc/org/awb_no", "@ondc/org/ewaybillno", "@ondc/org/ebnexpirydate", "start/instructions/images"]
-                        }
-                      }
-                    },
-                    {
-                      required: ["/update/message/order/fulfillments/@ondc/org/awb_no", "/update/message/order/fulfillments/@ondc/org/ewaybillno", "/update/message/order/fulfillments/@ondc/org/ebnexpirydate", "start/instructions/images"]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              properties: {
-                items: {
-                  type: "array",
-                  items: {
-                    type: "object",
-                    properties: {
-                      descriptor: {
-                        properties: {
-                          code: {const: "P2P"}
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ]
+
+          // oneOf: [
+          //   {
+          //     allOf: [
+          //       {
+          //         properties: {
+          //           items: {
+          //             type: "array",
+          //             items: {
+          //               type: "object",
+          //               properties: {
+          //                 descriptor: {
+          //                   properties: {
+          //                     code: { const: "P2H2P" },
+          //                   },
+          //                 },
+          //               },
+          //             },
+          //           },
+          //         },
+          //       },
+          //       {
+          //         properties: {
+          //           fulfillments: {
+          //             required: [
+          //               "@ondc/org/awb_no",
+          //               "start/instructions/images",
+          //             ],
+          //           },
+          //         },
+          //       }
+          //     ],
+          //   },
+          //   {
+          //     properties: {
+          //       items: {
+          //         type: "array",
+          //         items: {
+          //           type: "object",
+          //           properties: {
+          //             descriptor: {
+          //               properties: {
+          //                 code: { const: "P2P" },
+          //               },
+          //             },
+          //           },
+          //         },
+          //       },
+          //     },
+          //   },
+          // ],
         },
       },
       required: ["order"],
     },
+
     search: {
       type: "array",
       items: {
-          $ref: "searchSchema#"
-      } 
+        $ref: "searchSchema#",
+      },
     },
     on_search: {
       type: "array",
       items: {
-          $ref: "onSearchSchema#"
-      } 
+        $ref: "onSearchSchema#",
+      },
     },
     init: {
       type: "array",
       items: {
-          $ref: "initSchema#"
-      } 
+        $ref: "initSchema#",
+      },
     },
     on_init: {
       type: "array",
       items: {
-          $ref: "onInitSchema#"
-      } 
+        $ref: "onInitSchema#",
+      },
     },
     confirm: {
       type: "array",
       items: {
-          $ref: "confirmSchema#"
-        }
+        $ref: "confirmSchema#",
+      },
     },
     on_confirm: {
       type: "array",
       items: {
-          $ref: "onConfirmSchema#"
-      } 
+        $ref: "onConfirmSchema#",
+      },
     },
     update: {
       type: "array",
       items: {
-          $ref: "updateSchema#"
-      } 
-    }
+        $ref: "updateSchema#",
+      },
+    },
   },
   required: ["context", "message"],
 };

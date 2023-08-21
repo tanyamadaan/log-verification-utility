@@ -228,7 +228,9 @@ module.exports = {
                   properties: {
                     name: {
                       type: "string",
-                      const: { $data: "/init/0/message/order/billing/state/name" },
+                      const: {
+                        $data: "/init/0/message/order/billing/state/name",
+                      },
                     },
                   },
                   required: ["name"],
@@ -238,7 +240,9 @@ module.exports = {
                   properties: {
                     name: {
                       type: "string",
-                      const: { $data: "/init/0/message/order/billing/city/name" },
+                      const: {
+                        $data: "/init/0/message/order/billing/city/name",
+                      },
                     },
                   },
                   required: ["name"],
@@ -256,15 +260,8 @@ module.exports = {
                   const: { $data: "/init/0/message/order/billing/phone" },
                 },
               },
-              "additionalProperties": false,
-              required: [
-                "name",
-                "address",
-                "state",
-                "city",
-                "tax_id",
-                "phone",
-              ],
+              additionalProperties: false,
+              required: ["name", "address", "state", "city", "tax_id", "phone"],
             },
             fulfillments: {
               type: "array",
@@ -424,7 +421,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
-                              enum:["DELIVERY_TERMS"]
+                              enum: ["DELIVERY_TERMS"],
                             },
                           },
                           required: ["code"],
@@ -439,7 +436,7 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
-                                    enum:["INCOTERMS","DELIVERY_DUTY"]
+                                    enum: ["INCOTERMS", "DELIVERY_DUTY"],
                                   },
                                 },
                                 required: ["code"],
@@ -461,7 +458,7 @@ module.exports = {
                   "@ondc/org/provider_name",
                   "state",
                   "type",
-                  "stops"
+                  "stops",
                 ],
               },
             },
@@ -476,7 +473,9 @@ module.exports = {
                     },
                     value: {
                       type: "string",
-                      const: { $data: "/on_init/0/message/order/quote/price/value" },
+                      const: {
+                        $data: "/on_init/0/message/order/quote/price/value",
+                      },
                     },
                   },
                   required: ["currency", "value"],
@@ -726,28 +725,36 @@ module.exports = {
               items: {
                 type: "object",
                 properties: {
-                  code: {
-                    type: "string",
-                    enum:["buyer_id"]
+                  descriptor: {
+                    properties: {
+                      code: {
+                        type: "string",
+                        enum: ["buyer_id"],
+                      },
+                    },
                   },
                   list: {
                     type: "array",
                     items: {
                       type: "object",
                       properties: {
-                        code: {
-                          type: "string",
-                          enum:["buyer_id_code","buyer_id_no"]
+                        descriptor: {
+                          properties: {
+                            code: {
+                              type: "string",
+                              enum: ["buyer_id_code", "buyer_id_no"],
+                            },
+                          },
                         },
                         value: {
                           type: "string",
                         },
                       },
-                      required: ["code", "value"],
+                      required: ["descriptor", "value"],
                     },
                   },
                 },
-                required: ["code", "list"],
+                required: ["descriptor", "list"],
               },
             },
             created_at: {
@@ -762,7 +769,7 @@ module.exports = {
               format: "date-time",
               const: { $data: "3/context/timestamp" },
               errorMessage:
-              "order/updated_at should be updated as per context/timestamp - ${3/context/timestamp}",
+                "order/updated_at should be updated as per context/timestamp - ${3/context/timestamp}",
             },
           },
           required: [

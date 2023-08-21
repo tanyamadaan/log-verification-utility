@@ -159,31 +159,43 @@ module.exports = {
               items: {
                 type: "object",
                 properties: {
-                  code: {
-                    type: "string",
-                    enum: ["bap_terms", "buyer_id"],
+                  descriptor: {
+                    properties: {
+                      code: {
+                        type: "string",
+                        enum: ["bap_terms", "buyer_id"],
+                      },
+                    },
+                    required:["code"]
                   },
                   list: {
                     type: "array",
                     items: {
                       type: "object",
                       properties: {
-                        code: {
-                          type: "string",
+                        descriptor: {
+                          properties: {
+                            code: {
+                              type: "string",
+                            },
+                          },
+                          required:["code"]
                         },
                         value: {
                           type: "string",
                         },
                       },
-                      required: ["code", "value"],
+                      required: ["descriptor", "value"],
                     },
                     minItems: 2,
                   },
                 },
-                required: ["code", "list"],
+                required: ["descriptor", "list"],
                 if: {
                   properties: {
-                    code: { const: "bap_terms" },
+                    descriptor: {
+                      properties: { code: { const: "bap_terms" } },
+                    },
                   },
                 },
                 then: {
@@ -192,11 +204,15 @@ module.exports = {
                       items: {
                         type: "object",
                         properties: {
-                          code: {
-                            enum: ["finder_fee_type", "finder_fee_amount"],
+                          descriptor: {
+                            properties: {
+                              code: {
+                                enum: ["finder_fee_type", "finder_fee_amount"],
+                              },
+                            },
                           },
                         },
-                        required: ["code"],
+                        required: ["descriptor"],
                       },
                     },
                   },
@@ -206,7 +222,9 @@ module.exports = {
                 else: {
                   if: {
                     properties: {
-                      code: { const: "buyer_id" },
+                      descriptor: {
+                        properties: { code: { const: "buyer_id" } },
+                      },
                     },
                   },
                   then: {
@@ -215,11 +233,15 @@ module.exports = {
                         items: {
                           type: "object",
                           properties: {
-                            code: {
-                              enum: ["buyer_id_code", "buyer_id_no"],
+                            descriptor: {
+                              properties: {
+                                code: {
+                                  enum: ["buyer_id_code", "buyer_id_no"],
+                                },
+                              },
                             },
                           },
-                          required: ["code"],
+                          required: ["descriptor"],
                         },
                       },
                     },

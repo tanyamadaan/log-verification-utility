@@ -61,7 +61,6 @@ module.exports = {
         },
         message_id: {
           type: "string",
-          const: { $data: "/status/0/context/message_id" },
         },
         timestamp: {
           type: "string",
@@ -190,7 +189,7 @@ module.exports = {
                   type: "string",
                 },
               },
-              required: ["name", "address", "state", "city", "email", "phone"],
+              required: ["name", "address", "state", "city", "phone"],
             },
             fulfillments: {
               type: "array",
@@ -217,7 +216,7 @@ module.exports = {
                         properties: {
                           code: {
                             type: "string",
-                            enum:["Pending","Agent-assigned","Order-picked-up","Out-for-delivery","Delivered"]
+                            enum:["Pending","Agent-assigned","Order-picked-up","Out-for-delivery","Order-delivered"]
                           },
                         },
                         required: ["code"],

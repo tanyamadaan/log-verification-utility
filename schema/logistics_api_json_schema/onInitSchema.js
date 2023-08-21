@@ -90,6 +90,7 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/provider/id" },
                 },
               },
               required: ["id"],
@@ -99,6 +100,7 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/provider/locations/0/id" },
                 },
               },
             },
@@ -109,6 +111,7 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
+                    const: { $data: "/init/0/message/order/items/0/id" },
                   },
                 },
                 required: ["id"],
@@ -125,9 +128,6 @@ module.exports = {
                     },
                     value: {
                       type: "string",
-                      pattern: "^[0-9]+(\\.[0-9]{2})?$",
-                      errorMessage:
-                        "String must represent a number with a maximum of two decimal digits.",
                     },
                   },
                   required: ["currency", "value"],
@@ -139,8 +139,6 @@ module.exports = {
                     properties: {
                       "@ondc/org/item_id": {
                         type: "string",
-                        const: { $data: "2/items/0/id" },
-                        errorMessage: "${2/items/0/id}",
                       },
                       "@ondc/org/title_type": {
                         type: "string",
@@ -154,9 +152,6 @@ module.exports = {
                           },
                           value: {
                             type: "string",
-                            pattern: "^[0-9]+(\\.[0-9]{2})?$",
-                            errorMessage:
-                              "String must represent a number with a maximum of two decimal digits.",
                           },
                         },
                         required: ["currency", "value"],
@@ -243,21 +238,22 @@ module.exports = {
             },
           },
           required: ["provider", "items", "quote", "payment"],
-          oneOf: [
-            {
-              required: [
-                "/on_search/0/message/catalog/bpp~1providers/0/locations",
-                "provider_location",
-              ],
-            },
-            {
-              not: {
-                required: [
-                  "/on_search/0/message/catalog/bpp~1providers/0/locations",
-                ],
-              },
-            },
-          ],
+          // anyOf: [
+          //   {
+          //     required: [
+          //       "/on_search/0/message/catalog/bpp~1providers/0/locations",
+          //       "provider_location",
+          //     ],
+          //     errorMessage:"provider/location is required in /init if it was returned in /on_search"
+          //   },
+          //   {
+          //     not: {
+          //       required: [
+          //         "/on_search/0/message/catalog/bpp~1providers/0/locations",
+          //       ],
+          //     },
+          //   },
+          // ],
         },
       },
       required: ["order"],

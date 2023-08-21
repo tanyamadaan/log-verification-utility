@@ -168,7 +168,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
-                              enum:["DELIVERY_TERMS"]
+                              enum:["BUYER_TERMS"]
                             },
                           },
                           required: ["code"],
@@ -183,7 +183,7 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
-                                    enum:["INCOTERMS","DELIVERY_DUTY"]
+                                    enum:["ITEM_REQ","PACKAGING_REQ"]
                                   },
                                 },
                                 required: ["code"],
@@ -203,7 +203,7 @@ module.exports = {
                 required: ["id", "quantity"],
               },
             },
-            billing: { 
+            billing: {
               type: "object",
               properties: {
                 name: {
@@ -240,15 +240,8 @@ module.exports = {
                   type: "string",
                 },
               },
-              "additionalProperties": false,
-              required: [
-                "name",
-                "address",
-                "state",
-                "city",
-                "tax_id",
-                "phone",
-              ],
+              additionalProperties: false,
+              required: ["name", "address", "state", "city", "tax_id", "phone"],
             },
             fulfillments: {
               type: "array",
@@ -367,6 +360,7 @@ module.exports = {
                     },
                     required: ["person"],
                   },
+                  
                   tags: {
                     type: "array",
                     items: {
@@ -377,6 +371,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
+                              enum: ["DELIVERY_TERMS"],
                             },
                           },
                           required: ["code"],
@@ -391,6 +386,7 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
+                                    enum: ["INCOTERMS", "DELIVERY_DUTY"],
                                   },
                                 },
                                 required: ["code"],
@@ -434,28 +430,36 @@ module.exports = {
               items: {
                 type: "object",
                 properties: {
-                  code: {
-                    type: "string",
-                    enum:["buyer_id"]
+                  descriptor: {
+                    properties: {
+                      code: {
+                        type: "string",
+                        enum: ["buyer_id"],
+                      },
+                    },
                   },
                   list: {
                     type: "array",
                     items: {
                       type: "object",
                       properties: {
-                        code: {
-                          type: "string",
-                          enum:["buyer_id_code","buyer_id_no"]
+                        descriptor: {
+                          properties: {
+                            code: {
+                              type: "string",
+                              enum: ["buyer_id_code", "buyer_id_no"],
+                            },
+                          },
                         },
                         value: {
                           type: "string",
                         },
                       },
-                      required: ["code", "value"],
+                      required: ["descriptor", "value"],
                     },
                   },
                 },
-                required: ["code", "list"],
+                required: ["descriptor", "list"],
               },
             },
           },

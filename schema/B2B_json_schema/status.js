@@ -27,7 +27,7 @@ module.exports = {
               properties: {
                 code: {
                   type: "string",
-                  const: { $data: "/on_confirm/0/context/location/city/code" },
+                  const: { $data: "/on_confirm/0/context/location/country/code" },
                 },
               },
               required: ["code"],

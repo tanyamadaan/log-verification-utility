@@ -81,6 +81,7 @@ const checkOnSearch = (data, msgIdSet) => {
       providers.forEach((provider, i) => {
         let itemsArr = provider.items;
         const providerId = provider.id;
+    
         dao.setValue(`${providerId}itemsArr`, itemsArr);
         itemsArr.forEach((item, j) => {
           if (!validFulfillmentIDs.has(item.fulfillment_id)) {
@@ -90,8 +91,10 @@ const checkOnSearch = (data, msgIdSet) => {
             item.descriptor.code === "P2H2P" &&
             !search["@ondc/org/payload_details"].dimensions
           ) {
-            let itemKey = `dimensionErr${j}`
-            onSrchObj[itemKey] = `@ondc/org/payload_details/dimensions is a required property in /search request for 'P2H2P' shipments`;
+            let itemKey = `dimensionErr${j}`;
+            onSrchObj[
+              itemKey
+            ] = `@ondc/org/payload_details/dimensions is a required property in /search request for 'P2H2P' shipments`;
           }
         });
       });

@@ -55,7 +55,7 @@ module.exports = {
               not: {
                 const: { $data: "/confirm/0/context/message_id" },
               },
-              errorMessage: "Message ID should be unique",
+              errorMessage: "Message ID should be unique and not same as /confirm API",
             },
           ],
         },

@@ -103,6 +103,7 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/provider/id" },
                 },
                 locations: {
                   type: "array",

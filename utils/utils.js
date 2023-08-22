@@ -191,6 +191,25 @@ const timestampCheck = (date) => {
   }
 };
 
+function compareDates(dateString1, dateString2) {
+  const date1 = new Date(dateString1);
+  const date2 = new Date(dateString2);
+  
+  const year1 = date1.getUTCFullYear();
+  const month1 = date1.getUTCMonth();
+  const day1 = date1.getUTCDate();
+
+  const year2 = date2.getUTCFullYear();
+  const month2 = date2.getUTCMonth();
+  const day2 = date2.getUTCDate();
+
+  if (year1 > year2 || (year1 === year2 && month1 > month2) || (year1 === year2 && month1 === month2 && day1 > day2)) {
+    return true;
+  } else if (year1 < year2 || (year1 === year2 && month1 < month2) || (year1 === year2 && month1 === month2 && day1 <= day2)) {
+    return false;
+  } 
+}
+
 const hasTwoOrLessDecimalPlaces = (inputString) =>{
   const parts = inputString.split(".");
   
@@ -301,6 +320,7 @@ module.exports = {
   retailPaymentType,
   retailPymntTtl,
   categoriesMap,
+  compareDates,
   hasTwoOrLessDecimalPlaces,
   timeDiff,
   taxNotInlcusive,

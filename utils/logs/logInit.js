@@ -23,15 +23,15 @@ const checkInit = (data, msgIdSet) => {
       let providerObj = providersArr.filter(
         (prov) => prov.id === init.provider.id
       );
-      if (providerObj.length < 1) {
+      if (providerObj?.length < 1) {
         initObj.prvdrErr = `Provider with id '${init.provider.id}' does not exist in the catalog provided in /on_search`;
       } else {
         if (
-          (!init.provider.locations || init.provider.locations.length < 1) &&
-          providerObj[0].locations.length>1
+          (!init?.provider?.locations || init?.provider?.locations?.length < 1) &&
+          providerObj[0]?.locations?.length>1
         ) {
           initObj.provLocErr = `Provider location is mandatory if provided in the catalog in /on_search`;
-        } else if (init.provider.locations) {
+        } else if (init?.provider?.locations) {
           let providerLocArr = init.provider.locations;
           let providerLocExists = false;
           providerLocArr.forEach((location, i) => {
@@ -53,7 +53,7 @@ const checkInit = (data, msgIdSet) => {
     }
   } catch (error) {
     console.log(
-      `!!Error while checking provider object in /${constants.log_INIT}`,
+      `!!Error while checking provider object in /${constants.LOG_INIT}`,
       error
     );
   }

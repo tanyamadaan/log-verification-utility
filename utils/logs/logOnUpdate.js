@@ -40,9 +40,6 @@ const checkOnUpdate = (data, msgIdSet) => {
     console.log(`!!Error while checking fulfillments in /on_update api`, error);
   }
 
-  try {
-    console.log(`Checking "P2H2P"=true in /on_update api`);
-  } catch (error) {}
 
   return onUpdtObj;
 };

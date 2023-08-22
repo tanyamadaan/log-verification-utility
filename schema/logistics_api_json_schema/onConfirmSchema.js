@@ -121,22 +121,22 @@ module.exports = {
                 },
               },
               required: ["id"],
-              oneOf: [
-                {
-                  required: [
-                    "/confirm/0/message/order/provider/locations",
-                    "locations",
-                  ],
-                },
-                {
-                  not: {
-                    required: [
-                      "/confirm/0/message/order/provider/locations",
-                      "locations",
-                    ],
-                  },
-                },
-              ],
+              // oneOf: [
+              //   {
+              //     required: [
+              //       "/confirm/0/message/order/provider/locations",
+              //       "locations",
+              //     ],
+              //   },
+              //   {
+              //     not: {
+              //       required: [
+              //         "/confirm/0/message/order/provider/locations",
+              //         "locations",
+              //       ],
+              //     },
+              //   },
+              // ],
             },
             items: {
               type: "array",

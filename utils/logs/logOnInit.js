@@ -14,6 +14,7 @@ const checkOnInit = (data, msgIdSet) => {
   let provId = on_init.provider.id;
   let itemId = on_init.items[0].id;
   let onSearchProvArr = dao.getValue("providersArr");
+ 
   try {
     console.log(
       `Comparing order quote price and break up  in ${constants.LOG_ONINIT}`

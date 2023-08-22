@@ -3,6 +3,7 @@ const path = require("path");
 const constants = require("./constants");
 
 const sortMerge = (directory, destination) => {
+  flowErrObj={}
   try {
     var mergedlogs = [];
     files = fs.readdirSync(directory);
@@ -74,12 +75,14 @@ const sortMerge = (directory, destination) => {
           ([a]) => a.replace("on_", "") === nextAction
         );
         if (i > nextIndex && !action.includes("confirm")) {
-          console.log("flow incorrect");
+          console.log(`Flow incorrect- current action: ${curAction}, next action :${nextAction}`);
+          flowErrObj[curIndex]= `Flow incorrect- current action: ${curAction}, next action :${nextAction}`
         }
       }
     });
 
     fs.writeFileSync(destination, JSON.stringify(mergedlogs));
+    return flowErrObj;
   } catch (err) {
     console.log(`Error while running merging log files, ${err}`);
     console.trace(err);

@@ -1,5 +1,5 @@
 module.exports = {
-  $id: "http://example.com/schema/searchSchema",
+  $id: "http://example.com/schema/searchSchema1",
   type: "object",
   properties: {
     context: {
@@ -294,9 +294,6 @@ module.exports = {
                 },
                 dangerous_goods: {
                   type: "boolean",
-                  const: "true",
-                  errorMessage:
-                      "is an optional property and should be set when payload includes hazardous goods",
                 },
                 value: {
                   type: "object",

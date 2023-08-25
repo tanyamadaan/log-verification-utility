@@ -3,16 +3,10 @@ module.exports = {
   type: "object",
   properties: {
     search: {
-      type: "array",
-      items: {
-        $ref: "searchSchema#",
-      },
+      $ref: "searchSchema1#",
     },
     on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
+      $ref: "onSearchSchema1#",
     },
   },
 };

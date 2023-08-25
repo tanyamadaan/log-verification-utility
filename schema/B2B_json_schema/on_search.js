@@ -257,6 +257,7 @@ module.exports = {
                           type: "string",
                         },
                       },
+                      additionalProperties:false,
                       required: [
                         "id",
                         "gps",

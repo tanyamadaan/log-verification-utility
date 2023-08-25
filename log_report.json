@@ -1,16 +1,28 @@
 {
     "Schema": {
-        "schemaErr0": "/on_search/0/message/catalog/bpp~1providers/0/items/0/time/timestamp must match format \"date-time\"",
-        "schemaErr1": "/on_search/0/message/catalog/bpp~1providers/0/items/1/time/timestamp must match format \"date-time\"",
-        "schemaErr2": "/on_search/0/message/catalog/bpp~1providers/1/items/0/time/timestamp must match format \"date-time\"",
-        "schemaErr3": "/on_search/0/message/catalog/bpp~1providers/1/items/1/time/timestamp must match format \"date-time\"",
-        "schemaErr4": "/on_search/0/message/catalog/bpp~1providers/2/items/0/time/timestamp must match format \"date-time\"",
-        "schemaErr5": "/on_search/0/message/catalog/bpp~1providers/2/items/1/time/timestamp must match format \"date-time\"",
-        "schemaErr6": "/on_search/0/message/catalog/bpp~1providers/3/items/0/time/timestamp must match format \"date-time\"",
-        "schemaErr7": "/on_search/0/message/catalog/bpp~1providers/3/items/1/time/timestamp must match format \"date-time\"",
-        "schemaErr8": "/init/0/message/order/billing/address/building cannot be equal to locality",
-        "schemaErr9": "/on_confirm/0/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate must match format \"date-time\"",
-        "schemaErr10": "/on_update/0/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate must match format \"date-time\"",
-        "schemaErr11": "/on_cancel/0/context/message_id Message ID should be unique and not same as /confirm API"
+        "schemaErr0": "/init/0/message/order must NOT have additional properties (quote)",
+        "schemaErr1": "/init/0/message/order/fulfillments/0 must NOT have additional properties (tags)",
+        "schemaErr2": "/on_confirm/0/message/order/quote object mismatches in /confirm and /on_confirm.",
+        "schemaErr3": "/on_status/0/message/order/payment/@ondc~1org~1settlement_details/0/upi_address must be string",
+        "schemaErr4": "/on_status/1/message/order/payment/@ondc~1org~1settlement_details/0/upi_address must be string"
+    },
+    "Context": {
+        "on_search": {
+            "tmpstmp": "context/timestamp difference between on_search and search should be smaller than 1 sec"
+        },
+        "on_init": {
+            "tmpstmp": "context/timestamp difference between on_init and init should be smaller than 1 sec"
+        },
+        "on_confirm": {
+            "tmpstmp": "Timestamp mismatch for /on_confirm "
+        }
+    },
+    "Message": {
+        "search_0": {
+            "holidayErr0": "Holiday date '2023-08-19' should not be past dated"
+        },
+        "on_init_0": {
+            "priceArr0": "Quote price 30.00 for 'Delivery Charge' does not match item price 30 in /on_search"
+        }
     }
 }

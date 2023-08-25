@@ -75,8 +75,8 @@ const sortMerge = (directory, destination) => {
           ([a]) => a.replace("on_", "") === nextAction
         );
         if (i > nextIndex && !action.includes("confirm")) {
-          console.log(`Flow incorrect- current action: ${curAction}, next action :${nextAction}`);
-          flowErrObj[curIndex]= `Flow incorrect- current action: ${curAction}, next action :${nextAction}`
+          console.log(`Flow incorrect- current action: ${action}, index :${i}, nextIndex:${nextIndex}`);
+          flowErrObj[curIndex]= `Incorrect Flow - (${Object.keys(mergedlogs)})`
         }
       }
     });

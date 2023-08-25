@@ -36,10 +36,7 @@ const checkOnStatus = (data, msgIdSet) => {
       );
       fulfillments.forEach((fulfillment) => {
         ffState = fulfillment?.state?.descriptor?.code;
-        if (
-          fulfillment.type === "Prepaid" &&
-          ffState !== "Cancelled"
-        ) {
+        if (fulfillment.type === "Prepaid" && ffState !== "Cancelled") {
           onStatusObj.flflmntstErr = `In case of RTO, fulfillment with type 'Prepaid' needs to in 'Cancelled' state`;
         }
       });
@@ -83,8 +80,7 @@ const checkOnStatus = (data, msgIdSet) => {
           }
           if (!dao.getValue("pickupTime")) {
             onStatusObj.pickupTimeErr = `Missing /on_status response for fulfillment state - 'Order-picked-up'`;
-          }
-         else if (
+          } else if (
             !fulfillment?.start?.time?.timestamp ||
             fulfillment?.start?.time?.timestamp !== dao.getValue("pickupTime")
           ) {
@@ -157,17 +153,18 @@ const checkOnStatus = (data, msgIdSet) => {
           RtoPickupTime = fulfillment?.start?.time?.timestamp;
           if (RtoPickupTime) {
             dao.setValue("RtoPickupTime", RtoPickupTime);
-          } else{
+          } else {
             onStatusObj.rtoPickupTimeErr = `RTO Pickup timestamp is missing for fulfillment state - ${ffState}`;
           }
           if (_.gt(RtoPickupTime, contextTime)) {
             onStatusObj.rtoPickupErr = `RTO Pickup time cannot be future dated for fulfillment state - ${ffState}`;
           }
         }
-        if (ffState === "RTO-Delivered"||ffState=== 'RTO-Disposed') {
+        if (ffState === "RTO-Delivered" || ffState === "RTO-Disposed") {
           RtoDeliveredTime = fulfillment?.end?.time?.timestamp;
           console.log(dao.getValue("RtoPickupTime"));
-          if(!RtoDeliveredTime && ffState=== "RTO-Delivered")  onStatusObj.rtoDlvryTimeErr = `RTO Delivery timestamp is missing for fulfillment state - ${ffState}`;
+          if (!RtoDeliveredTime && ffState === "RTO-Delivered")
+            onStatusObj.rtoDlvryTimeErr = `RTO Delivery timestamp is missing for fulfillment state - ${ffState}`;
           if (
             fulfillment.start.time.timestamp &&
             dao.getValue("RtoPickupTime")

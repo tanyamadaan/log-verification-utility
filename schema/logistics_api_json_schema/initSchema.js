@@ -294,6 +294,7 @@ module.exports = {
                     required: ["location", "contact"],
                   },
                 },
+                additionalProperties:false,
                 required: ["id", "type", "start", "end"],
               },
             },
@@ -444,6 +445,7 @@ module.exports = {
               required: ["@ondc/org/settlement_details"],
             },
           },
+          additionalProperties:false,
           required: ["provider", "items", "fulfillments", "billing"]
         },
       },

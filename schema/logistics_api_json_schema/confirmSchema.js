@@ -40,7 +40,7 @@ module.exports = {
           type: "string",
           const: { $data: "/init/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same as /init: ${/init/0/context/transaction_id}",
+            "Transaction ID should be same as /init: ${/init/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -145,7 +145,9 @@ module.exports = {
                   },
                   category_id: {
                     type: "string",
-                    const: { $data: "/init/0/message/order/items/0/category_id" },
+                    const: {
+                      $data: "/init/0/message/order/items/0/category_id",
+                    },
                   },
                   descriptor: {
                     type: "object",
@@ -496,16 +498,16 @@ module.exports = {
                         enum: ["yes", "no"],
                       },
                     },
-                    if: {
-                      properties: {
-                        "@ondc/org/order_ready_to_ship": { const: "yes" },
-                      },
-                    },
-                    then: {
-                      required: ["1/start/instructions"],
-                      errorMessage:
-                        "Pickup code (fulfillments/start/instructions), mandatory  if order_ready_to_ship = yes in /confirm",
-                    },
+                    // if: {
+                    //   properties: {
+                    //     "@ondc/org/order_ready_to_ship": { const: "yes" },
+                    //   },
+                    // },
+                    // then: {
+                    //   required: ["1/start/instructions"],
+                    //   errorMessage:
+                    //     "Pickup code (fulfillments/start/instructions), mandatory if order_ready_to_ship = yes in /confirm",
+                    // },
 
                     required: ["@ondc/org/order_ready_to_ship"],
                   },
@@ -818,7 +820,7 @@ module.exports = {
                           type: "string",
                         },
                       },
-  
+
                       required: [
                         "name",
                         "locality",
@@ -867,6 +869,7 @@ module.exports = {
                 "updated_at does not match context timestamp - ${3/context/timestamp}",
             },
           },
+          additionalProperties: false,
           required: [
             "id",
             "state",

@@ -251,8 +251,8 @@ module.exports = {
                           },
                           if: {code: { const: "P2H2P" } },
                           then: {
-                            required: ["5/search/context/transaction_id"],
-                            errorMessage: "short desc is required ${/search/context/transaction_id}",
+                            required: ["1/category_id"],
+                            errorMessage: "short desc is required ${1/category_id}",
                           },
                           else: { required: ["name", "code"] },
                         },
@@ -341,13 +341,6 @@ module.exports = {
       required: ["catalog"],
     },
   },
-  search: {
-    type: "array",
-    items: {
-      $ref: "searchSchema#",
-    },
-  },
-
 
   required: ["context", "message"],
 };

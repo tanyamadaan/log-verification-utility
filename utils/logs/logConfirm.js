@@ -19,6 +19,9 @@ const checkConfirm = (data, msgIdSet) => {
   let p2h2p = dao.getValue("p2h2p")
   fulfillments.forEach(fulfillment => {
     if(fulfillment["@ondc/org/awb_no"] && p2h2p) awbNo= true;
+    if(fulfillment?.tags["@ondc/org/order_ready_to_ship"]==='yes' && !fulfillment?.start?.instructions?.short_desc){
+    cnfrmObj.instructionsErr=`PCC code is required in /fulfillments/start/instructions when ready_to_ship = 'yes'`
+    }
   });
   
   dao.setValue("awbNo",awbNo);

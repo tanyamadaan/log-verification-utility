@@ -185,6 +185,7 @@ module.exports = {
                         },
                       },
                     },
+                    additionalProperties:false,
                     required: ["instructions"],
                   },
                   end: {
@@ -215,6 +216,7 @@ module.exports = {
                         required: ["short_desc", "long_desc"],
                       },
                     },
+                    additionalProperties:false,
                     required: ["instructions"],
                   },
                   "@ondc/org/ewaybillno": {
@@ -227,6 +229,7 @@ module.exports = {
                     const: { $data: "/confirm/0/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate"},
                   },
                 },
+                additionalProperties:false,
                 required: ["id", "type", "tags"],
 
                 // if: {

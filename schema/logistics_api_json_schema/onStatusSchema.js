@@ -597,17 +597,43 @@ module.exports = {
                 },
               },
             },
+            created_at: {
+              type: "string",
+              const: { $data: "/confirm/0/context/timestamp" },
+              errorMessage:
+                "does not match confirm context timestamp - ${/confirm/0/context/timestamp}",
+            },
+            updated_at: {
+              type: "string"
+            },
           },
-          required: [
-            "id",
-            "state",
-            "provider",
-            "items",
-            "quote",
-            "fulfillments",
-            "payment",
-            "billing",
-          ],
+          additionalProperties:false,
+          if: { properties: { state: { const: "Cancelled" } } },
+          then: {
+            required: [
+              "id",
+              "state",
+              "provider",
+              "items",
+              "quote",
+              "fulfillments",
+              "payment",
+              "billing",
+              "tags"
+            ],
+          },
+          else: {
+            required: [
+              "id",
+              "state",
+              "provider",
+              "items",
+              "quote",
+              "fulfillments",
+              "payment",
+              "billing",
+            ],
+          },
         },
       },
       required: ["order"],

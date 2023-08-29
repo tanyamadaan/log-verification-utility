@@ -293,10 +293,10 @@ module.exports = {
                   ],
                 },
                 dangerous_goods: {
-                  type: "boolean",
-                  const: "true",
-                  errorMessage:
-                      "is an optional property and should be set when payload includes hazardous goods",
+                  type: "boolean"
+                  // const: "true",
+                  // errorMessage:
+                  //     "is an optional property and should be set when payload includes hazardous goods",
                 },
                 value: {
                   type: "object",

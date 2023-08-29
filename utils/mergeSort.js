@@ -3,7 +3,7 @@ const path = require("path");
 const constants = require("./constants");
 
 const sortMerge = (directory, destination) => {
-  flowErrObj={}
+  flowErrObj = {};
   try {
     var mergedlogs = [];
     files = fs.readdirSync(directory);
@@ -34,7 +34,6 @@ const sortMerge = (directory, destination) => {
       }
     }, {});
 
-    
     // Sort the arrays within each action based on context.timestamp
     for (const action in mergedlogs) {
       const array = mergedlogs[action];
@@ -43,10 +42,8 @@ const sortMerge = (directory, destination) => {
           (a, b) =>
             new Date(a.context.timestamp) - new Date(b.context.timestamp)
         );
-       
       }
     }
-   
 
     // Sort the mergedlogs object based on the first element of each array's context.timestamp
     const sortedmergedlogs = {};
@@ -65,18 +62,17 @@ const sortMerge = (directory, destination) => {
 
     Object.entries(mergedlogs).forEach(([action], i, entries) => {
       const curAction = action;
-
       if (map.includes(curAction)) {
         const curIndex = map.indexOf(curAction);
-
-        // const nextAction = map[curIndex + 1];
-
-        // const nextIndex = entries.findIndex(
-        //   ([a]) => a === nextAction
-        // );
         if (i !== curIndex) {
-          console.log(`Flow incorrect- current action: ${action}, Current Index:${i}, Index in correct flow:${curIndex}`);
-          flowErrObj[i]= `Incorrect Flow as per context/timestamps - (${Object.keys(mergedlogs)})`
+          console.log(
+            `Flow incorrect- current action: ${action}, Current Index:${i}, Index in correct flow:${curIndex}`
+          );
+          flowErrObj[
+            i
+          ] = `Incorrect Flow as per context/timestamps - (${Object.keys(
+            mergedlogs
+          )})`;
         }
       }
     });

@@ -198,10 +198,17 @@ module.exports = {
                 required: ["id", "type", "start"],
               },
             },
+            created_at: {
+              type: "string",
+              const: { $data: "/confirm/0/context/timestamp" },
+              errorMessage:
+                "does not match confirm context timestamp - ${/confirm/0/context/timestamp}",
+            },
             updated_at: {
               type: "string",
             },
           },
+          additionalProperties:false,
           required: ["id", "state", "items", "fulfillments", "updated_at"],
 
           // oneOf: [

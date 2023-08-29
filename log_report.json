@@ -1,23 +1,15 @@
 {
-    "Flow Error": {
-        "6": "Incorrect Flow as per context/timestamps - (search,on_search,init,on_init,confirm,update,on_confirm,on_update,on_status)"
-    },
     "Schema": {
-        "schemaErr0": "/on_confirm/0/message/order/created_at does not match confirm context timestamp - \"2023-08-28T04:20:27.282Z\"",
-        "schemaErr1": "/update/0/message/order/updated_at updated_at does not match context timestamp - \"2023-08-28T04:20:27.282Z\"",
-        "schemaErr2": "/on_status/0/message/order/billing/created_at mismatches in /billing in /confirm and /on_status",
-        "schemaErr3": "/on_status/0/message/order/billing/updated_at mismatches in /billing in /confirm and /on_status",
-        "schemaErr4": "/on_status/1/message/order/billing/created_at mismatches in /billing in /confirm and /on_status",
-        "schemaErr5": "/on_status/1/message/order/billing/updated_at mismatches in /billing in /confirm and /on_status",
-        "schemaErr6": "/on_status/2/message/order/billing/created_at mismatches in /billing in /confirm and /on_status",
-        "schemaErr7": "/on_status/2/message/order/billing/updated_at mismatches in /billing in /confirm and /on_status"
+        "schemaErr0": "/update/0/message/order/fulfillments/0 must NOT have additional properties (tracking)",
+        "schemaErr1": "/on_update/0/message/order must NOT have additional properties (@ondc/org/linked_order)",
+        "schemaErr2": "/on_update/0/message/order must NOT have additional properties (billing)"
     },
     "Context": {
-        "update": {
-            "tmpstmp": "Timestamp mismatch for /update "
+        "on_search": {
+            "tmpstmp": "context/timestamp difference between on_search and search should be smaller than 1 sec"
         },
-        "on_confirm": {
-            "tmpstmp": "context/timestamp difference between on_confirm and confirm should be smaller than 1 sec"
+        "on_init": {
+            "tmpstmp": "context/timestamp difference between on_init and init should be smaller than 1 sec"
         }
     }
 }

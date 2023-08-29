@@ -237,6 +237,7 @@ module.exports = {
               required: ["type", "collected_by"],
             },
           },
+          additionalProperties:false,
           required: ["provider", "items", "quote", "payment"],
           // anyOf: [
           //   {

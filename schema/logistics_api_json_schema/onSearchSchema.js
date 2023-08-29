@@ -338,6 +338,7 @@ module.exports = {
               },
             },
           },
+          additionalProperties:false,
           required: ["bpp/fulfillments", "bpp/descriptor", "bpp/providers"],
         },
       },

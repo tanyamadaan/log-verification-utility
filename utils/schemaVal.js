@@ -116,7 +116,8 @@ const Validate = (domain, dirPath, msgIdSet, ErrorObj) => {
           ErrorObj["Message"][`${action}_${i}`] = checkMessage(
             element,
             action,
-            msgIdSet
+            msgIdSet,
+            domain
           );
         } catch (error) {
           console.log(
@@ -148,6 +149,7 @@ const Validate = (domain, dirPath, msgIdSet, ErrorObj) => {
         //   );
         // }
       });
+    
       return ErrorObj;
     });
   } catch (error) {

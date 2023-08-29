@@ -97,7 +97,7 @@ const checkOnStatus = (data, msgIdSet) => {
           deliveryTime = fulfillment?.end?.time?.timestamp;
           dao.setValue("deliveryTime", deliveryTime);
           if (!dao.getValue("pickupTime")) {
-            onStatusObj.pickupTimeErr = `Missing /on_status response for fulfillment state - 'Order-picked-up'`;
+            onStatusObj.pickupTimeErr = `/on_status call for Fulfillment state - 'Order-picked-up' missing`;
           } else if (
             !fulfillment?.start?.time?.timestamp ||
             fulfillment?.start?.time?.timestamp !== dao.getValue("pickupTime")
@@ -118,7 +118,7 @@ const checkOnStatus = (data, msgIdSet) => {
           }
           if (fulfillments.length > 1) {
             if (!dao.getValue("pickupTime")) {
-              onStatusObj.msngPickupState = `/on_status call for Fulfillment state - Order-picked-up missing`;
+              onStatusObj.msngPickupState = `/on_status call for Fulfillment state - 'Order-picked-up' missing`;
             } else if (!fulfillment.start.time.timestamp) {
               onStatusObj.msngPickupTimeErr = `Pickup timestamp (fulfillments/start/time/timestamp) is missing for fulfillment state - ${ffState}`;
             }
@@ -157,14 +157,14 @@ const checkOnStatus = (data, msgIdSet) => {
             onStatusObj.rtoPickupTimeErr = `RTO Pickup timestamp is missing for fulfillment state - ${ffState}`;
           }
           if (_.gt(RtoPickupTime, contextTime)) {
-            onStatusObj.rtoPickupErr = `RTO Pickup time cannot be future dated for fulfillment state - ${ffState}`;
+            onStatusObj.rtoPickupErr = `RTO Pickup (fulfillments/start/time/timestamp) time cannot be future dated for fulfillment state - ${ffState}`;
           }
         }
         if (ffState === "RTO-Delivered" || ffState === "RTO-Disposed") {
           RtoDeliveredTime = fulfillment?.end?.time?.timestamp;
           console.log(dao.getValue("RtoPickupTime"));
           if (!RtoDeliveredTime && ffState === "RTO-Delivered")
-            onStatusObj.rtoDlvryTimeErr = `RTO Delivery timestamp is missing for fulfillment state - ${ffState}`;
+            onStatusObj.rtoDlvryTimeErr = `RTO Delivery timestamp (fulfillments/end/time/timestamp) is missing for fulfillment state - ${ffState}`;
           if (
             fulfillment.start.time.timestamp &&
             dao.getValue("RtoPickupTime")
@@ -175,11 +175,11 @@ const checkOnStatus = (data, msgIdSet) => {
                 dao.getValue("RtoPickupTime")
               )
             ) {
-              onStatusObj.rtoPickupErr = `RTO Pickup time cannot change for fulfillment state - ${ffState}`;
+              onStatusObj.rtoPickupErr = `RTO Pickup time (fulfillments/start/time/timestamp) cannot change for fulfillment state - ${ffState}`;
             }
           }
           if (RtoDeliveredTime && _.gt(RtoDeliveredTime, contextTime)) {
-            onStatusObj.rtoDeliveredErr = `RTO Delivery time cannot be future dated for fulfillment state - ${ffState}`;
+            onStatusObj.rtoDeliveredErr = `RTO Delivery time (fulfillments/end/time/timestamp) cannot be future dated for fulfillment state - ${ffState}`;
           }
         }
       }

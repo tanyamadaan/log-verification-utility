@@ -7,22 +7,22 @@ module.exports = {
       properties: {
         domain: {
           type: "string",
-          const: "nic2004:60232"
+          const: "nic2004:60232",
         },
         country: {
           type: "string",
         },
         city: {
           type: "string",
-          const: {$data: "/search/0/context/city"}
+          const: { $data: "/search/0/context/city" },
         },
         action: {
           type: "string",
-          const:"on_status"
+          const: "on_status",
         },
         core_version: {
           type: "string",
-          const:"1.1.0"
+          const: "1.1.0",
         },
         bap_id: {
           type: "string",
@@ -38,26 +38,24 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: {$data: "/init/0/context/transaction_id"}
+          const: { $data: "/init/0/context/transaction_id" },
         },
         message_id: {
           type: "string",
-          const: {$data: "/status/context/message_id"},
+          const: { $data: "/status/context/message_id" },
           allOf: [
-           
             {
               not: {
                 const: { $data: "1/transaction_id" },
               },
               errorMessage:
-              "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
             },
             {
               not: {
                 const: { $data: "/confirm/0/context/message_id" },
               },
-              errorMessage:
-              "Message ID should be unique",
+              errorMessage: "Message ID should be unique",
             },
           ],
         },
@@ -115,7 +113,10 @@ module.exports = {
                     properties: {
                       id: {
                         type: "string",
-                        const: { $data: "/init/0/message/order/provider/locations/0/id" },
+                        const: {
+                          $data:
+                            "/init/0/message/order/provider/locations/0/id",
+                        },
                       },
                     },
                   },
@@ -134,14 +135,19 @@ module.exports = {
                   },
                   category_id: {
                     type: "string",
-                    const: { $data: "/init/0/message/order/items/0/category_id" },
+                    const: {
+                      $data: "/init/0/message/order/items/0/category_id",
+                    },
                   },
                   descriptor: {
                     type: "object",
                     properties: {
                       code: {
                         type: "string",
-                        const: { $data: "/init/0/message/order/items/0/descriptor/code" },
+                        const: {
+                          $data:
+                            "/init/0/message/order/items/0/descriptor/code",
+                        },
                       },
                     },
                     required: ["code"],
@@ -209,7 +215,6 @@ module.exports = {
                   },
                   "@ondc/org/awb_no": {
                     type: "string",
-
                   },
                   state: {
                     type: "object",
@@ -371,11 +376,11 @@ module.exports = {
                     type: "string",
                   },
                 },
-                required: [
-                  "type",
-                  "state",
-                  "tracking"
-                ],
+                if: { properties: { type: { const: "Prepaid" } } },
+                then: { required: ["type", "state", "tracking"] },
+                else: {
+                  required: ["type", "state"],
+                },
               },
             },
             payment: {
@@ -387,7 +392,9 @@ module.exports = {
                 },
                 collected_by: {
                   type: "string",
-                  const: { $data: "/on_confirm/0/message/order/payment/collected_by" },
+                  const: {
+                    $data: "/on_confirm/0/message/order/payment/collected_by",
+                  },
                 },
                 "@ondc/org/settlement_details": {
                   type: "array",
@@ -436,7 +443,7 @@ module.exports = {
                         if: {
                           properties: {
                             settlement_type: {
-                              const: ["neft","rtgs"]
+                              const: ["neft", "rtgs"],
                             },
                           },
                         },
@@ -447,18 +454,12 @@ module.exports = {
                           ],
                         },
                       },
-                  ],
-                    required: [
-                      "settlement_counterparty",
-                      "settlement_type",
                     ],
+                    required: ["settlement_counterparty", "settlement_type"],
                   },
                 },
               },
-              required: [
-                "type",
-                "collected_by"
-              ],
+              required: ["type", "collected_by"],
             },
             billing: {
               type: "object",
@@ -484,7 +485,8 @@ module.exports = {
                     building: {
                       type: "string",
                       const: {
-                        $data: "/confirm/0/message/order/billing/address/building",
+                        $data:
+                          "/confirm/0/message/order/billing/address/building",
                       },
                       errorMessage:
                         "mismatches in /billing in /confirm and /on_status",
@@ -492,7 +494,8 @@ module.exports = {
                     locality: {
                       type: "string",
                       const: {
-                        $data: "/confirm/0/message/order/billing/address/locality",
+                        $data:
+                          "/confirm/0/message/order/billing/address/locality",
                       },
                       errorMessage:
                         "mismatches in /billing in /confirm and /on_status",
@@ -516,7 +519,8 @@ module.exports = {
                     country: {
                       type: "string",
                       const: {
-                        $data: "/confirm/0/message/order/billing/address/country",
+                        $data:
+                          "/confirm/0/message/order/billing/address/country",
                       },
                       errorMessage:
                         "mismatches in /billing in /confirm and /on_status",
@@ -544,7 +548,9 @@ module.exports = {
                 },
                 tax_number: {
                   type: "string",
-                  const: { $data: "/confirm/0/message/order/billing/tax_number" },
+                  const: {
+                    $data: "/confirm/0/message/order/billing/tax_number",
+                  },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_status",
                 },
@@ -562,24 +568,23 @@ module.exports = {
                 },
                 created_at: {
                   type: "string",
-                  const: { $data: "/confirm/0/message/order/billing/created_at" },
+                  const: {
+                    $data: "/confirm/0/message/order/billing/created_at",
+                  },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_status",
                 },
                 updated_at: {
                   type: "string",
-                  const: { $data: "/confirm/0/message/order/billing/updated_at" },
+                  const: {
+                    $data: "/confirm/0/message/order/billing/updated_at",
+                  },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_status",
                 },
               },
               additionalProperties: false,
-              required: [
-                "name",
-                "address",
-                "phone",
-                "tax_number"
-              ],
+              required: ["name", "address", "phone", "tax_number"],
             },
             tags: {
               type: "object",
@@ -640,9 +645,9 @@ module.exports = {
     status: {
       type: "array",
       items: {
-          $ref: "statusSchema#"
-        }
-    }
+        $ref: "statusSchema#",
+      },
+    },
   },
   required: ["context", "message"],
 };

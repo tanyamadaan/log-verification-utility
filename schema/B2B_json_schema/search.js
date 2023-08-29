@@ -252,6 +252,7 @@ module.exports = {
               },
             },
           },
+          additionalProperties:false,
           required: ["item", "fulfillment", "payment", "tags"],
         },
       },

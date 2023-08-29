@@ -94,6 +94,7 @@ module.exports = {
           const: { $data: "/on_confirm/0/message/order/id" },
         },
       },
+      additionalProperties:false,
       required: ["order_id"],
     },
     on_confirm: {

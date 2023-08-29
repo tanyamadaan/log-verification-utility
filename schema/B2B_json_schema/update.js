@@ -275,6 +275,7 @@ module.exports = {
               ],
             },
           },
+          additionalProperties:false,
           required: ["id", "state", "provider", "items", "payments"],
         },
       },

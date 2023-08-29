@@ -9,6 +9,8 @@ const checkUpdate = (data, msgIdSet) => {
   let p2h2p = dao.getValue("p2h2p");
   let awbNo= dao.getValue("awbNo");
 
+  dao.setValue("updateApi",true)
+
   update = update.message.order;
   let rts = update?.fulfillments[0]?.tags["@ondc/org/order_ready_to_ship"];
   dao.setValue("rts", rts);

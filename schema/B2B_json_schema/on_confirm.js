@@ -69,7 +69,6 @@ module.exports = {
         },
         ttl: {
           type: "string",
-          const: "PT30S",
         },
       },
       required: [
@@ -399,13 +398,19 @@ module.exports = {
                           required: ["phone", "email"],
                         },
                       },
-                      required: [
-                        "type",
-                        "location",
-                        "time",
-                        "instructions",
-                        "contact",
-                      ],
+                      if: { properties: { type: { const: "end" } } },
+                      then: {
+                        required: ["type", "location", "time", "contact"],
+                      },
+                      else: {
+                        required: [
+                          "type",
+                          "location",
+                          "time",
+                          "instructions",
+                          "contact",
+                        ],
+                      },
                     },
                   },
                   rateable: {
@@ -436,13 +441,37 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
-                                    enum: ["INCOTERMS", "DELIVERY_DUTY"],
+                                    enum: [
+                                      "INCOTERMS",
+                                      "NAMED_PLACE_OF_DELIVERY",
+                                    ],
                                   },
                                 },
                                 required: ["code"],
                               },
                               value: {
                                 type: "string",
+                              },
+                            },
+                            if: {
+                              properties: {
+                                descriptor: {
+                                  properties: { code: { const: "INCOTERMS" } },
+                                },
+                              },
+                            },
+                            then: {
+                              properties: {
+                                value: {
+                                  enum: [
+                                    "DPU",
+                                    "CIF",
+                                    "EXW",
+                                    "FOB",
+                                    "DAP",
+                                    "DDP",
+                                  ],
+                                },
                               },
                             },
                             required: ["descriptor", "value"],
@@ -636,6 +665,7 @@ module.exports = {
                   },
                   collected_by: {
                     type: "string",
+                    enum:["BAP","BPP"]
                   },
                   "@ondc/org/buyer_app_finder_fee_type": {
                     type: "string",
@@ -650,6 +680,7 @@ module.exports = {
                       properties: {
                         settlement_counterparty: {
                           type: "string",
+                          enum: ["BPP", "BAP"],
                         },
                         settlement_phase: {
                           type: "string",
@@ -707,6 +738,14 @@ module.exports = {
                         },
                       ],
                       required: ["settlement_counterparty", "settlement_type"],
+                    },
+                  },
+                },
+                if: { properties: { type: { const: "ON-FULFILLMENT" } } },
+                then: {
+                  properties: {
+                    collected_by: {
+                      const: "BPP",
                     },
                   },
                 },
@@ -772,6 +811,7 @@ module.exports = {
                 "order/updated_at should be updated as per context/timestamp - ${3/context/timestamp}",
             },
           },
+          additionalProperties: false,
           required: [
             "id",
             "state",

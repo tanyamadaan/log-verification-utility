@@ -1,45 +1,23 @@
 {
     "Flow Error": {
-        "0": "Incorrect Flow - (search,init,confirm,on_confirm,on_search,on_init,on_status)",
-        "1": "Incorrect Flow - (search,init,confirm,on_confirm,on_search,on_init,on_status)"
+        "6": "Incorrect Flow as per context/timestamps - (search,on_search,init,on_init,confirm,update,on_confirm,on_update,on_status)"
     },
     "Schema": {
-        "schemaErr0": "/init/0/message/order/billing/address/building cannot be equal to locality",
-        "schemaErr1": "/on_confirm/0/context must have required property 'bap_uri'",
-        "schemaErr2": "/on_confirm/0/message/order/fulfillments/0/agent must have required property 'name'",
-        "schemaErr3": "/on_confirm/0/message/order/fulfillments/0/agent must have required property 'phone'",
-        "schemaErr4": "/on_confirm/0/message/order/billing must have required property 'phone'",
-        "schemaErr5": "/on_confirm/0/message/order/billing must have required property 'tax_number'",
-        "schemaErr6": "/on_confirm/0/message/order/billing must have required property 'created_at'",
-        "schemaErr7": "/on_confirm/0/message/order/billing/name mismatches in /billing in /confirm and /on_confirm",
-        "schemaErr8": "/on_confirm/0/message/order/billing/updated_at mismatches in /billing in /confirm and /on_confirm",
-        "schemaErr9": "/on_status/0/context must have required property 'city'",
-        "schemaErr10": "/on_status/0/message/order/billing must have required property 'phone'",
-        "schemaErr11": "/on_status/0/message/order/billing must have required property 'tax_number'",
-        "schemaErr12": "/on_status/0/message/order/billing/address must have required property 'name'",
-        "schemaErr13": "/on_status/1/context must have required property 'city'",
-        "schemaErr14": "/on_status/1/message/order/billing must have required property 'phone'",
-        "schemaErr15": "/on_status/1/message/order/billing must have required property 'tax_number'",
-        "schemaErr16": "/on_status/1/message/order/billing/address must have required property 'name'"
+        "schemaErr0": "/on_confirm/0/message/order/created_at does not match confirm context timestamp - \"2023-08-28T04:20:27.282Z\"",
+        "schemaErr1": "/update/0/message/order/updated_at updated_at does not match context timestamp - \"2023-08-28T04:20:27.282Z\"",
+        "schemaErr2": "/on_status/0/message/order/billing/created_at mismatches in /billing in /confirm and /on_status",
+        "schemaErr3": "/on_status/0/message/order/billing/updated_at mismatches in /billing in /confirm and /on_status",
+        "schemaErr4": "/on_status/1/message/order/billing/created_at mismatches in /billing in /confirm and /on_status",
+        "schemaErr5": "/on_status/1/message/order/billing/updated_at mismatches in /billing in /confirm and /on_status",
+        "schemaErr6": "/on_status/2/message/order/billing/created_at mismatches in /billing in /confirm and /on_status",
+        "schemaErr7": "/on_status/2/message/order/billing/updated_at mismatches in /billing in /confirm and /on_status"
     },
     "Context": {
+        "update": {
+            "tmpstmp": "Timestamp mismatch for /update "
+        },
         "on_confirm": {
-            "tmpstmp": "Timestamp mismatch for /on_confirm "
-        },
-        "on_search": {
-            "tmpstmp": "context/timestamp difference between on_search and search should be smaller than 1 sec"
-        },
-        "on_init": {
-            "tmpstmp": "context/timestamp difference between on_init and init should be smaller than 1 sec"
-        }
-    },
-    "Message": {
-        "on_status_0": {
-            "pickupTimeErr": "Missing /on_status response for fulfillment state - 'Order-picked-up'",
-            "deliveryTimeErr": "Delivery timestamp (fulfillments/end/time/timestamp) cannot be provided for fulfillment state - Out-for-delivery"
-        },
-        "on_status_1": {
-            "pickupTimeErr": "Missing /on_status response for fulfillment state - 'Order-picked-up'"
+            "tmpstmp": "context/timestamp difference between on_confirm and confirm should be smaller than 1 sec"
         }
     }
 }

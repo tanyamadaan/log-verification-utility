@@ -68,8 +68,7 @@ module.exports = {
           format: "date-time",
         },
         ttl: {
-          type: "string",
-          const: "PT30S",
+          type: "string"
         },
       },
       required: [
@@ -180,6 +179,7 @@ module.exports = {
                 },
                 collected_by: {
                   type: "string",
+                  enum:["BAP","BPP"]
                 },
                 "@ondc/org/buyer_app_finder_fee_type": {
                   type: "string",
@@ -254,6 +254,14 @@ module.exports = {
                   },
                 },
               },
+              if: { properties: { type: { const: "ON-FULFILLMENT" } } },
+                then: {
+                  properties: {
+                    collected_by: {
+                      const: "BPP",
+                    },
+                  },
+                },
               required: [
                 "params",
                 "status",
@@ -465,6 +473,7 @@ module.exports = {
               },
             },
           },
+          additionalProperties:false,
           required: ["id", "state", "provider", "items"],
         },
       },

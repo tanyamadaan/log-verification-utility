@@ -67,8 +67,7 @@ module.exports = {
           format: "date-time",
         },
         ttl: {
-          type: "string",
-          const: "PT30S",
+          type: "string"
         },
       },
       required: [
@@ -98,7 +97,13 @@ module.exports = {
             },
             state: {
               type: "string",
-              enum: ["Created", "Accepted", "In-progress","Cancelled","Completed"],
+              enum: [
+                "Created",
+                "Accepted",
+                "In-progress",
+                "Cancelled",
+                "Completed",
+              ],
             },
             provider: {
               type: "object",
@@ -216,7 +221,14 @@ module.exports = {
                         properties: {
                           code: {
                             type: "string",
-                            enum:["Pending","Agent-assigned","Order-picked-up","Out-for-delivery","Order-delivered"]
+                            enum: [
+                              "Pending",
+                              "Packed",
+                              "Agent-assigned",
+                              "Order-picked-up",
+                              "Out-for-delivery",
+                              "Order-delivered",
+                            ],
                           },
                         },
                         required: ["code"],
@@ -256,8 +268,40 @@ module.exports = {
                             gps: {
                               type: "string",
                             },
+                            address: {
+                              type: "string",
+                            },
+                            city: {
+                              type: "object",
+                              properties: {
+                                name: {
+                                  type: "string",
+                                }
+                              },
+                              required: ["name"],
+                            },
+                            country: {
+                              type: "object",
+                              properties: {
+                                code: {
+                                  type: "string",
+                                }
+                              },
+                              required: ["code"],
+                            },
+                            area_code: {
+                              type: "string",
+                            },
+                            state:  {
+                              type: "object",
+                              properties: {
+                                name: {
+                                  type: "string",
+                                }
+                              },
+                              required: ["name"],
+                            },
                           },
-                          required: ["id", "descriptor", "gps"],
                         },
                         time: {
                           type: "object",
@@ -343,12 +387,14 @@ module.exports = {
                           required: ["person", "contact"],
                         },
                       },
-                      required: [
-                        "type",
-                        "location",
-                        "time",
-                        "contact",
-                      ],
+                      if: { properties: { type: { const: "start" } } },
+                      then: {
+                        properties: {
+                          location: { required: ["id", "descriptor", "gps"] },
+                        },
+                      },
+                      else: { properties: { location: { required: ["address","gps"] } } },
+                      required: ["type", "location", "time", "contact"],
                     },
                   },
                 },
@@ -540,6 +586,7 @@ module.exports = {
                     },
                     collected_by: {
                       type: "string",
+                      enum:["BAP","BPP"]
                     },
                     "@ondc/org/buyer_app_finder_fee_type": {
                       type: "string",
@@ -610,10 +657,21 @@ module.exports = {
                             },
                           },
                         ],
-                        required: ["settlement_counterparty", "settlement_type"],
+                        required: [
+                          "settlement_counterparty",
+                          "settlement_type",
+                        ],
                       },
                     },
                   },
+                  if: { properties: { type: { const: "ON-FULFILLMENT" } } },
+                then: {
+                  properties: {
+                    collected_by: {
+                      const: "BPP",
+                    },
+                  },
+                },
                   required: [
                     "params",
                     "status",
@@ -654,6 +712,7 @@ module.exports = {
               format: "date-time",
             },
           },
+          additionalProperties: false,
           required: [
             "id",
             "state",

@@ -64,19 +64,19 @@ const sortMerge = (directory, destination) => {
     mergedlogs = sortedmergedlogs;
 
     Object.entries(mergedlogs).forEach(([action], i, entries) => {
-      const curAction = action.replace("on_", "");
+      const curAction = action;
 
       if (map.includes(curAction)) {
         const curIndex = map.indexOf(curAction);
 
-        const nextAction = map[curIndex + 1];
+        // const nextAction = map[curIndex + 1];
 
-        const nextIndex = entries.findIndex(
-          ([a]) => a.replace("on_", "") === nextAction
-        );
-        if (i > nextIndex && !action.includes("confirm")) {
-          console.log(`Flow incorrect- current action: ${action}, index :${i}, nextIndex:${nextIndex}`);
-          flowErrObj[curIndex]= `Incorrect Flow - (${Object.keys(mergedlogs)})`
+        // const nextIndex = entries.findIndex(
+        //   ([a]) => a === nextAction
+        // );
+        if (i !== curIndex) {
+          console.log(`Flow incorrect- current action: ${action}, Current Index:${i}, Index in correct flow:${curIndex}`);
+          flowErrObj[i]= `Incorrect Flow as per context/timestamps - (${Object.keys(mergedlogs)})`
         }
       }
     });

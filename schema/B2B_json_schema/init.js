@@ -68,7 +68,8 @@ module.exports = {
         },
         ttl: {
           type: "string",
-          const: "PT30S",
+          const: { $data: "2/message/order/provider/ttl" },
+          errorMessage:"should match provider ttl - ${2/message/order/provider/ttl}"
         },
       },
       required: [
@@ -386,13 +387,37 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
-                                    enum: ["INCOTERMS", "DELIVERY_DUTY"],
+                                    enum: [
+                                      "INCOTERMS",
+                                      "NAMED_PLACE_OF_DELIVERY",
+                                    ],
                                   },
                                 },
                                 required: ["code"],
                               },
                               value: {
                                 type: "string",
+                              },
+                            },
+                            if: {
+                              properties: {
+                                descriptor: {
+                                  properties: { code: { const: "INCOTERMS" } },
+                                },
+                              },
+                            },
+                            then: {
+                              properties: {
+                                value: {
+                                  enum: [
+                                    "DPU",
+                                    "CIF",
+                                    "EXW",
+                                    "FOB",
+                                    "DAP",
+                                    "DDP",
+                                  ],
+                                },
                               },
                             },
                             required: ["descriptor", "value"],
@@ -463,6 +488,7 @@ module.exports = {
               },
             },
           },
+          additionalProperties:false,
           required: [
             "provider",
             "items",

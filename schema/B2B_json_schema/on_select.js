@@ -68,8 +68,7 @@ module.exports = {
           format: "date-time",
         },
         ttl: {
-          type: "string",
-          const: "PT30S",
+          type: "string"
         },
       },
       required: [

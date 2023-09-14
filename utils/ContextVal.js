@@ -43,6 +43,8 @@ const checkContextVal = (payload, Obj, msgIdSet) => {
             action === "on_update" ||
             action === "on_cancel"
           ) {
+            console.log(dao.getValue(`${action.replace("on_", "")}Tmpstmp`),
+            payload.context.timestamp);
             if (
               _.gte(
                 dao.getValue(`${action.replace("on_", "")}Tmpstmp`),
@@ -60,7 +62,8 @@ const checkContextVal = (payload, Obj, msgIdSet) => {
           if (
             action === "on_search" ||
             action === "on_init" ||
-            action === "on_confirm"
+            action === "on_confirm" ||
+            action ==="on_update"
           ) {
             const timeDiff = utils.timeDiff(
               payload.context.timestamp,
@@ -84,28 +87,31 @@ const checkContextVal = (payload, Obj, msgIdSet) => {
       console.trace(error);
     }
 
-    // try {
-    //   console.log(
-    //     `Comparing Message Id of /${action}`
-    //   );
-    //   if (action.includes("on_")) {
-    //     if (!_.isEqual(dao.getValue("msgId"), payload.context.message_id)) {
-    //         Obj[action].msgId = `Message Id for /${action.replace('on_', '')} and /${action} api should be same`;
-    //     }
-    //     msgIdSet.add(payload.context.message_id);
-    // }
-    // else {
-    //     if (msgIdSet.has(payload.context.message_id)) {
-    //         Obj[action].msgId2 = "Message Id cannot be same for different sets of APIs";
-    //       }
-    //     dao.setValue("msgId", payload.context.message_id);
-    // }
-    // } catch (error) {
-    //   console.log(
-    //     `Error while comparing message id for /${action} api`,
-    //     error
-    //   );
-    // }
+    try {
+      console.log(`Comparing Message Id of /${action}`);
+      if (action.includes("on_")) {
+        if (msgIdSet.has(payload.context.message_id)) {
+          Obj[action].msgId2 =
+            "Message Id cannot be same for different sets of APIs";
+        }else{
+          msgIdSet.add(payload.context.message_id);
+        }
+      } 
+      //   if (action.includes("on_")) {
+      //     if (!_.isEqual(dao.getValue("msgId"), payload.context.message_id)) {
+      //         Obj[action].msgId = `Message Id for /${action.replace('on_', '')} and /${action} api should be same`;
+      //     }
+      //     msgIdSet.add(payload.context.message_id);
+      // }
+      // else {
+      //     if (msgIdSet.has(payload.context.message_id)) {
+      //         Obj[action].msgId2 = "Message Id cannot be same for different sets of APIs";
+      //       }
+      //     dao.setValue("msgId", payload.context.message_id);
+      // }
+    } catch (error) {
+      console.log(`Error while comparing message id for /${action} api`, error);
+    }
   } catch (err) {
     if (err.code === "ENOENT") {
       console.log(`!!File not found for /${action} API!`);

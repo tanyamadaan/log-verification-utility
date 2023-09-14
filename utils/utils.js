@@ -104,8 +104,14 @@ const bpp_provider_days = [
   "1,2,3,4,5,6,7",
 ];
 const categoriesMap = [
-  { "Standard Delivery": ["Immediate Delivery", "Next Day Delivery", "Same Day Delivery"] },
-  { "Express Delivery": [] }
+  {
+    "Standard Delivery": [
+      "Immediate Delivery",
+      "Next Day Delivery",
+      "Same Day Delivery",
+    ],
+  },
+  { "Express Delivery": [] },
 ];
 const grocery_categories_id = [
   "Fruits and Vegetables",
@@ -194,7 +200,7 @@ const timestampCheck = (date) => {
 function compareDates(dateString1, dateString2) {
   const date1 = new Date(dateString1);
   const date2 = new Date(dateString2);
-  
+
   const year1 = date1.getUTCFullYear();
   const month1 = date1.getUTCMonth();
   const day1 = date1.getUTCDate();
@@ -203,26 +209,35 @@ function compareDates(dateString1, dateString2) {
   const month2 = date2.getUTCMonth();
   const day2 = date2.getUTCDate();
 
-  if (year1 > year2 || (year1 === year2 && month1 > month2) || (year1 === year2 && month1 === month2 && day1 > day2)) {
+  if (
+    year1 > year2 ||
+    (year1 === year2 && month1 > month2) ||
+    (year1 === year2 && month1 === month2 && day1 > day2)
+  ) {
     return true;
-  } else if (year1 < year2 || (year1 === year2 && month1 < month2) || (year1 === year2 && month1 === month2 && day1 <= day2)) {
+  } else if (
+    year1 < year2 ||
+    (year1 === year2 && month1 < month2) ||
+    (year1 === year2 && month1 === month2 && day1 <= day2)
+  ) {
     return false;
-  } 
-}
-
-const hasTwoOrLessDecimalPlaces = (inputString) =>{
-  const parts = inputString.split(".");
-  
-  if (parts.length === 2) {
-      const decimalPart = parts[1];
-      return decimalPart.length <= 2;
-  } else {
-      return true; // No decimal part, automatically satisfies the condition
   }
 }
 
+const hasTwoOrLessDecimalPlaces = (inputString) => {
+  const parts = inputString.split(".");
+
+  if (parts.length === 2) {
+    const decimalPart = parts[1];
+    return decimalPart.length <= 2;
+  } else {
+    return true; // No decimal part, automatically satisfies the condition
+  }
+};
+
 const getObjValues = (obj) => {
   let values = "";
+
   Object.values(obj).forEach((value) => {
     values += `- ${value}\n`;
   });
@@ -268,7 +283,11 @@ const isObjectEqual = (obj1, obj2, parentKey = "") => {
     const sortedObj2 = [...obj2].sort();
 
     for (let i = 0; i < sortedObj1.length; i++) {
-      const nestedKeys = isObjectEqual(sortedObj1[i], sortedObj2[i], `${parentKey}[${i}]`);
+      const nestedKeys = isObjectEqual(
+        sortedObj1[i],
+        sortedObj2[i],
+        `${parentKey}[${i}]`
+      );
       if (nestedKeys.length > 0) {
         return nestedKeys;
       }

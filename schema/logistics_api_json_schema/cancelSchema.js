@@ -40,6 +40,15 @@ module.exports = {
         },
         message_id: {
           type: "string",
+          allOf: [
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            }
+          ],
         },
         timestamp: {
           type: "string",

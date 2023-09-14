@@ -2,13 +2,21 @@ const fs = require("fs");
 const path = require("path");
 const constants = require("./constants");
 
-const sortMerge = (directory, destination) => {
+const sortMerge = (domain,directory, destination) => {
   flowErrObj = {};
   try {
     var mergedlogs = [];
     files = fs.readdirSync(directory);
 
-    let map = constants.SORTED_INDEX;
+    let map;
+    switch(domain) {
+      case 'logistics':
+        map = constants.LOG_SORTED_INDEX
+        break;
+      case 'b2b':
+        map = constants.B2B_SORTED_INDEX
+        break;
+    }
 
     mergedlogs = files.reduce((acc, item) => {
       try {
@@ -64,7 +72,7 @@ const sortMerge = (directory, destination) => {
       const curAction = action;
       if (map.includes(curAction)) {
         const curIndex = map.indexOf(curAction);
-        if (i !== curIndex) {
+        if (i != curIndex) {
           console.log(
             `Flow incorrect- current action: ${action}, Current Index:${i}, Index in correct flow:${curIndex}`
           );

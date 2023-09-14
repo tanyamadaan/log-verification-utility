@@ -60,6 +60,7 @@ module.exports = {
         },
         message_id: {
           type: "string",
+          const: { $data: "/search/0/context/message_id" },
         },
         timestamp: {
           type: "string",

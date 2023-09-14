@@ -433,7 +433,7 @@ module.exports = {
             },
             payments: {
               type: "array",
-              items: [
+              items: 
                 {
                   type: "object",
                   properties: {
@@ -448,7 +448,7 @@ module.exports = {
                   },
                   required: ["type"],
                 },
-              ],
+              
             },
             tags: {
               type: "array",

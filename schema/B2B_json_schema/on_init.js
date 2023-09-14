@@ -452,30 +452,6 @@ module.exports = {
                       item: {
                         type: "object",
                         properties: {
-                          quantity: {
-                            type: "object",
-                            properties: {
-                              available: {
-                                type: "object",
-                                properties: {
-                                  count: {
-                                    type: "string",
-                                  },
-                                },
-                                required: ["count"],
-                              },
-                              maximum: {
-                                type: "object",
-                                properties: {
-                                  count: {
-                                    type: "string",
-                                  },
-                                },
-                                required: ["count"],
-                              },
-                            },
-                            required: ["available", "maximum"],
-                          },
                           price: {
                             type: "object",
                             properties: {
@@ -489,7 +465,7 @@ module.exports = {
                             required: ["currency", "value"],
                           },
                         },
-                        required: ["quantity", "price"],
+                        required: ["price"],
                       },
                     },
                     if: {
@@ -554,6 +530,7 @@ module.exports = {
                       properties: {
                         settlement_counterparty: {
                           type: "string",
+                          enum: ["seller-app", "buyer-app"],
                         },
                         settlement_phase: {
                           type: "string",

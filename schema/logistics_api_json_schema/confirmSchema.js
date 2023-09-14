@@ -52,12 +52,6 @@ module.exports = {
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
             },
-            {
-              not: {
-                const: { $data: "/init/0/context/message_id" },
-              },
-              errorMessage: "Message ID should be unique",
-            },
           ],
         },
         timestamp: {
@@ -218,6 +212,8 @@ module.exports = {
             },
             quote: {
               type: "object",
+              const: { $data: "/on_init/0/message/order/quote" },
+              errorMessage: "object mismatches in /on_init and /confirm.",
               properties: {
                 price: {
                   type: "object",
@@ -646,10 +642,18 @@ module.exports = {
                 },
                 collected_by: {
                   type: "string",
+                  const: {
+                    $data: "/on_init/0/message/order/payment/collected_by",
+                  },
+                  errorMessage: "mismatches in /payment in /on_init and /confirm",
                 },
                 type: {
                   type: "string",
                   enum: ["ON-FULFILLMENT", "POST-FULFILLMENT", "ON-ORDER"],
+                  const: {
+                    $data: "/on_init/0/message/order/payment/type",
+                  },
+                  errorMessage: "mismatches in /payment in /on_init and /confirm",
                 },
                 "@ondc/org/settlement_details": {
                   type: "array",
@@ -704,6 +708,14 @@ module.exports = {
                       },
                     ],
                     required: ["settlement_counterparty", "settlement_type"],
+                  },
+                },
+              },
+              if: { properties: { type: { const: "ON-FULFILLMENT" } } },
+              then: {
+                properties: {
+                  collected_by: {
+                    const: "BPP",
                   },
                 },
               },
@@ -846,6 +858,12 @@ module.exports = {
                         },
                         value: {
                           type: "number",
+                          const: {
+                            $data:
+                              "/search/0/message/intent/@ondc~1org~1payload_details/weight/value",
+                          },
+                          errorMessage:
+                            "Payload weight mismatches in /search and /confirm",
                         },
                       },
                       required: ["unit", "value"],

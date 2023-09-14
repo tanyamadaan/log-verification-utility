@@ -41,6 +41,20 @@ module.exports = {
         },
         message_id: {
           type: "string",
+          allOf: [
+            {
+              const: { $data: "/support/0/context/message_id" },
+              errorMessage:
+                "Message ID should be same as /support: ${/support/0/context/message_id}",
+            },
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            }
+          ],
         },
         timestamp: {
           type: "string",

@@ -1,8 +1,7 @@
 {
     "Schema": {
-        "schemaErr0": "/update/0/message/order/fulfillments/0 must NOT have additional properties (tracking)",
-        "schemaErr1": "/on_update/0/message/order must NOT have additional properties (@ondc/org/linked_order)",
-        "schemaErr2": "/on_update/0/message/order must NOT have additional properties (billing)"
+        "schemaErr0": "/on_status/2/message/order/quote/breakup/1 must have required property '@ondc/org/item_id'",
+        "schemaErr1": "/on_status/3/message/order/quote/breakup/1 must have required property '@ondc/org/item_id'"
     },
     "Context": {
         "on_search": {
@@ -10,6 +9,12 @@
         },
         "on_init": {
             "tmpstmp": "context/timestamp difference between on_init and init should be smaller than 1 sec"
+        },
+        "on_confirm": {
+            "tmpstmp": "context/timestamp difference between on_confirm and confirm should be smaller than 1 sec"
+        },
+        "on_update": {
+            "tmpstmp": "context/timestamp difference between on_update and update should be smaller than 1 sec"
         }
     }
 }

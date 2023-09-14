@@ -48,13 +48,7 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            },
-            {
-              not: {
-                const: { $data: "/search/0/context/message_id" },
-              },
-              errorMessage: "Message ID should be unique",
-            },
+            }
           ],
         },
         timestamp: {
@@ -361,13 +355,13 @@ module.exports = {
                   type: "string",
                   const: { $data: "4/context/timestamp" },
                   errorMessage:
-                    "created_at - ${4/context/timestamp} does not match context timestamp",
+                    "does not match context timestamp - ${4/context/timestamp} ",
                 },
                 updated_at: {
                   type: "string",
                   const: { $data: "4/context/timestamp" },
                   errorMessage:
-                    "updated_at - ${4/context/timestamp} does not match context timestamp",
+                    "does not match context timestamp - ${4/context/timestamp} ",
                 },
               },
               required: [

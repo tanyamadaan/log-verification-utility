@@ -593,6 +593,7 @@ module.exports = {
                       properties: {
                         settlement_counterparty: {
                           type: "string",
+                          enum: ["seller-app", "buyer-app"],
                         },
                         settlement_phase: {
                           type: "string",

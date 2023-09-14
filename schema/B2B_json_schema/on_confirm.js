@@ -398,19 +398,7 @@ module.exports = {
                           required: ["phone", "email"],
                         },
                       },
-                      if: { properties: { type: { const: "end" } } },
-                      then: {
-                        required: ["type", "location", "time", "contact"],
-                      },
-                      else: {
-                        required: [
-                          "type",
-                          "location",
-                          "time",
-                          "instructions",
-                          "contact",
-                        ],
-                      },
+                      required: ["type", "location", "time", "contact"],
                     },
                   },
                   rateable: {
@@ -547,30 +535,6 @@ module.exports = {
                       item: {
                         type: "object",
                         properties: {
-                          quantity: {
-                            type: "object",
-                            properties: {
-                              available: {
-                                type: "object",
-                                properties: {
-                                  count: {
-                                    type: "string",
-                                  },
-                                },
-                                required: ["count"],
-                              },
-                              maximum: {
-                                type: "object",
-                                properties: {
-                                  count: {
-                                    type: "string",
-                                  },
-                                },
-                                required: ["count"],
-                              },
-                            },
-                            required: ["available", "maximum"],
-                          },
                           price: {
                             type: "object",
                             properties: {
@@ -584,7 +548,7 @@ module.exports = {
                             required: ["currency", "value"],
                           },
                         },
-                        required: ["quantity", "price"],
+                        required: ["price"],
                       },
                     },
                     if: {
@@ -665,7 +629,7 @@ module.exports = {
                   },
                   collected_by: {
                     type: "string",
-                    enum:["BAP","BPP"]
+                    enum: ["BAP", "BPP"],
                   },
                   "@ondc/org/buyer_app_finder_fee_type": {
                     type: "string",
@@ -680,7 +644,7 @@ module.exports = {
                       properties: {
                         settlement_counterparty: {
                           type: "string",
-                          enum: ["BPP", "BAP"],
+                          enum: ["seller-app", "buyer-app"],
                         },
                         settlement_phase: {
                           type: "string",
@@ -801,14 +765,14 @@ module.exports = {
               format: "date-time",
               const: { $data: "/confirm/0/message/order/created_at" },
               errorMessage:
-                "order/created_at should remain same as in /confirm - ${/confirm/0/message/order/created_at}",
+                "should remain same as in /confirm - ${/confirm/0/message/order/created_at}",
             },
             updated_at: {
               type: "string",
               format: "date-time",
               const: { $data: "3/context/timestamp" },
               errorMessage:
-                "order/updated_at should be updated as per context/timestamp - ${3/context/timestamp}",
+                " should be updated as per context/timestamp - ${3/context/timestamp}",
             },
           },
           additionalProperties: false,

@@ -25,7 +25,7 @@ const validateLogs = (domain, dirPath) => {
   console.log(dirPath)
   const mergefile = path.join(dirPath, '../test.json')
   console.log(mergefile)
-   ErrorObj["Flow Error"] = sortMerge(dirPath, mergefile);
+   ErrorObj["Flow Error"] = sortMerge(domain,dirPath, mergefile);
   console.log("Merged File created")
 
   //  Validation
@@ -52,7 +52,6 @@ const validateLogs = (domain, dirPath) => {
 try {
   // outputfile = `log${flowId}.json`
   outputfile= 'log_report.json'
-
   // let out = getObjValues(ErrorObj['Schema'])
 let out = JSON.stringify(ErrorObj,null,4)
   fs.writeFileSync(outputfile, out , 'utf-8');

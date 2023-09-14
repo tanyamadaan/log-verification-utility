@@ -67,7 +67,7 @@ module.exports = {
           format: "date-time",
         },
         ttl: {
-          type: "string"
+          type: "string",
         },
       },
       required: [
@@ -276,7 +276,7 @@ module.exports = {
                               properties: {
                                 name: {
                                   type: "string",
-                                }
+                                },
                               },
                               required: ["name"],
                             },
@@ -285,19 +285,19 @@ module.exports = {
                               properties: {
                                 code: {
                                   type: "string",
-                                }
+                                },
                               },
                               required: ["code"],
                             },
                             area_code: {
                               type: "string",
                             },
-                            state:  {
+                            state: {
                               type: "object",
                               properties: {
                                 name: {
                                   type: "string",
-                                }
+                                },
                               },
                               required: ["name"],
                             },
@@ -360,7 +360,7 @@ module.exports = {
                               type: "string",
                             },
                           },
-                          required: ["phone", "email"],
+                          required: ["phone"],
                         },
                         agent: {
                           type: "object",
@@ -393,7 +393,11 @@ module.exports = {
                           location: { required: ["id", "descriptor", "gps"] },
                         },
                       },
-                      else: { properties: { location: { required: ["address","gps"] } } },
+                      else: {
+                        properties: {
+                          location: { required: ["address", "gps"] },
+                        },
+                      },
                       required: ["type", "location", "time", "contact"],
                     },
                   },
@@ -461,30 +465,6 @@ module.exports = {
                       item: {
                         type: "object",
                         properties: {
-                          quantity: {
-                            type: "object",
-                            properties: {
-                              available: {
-                                type: "object",
-                                properties: {
-                                  count: {
-                                    type: "string",
-                                  },
-                                },
-                                required: ["count"],
-                              },
-                              maximum: {
-                                type: "object",
-                                properties: {
-                                  count: {
-                                    type: "string",
-                                  },
-                                },
-                                required: ["count"],
-                              },
-                            },
-                            required: ["available", "maximum"],
-                          },
                           price: {
                             type: "object",
                             properties: {
@@ -498,7 +478,7 @@ module.exports = {
                             required: ["currency", "value"],
                           },
                         },
-                        required: ["quantity", "price"],
+                        required: ["price"],
                       },
                     },
                     if: {
@@ -547,124 +527,115 @@ module.exports = {
             },
             payments: {
               type: "array",
-              items: [
-                {
-                  type: "object",
-                  properties: {
-                    uri: {
-                      type: "string",
+              items: {
+                type: "object",
+                properties: {
+                  params: {
+                    type: "object",
+                    properties: {
+                      currency: {
+                        type: "string",
+                      },
+                      transaction_id: {
+                        type: "string",
+                      },
+                      amount: {
+                        type: "string",
+                      },
                     },
-                    tl_method: {
-                      type: "string",
-                    },
-                    params: {
+                    required: ["currency", "amount"],
+                  },
+                  status: {
+                    type: "string",
+                    enum: ["PAID", "NOT-PAID"],
+                  },
+                  type: {
+                    type: "string",
+                    enum: [
+                      "PRE-FULFILLMENT",
+                      "ON-FULFILLMENT",
+                      "POST-FULFILLMENT",
+                    ],
+                  },
+                  collected_by: {
+                    type: "string",
+                    enum: ["BAP", "BPP"],
+                  },
+                  "@ondc/org/buyer_app_finder_fee_type": {
+                    type: "string",
+                  },
+                  "@ondc/org/buyer_app_finder_fee_amount": {
+                    type: "string",
+                  },
+                  "@ondc/org/settlement_details": {
+                    type: "array",
+                    items: {
                       type: "object",
                       properties: {
-                        currency: {
+                        settlement_counterparty: {
+                          type: "string",
+                          enum: ["seller-app", "buyer-app"],
+                        },
+                        settlement_phase: {
                           type: "string",
                         },
-                        transaction_id: {
+                        settlement_type: {
+                          type: "string",
+                          enum: ["upi", "neft", "rtgs"],
+                        },
+                        beneficiary_name: {
                           type: "string",
                         },
-                        amount: {
+                        upi_address: {
+                          type: "string",
+                        },
+                        settlement_bank_account_no: {
+                          type: "string",
+                        },
+                        settlement_ifsc_code: {
+                          type: "string",
+                        },
+                        bank_name: {
+                          type: "string",
+                        },
+                        branch_name: {
                           type: "string",
                         },
                       },
-                      required: ["currency", "amount"],
-                    },
-                    status: {
-                      type: "string",
-                      enum: ["PAID", "NOT-PAID"],
-                    },
-                    type: {
-                      type: "string",
-                      enum: [
-                        "PRE-FULFILLMENT",
-                        "ON-FULFILLMENT",
-                        "POST-FULFILLMENT",
+                      allOf: [
+                        {
+                          if: {
+                            properties: {
+                              settlement_type: {
+                                const: "upi",
+                              },
+                            },
+                          },
+                          then: {
+                            required: ["upi_address"],
+                          },
+                        },
+                        {
+                          if: {
+                            properties: {
+                              settlement_type: {
+                                const: ["neft", "rtgs"],
+                              },
+                            },
+                          },
+                          then: {
+                            required: [
+                              "settlement_ifsc_code",
+                              "settlement_bank_account_no",
+                            ],
+                          },
+                        },
                       ],
-                    },
-                    collected_by: {
-                      type: "string",
-                      enum:["BAP","BPP"]
-                    },
-                    "@ondc/org/buyer_app_finder_fee_type": {
-                      type: "string",
-                    },
-                    "@ondc/org/buyer_app_finder_fee_amount": {
-                      type: "string",
-                    },
-                    "@ondc/org/settlement_details": {
-                      type: "array",
-                      items: {
-                        type: "object",
-                        properties: {
-                          settlement_counterparty: {
-                            type: "string",
-                          },
-                          settlement_phase: {
-                            type: "string",
-                          },
-                          settlement_type: {
-                            type: "string",
-                            enum: ["upi", "neft", "rtgs"],
-                          },
-                          beneficiary_name: {
-                            type: "string",
-                          },
-                          upi_address: {
-                            type: "string",
-                          },
-                          settlement_bank_account_no: {
-                            type: "string",
-                          },
-                          settlement_ifsc_code: {
-                            type: "string",
-                          },
-                          bank_name: {
-                            type: "string",
-                          },
-                          branch_name: {
-                            type: "string",
-                          },
-                        },
-                        allOf: [
-                          {
-                            if: {
-                              properties: {
-                                settlement_type: {
-                                  const: "upi",
-                                },
-                              },
-                            },
-                            then: {
-                              required: ["upi_address"],
-                            },
-                          },
-                          {
-                            if: {
-                              properties: {
-                                settlement_type: {
-                                  const: ["neft", "rtgs"],
-                                },
-                              },
-                            },
-                            then: {
-                              required: [
-                                "settlement_ifsc_code",
-                                "settlement_bank_account_no",
-                              ],
-                            },
-                          },
-                        ],
-                        required: [
-                          "settlement_counterparty",
-                          "settlement_type",
-                        ],
-                      },
+                      required: ["settlement_counterparty", "settlement_type"],
                     },
                   },
-                  if: { properties: { type: { const: "ON-FULFILLMENT" } } },
+                },
+                if: { properties: { type: { const: "ON-FULFILLMENT" } } },
                 then: {
                   properties: {
                     collected_by: {
@@ -672,20 +643,20 @@ module.exports = {
                     },
                   },
                 },
-                  required: [
-                    "params",
-                    "status",
-                    "type",
-                    "collected_by",
-                    "@ondc/org/buyer_app_finder_fee_type",
-                    "@ondc/org/buyer_app_finder_fee_amount",
-                  ],
-                },
-              ],
+                required: [
+                  "params",
+                  "status",
+                  "type",
+                  "collected_by",
+                  "@ondc/org/buyer_app_finder_fee_type",
+                  "@ondc/org/buyer_app_finder_fee_amount",
+                ],
+              },
             },
+
             documents: {
               type: "array",
-              items: [
+              items: 
                 {
                   type: "object",
                   properties: {
@@ -698,7 +669,7 @@ module.exports = {
                   },
                   required: ["url", "label"],
                 },
-              ],
+              
             },
             created_at: {
               type: "string",

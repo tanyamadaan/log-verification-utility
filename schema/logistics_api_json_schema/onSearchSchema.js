@@ -43,6 +43,7 @@ module.exports = {
         },
         message_id: {
           type: "string",
+          
         },
         timestamp: {
           type: "string",
@@ -301,7 +302,7 @@ module.exports = {
                     },
                   },
                 },
-                oneOf: [
+                if: 
                   {
                     properties: {
                       categories: {
@@ -318,23 +319,24 @@ module.exports = {
                       required: ["locations"],
                     },
                   },
-                  {
-                    not: {
-                      properties: {
-                        categories: {
-                          type: "array",
-                          items: {
-                            type: "object",
-                            properties: {
-                              id: { const: "Immediate Delivery" },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                ],
+                  // {
+                  //   not: {
+                  //     properties: {
+                  //       categories: {
+                  //         type: "array",
+                  //         items: {
+                  //           type: "object",
+                  //           properties: {
+                  //             id: { const: "Immediate Delivery" },
+                  //           },
+                  //         },
+                  //       },
+                  //     },
+                  //   },
+                  // },
+                else:{
                 required: ["id", "descriptor", "categories", "items"],
+                }
               },
             },
           },

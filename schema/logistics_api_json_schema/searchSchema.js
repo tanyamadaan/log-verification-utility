@@ -88,6 +88,8 @@ module.exports = {
                   properties: {
                     days: {
                       type: "string",
+                      pattern: "^(?!.*(\\d).*\\1)[1-7](?:,[1-7])*(?![1-7])$",
+                      errorMessage: "Days format not correct. Ref footnote 9 of 1.1"
                     },
                     schedule: {
                       type: "object",
@@ -107,7 +109,12 @@ module.exports = {
                           type: "array",
                           items: {
                             type: "string",
+                            pattern: "^(?:[01][0-9]|2[0-3])[0-5][0-9]$",
+                            errorMessage: "Must be a valid 24 hour time"
                           },
+                          minItems: 2,
+                          maxItems: 2,
+                          errorMessage: "times format wrong. Ref footnote 12 of v1.1"
                         },
                       },
                       required: ["holidays"],

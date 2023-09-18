@@ -19,10 +19,9 @@ const path = require("path");
 const Ajv = require("ajv");
 const ajv = new Ajv({
   allErrors: true,
-  strict: "log",
+  strict: false,
   strictRequired: false,
   strictTypes: false,
-  //verbose: true,
   $data: true,
 });
 const addFormats = require("ajv-formats");
@@ -78,11 +77,9 @@ const validate_schema = (data, schema) => {
       error_list = validate.errors;
     }
   } catch (error) {
-    console.log("ERROR!! validating schema")
-    console.trace(error)
+    console.log("ERROR!! validating schema");
+    console.trace(error);
   }
- 
- 
   return error_list;
 };
 

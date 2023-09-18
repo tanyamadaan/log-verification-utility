@@ -178,7 +178,7 @@ const uuidCheck = (data) => {
 };
 
 const timestampCheck = (date) => {
-  console.log("***Timestamp Check Utils***");
+  //console.log("***Timestamp Check Utils***");
   let dateParsed = new Date(Date.parse(date));
   if (!isNaN(dateParsed)) {
     if (dateParsed.toISOString() != date) {

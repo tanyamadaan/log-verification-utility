@@ -1,6 +1,5 @@
 const fs = require("fs");
 const _ = require("lodash");
-const { checkContext } = require("../../services/service");
 const dao = require("../../dao/dao");
 const validateSchema = require("../schemaValidation");
 const constants = require("../constants");

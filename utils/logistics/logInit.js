@@ -121,5 +121,4 @@ const checkInit = (data, msgIdSet) => {
   dao.setValue("p2h2p", p2h2p);
   return initObj;
 };
-
 module.exports = checkInit;

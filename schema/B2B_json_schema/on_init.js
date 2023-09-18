@@ -7,7 +7,6 @@ module.exports = {
       properties: {
         domain: {
           type: "string",
-          const: "ONDC:RET10",
         },
         location: {
           type: "object",
@@ -58,17 +57,33 @@ module.exports = {
         transaction_id: {
           type: "string",
           const: { $data: "/select/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/select/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
-          const: { $data: "/init/0/context/message_id" },
+          allOf: [
+            {
+              const: { $data: "/init/0/context/message_id" },
+              errorMessage:
+                "Message ID for on_action API should be same as action API: ${/init/0/context/message_id}",
+            },
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            },
+          ]
         },
         timestamp: {
           type: "string",
           format: "date-time",
         },
         ttl: {
-          type: "string"
+          type: "string",
+          format: "duration"
         },
       },
       required: [
@@ -97,7 +112,7 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
-                  const: { $data: "/select/0/message/order/provider/id" },
+                  const: { $data: "/init/0/message/order/provider/id" },
                 },
               },
               required: ["id"],
@@ -107,6 +122,7 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/provider/locations/0/id"}
                 },
               },
               required: ["id"],
@@ -162,6 +178,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
+                              enum:["BUYER_TERMS"]
                             },
                           },
                           required: ["code"],
@@ -176,12 +193,21 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
+                                    enum:["ITEM_REQ","PACKAGING_REQ"]
                                   },
                                 },
                                 required: ["code"],
                               },
                               value: {
                                 type: "string",
+                                anyOf: [
+                                  {
+                                    const: { $data: "/init/0/message/order/items/0/tags/0/list/0/value" },
+                                  },
+                                  {
+                                    const: { $data: "/init/0/message/order/items/0/tags/0/list/1/value" },
+                                  }
+                                ]
                               },
                             },
                             required: ["descriptor", "value"],
@@ -267,12 +293,15 @@ module.exports = {
                       properties: {
                         type: {
                           type: "string",
+                          enum: ["start", "end"],
                         },
                         location: {
                           type: "object",
                           properties: {
                             gps: {
                               type: "string",
+                              pattern: "^(-?[0-9]{1,3}(?:.[0-9]{6,15})?),( )*?(-?[0-9]{1,3}(?:.[0-9]{6,15})?)$",
+                              errorMessage: "Incorrect gps value",
                             },
                             address: {
                               type: "string",
@@ -365,6 +394,14 @@ module.exports = {
                               },
                               value: {
                                 type: "string",
+                                anyOf: [
+                                  {
+                                    const: { $data: "/init/0/message/order/fulfillments/0/tags/0/list/0/value" },
+                                  },
+                                  {
+                                    const: { $data: "/init/0/message/order/fulfillments/0/tags/0/list/1/value" },
+                                  }
+                                ]
                               },
                             },
                             if: {
@@ -436,6 +473,7 @@ module.exports = {
                       },
                       "@ondc/org/title_type": {
                         type: "string",
+                        enum: ["item", "Discount", "Packing charges", "delivery ", "tax", "misc"]
                       },
                       price: {
                         type: "object",
@@ -671,36 +709,6 @@ module.exports = {
         },
       },
       required: ["order"],
-    },
-    init: {
-      type: "array",
-      items: {
-        $ref: "initSchema#",
-      },
-    },
-    search: {
-      type: "array",
-      items: {
-        $ref: "searchSchema#",
-      },
-    },
-    on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
-    },
-    select: {
-      type: "array",
-      items: {
-        $ref: "selectSchema#",
-      },
-    },
-    on_select: {
-      type: "array",
-      items: {
-        $ref: "onSelectSchema#",
-      },
     },
   },
   required: ["context", "message"],

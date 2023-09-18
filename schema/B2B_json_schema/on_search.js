@@ -7,7 +7,6 @@ module.exports = {
       properties: {
         domain: {
           type: "string",
-          const: "ONDC:RET10",
         },
         location: {
           type: "object",
@@ -57,9 +56,26 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/search/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
+          allOf: [
+            {
+              const: { $data: "/search/0/context/message_id" },
+              errorMessage:
+                "Message ID for on_action API should be same as action API: ${/search/0/context/message_id}",
+            },
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            },
+          ]
         },
         timestamp: {
           type: "string",
@@ -100,6 +116,7 @@ module.exports = {
                   },
                   type: {
                     type: "string",
+                    enum: ["Delivery", "Self-Pickup"]
                   },
                 },
                 required: ["id", "type"],
@@ -207,6 +224,7 @@ module.exports = {
                   },
                   ttl: {
                     type: "string",
+                    format: "duration"
                   },
                   locations: {
                     type: "array",
@@ -218,6 +236,9 @@ module.exports = {
                         },
                         gps: {
                           type: "string",
+                          pattern:
+                            "^(-?[0-9]{1,3}(?:.[0-9]{6,15})?),( )*?(-?[0-9]{1,3}(?:.[0-9]{6,15})?)$",
+                          errorMessage: "Incorrect gps value",
                         },
                         address: {
                           type: "string",
@@ -227,6 +248,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
+                              pattern: "^(std:?[0-9]{2,3})$"
                             },
                             name: {
                               type: "string",
@@ -239,6 +261,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
+                              pattern: "^(std:?[0-9]{2,3})$"
                             },
                           },
                           required: ["code"],

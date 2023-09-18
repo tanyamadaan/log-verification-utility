@@ -57,7 +57,7 @@ module.exports = {
         },
         ttl: {
           type: "string",
-          const: "PT30S",
+          format: "duration"
         },
       },
       required: [
@@ -205,6 +205,7 @@ module.exports = {
                           },
                           email: {
                             type: "string",
+                            format: "email"
                           },
                         },
                         required: ["phone"],
@@ -280,6 +281,7 @@ module.exports = {
                           },
                           email: {
                             type: "string",
+                            format: "email"
                           },
                         },
                         required: ["phone", "email"],
@@ -350,6 +352,7 @@ module.exports = {
                 },
                 email: {
                   type: "string",
+                  format:"email"
                 },
                 created_at: {
                   type: "string",

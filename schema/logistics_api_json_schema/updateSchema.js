@@ -180,7 +180,7 @@ module.exports = {
                       },
                     },
                     additionalProperties:false,
-                    required: ["instructions"],
+                    // required: ["instructions"],
                   },
                   end: {
                     type: "object",
@@ -211,7 +211,7 @@ module.exports = {
                       },
                     },
                     additionalProperties:false,
-                    required: ["instructions"],
+                    // required: ["instructions"],
                   },
                   "@ondc/org/ewaybillno": {
                     type: "string",

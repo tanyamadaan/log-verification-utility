@@ -1,20 +1,9 @@
 {
     "Schema": {
-        "schemaErr0": "/on_status/2/message/order/quote/breakup/1 must have required property '@ondc/org/item_id'",
-        "schemaErr1": "/on_status/3/message/order/quote/breakup/1 must have required property '@ondc/org/item_id'"
-    },
-    "Context": {
-        "on_search": {
-            "tmpstmp": "context/timestamp difference between on_search and search should be smaller than 1 sec"
-        },
-        "on_init": {
-            "tmpstmp": "context/timestamp difference between on_init and init should be smaller than 1 sec"
-        },
-        "on_confirm": {
-            "tmpstmp": "context/timestamp difference between on_confirm and confirm should be smaller than 1 sec"
-        },
-        "on_update": {
-            "tmpstmp": "context/timestamp difference between on_update and update should be smaller than 1 sec"
-        }
+        "schemaErr0": "/init/0/message/order/billing/address/building cannot be equal to locality",
+        "schemaErr1": "/on_confirm/0/message/order/quote/price/value mismatches in /on_confirm and /confirm.",
+        "schemaErr2": "/on_confirm/0/message/order/quote object mismatches in /confirm and /on_confirm.",
+        "schemaErr3": "/on_status/2/message/order/quote/breakup/1 must have required property '@ondc/org/item_id'",
+        "schemaErr4": "/on_status/3/message/order/quote/breakup/1 must have required property '@ondc/org/item_id'"
     }
 }

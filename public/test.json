@@ -1,1 +1,1230 @@
-{"search":[{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"search","core_version":"1.1.0","bap_id":"ondc-seller-api.trafyn.site","bap_uri":"https://ondc-seller-api.trafyn.site/","transaction_id":"241196e3-7588-4d25-a93a-1914b743c3cd","message_id":"c475d8ab-d6ca-45f6-bbc4-b5ce3f438d0f","timestamp":"2023-09-11T13:48:40.266Z","ttl":"PT30S"},"message":{"intent":{"fulfillment":{"type":"Prepaid","start":{"location":{"gps":"12.937999,77.624405","address":{"area_code":"560095"}}},"end":{"location":{"gps":"12.938208, 77.619106","address":{"area_code":"560095"}}}},"provider":{"time":{"range":{"start":"0000","end":"2359"},"days":"1,2,3,4,5,6,7","schedule":{"holidays":[]}}},"category":{"id":"Immediate Delivery"},"@ondc/org/payload_details":{"weight":{"value":2,"unit":"Kilogram"},"category":"Grocery","value":{"currency":"INR","value":"31.00"}}}}}],"on_search":[{"context":{"action":"on_search","domain":"nic2004:60232","country":"IND","city":"std:080","core_version":"1.1.0","bap_id":"ondc-seller-api.trafyn.site","bap_uri":"https://ondc-seller-api.trafyn.site/","bpp_id":"flash-api.staging.shadowfax.in","bpp_uri":"https://flash-api.staging.shadowfax.in/ondc/v1","transaction_id":"241196e3-7588-4d25-a93a-1914b743c3cd","message_id":"c475d8ab-d6ca-45f6-bbc4-b5ce3f438d0f","timestamp":"2023-09-11T13:48:42.516Z"},"message":{"catalog":{"bpp/fulfillments":[{"id":"2","type":"Prepaid"},{"id":"3","type":"RTO"}],"bpp/descriptor":{"name":"SFX"},"bpp/providers":[{"id":"SFX","descriptor":{"name":"SFX","short_desc":"SFX","long_desc":"Shadowfax"},"categories":[{"id":"Immediate Delivery","time":{"label":"TAT","duration":"PT40M"}},{"id":"Next Day Delivery","time":{"label":"TAT","duration":"PT40M"}},{"id":"Same Day Delivery","time":{"label":"TAT","duration":"PT40M"}}],"items":[{"id":"SFXImmediateDelivery","parent_item_id":"","category_id":"Immediate Delivery","fulfillment_id":"2","descriptor":{"code":"P2P","name":"Immediate Delivery","short_desc":"Immediate Delivery for F&B","long_desc":"Immediate Delivery for F&B"},"price":{"currency":"INR","value":"2.00"}},{"id":"SFXImmediateDeliveryRTO","parent_item_id":"SFXImmediateDelivery","category_id":"Immediate Delivery","fulfillment_id":"3","descriptor":{"code":"P2P","name":"RTO Immediate Delivery","short_desc":"RTO Immediate Delivery for F&B","long_desc":"RTO Immediate Delivery for F&B"},"price":{"currency":"INR","value":"2.00"}},{"id":"SFXNextDayDelivery","parent_item_id":"","category_id":"Next Day Delivery","fulfillment_id":"2","descriptor":{"code":"P2P","name":"Next Day Delivery","short_desc":"Next Day Delivery","long_desc":"Next Day Delivery"},"price":{"currency":"INR","value":"2.00"}},{"id":"SFXNextDayDeliveryRTO","parent_item_id":"SFXNextDayDelivery","category_id":"Next Day Delivery","fulfillment_id":"3","descriptor":{"code":"P2P","name":"Next Day Delivery","short_desc":"RTO Next Day Delivery","long_desc":"RTO Next Day Delivery"},"price":{"currency":"INR","value":"2.00"}},{"id":"SFXSameDayDelivery","parent_item_id":"","category_id":"Same Day Delivery","fulfillment_id":"2","descriptor":{"code":"P2P","name":"Same Day Delivery","short_desc":"Same Day Delivery","long_desc":"Same Day Delivery"},"price":{"currency":"INR","value":"2.00"}},{"id":"SFXSameDayDeliveryRTO","parent_item_id":"SFXSameDayDelivery","category_id":"Same Day Delivery","fulfillment_id":"3","descriptor":{"code":"P2P","name":"Same Day Delivery","short_desc":"RTO Same Day Delivery","long_desc":"RTO Same Day Delivery"},"price":{"currency":"INR","value":"2.00"}}]}]}}}],"init":[{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"init","core_version":"1.1.0","bap_id":"ondc-seller-api.trafyn.site","bap_uri":"https://ondc-seller-api.trafyn.site/","bpp_id":"flash-api.staging.shadowfax.in","bpp_uri":"https://flash-api.staging.shadowfax.in/ondc/v1","transaction_id":"241196e3-7588-4d25-a93a-1914b743c3cd","message_id":"0b2e4f8f-d557-4866-a5bf-3d9f7ddfd827","timestamp":"2023-09-11T13:48:46.247Z","ttl":"PT30S"},"message":{"order":{"provider":{"id":"SFX"},"items":[{"id":"SFXImmediateDelivery","category_id":"Immediate Delivery","descriptor":{"code":"P2P"}}],"billing":{"name":"Ninjacart ONDC Support","address":{"name":"Ninjacart ONDC Support","building":"Wework vaishanvi signature","locality":"Bellandur","city":"Bengaluru","state":"Karnataka","country":"IND","area_code":"560103"},"email":"ondc-support@ninjacart.com","phone":"6366426208","tax_number":"29AAACZ8597L1Z8","created_at":"2023-09-11T13:48:46.247Z","updated_at":"2023-09-11T13:48:46.247Z"},"fulfillments":[{"id":"2","type":"Prepaid","start":{"location":{"gps":"12.937999,77.624405","address":{"name":"SHWETA SINGH","building":"6th Cross Rd","locality":"6th Block, Koramangala","city":"Bengaluru","state":"Karnataka","country":"IND","area_code":"560095"}},"contact":{"phone":"8738734873","email":"harshit.pandey@ninjacart.com"}},"end":{"location":{"gps":"12.938208, 77.619106","address":{"name":"Subhendu Maji","building":"test landmark","locality":"115, 13th main","city":"Bengaluru","state":"Karnataka","country":"IND","area_code":"560095"}},"contact":{"phone":"9999999991","email":"subhendu@ninjacart.com"}}}]}}}],"on_init":[{"context":{"action":"on_init","domain":"nic2004:60232","country":"IND","city":"std:080","core_version":"1.1.0","bap_id":"ondc-seller-api.trafyn.site","bap_uri":"https://ondc-seller-api.trafyn.site/","bpp_id":"flash-api.staging.shadowfax.in","bpp_uri":"https://flash-api.staging.shadowfax.in/ondc/v1","transaction_id":"241196e3-7588-4d25-a93a-1914b743c3cd","message_id":"0b2e4f8f-d557-4866-a5bf-3d9f7ddfd827","timestamp":"2023-09-11T13:48:48.394Z"},"message":{"order":{"provider":{"id":"SFX"},"items":[{"id":"SFXImmediateDelivery"}],"quote":{"price":{"currency":"INR","value":"2.00"},"breakup":[{"@ondc/org/item_id":"SFXImmediateDelivery","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"2.00"}}]},"payment":{"type":"POST-FULFILLMENT","collected_by":"BAP","@ondc/org/settlement_details":[{"settlement_counterparty":"seller-app","settlement_type":"upi","beneficiary_name":"SFX Ltd","settlement_bank_account_no":"XXXXXXXXXX","settlement_ifsc_code":"XXXXXXXXX","upi_address":"gft@oksbi"}]}}}}],"confirm":[{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"confirm","core_version":"1.1.0","bap_id":"ondc-seller-api.trafyn.site","bap_uri":"https://ondc-seller-api.trafyn.site/","bpp_id":"flash-api.staging.shadowfax.in","bpp_uri":"https://flash-api.staging.shadowfax.in/ondc/v1","transaction_id":"241196e3-7588-4d25-a93a-1914b743c3cd","message_id":"7e838093-c58f-4ddb-9fb0-1defaffe5445","timestamp":"2023-09-11T13:48:54.246Z","ttl":"PT30S"},"message":{"order":{"id":"2023-09-11-232309","state":"Created","provider":{"id":"SFX"},"items":[{"id":"SFXImmediateDelivery","category_id":"Immediate Delivery","descriptor":{"code":"P2P"}}],"billing":{"name":"Ninjacart ONDC Support","address":{"name":"Ninjacart ONDC Support","building":"Wework vaishanvi signature","locality":"Bellandur","city":"Bengaluru","state":"Karnataka","country":"IND","area_code":"560103"},"email":"ondc-support@ninjacart.com","phone":"6366426208","tax_number":"29AAACZ8597L1Z8","created_at":"2023-09-11T13:48:46.247Z","updated_at":"2023-09-11T13:48:46.247Z"},"fulfillments":[{"id":"2","type":"Prepaid","start":{"location":{"gps":"12.937999,77.624405","address":{"name":"SHWETA SINGH","building":"6th Cross Rd","locality":"6th Block, Koramangala","city":"Bengaluru","state":"Karnataka","country":"IND","area_code":"560095"}},"instructions":{"short_desc":"XYZ1","long_desc":"QR code will be attached to package","images":[]},"contact":{"phone":"8738734873","email":"harshit.pandey@ninjacart.com"},"person":{"name":"SHWETA SINGH"}},"end":{"location":{"gps":"12.938208, 77.619106","address":{"name":"Subhendu Maji","building":"test landmark","locality":"115, 13th main","city":"Bengaluru","state":"Karnataka","country":"IND","area_code":"560095"}},"instructions":{"short_desc":"XYZ2","long_desc":"drop package at security gate","additional_desc":{"content_type":"text/plain","url":""}},"contact":{"phone":"9999999991","email":"subhendu@ninjacart.com"},"person":{"name":"Subhendu Maji"}},"tags":{"@ondc/org/order_ready_to_ship":"no"}}],"quote":{"price":{"currency":"INR","value":"2.00"},"breakup":[{"@ondc/org/item_id":"SFXImmediateDelivery","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"2.00"}}]},"payment":{"type":"POST-FULFILLMENT","collected_by":"BAP","@ondc/org/collection_amount":"0","@ondc/org/settlement_details":[{"settlement_counterparty":"seller-app","settlement_type":"upi","settlement_bank_account_no":"XXXXXXXXXX","settlement_ifsc_code":"XXXXXXXXX","upi_address":"gft@oksbi"}]},"created_at":"2023-09-11T13:48:54.246Z","updated_at":"2023-09-11T13:48:54.246Z","@ondc/org/linked_order":{"items":[{"category_id":"Grocery","descriptor":{"name":"Tomato (hybrid) -Ripe"},"quantity":{"count":1,"measure":{"value":1,"unit":"Kilogram"}},"price":{"currency":"INR","value":"11.00"}},{"category_id":"Grocery","descriptor":{"name":"Beans (cluster)"},"quantity":{"count":1,"measure":{"value":1,"unit":"Kilogram"}},"price":{"currency":"INR","value":"20.00"}}],"provider":{"descriptor":{"name":"SHWETA SINGH"},"address":{"name":"SHWETA SINGH","street":"6th Cross Rd","locality":"6th Block, Koramangala","city":"Bengaluru","state":"Karnataka","area_code":"560095"}},"order":{"id":"2023-09-11-232309","weight":{"value":2,"unit":"Kilogram"}}}}}}],"on_confirm":[{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"on_confirm","core_version":"1.1.0","bap_id":"ondc-seller-api.trafyn.site","bap_uri":"https://ondc-seller-api.trafyn.site/","bpp_id":"flash-api.staging.shadowfax.in","bpp_uri":"https://flash-api.staging.shadowfax.in/ondc/v1","transaction_id":"241196e3-7588-4d25-a93a-1914b743c3cd","message_id":"7e838093-c58f-4ddb-9fb0-1defaffe5445","timestamp":"2023-09-11T13:48:56.234Z"},"message":{"order":{"id":"2023-09-11-232309","state":"Accepted","provider":{"id":"SFX"},"items":[{"id":"SFXImmediateDelivery","category_id":"Immediate Delivery","descriptor":{"code":"P2P"}}],"billing":{"name":"Ninjacart ONDC Support","address":{"name":"Ninjacart ONDC Support","building":"Wework vaishanvi signature","locality":"Bellandur","city":"Bengaluru","state":"Karnataka","country":"IND","area_code":"560103"},"email":"ondc-support@ninjacart.com","phone":"6366426208","tax_number":"29AAACZ8597L1Z8","created_at":"2023-09-11T13:48:46.247Z","updated_at":"2023-09-11T13:48:46.247Z"},"fulfillments":[{"id":"2","type":"Prepaid","state":{"descriptor":{"code":"Pending"}},"tracking":false}],"quote":{"price":{"currency":"INR","value":"2.00"},"breakup":[{"@ondc/org/item_id":"SFXImmediateDelivery","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"2.00"}}]},"created_at":"2023-09-11T13:48:54.246Z","updated_at":"2023-09-11T13:48:56.234Z"}}}],"update":[{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"update","core_version":"1.1.0","bap_id":"ondc-seller-api.trafyn.site","bap_uri":"https://ondc-seller-api.trafyn.site/","bpp_id":"flash-api.staging.shadowfax.in","bpp_uri":"https://flash-api.staging.shadowfax.in/ondc/v1","transaction_id":"241196e3-7588-4d25-a93a-1914b743c3cd","message_id":"9b90a361-5420-4564-8413-c161e54fe331","timestamp":"2023-09-11T13:53:14.564Z","ttl":"PT30S"},"message":{"update_target":"fulfillment","order":{"id":"2023-09-11-232309","state":"Accepted","items":[{"id":"SFXImmediateDelivery","category_id":"Immediate Delivery","descriptor":{"code":"P2P"}}],"fulfillments":[{"id":"2","type":"Prepaid","start":{"instructions":{"short_desc":"XYZ1","long_desc":"QR code will be attached to package","additional_desc":{"content_type":"text/plain","url":""}}},"end":{"instructions":{"short_desc":"XYZ2","long_desc":"drop package at security gate","additional_desc":{"content_type":"text/plain","url":""}}},"tags":{"@ondc/org/order_ready_to_ship":"yes"}}],"updated_at":"2023-09-11T13:53:14.564Z"}}}],"on_update":[{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"on_update","core_version":"1.1.0","bap_id":"ondc-seller-api.trafyn.site","bap_uri":"https://ondc-seller-api.trafyn.site/","bpp_id":"flash-api.staging.shadowfax.in","bpp_uri":"https://flash-api.staging.shadowfax.in/ondc/v1","transaction_id":"241196e3-7588-4d25-a93a-1914b743c3cd","message_id":"9b90a361-5420-4564-8413-c161e54fe331","timestamp":"2023-09-11T13:53:16.032Z"},"message":{"order":{"id":"2023-09-11-232309","state":"Accepted","items":[{"id":"SFXImmediateDelivery","category_id":"Immediate Delivery","descriptor":{"code":"P2P"}}],"fulfillments":[{"id":"2","type":"Prepaid","start":{"time":{"range":{"start":"2023-09-11T13:53:16.032Z","end":"2023-09-11T13:58:16.032Z"}}},"end":{"time":{"range":{"start":"2023-09-11T14:53:16.032Z","end":"2023-09-11T14:58:16.032Z"}}},"agent":{"name":"Dhruv","phone":"9866780909"}}],"updated_at":"2023-09-11T13:53:16.032Z"}}}],"on_status":[{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"on_status","core_version":"1.1.0","bap_id":"ondc-seller-api.trafyn.site","bap_uri":"https://ondc-seller-api.trafyn.site/","bpp_id":"flash-api.staging.shadowfax.in","bpp_uri":"https://flash-api.staging.shadowfax.in/ondc/v1","transaction_id":"241196e3-7588-4d25-a93a-1914b743c3cd","message_id":"3b72ebf6-17c4-449d-9c9b-f40d48ce7ac3","timestamp":"2023-09-11T13:54:16.252Z"},"message":{"order":{"id":"2023-09-11-232309","state":"In-progress","provider":{"id":"SFX"},"items":[{"id":"SFXImmediateDelivery","category_id":"Immediate Delivery","descriptor":{"code":"P2P"}}],"quote":{"price":{"currency":"INR","value":"2.00"},"breakup":[{"@ondc/org/item_id":"SFXImmediateDelivery","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"2.00"}}]},"billing":{"name":"Ninjacart ONDC Support","address":{"name":"Ninjacart ONDC Support","building":"Wework vaishanvi signature","locality":"Bellandur","city":"Bengaluru","state":"Karnataka","country":"IND","area_code":"560103"},"email":"ondc-support@ninjacart.com","phone":"6366426208","tax_number":"29AAACZ8597L1Z8","created_at":"2023-09-11T13:48:46.247Z","updated_at":"2023-09-11T13:48:46.247Z"},"payment":{"type":"POST-FULFILLMENT","collected_by":"BAP","@ondc/org/settlement_details":[{"settlement_counterparty":"seller-app","settlement_type":"upi","settlement_bank_account_no":"XXXXXXXXXX","settlement_ifsc_code":"XXXXXXXXX","upi_address":"gft@oksbi"}]},"created_at":"2023-09-11T13:48:54.246Z","updated_at":"2023-09-11T13:54:16.252Z","fulfillments":[{"type":"Prepaid","tracking":false,"start":{"time":{"range":{"start":"2023-09-11T13:53:16.032Z","end":"2023-09-11T13:58:16.032Z"},"timestamp":"2023-09-11T13:54:16.252Z"}},"end":{"time":{"range":{"start":"2023-09-11T14:53:16.032Z","end":"2023-09-11T14:58:16.032Z"}}},"agent":{"name":"Dhruv","phone":"9866780909"},"state":{"descriptor":{"code":"Order-picked-up","name":"Order picked up"}}}]}}},{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"on_status","core_version":"1.1.0","bap_id":"ondc-seller-api.trafyn.site","bap_uri":"https://ondc-seller-api.trafyn.site/","bpp_id":"flash-api.staging.shadowfax.in","bpp_uri":"https://flash-api.staging.shadowfax.in/ondc/v1","transaction_id":"241196e3-7588-4d25-a93a-1914b743c3cd","message_id":"2c0204ff-7b72-41c2-99b1-95e7e0cead03","timestamp":"2023-09-11T13:54:34.334Z"},"message":{"order":{"id":"2023-09-11-232309","state":"In-progress","provider":{"id":"SFX"},"items":[{"id":"SFXImmediateDelivery","category_id":"Immediate Delivery","descriptor":{"code":"P2P"}}],"quote":{"price":{"currency":"INR","value":"2.00"},"breakup":[{"@ondc/org/item_id":"SFXImmediateDelivery","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"2.00"}}]},"billing":{"name":"Ninjacart ONDC Support","address":{"name":"Ninjacart ONDC Support","building":"Wework vaishanvi signature","locality":"Bellandur","city":"Bengaluru","state":"Karnataka","country":"IND","area_code":"560103"},"email":"ondc-support@ninjacart.com","phone":"6366426208","tax_number":"29AAACZ8597L1Z8","created_at":"2023-09-11T13:48:46.247Z","updated_at":"2023-09-11T13:48:46.247Z"},"payment":{"type":"POST-FULFILLMENT","collected_by":"BAP","@ondc/org/settlement_details":[{"settlement_counterparty":"seller-app","settlement_type":"upi","settlement_bank_account_no":"XXXXXXXXXX","settlement_ifsc_code":"XXXXXXXXX","upi_address":"gft@oksbi"}]},"created_at":"2023-09-11T13:48:54.246Z","updated_at":"2023-09-11T13:54:34.334Z","fulfillments":[{"type":"Prepaid","tracking":false,"start":{"time":{"range":{"start":"2023-09-11T13:53:16.032Z","end":"2023-09-11T13:58:16.032Z"},"timestamp":"2023-09-11T13:54:16.252Z"}},"end":{"time":{"range":{"start":"2023-09-11T14:53:16.032Z","end":"2023-09-11T14:58:16.032Z"}}},"state":{"descriptor":{"code":"Out-for-delivery","name":"Out for delivery"}}}]}}},{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"on_status","core_version":"1.1.0","bap_id":"ondc-seller-api.trafyn.site","bap_uri":"https://ondc-seller-api.trafyn.site/","bpp_id":"flash-api.staging.shadowfax.in","bpp_uri":"https://flash-api.staging.shadowfax.in/ondc/v1","transaction_id":"241196e3-7588-4d25-a93a-1914b743c3cd","message_id":"af7589ce-0cad-42ae-9627-5dbece884317","timestamp":"2023-09-11T14:44:37.442Z"},"message":{"order":{"id":"2023-09-11-232309","state":"Cancelled","provider":{"id":"SFX"},"items":[{"id":"SFXImmediateDelivery","category_id":"Immediate Delivery","descriptor":{"code":"P2P"}}],"quote":{"price":{"currency":"INR","value":"4.00"},"breakup":[{"@ondc/org/item_id":"SFXImmediateDelivery","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"2.00"}},{"title":"RTO Charges","@ondc/org/title_type":"RTO Charge","price":{"currency":"INR","value":"2.00"}}]},"billing":{"name":"Ninjacart ONDC Support","address":{"name":"Ninjacart ONDC Support","building":"Wework vaishanvi signature","locality":"Bellandur","city":"Bengaluru","state":"Karnataka","country":"IND","area_code":"560103"},"email":"ondc-support@ninjacart.com","phone":"6366426208","tax_number":"29AAACZ8597L1Z8","created_at":"2023-09-11T13:48:46.247Z","updated_at":"2023-09-11T13:48:46.247Z"},"payment":{"type":"POST-FULFILLMENT","collected_by":"BAP","@ondc/org/settlement_details":[{"settlement_counterparty":"seller-app","settlement_type":"upi","settlement_bank_account_no":"XXXXXXXXXX","settlement_ifsc_code":"XXXXXXXXX","upi_address":"gft@oksbi"}]},"tags":{"cancellation_reason_id":"016"},"created_at":"2023-09-11T13:48:54.246Z","updated_at":"2023-09-11T14:44:37.442Z","fulfillments":[{"type":"Prepaid","tracking":false,"start":{"time":{"range":{"start":"2023-09-11T13:53:16.032Z","end":"2023-09-11T13:58:16.032Z"},"timestamp":"2023-09-11T13:54:16.252Z"}},"end":{"time":{"range":{"start":"2023-09-11T14:53:16.032Z","end":"2023-09-11T14:58:16.032Z"}}},"state":{"descriptor":{"code":"Cancelled","name":"Cancelled"}}},{"type":"RTO","state":{"descriptor":{"code":"RTO-Initiated","name":"RTO Initiated"}},"tracking":false,"start":{"time":{"range":{"start":"2023-09-11T14:44:37.442Z","end":"2023-09-11T14:44:37.442Z"},"timestamp":"2023-09-11T14:44:37.442Z"}},"end":{"time":{"range":{"start":"2023-09-11T15:44:37.442Z","end":"2023-09-11T15:44:37.442Z"}}}}]}}},{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"on_status","core_version":"1.1.0","bap_id":"ondc-seller-api.trafyn.site","bap_uri":"https://ondc-seller-api.trafyn.site/","bpp_id":"flash-api.staging.shadowfax.in","bpp_uri":"https://flash-api.staging.shadowfax.in/ondc/v1","transaction_id":"241196e3-7588-4d25-a93a-1914b743c3cd","message_id":"4e2835ed-4eac-4f71-afac-b86262d4864b","timestamp":"2023-09-11T14:51:15.674Z"},"message":{"order":{"id":"2023-09-11-232309","state":"Cancelled","provider":{"id":"SFX"},"items":[{"id":"SFXImmediateDelivery","category_id":"Immediate Delivery","descriptor":{"code":"P2P"}}],"quote":{"price":{"currency":"INR","value":"4.00"},"breakup":[{"@ondc/org/item_id":"SFXImmediateDelivery","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"2.00"}},{"title":"RTO Charges","@ondc/org/title_type":"RTO Charge","price":{"currency":"INR","value":"2.00"}}]},"billing":{"name":"Ninjacart ONDC Support","address":{"name":"Ninjacart ONDC Support","building":"Wework vaishanvi signature","locality":"Bellandur","city":"Bengaluru","state":"Karnataka","country":"IND","area_code":"560103"},"email":"ondc-support@ninjacart.com","phone":"6366426208","tax_number":"29AAACZ8597L1Z8","created_at":"2023-09-11T13:48:46.247Z","updated_at":"2023-09-11T13:48:46.247Z"},"payment":{"type":"POST-FULFILLMENT","collected_by":"BAP","@ondc/org/settlement_details":[{"settlement_counterparty":"seller-app","settlement_type":"upi","settlement_bank_account_no":"XXXXXXXXXX","settlement_ifsc_code":"XXXXXXXXX","upi_address":"gft@oksbi"}]},"tags":{"cancellation_reason_id":"016"},"created_at":"2023-09-11T13:48:54.246Z","updated_at":"2023-09-11T14:51:15.674Z","fulfillments":[{"type":"Prepaid","tracking":false,"start":{"time":{"range":{"start":"2023-09-11T13:53:16.032Z","end":"2023-09-11T13:58:16.032Z"},"timestamp":"2023-09-11T13:54:16.252Z"}},"end":{"time":{"range":{"start":"2023-09-11T14:53:16.032Z","end":"2023-09-11T14:58:16.032Z"}}},"state":{"descriptor":{"code":"Cancelled","name":"Cancelled"}}},{"type":"RTO","state":{"descriptor":{"code":"RTO-Disposed","name":"RTO-Disposed"}},"tracking":false,"start":{"time":{"range":{"start":"2023-09-11T14:44:37.442Z","end":"2023-09-11T14:44:37.442Z"},"timestamp":"2023-09-11T14:44:37.442Z"}},"end":{"time":{"range":{"start":"2023-09-11T15:44:37.442Z","end":"2023-09-11T15:44:37.442Z"},"timestamp":"2023-09-11T14:51:15.674Z"}}}]}}}],"on_cancel":[{"context":{"action":"on_cancel","domain":"nic2004:60232","country":"IND","city":"std:080","core_version":"1.1.0","bap_id":"ondc-seller-api.trafyn.site","bap_uri":"https://ondc-seller-api.trafyn.site/","bpp_id":"flash-api.staging.shadowfax.in","bpp_uri":"https://flash-api.staging.shadowfax.in/ondc/v1","transaction_id":"241196e3-7588-4d25-a93a-1914b743c3cd","message_id":"540c4193-3cf4-4bde-bc86-ea4403bb3134","timestamp":"2023-09-11T14:44:35.312Z"},"message":{"order":{"id":"2023-09-11-232309","state":"Cancelled","fulfillments":[{"id":"2","type":"Prepaid","state":{"descriptor":{"code":"Cancelled","name":"Cancelled"}},"tags":{"cancellation_reason_id":"016"}}]}}}]}
+{
+  "search": [
+    {
+      "context": {
+        "transaction_id": "86bca914-8062-5b26-a81e-6b9045199876",
+        "country": "IND",
+        "city": "std:080",
+        "domain": "nic2004:60232",
+        "action": "search",
+        "message_id": "3067030b-b697-5a6f-9a2b-05282c1e5986",
+        "core_version": "1.1.0",
+        "ttl": "PT30S",
+        "bap_uri": "https://preprod-ondc.viranc.com/p/v1/store/bapl",
+        "bap_id": "preprod-ondc.viranc.com/p/v1/store",
+        "timestamp": "2023-09-16T08:22:32.423Z"
+      },
+      "message": {
+        "intent": {
+          "provider": {
+            "time": {
+              "schedule": { "holidays": [] },
+              "days": "1,2,3,4,5,6,7",
+              "range": { "start": "0000", "end": "2359" }
+            }
+          },
+          "fulfillment": {
+            "start": {
+              "location": {
+                "address": { "area_code": "560001" },
+                "gps": "12.96774,77.588913"
+              }
+            },
+            "end": {
+              "location": {
+                "address": { "area_code": "560008" },
+                "gps": "12.977203,77.631812"
+              }
+            },
+            "type": "Prepaid"
+          },
+          "category": { "id": "Standard Delivery" },
+          "@ondc/org/payload_details": {
+            "weight": { "unit": "Kilogram", "value": 11 },
+            "category": "Grocery",
+            "value": { "currency": "INR", "value": "531.48" }
+          }
+        }
+      }
+    }
+  ],
+  "on_search": [
+    {
+      "context": {
+        "transaction_id": "86bca914-8062-5b26-a81e-6b9045199876",
+        "country": "IND",
+        "bpp_id": "ondc.whizzard.in",
+        "city": "std:080",
+        "domain": "nic2004:60232",
+        "bpp_uri": "https://ondc.whizzard.in/api/integration",
+        "action": "on_search",
+        "message_id": "3067030b-b697-5a6f-9a2b-05282c1e5986",
+        "core_version": "1.1.0",
+        "bap_uri": "https://preprod-ondc.viranc.com/p/v1/store/bapl",
+        "bap_id": "preprod-ondc.viranc.com/p/v1/store",
+        "timestamp": "2023-09-16T08:22:32.623Z"
+      },
+      "message": {
+        "catalog": {
+          "bpp/fulfillments": [
+            { "id": "1", "type": "Prepaid" },
+            { "id": "2", "type": "CoD" },
+            { "id": "3", "type": "RTO" }
+          ],
+          "bpp/providers": [
+            {
+              "id": "MLL",
+              "descriptor": {
+                "name": "Mahindra Logistics",
+                "short_desc": "MLL",
+                "long_desc": "Mahindra Logistics Ltd."
+              },
+              "categories": [
+                {
+                  "id": "Immediate Delivery",
+                  "time": { "duration": "PT9M", "label": "TAT" }
+                },
+                {
+                  "id": "Same Day Delivery",
+                  "time": { "duration": "PT2H", "label": "TAT" }
+                }
+              ],
+              "items": [
+                {
+                  "category_id": "Immediate Delivery",
+                  "parent_item_id": "",
+                  "price": { "currency": "INR", "value": "25" },
+                  "id": "I1",
+                  "descriptor": {
+                    "code": "P2P",
+                    "name": "9 min delivery",
+                    "short_desc": "9 min delivery",
+                    "long_desc": "9 min delivery"
+                  },
+                  "time": {
+                    "duration": "PT9M",
+                    "label": "TAT",
+                    "timestamp": "2023-09-16T08:22:32.825Z"
+                  },
+                  "fulfillment_id": "1"
+                },
+                {
+                  "category_id": "Immediate Delivery",
+                  "parent_item_id": "",
+                  "price": { "currency": "INR", "value": "25" },
+                  "id": "I2",
+                  "descriptor": {
+                    "code": "P2P",
+                    "name": "9 min delivery",
+                    "short_desc": "9 min delivery",
+                    "long_desc": "9 min delivery"
+                  },
+                  "time": {
+                    "duration": "PT9M",
+                    "label": "TAT",
+                    "timestamp": "2023-09-16T08:22:32.825Z"
+                  },
+                  "fulfillment_id": "2"
+                },
+                {
+                  "category_id": "Immediate Delivery",
+                  "parent_item_id": "I1",
+                  "price": { "currency": "INR", "value": "25" },
+                  "id": "I3",
+                  "descriptor": {
+                    "code": "P2P",
+                    "name": "RTO quote",
+                    "short_desc": "RTO quote",
+                    "long_desc": "RTO quote for Immediate Delivery"
+                  },
+                  "time": {
+                    "duration": "PT9M",
+                    "label": "TAT",
+                    "timestamp": "2023-09-16T08:22:32.825Z"
+                  },
+                  "fulfillment_id": "3"
+                },
+                {
+                  "category_id": "Same Day Delivery",
+                  "price": { "currency": "INR", "value": "25" },
+                  "id": "I4",
+                  "descriptor": {
+                    "code": "P2P",
+                    "name": "2 Hour delivery",
+                    "short_desc": "2 Hr delivery",
+                    "long_desc": "2 Hr delivery"
+                  },
+                  "time": {
+                    "duration": "PT2H",
+                    "label": "TAT",
+                    "timestamp": "2023-09-16T08:22:32.825Z"
+                  },
+                  "fulfillment_id": "1"
+                },
+                {
+                  "category_id": "Same Day Delivery",
+                  "price": { "currency": "INR", "value": "25" },
+                  "id": "I5",
+                  "descriptor": {
+                    "code": "P2P",
+                    "name": "2 Hours delivery",
+                    "short_desc": "2 Hrs delivery",
+                    "long_desc": "2 Hrs delivery"
+                  },
+                  "time": {
+                    "duration": "PT2H",
+                    "label": "TAT",
+                    "timestamp": "2023-09-16T08:22:32.825Z"
+                  },
+                  "fulfillment_id": "2"
+                },
+                {
+                  "category_id": "Same Day Delivery",
+                  "parent_item_id": "I4",
+                  "price": { "currency": "INR", "value": "25" },
+                  "id": "I6",
+                  "descriptor": {
+                    "code": "P2P",
+                    "name": "RTO quote",
+                    "short_desc": "RTO quote",
+                    "long_desc": "RTO quote for Same Day Delivery"
+                  },
+                  "time": {
+                    "duration": "PT2H",
+                    "label": "TAT",
+                    "timestamp": "2023-09-16T08:22:32.825Z"
+                  },
+                  "fulfillment_id": "3"
+                }
+              ]
+            }
+          ],
+          "bpp/descriptor": { "name": "Mahindra Logistics" }
+        }
+      }
+    }
+  ],
+  "init": [
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "country": "IND",
+        "city": "std:080",
+        "action": "init",
+        "core_version": "1.1.0",
+        "bap_id": "preprod-ondc.viranc.com/p/v1/store",
+        "bap_uri": "https://preprod-ondc.viranc.com/p/v1/store/bapl",
+        "bpp_id": "ondc.whizzard.in",
+        "bpp_uri": "https://ondc.whizzard.in/api/integration",
+        "transaction_id": "86bca914-8062-5b26-a81e-6b9045199876",
+        "message_id": "6fb39d27-99b0-5107-9ebc-685ee8be4c3e",
+        "timestamp": "2023-09-16T08:23:26.842Z",
+        "ttl": "PT30S"
+      },
+      "message": {
+        "order": {
+          "provider": { "id": "MLL" },
+          "items": [
+            {
+              "id": "I1",
+              "category_id": "Immediate Delivery",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "fulfillments": [
+            {
+              "id": "1",
+              "type": "Prepaid",
+              "start": {
+                "location": {
+                  "gps": "12.96774,77.588913",
+                  "address": {
+                    "name": "ONDC Test Seller Store",
+                    "building": "Kasturba Rd",
+                    "locality": "Kasturba Rd",
+                    "city": "Bengaluru",
+                    "state": "Karnataka",
+                    "country": "India",
+                    "area_code": "560001"
+                  }
+                },
+                "contact": { "phone": "9999999999", "email": "test@test.com" }
+              },
+              "end": {
+                "location": {
+                  "gps": "12.977203,77.631812",
+                  "address": {
+                    "name": "Jeevan",
+                    "building": "The Leela Palace Bengaluru",
+                    "locality": "23, HAL Old Airport Rd, HAL 2nd Stage, Kodihalli, Bengaluru, Karnataka 560008",
+                    "city": "Bengaluru",
+                    "state": "Karnataka",
+                    "country": "IND",
+                    "area_code": "560008"
+                  }
+                },
+                "contact": {
+                  "phone": "8499954583",
+                  "email": "jeevan.mudhigolam@whizzard.in"
+                }
+              }
+            }
+          ],
+          "billing": {
+            "name": "ONDC Test Seller Store",
+            "address": {
+              "name": "ONDC Test Seller Store",
+              "building": "Fort",
+              "locality": "Fort",
+              "city": "Mumbai",
+              "state": "Maharashtra",
+              "country": "India",
+              "area_code": "400001"
+            },
+            "tax_number": "22AAAAA0000A1Z5",
+            "phone": "9999999999",
+            "email": "test@gmail.com",
+            "created_at": "2023-09-16T08:23:26.842Z",
+            "updated_at": "2023-09-16T08:23:26.842Z"
+          },
+          "payment": { "@ondc/org/settlement_details": [] }
+        }
+      }
+    }
+  ],
+  "on_init": [
+    {
+      "context": {
+        "transaction_id": "86bca914-8062-5b26-a81e-6b9045199876",
+        "country": "IND",
+        "bpp_id": "ondc.whizzard.in",
+        "city": "std:080",
+        "domain": "nic2004:60232",
+        "bpp_uri": "https://ondc.whizzard.in/api/integration",
+        "action": "on_init",
+        "message_id": "6fb39d27-99b0-5107-9ebc-685ee8be4c3e",
+        "core_version": "1.1.0",
+        "bap_uri": "https://preprod-ondc.viranc.com/p/v1/store/bapl",
+        "bap_id": "preprod-ondc.viranc.com/p/v1/store",
+        "timestamp": "2023-09-16T08:23:27.042Z"
+      },
+      "message": {
+        "order": {
+          "quote": {
+            "breakup": [
+              {
+                "@ondc/org/item_id": "I1",
+                "price": { "currency": "INR", "value": "25" },
+                "@ondc/org/title_type": "Delivery Charge"
+              }
+            ],
+            "price": { "currency": "INR", "value": "25" }
+          },
+          "provider": { "id": "MLL" },
+          "payment": {
+            "collected_by": "BAP",
+            "type": "ON-ORDER",
+            "@ondc/org/settlement_details": [
+              {
+                "beneficiary_name": "Jeevan",
+                "settlement_counterparty": "seller-app",
+                "settlement_ifsc_code": "SBIN0000123",
+                "settlement_bank_account_no": "123239845757",
+                "upi_address": "jeavan@ybl",
+                "settlement_type": "upi"
+              }
+            ]
+          },
+          "items": [{ "id": "I1" }]
+        }
+      }
+    }
+  ],
+  "confirm": [
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "country": "IND",
+        "city": "std:080",
+        "action": "confirm",
+        "core_version": "1.1.0",
+        "bap_id": "preprod-ondc.viranc.com/p/v1/store",
+        "bap_uri": "https://preprod-ondc.viranc.com/p/v1/store/bapl",
+        "bpp_id": "ondc.whizzard.in",
+        "bpp_uri": "https://ondc.whizzard.in/api/integration",
+        "transaction_id": "86bca914-8062-5b26-a81e-6b9045199876",
+        "message_id": "69bc1c3f-5b69-5972-8abf-0e6e87a8dd48",
+        "timestamp": "2023-09-16T08:24:06.502Z",
+        "ttl": "PT30S"
+      },
+      "message": {
+        "order": {
+          "id": "56ced6f1-45e2-47d0-b08e-687230ca73bd",
+          "state": "Created",
+          "provider": { "id": "MLL" },
+          "items": [
+            {
+              "id": "I1",
+              "category_id": "Immediate Delivery",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "quote": {
+            "price": { "value": "25", "currency": "INR" },
+            "breakup": [
+              {
+                "price": { "value": "25", "currency": "INR" },
+                "@ondc/org/item_id": "I1",
+                "@ondc/org/title_type": "Delivery Charge"
+              }
+            ]
+          },
+          "fulfillments": [
+            {
+              "id": "1",
+              "type": "Prepaid",
+              "start": {
+                "person": { "name": "Test" },
+                "location": {
+                  "gps": "12.96774,77.588913",
+                  "address": {
+                    "name": "ONDC Test Seller Store",
+                    "building": "Kasturba Rd",
+                    "locality": "Kasturba Rd",
+                    "city": "Bengaluru",
+                    "state": "Karnataka",
+                    "country": "India",
+                    "area_code": "560001"
+                  }
+                },
+                "contact": { "phone": "9999999999", "email": "test@test.com" },
+                "instructions": {
+                  "name": "Status for pickup",
+                  "long_desc": "Pickup Confirmation Code",
+                  "short_desc": "2233374"
+                }
+              },
+              "end": {
+                "person": { "name": "Jeevan" },
+                "location": {
+                  "gps": "12.977203,77.631812",
+                  "address": {
+                    "name": "Jeevan",
+                    "building": "The Leela Palace Bengaluru",
+                    "locality": "23, HAL Old Airport Rd, HAL 2nd Stage, Kodihalli, Bengaluru, Karnataka 560008",
+                    "city": "Bengaluru",
+                    "state": "Karnataka",
+                    "country": "IND",
+                    "area_code": "560008"
+                  }
+                },
+                "contact": {
+                  "phone": "8499954583",
+                  "email": "jeevan.mudhigolam@whizzard.in"
+                },
+                "instructions": {
+                  "name": "Status for drop",
+                  "long_desc": "Delivery Confirmation Code",
+                  "short_desc": "4518735"
+                }
+              },
+              "tags": { "@ondc/org/order_ready_to_ship": "no" }
+            }
+          ],
+          "billing": {
+            "name": "ONDC Test Seller Store",
+            "address": {
+              "name": "ONDC Test Seller Store",
+              "building": "Fort",
+              "locality": "Fort",
+              "city": "Mumbai",
+              "state": "Maharashtra",
+              "country": "India",
+              "area_code": "400001"
+            },
+            "tax_number": "22AAAAA0000A1Z5",
+            "phone": "9999999999",
+            "email": "test@gmail.com",
+            "created_at": "2023-09-16T08:23:26.842Z",
+            "updated_at": "2023-09-16T08:23:26.842Z"
+          },
+          "payment": {
+            "@ondc/org/collection_amount": "557.23",
+            "collected_by": "BAP",
+            "type": "ON-ORDER",
+            "@ondc/org/settlement_details": [
+              {
+                "upi_address": "jeavan@ybl",
+                "settlement_type": "upi",
+                "beneficiary_name": "Jeevan",
+                "settlement_ifsc_code": "SBIN0000123",
+                "settlement_counterparty": "seller-app",
+                "settlement_bank_account_no": "123239845757"
+              }
+            ]
+          },
+          "@ondc/org/linked_order": {
+            "items": [
+              {
+                "category_id": "Grocery",
+                "descriptor": {
+                  "name": "Aashirvaad Shudh Chakki Atta, 10kg Pack"
+                },
+                "quantity": {
+                  "count": 1,
+                  "measure": { "unit": "Kilogram", "value": 10 }
+                },
+                "price": { "currency": "INR", "value": "437.00" }
+              },
+              {
+                "category_id": "Grocery",
+                "descriptor": {
+                  "name": "Pillsbury Chakki Fresh Whole Wheat Atta, 1 kg"
+                },
+                "quantity": {
+                  "count": 1,
+                  "measure": { "unit": "Kilogram", "value": 1 }
+                },
+                "price": { "currency": "INR", "value": "79.00" }
+              }
+            ],
+            "provider": {
+              "descriptor": { "name": "ONDC Test Seller Store" },
+              "address": {
+                "name": "ONDC Test Seller Store",
+                "street": "Kasturba Rd",
+                "locality": "Kasturba Rd",
+                "city": "Bengaluru",
+                "state": "Karnataka",
+                "area_code": "560001"
+              }
+            },
+            "order": {
+              "id": "2023-09-16-732545",
+              "weight": { "unit": "Kilogram", "value": 11 }
+            }
+          },
+          "created_at": "2023-09-16T08:24:06.502Z",
+          "updated_at": "2023-09-16T08:24:06.502Z"
+        }
+      }
+    }
+  ],
+  "on_confirm": [
+    {
+      "context": {
+        "transaction_id": "86bca914-8062-5b26-a81e-6b9045199876",
+        "country": "IND",
+        "bpp_id": "ondc.whizzard.in",
+        "city": "std:080",
+        "domain": "nic2004:60232",
+        "bpp_uri": "https://ondc.whizzard.in/api/integration",
+        "action": "on_confirm",
+        "message_id": "69bc1c3f-5b69-5972-8abf-0e6e87a8dd48",
+        "core_version": "1.1.0",
+        "bap_uri": "https://preprod-ondc.viranc.com/p/v1/store/bapl",
+        "bap_id": "preprod-ondc.viranc.com/p/v1/store",
+        "timestamp": "2023-09-16T08:24:06.702Z"
+      },
+      "message": {
+        "order": {
+          "fulfillments": [
+            {
+              "agent": { "phone": "8499954583", "name": "Jeevan" },
+              "@ondc/org/awb_no": "56ced6f1-45e2-47d0-b08e-687230ca73bd",
+              "id": "1",
+              "state": { "descriptor": { "code": "Pending" } },
+              "type": "Prepaid",
+              "tracking": true
+            }
+          ],
+          "quote": {
+            "breakup": [
+              {
+                "@ondc/org/item_id": "I1",
+                "price": { "currency": "INR", "value": "25.0" },
+                "@ondc/org/title_type": "Delivery Charge"
+              }
+            ],
+            "price": { "currency": "INR", "value": "25.0" }
+          },
+          "updated_at": "2023-09-16T08:24:06.702Z",
+          "provider": { "id": "MLL" },
+          "created_at": "2023-09-16T08:24:06.502Z",
+          "id": "56ced6f1-45e2-47d0-b08e-687230ca73bd",
+          "state": "Created",
+          "items": [
+            {
+              "category_id": "Immediate Delivery",
+              "id": "I1",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "billing": {
+            "address": {
+              "country": "India",
+              "city": "Mumbai",
+              "area_code": "400001",
+              "name": "ONDC Test Seller Store",
+              "locality": "Fort",
+              "state": "Maharashtra",
+              "building": "Fort"
+            },
+            "updated_at": "2023-09-16T08:23:26.842Z",
+            "phone": "9999999999",
+            "tax_number": "22AAAAA0000A1Z5",
+            "name": "ONDC Test Seller Store",
+            "created_at": "2023-09-16T08:23:26.842Z",
+            "email": "test@gmail.com"
+          }
+        }
+      }
+    }
+  ],
+  "update": [
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "country": "IND",
+        "city": "std:080",
+        "action": "update",
+        "core_version": "1.1.0",
+        "bap_id": "preprod-ondc.viranc.com/p/v1/store",
+        "bap_uri": "https://preprod-ondc.viranc.com/p/v1/store/bapl",
+        "bpp_id": "ondc.whizzard.in",
+        "bpp_uri": "https://ondc.whizzard.in/api/integration",
+        "transaction_id": "86bca914-8062-5b26-a81e-6b9045199876",
+        "message_id": "1af30479-28fd-4259-a060-a24771a9f623",
+        "timestamp": "2023-09-16T08:26:07.426Z",
+        "ttl": "PT30S"
+      },
+      "message": {
+        "update_target": "fulfillment",
+        "order": {
+          "id": "56ced6f1-45e2-47d0-b08e-687230ca73bd",
+          "state": "Created",
+          "items": [
+            {
+              "id": "I1",
+              "category_id": "Immediate Delivery",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "fulfillments": [
+            {
+              "id": "1",
+              "type": "Prepaid",
+              "tags": { "@ondc/org/order_ready_to_ship": "yes" },
+              "start": {
+                "instructions": {
+                  "name": "Status for pickup",
+                  "long_desc": "Pickup Confirmation Code",
+                  "short_desc": "2233374"
+                }
+              },
+              "end": {
+                "instructions": {
+                  "name": "Status for drop",
+                  "long_desc": "Delivery Confirmation Code",
+                  "short_desc": "4518735"
+                }
+              }
+            }
+          ],
+          "payment": {
+            "@ondc/org/collection_amount": "557.23",
+            "collected_by": "BAP",
+            "type": "ON-ORDER"
+          },
+          "@ondc/org/linked_order": {
+            "items": [
+              {
+                "category_id": "Grocery",
+                "descriptor": {
+                  "name": "Aashirvaad Shudh Chakki Atta, 10kg Pack"
+                },
+                "quantity": {
+                  "count": 1,
+                  "measure": { "unit": "Kilogram", "value": 10 }
+                },
+                "price": { "currency": "INR", "value": "437.00" }
+              },
+              {
+                "category_id": "Grocery",
+                "descriptor": {
+                  "name": "Pillsbury Chakki Fresh Whole Wheat Atta, 1 kg"
+                },
+                "quantity": {
+                  "count": 1,
+                  "measure": { "unit": "Kilogram", "value": 1 }
+                },
+                "price": { "currency": "INR", "value": "79.00" }
+              }
+            ],
+            "provider": {
+              "descriptor": { "name": "ONDC Test Seller Store" },
+              "address": {
+                "name": "ONDC Test Seller Store",
+                "street": "Kasturba Rd",
+                "locality": "Kasturba Rd",
+                "city": "Bengaluru",
+                "state": "Karnataka",
+                "area_code": "560001"
+              }
+            },
+            "order": {
+              "id": "2023-09-16-732545",
+              "weight": { "unit": "Kilogram", "value": 11 }
+            }
+          },
+          "updated_at": "2023-09-16T08:26:07.426Z"
+        }
+      }
+    }
+  ],
+  "on_update": [
+    {
+      "context": {
+        "transaction_id": "86bca914-8062-5b26-a81e-6b9045199876",
+        "country": "IND",
+        "bpp_id": "ondc.whizzard.in",
+        "city": "std:080",
+        "domain": "nic2004:60232",
+        "bpp_uri": "https://ondc.whizzard.in/api/integration",
+        "action": "on_update",
+        "message_id": "1af30479-28fd-4259-a060-a24771a9f623",
+        "core_version": "1.1.0",
+        "bap_uri": "https://preprod-ondc.viranc.com/p/v1/store/bapl",
+        "bap_id": "preprod-ondc.viranc.com/p/v1/store",
+        "timestamp": "2023-09-16T08:26:07.446Z"
+      },
+      "message": {
+        "order": {
+          "fulfillments": [
+            {
+              "agent": { "phone": "8499954583", "name": "Jeevan" },
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:24:06.599Z",
+                    "end": "2023-09-16T08:27:06.599Z"
+                  }
+                }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:27:06.599Z",
+                    "end": "2023-09-16T08:31:06.599Z"
+                  }
+                }
+              },
+              "id": "Fulfillment1",
+              "type": "Prepaid"
+            }
+          ],
+          "updated_at": "2023-09-16T08:24:06.502Z",
+          "created_at": "2023-09-16T08:24:06.502Z",
+          "id": "56ced6f1-45e2-47d0-b08e-687230ca73bd",
+          "state": "Accepted",
+          "items": [
+            {
+              "category_id": "Immediate Delivery",
+              "id": "I1",
+              "descriptor": { "code": "P2P" }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "on_status": [
+    {
+      "context": {
+        "transaction_id": "86bca914-8062-5b26-a81e-6b9045199876",
+        "country": "IND",
+        "bpp_id": "ondc.whizzard.in",
+        "city": "std:080",
+        "domain": "nic2004:60232",
+        "bpp_uri": "https://ondc.whizzard.in/api/integration",
+        "action": "on_status",
+        "message_id": "2023-09-16-7325451694852936330",
+        "core_version": "1.1.0",
+        "bap_uri": "https://preprod-ondc.viranc.com/p/v1/store/bapl",
+        "bap_id": "preprod-ondc.viranc.com/p/v1/store",
+        "timestamp": "2023-09-16T08:26:55.330Z"
+      },
+      "message": {
+        "order": {
+          "fulfillments": [
+            {
+              "agent": { "phone": "8499954583", "name": "Jeevan M" },
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:24:06.599Z",
+                    "end": "2023-09-16T08:27:06.599Z"
+                  },
+                  "timestamp": "2023-09-16T08:24:06.502Z"
+                }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:27:06.599Z",
+                    "end": "2023-09-16T08:31:06.599Z"
+                  }
+                }
+              },
+              "state": { "descriptor": { "code": "Order-picked-up" } },
+              "type": "Prepaid",
+              "tracking": true,
+              "vehicle": {
+                "size": "small",
+                "registration": "AP03 223 34",
+                "category": "Bike"
+              }
+            }
+          ],
+          "quote": {
+            "breakup": [
+              {
+                "@ondc/org/item_id": "I1",
+                "price": { "currency": "INR", "value": "25" },
+                "@ondc/org/title_type": "Delivery Charge"
+              }
+            ],
+            "price": { "currency": "INR", "value": "25.0" }
+          },
+          "provider": { "id": "MLL" },
+          "payment": {
+            "collected_by": "BAP",
+            "type": "ON-ORDER",
+            "@ondc/org/settlement_details": [
+              {
+                "beneficiary_name": "Jeevan",
+                "settlement_counterparty": "seller-app",
+                "settlement_ifsc_code": "SBIN0000123",
+                "settlement_bank_account_no": "123239845757",
+                "upi_address": "jeavan@ybl",
+                "settlement_type": "upi"
+              }
+            ]
+          },
+          "id": "56ced6f1-45e2-47d0-b08e-687230ca73bd",
+          "state": "In-progress",
+          "items": [
+            {
+              "category_id": "Immediate Delivery",
+              "id": "I1",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "billing": {
+            "address": {
+              "country": "India",
+              "city": "Mumbai",
+              "area_code": "400001",
+              "name": "ONDC Test Seller Store",
+              "locality": "Fort",
+              "state": "Maharashtra",
+              "building": "Fort"
+            },
+            "phone": "9999999999",
+            "tax_number": "22AAAAA0000A1Z5",
+            "name": "ONDC Test Seller Store",
+            "email": "test@gmail.com"
+          }
+        }
+      }
+    },
+    {
+      "context": {
+        "transaction_id": "86bca914-8062-5b26-a81e-6b9045199876",
+        "country": "IND",
+        "bpp_id": "ondc.whizzard.in",
+        "city": "std:080",
+        "domain": "nic2004:60232",
+        "bpp_uri": "https://ondc.whizzard.in/api/integration",
+        "action": "on_status",
+        "message_id": "2023-09-16-7325451694852936589",
+        "core_version": "1.1.0",
+        "bap_uri": "https://preprod-ondc.viranc.com/p/v1/store/bapl",
+        "bap_id": "preprod-ondc.viranc.com/p/v1/store",
+        "timestamp": "2023-09-16T08:27:02.330Z"
+      },
+      "message": {
+        "order": {
+          "fulfillments": [
+            {
+              "agent": { "phone": "8499954583", "name": "Jeevan M" },
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:24:06.599Z",
+                    "end": "2023-09-16T08:27:06.599Z"
+                  },
+                  "timestamp": "2023-09-16T08:24:06.502Z"
+                }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:27:06.599Z",
+                    "end": "2023-09-16T08:31:06.599Z"
+                  }
+                }
+              },
+              "state": { "descriptor": { "code": "Out-for-delivery" } },
+              "type": "Prepaid",
+              "tracking": true,
+              "vehicle": {
+                "size": "small",
+                "registration": "AP03 223 34",
+                "category": "Bike"
+              }
+            }
+          ],
+          "quote": {
+            "breakup": [
+              {
+                "@ondc/org/item_id": "I1",
+                "price": { "currency": "INR", "value": "25" },
+                "@ondc/org/title_type": "Delivery Charge"
+              }
+            ],
+            "price": { "currency": "INR", "value": "25.0" }
+          },
+          "provider": { "id": "MLL" },
+          "payment": {
+            "collected_by": "BAP",
+            "type": "ON-ORDER",
+            "@ondc/org/settlement_details": [
+              {
+                "beneficiary_name": "Jeevan",
+                "settlement_counterparty": "seller-app",
+                "settlement_ifsc_code": "SBIN0000123",
+                "settlement_bank_account_no": "123239845757",
+                "upi_address": "jeavan@ybl",
+                "settlement_type": "upi"
+              }
+            ]
+          },
+          "id": "56ced6f1-45e2-47d0-b08e-687230ca73bd",
+          "state": "In-progress",
+          "items": [
+            {
+              "category_id": "Immediate Delivery",
+              "id": "I1",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "billing": {
+            "address": {
+              "country": "India",
+              "city": "Mumbai",
+              "area_code": "400001",
+              "name": "ONDC Test Seller Store",
+              "locality": "Fort",
+              "state": "Maharashtra",
+              "building": "Fort"
+            },
+            "phone": "9999999999",
+            "tax_number": "22AAAAA0000A1Z5",
+            "name": "ONDC Test Seller Store",
+            "email": "test@gmail.com"
+          }
+        }
+      }
+    },
+    {
+      "context": {
+        "transaction_id": "86bca914-8062-5b26-a81e-6b9045199876",
+        "country": "IND",
+        "bpp_id": "ondc.whizzard.in",
+        "city": "std:080",
+        "domain": "nic2004:60232",
+        "bpp_uri": "https://ondc.whizzard.in/api/integration",
+        "action": "on_status",
+        "message_id": "2023-09-16-7325451694853039294",
+        "core_version": "1.1.0",
+        "bap_uri": "https://preprod-ondc.viranc.com/p/v1/store/bapl",
+        "bap_id": "preprod-ondc.viranc.com/p/v1/store",
+        "timestamp": "2023-09-16T08:30:39.294Z"
+      },
+      "message": {
+        "order": {
+          "fulfillments": [
+            {
+              "agent": { "phone": "8499954583", "name": "Jeevan M" },
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:24:06.599Z",
+                    "end": "2023-09-16T08:27:06.599Z"
+                  },
+                  "timestamp": "2023-09-16T08:24:06.502Z"
+                }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:27:06.599Z",
+                    "end": "2023-09-16T08:31:06.599Z"
+                  }
+                }
+              },
+              "state": { "descriptor": { "code": "Cancelled" } },
+              "type": "Prepaid",
+              "tracking": true,
+              "vehicle": {
+                "size": "small",
+                "registration": "AP03 223 34",
+                "category": "Bike"
+              }
+            },
+            {
+              "agent": { "phone": "8499954583", "name": "Jeevan M" },
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:30:38.294Z",
+                    "end": "2023-09-16T08:32:06.599Z"
+                  },
+                  "timestamp": "2023-09-16T08:29:47.355Z"
+                }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:32:06.599Z",
+                    "end": "2023-09-16T08:35:06.599Z"
+                  }
+                }
+              },
+              "state": { "descriptor": { "code": "RTO-Initiated" } },
+              "type": "RTO",
+              "tracking": true
+            }
+          ],
+          "quote": {
+            "breakup": [
+              {
+                "@ondc/org/item_id": "I1",
+                "price": { "currency": "INR", "value": "25" },
+                "@ondc/org/title_type": "Delivery Charge"
+              },
+              {
+                "price": { "currency": "INR", "value": "25" },
+                "@ondc/org/title_type": "RTO Charge",
+                "title": "RTO charges"
+              }
+            ],
+            "price": { "currency": "INR", "value": "50.0" }
+          },
+          "provider": { "id": "MLL" },
+          "payment": {
+            "collected_by": "BAP",
+            "type": "ON-ORDER",
+            "@ondc/org/settlement_details": [
+              {
+                "beneficiary_name": "Jeevan",
+                "settlement_counterparty": "seller-app",
+                "settlement_ifsc_code": "SBIN0000123",
+                "settlement_bank_account_no": "123239845757",
+                "upi_address": "jeavan@ybl",
+                "settlement_type": "upi"
+              }
+            ]
+          },
+          "id": "56ced6f1-45e2-47d0-b08e-687230ca73bd",
+          "state": "Cancelled",
+          "items": [
+            {
+              "category_id": "Immediate Delivery",
+              "id": "I1",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "billing": {
+            "address": {
+              "country": "India",
+              "city": "Mumbai",
+              "area_code": "400001",
+              "name": "ONDC Test Seller Store",
+              "locality": "Fort",
+              "state": "Maharashtra",
+              "building": "Fort"
+            },
+            "phone": "9999999999",
+            "tax_number": "22AAAAA0000A1Z5",
+            "name": "ONDC Test Seller Store",
+            "email": "test@gmail.com"
+          },
+          "tags": { "cancellation_reason_id": "013" }
+        }
+      }
+    },
+    {
+      "context": {
+        "transaction_id": "86bca914-8062-5b26-a81e-6b9045199876",
+        "country": "IND",
+        "bpp_id": "ondc.whizzard.in",
+        "city": "std:080",
+        "domain": "nic2004:60232",
+        "bpp_uri": "https://ondc.whizzard.in/api/integration",
+        "action": "on_status",
+        "message_id": "2023-09-16-7325451694853060722",
+        "core_version": "1.1.0",
+        "bap_uri": "https://preprod-ondc.viranc.com/p/v1/store/bapl",
+        "bap_id": "preprod-ondc.viranc.com/p/v1/store",
+        "timestamp": "2023-09-16T08:33:00.722Z"
+      },
+      "message": {
+        "order": {
+          "fulfillments": [
+            {
+              "agent": { "phone": "8499954583", "name": "Jeevan M" },
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:24:06.599Z",
+                    "end": "2023-09-16T08:27:06.599Z"
+                  },
+                  "timestamp": "2023-09-16T08:24:06.502Z"
+                }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:27:06.599Z",
+                    "end": "2023-09-16T08:31:06.599Z"
+                  }
+                }
+              },
+              "state": { "descriptor": { "code": "Cancelled" } },
+              "type": "Prepaid",
+              "tracking": true,
+              "vehicle": {
+                "size": "small",
+                "registration": "AP03 223 34",
+                "category": "Bike"
+              }
+            },
+            {
+              "agent": { "phone": "8499954583", "name": "Jeevan M" },
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:30:38.294Z",
+                    "end": "2023-09-16T08:32:06.599Z"
+                  },
+                  "timestamp": "2023-09-16T08:29:47.355Z"
+                }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-16T08:32:06.599Z",
+                    "end": "2023-09-16T08:35:06.599Z"
+                  },
+                  "timestamp": "2023-09-16T08:33:00.722Z"
+                }
+              },
+              "state": { "descriptor": { "code": "RTO-Delivered" } },
+              "type": "RTO",
+              "tracking": true
+            }
+          ],
+          "quote": {
+            "breakup": [
+              {
+                "@ondc/org/item_id": "I1",
+                "price": { "currency": "INR", "value": "25" },
+                "@ondc/org/title_type": "Delivery Charge"
+              },
+              {
+                "price": { "currency": "INR", "value": "25" },
+                "@ondc/org/title_type": "RTO Charge",
+                "title": "RTO charges"
+              }
+            ],
+            "price": { "currency": "INR", "value": "50.0" }
+          },
+          "provider": { "id": "MLL" },
+          "payment": {
+            "collected_by": "BAP",
+            "type": "ON-ORDER",
+            "@ondc/org/settlement_details": [
+              {
+                "beneficiary_name": "Jeevan",
+                "settlement_counterparty": "seller-app",
+                "settlement_ifsc_code": "SBIN0000123",
+                "settlement_bank_account_no": "123239845757",
+                "upi_address": "jeavan@ybl",
+                "settlement_type": "upi"
+              }
+            ]
+          },
+          "id": "56ced6f1-45e2-47d0-b08e-687230ca73bd",
+          "state": "Cancelled",
+          "items": [
+            {
+              "category_id": "Immediate Delivery",
+              "id": "I1",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "billing": {
+            "address": {
+              "country": "India",
+              "city": "Mumbai",
+              "area_code": "400001",
+              "name": "ONDC Test Seller Store",
+              "locality": "Fort",
+              "state": "Maharashtra",
+              "building": "Fort"
+            },
+            "phone": "9999999999",
+            "tax_number": "22AAAAA0000A1Z5",
+            "name": "ONDC Test Seller Store",
+            "email": "test@gmail.com"
+          },
+          "tags": { "cancellation_reason_id": "013" }
+        }
+      }
+    }
+  ],
+  "on_cancel": [
+    {
+      "context": {
+        "transaction_id": "86bca914-8062-5b26-a81e-6b9045199876",
+        "country": "IND",
+        "bpp_id": "ondc.whizzard.in",
+        "city": "std:080",
+        "domain": "nic2004:60232",
+        "bpp_uri": "https://ondc.whizzard.in/api/integration",
+        "action": "on_cancel",
+        "message_id": "86bca914-8062-5b26-a81e-6b90451998761694852987",
+        "core_version": "1.1.0",
+        "bap_uri": "https://preprod-ondc.viranc.com/p/v1/store/bapl",
+        "bap_id": "preprod-ondc.viranc.com/p/v1/store",
+        "timestamp": "2023-09-16T08:29:47.355Z"
+      },
+      "message": {
+        "order": {
+          "fulfillments": [
+            {
+              "id": "1",
+              "state": { "descriptor": { "code": "Cancelled" } },
+              "type": "Prepaid",
+              "tags": { "cancellation_reason_id": "013" }
+            }
+          ],
+          "id": "56ced6f1-45e2-47d0-b08e-687230ca73bd",
+          "state": "Cancelled"
+        }
+      }
+    }
+  ]
+}

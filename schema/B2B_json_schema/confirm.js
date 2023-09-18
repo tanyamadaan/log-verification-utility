@@ -7,7 +7,6 @@ module.exports = {
       properties: {
         domain: {
           type: "string",
-          const: "ONDC:RET10",
         },
         location: {
           type: "object",
@@ -58,9 +57,20 @@ module.exports = {
         transaction_id: {
           type: "string",
           const: { $data: "/select/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
+          allOf: [
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            },
+          ]
         },
         timestamp: {
           type: "string",
@@ -104,10 +114,11 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
-                  const: { $data: "/select/0/message/order/provider/id" },
+                  const: { $data: "/init/0/message/order/provider/id" },
                 },
                 locations: {
                   type: "array",
+                  const: { $data: "/init/0/message/order/provider/locations" },
                   items: {
                     type: "object",
                     properties: {
@@ -194,6 +205,14 @@ module.exports = {
                               },
                               value: {
                                 type: "string",
+                                anyOf: [
+                                  {
+                                    const: { $data: "/init/0/message/order/items/0/tags/0/list/0/value" },
+                                  },
+                                  {
+                                    const: { $data: "/init/0/message/order/items/0/tags/0/list/1/value" },
+                                  }
+                                ]
                               },
                             },
                             required: ["descriptor", "value"],
@@ -279,12 +298,15 @@ module.exports = {
                       properties: {
                         type: {
                           type: "string",
+                          enum: ["start", "end"],
                         },
                         location: {
                           type: "object",
                           properties: {
                             gps: {
                               type: "string",
+                              pattern: "^(-?[0-9]{1,3}(?:.[0-9]{6,15})?),( )*?(-?[0-9]{1,3}(?:.[0-9]{6,15})?)$",
+                              errorMessage: "Incorrect gps value",
                             },
                             address: {
                               type: "string",
@@ -395,6 +417,14 @@ module.exports = {
                               },
                               value: {
                                 type: "string",
+                                anyOf: [
+                                  {
+                                    const: { $data: "/init/0/message/order/fulfillments/0/tags/0/list/0/value" },
+                                  },
+                                  {
+                                    const: { $data: "/init/0/message/order/fulfillments/0/tags/0/list/1/value" },
+                                  }
+                                ]
                               },
                             },
                             if: {
@@ -469,6 +499,7 @@ module.exports = {
                       },
                       "@ondc/org/title_type": {
                         type: "string",
+                        enum: ["item", "Discount", "Packing charges", "delivery ", "tax", "misc"]
                       },
                       price: {
                         type: "object",
@@ -730,42 +761,6 @@ module.exports = {
         },
       },
       required: ["order"],
-    },
-    search: {
-      type: "array",
-      items: {
-        $ref: "searchSchema#",
-      },
-    },
-    on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
-    },
-    select: {
-      type: "array",
-      items: {
-        $ref: "selectSchema#",
-      },
-    },
-    on_select: {
-      type: "array",
-      items: {
-        $ref: "onSelectSchema#",
-      },
-    },
-    init: {
-      type: "array",
-      items: {
-        $ref: "initSchema#",
-      },
-    },
-    on_init: {
-      type: "array",
-      items: {
-        $ref: "onInitSchema#",
-      },
     },
   },
   required: ["context", "message"],

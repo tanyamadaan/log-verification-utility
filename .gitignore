@@ -3,6 +3,7 @@ package-lock.json
 *.env
 .vscode
 /public/logs/*.json
+/public/*
 verification-logs
 /utils/*.json
 /utils/*.txt
@@ -13,3 +14,5 @@ test.js
 !LICENSE.md
 *.md
 logFlow*.json
+.DS_Store
+log_report.json

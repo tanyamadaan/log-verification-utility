@@ -17,6 +17,4 @@ const validate_schema_for_domain_json = (vertical, data) => {
   }
 };
 
-
-
 module.exports = validate_schema_for_domain_json;

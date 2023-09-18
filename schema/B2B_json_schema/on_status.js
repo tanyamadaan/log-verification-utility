@@ -7,7 +7,6 @@ module.exports = {
       properties: {
         domain: {
           type: "string",
-          const: "ONDC:RET10",
         },
         location: {
           type: "object",
@@ -58,6 +57,8 @@ module.exports = {
         transaction_id: {
           type: "string",
           const: { $data: "/select/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/select/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -165,15 +166,20 @@ module.exports = {
               properties: {
                 name: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/name" },
                 },
                 address: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/address" },
                 },
                 state: {
                   type: "object",
                   properties: {
                     name: {
                       type: "string",
+                      const: {
+                        $data: "/init/0/message/order/billing/state/name",
+                      },
                     },
                   },
                   required: ["name"],
@@ -184,14 +190,19 @@ module.exports = {
                     name: {
                       type: "string",
                     },
+                    const: {
+                      $data: "/init/0/message/order/billing/city/name",
+                    },
                   },
                   required: ["name"],
                 },
                 email: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/email" },
                 },
                 phone: {
                   type: "string",
+                  const: { $data: "/init/0/message/order/billing/phone" },
                 },
               },
               required: ["name", "address", "state", "city", "phone"],
@@ -243,6 +254,7 @@ module.exports = {
                       properties: {
                         type: {
                           type: "string",
+                          enum: ["start", "end"],
                         },
                         location: {
                           type: "object",
@@ -267,6 +279,8 @@ module.exports = {
                             },
                             gps: {
                               type: "string",
+                              pattern: "^(-?[0-9]{1,3}(?:.[0-9]{6,15})?),( )*?(-?[0-9]{1,3}(?:.[0-9]{6,15})?)$",
+                              errorMessage: "Incorrect gps value",
                             },
                             address: {
                               type: "string",
@@ -409,6 +423,28 @@ module.exports = {
                   "tracking",
                   "state",
                   "stops",
+                ],
+                anyof: [
+                  {
+                    properties: {
+                      state: {
+                        const: "Order-picked-up"
+                      },
+                      stops: {
+                        type: "array",
+                        items: {
+                          properties: {
+                            type: {
+                              const: "start"
+                            },
+                            time: {
+                              required: ["range", "timestamp"]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 ],
               },
             },

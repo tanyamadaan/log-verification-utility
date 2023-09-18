@@ -38,6 +38,9 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/search/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",

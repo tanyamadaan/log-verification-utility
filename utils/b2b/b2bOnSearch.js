@@ -30,5 +30,4 @@ const checkOnSearch = (data, msgIdSet) => {
 
   return onSrchObj;
 };
-
 module.exports = checkOnSearch;

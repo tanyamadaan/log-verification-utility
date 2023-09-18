@@ -1,10 +1,7 @@
 const fs = require("fs");
 const _ = require("lodash");
 const dao = require("../dao/dao");
-const constants = require("./constants");
 const utils = require("./utils");
-const { checkContext } = require("../services/service");
-const validateSchema = require("./schemaValidation");
 
 const checkContextVal = (payload, Obj, msgIdSet) => {
   try {
@@ -12,7 +9,6 @@ const checkContextVal = (payload, Obj, msgIdSet) => {
     if (!Obj.hasOwnProperty(action)) {
       Obj[action] = {};
     }
-
     let data = payload.context;
     if (data.timestamp) {
       let date = data.timestamp;
@@ -27,8 +23,7 @@ const checkContextVal = (payload, Obj, msgIdSet) => {
 
     try {
       if (action !== "on_status") {
-        console.log(`Comparing timestamp of /${action}`);
-        console.log(action, dao.getValue("tmpstmp"), payload.context.timestamp);
+        //console.log(`Comparing timestamp of /${action}`);
         if (_.gte(dao.getValue("tmpstmp"), payload.context.timestamp)) {
           if (
             action === "support" ||
@@ -69,7 +64,7 @@ const checkContextVal = (payload, Obj, msgIdSet) => {
               payload.context.timestamp,
               dao.getValue("tmpstmp")
             );
-            console.log(timeDiff);
+            //console.log(timeDiff);
             if (timeDiff > 1000) {
               Obj[
                 action
@@ -86,32 +81,7 @@ const checkContextVal = (payload, Obj, msgIdSet) => {
       console.log(`Error while comparing timestamp for /${action} api`);
       console.trace(error);
     }
-
-    try {
-      console.log(`Comparing Message Id of /${action}`);
-      if (action.includes("on_")) {
-        if (msgIdSet.has(payload.context.message_id)) {
-          Obj[action].msgId2 =
-            "Message Id cannot be same for different sets of APIs";
-        }else{
-          msgIdSet.add(payload.context.message_id);
-        }
-      } 
-      //   if (action.includes("on_")) {
-      //     if (!_.isEqual(dao.getValue("msgId"), payload.context.message_id)) {
-      //         Obj[action].msgId = `Message Id for /${action.replace('on_', '')} and /${action} api should be same`;
-      //     }
-      //     msgIdSet.add(payload.context.message_id);
-      // }
-      // else {
-      //     if (msgIdSet.has(payload.context.message_id)) {
-      //         Obj[action].msgId2 = "Message Id cannot be same for different sets of APIs";
-      //       }
-      //     dao.setValue("msgId", payload.context.message_id);
-      // }
-    } catch (error) {
-      console.log(`Error while comparing message id for /${action} api`, error);
-    }
+    return Obj;
   } catch (err) {
     if (err.code === "ENOENT") {
       console.log(`!!File not found for /${action} API!`);
@@ -120,5 +90,4 @@ const checkContextVal = (payload, Obj, msgIdSet) => {
     }
   }
 };
-
 module.exports = checkContextVal;

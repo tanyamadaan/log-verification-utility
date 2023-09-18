@@ -7,7 +7,6 @@ module.exports = {
       properties: {
         domain: {
           type: "string",
-          const: "ONDC:RET10",
         },
         location: {
           type: "object",
@@ -58,9 +57,21 @@ module.exports = {
         transaction_id: {
           type: "string",
           const: { $data: "/select/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+
         },
         message_id: {
           type: "string",
+          allOf: [
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            },
+          ]
         },
         timestamp: {
           type: "string",
@@ -107,6 +118,7 @@ module.exports = {
                     properties: {
                       id: {
                         type: "string",
+                        const: { $data: "/select/0/message/order/provider/locations/0/id"}
                       },
                     },
                     required: ["id"],
@@ -114,6 +126,7 @@ module.exports = {
                 },
                 ttl: {
                   type: "string",
+                  format: "duration"
                 },
               },
               required: ["id", "locations", "ttl"],
@@ -209,6 +222,7 @@ module.exports = {
               properties: {
                 name: {
                   type: "string",
+                  minLength: 3,
                 },
                 address: {
                   type: "string",
@@ -268,6 +282,8 @@ module.exports = {
                           properties: {
                             gps: {
                               type: "string",
+                              pattern: "^(-?[0-9]{1,3}(?:.[0-9]{6,15})?),( )*?(-?[0-9]{1,3}(?:.[0-9]{6,15})?)$",
+                              errorMessage: "Incorrect gps value",
                             },
                             address: {
                               type: "string",
@@ -341,6 +357,12 @@ module.exports = {
                                 },
                                 type: {
                                   type: "string",
+                                  enum: [
+                                    "License",
+                                    "Badge",
+                                    "Permit",
+                                    "Certificate",
+                                  ],
                                 },
                                 desc: {
                                   type: "string",
@@ -350,6 +372,8 @@ module.exports = {
                                 },
                                 url: {
                                   type: "string",
+                                  pattern:
+                                    "^https://[\\w.-]+(\\.[a-zA-Z]{2,})?(:[0-9]+)?(/\\S*)?$",
                                 },
                               },
                               required: ["id", "type", "desc", "icon", "url"],
@@ -360,8 +384,7 @@ module.exports = {
                       },
                     },
                     required: ["person"],
-                  },
-                  
+                  },           
                   tags: {
                     type: "array",
                     items: {
@@ -387,10 +410,7 @@ module.exports = {
                                 properties: {
                                   code: {
                                     type: "string",
-                                    enum: [
-                                      "INCOTERMS",
-                                      "NAMED_PLACE_OF_DELIVERY",
-                                    ],
+                                    enum: ["INCOTERMS", "DELIVERY_DUTY"],
                                   },
                                 },
                                 required: ["code"],
@@ -500,30 +520,6 @@ module.exports = {
         },
       },
       required: ["order"],
-    },
-    search: {
-      type: "array",
-      items: {
-        $ref: "searchSchema#",
-      },
-    },
-    on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
-    },
-    select: {
-      type: "array",
-      items: {
-        $ref: "selectSchema#",
-      },
-    },
-    on_select: {
-      type: "array",
-      items: {
-        $ref: "onSelectSchema#",
-      },
     },
   },
   required: ["context", "message"],

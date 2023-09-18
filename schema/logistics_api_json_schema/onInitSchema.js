@@ -38,9 +38,9 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: { $data: "/init/0/context/transaction_id" },
+          const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same as /init: ${/init/0/context/transaction_id}",
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -48,7 +48,7 @@ module.exports = {
             {
               const: { $data: "/init/0/context/message_id" },
               errorMessage:
-                "Message ID should be same as /init: ${/init/0/context/message_id}",
+                "Message ID for on_action API should be same as action API: ${/init/0/context/message_id}",
             },
             {
               not: {
@@ -57,6 +57,12 @@ module.exports = {
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
             },
+            {
+              not: {
+                const: { $data: "/search/0/context/message_id" },
+              },
+              errorMessage: "Message ID should be unique",
+            }
           ],
         },
         timestamp: {

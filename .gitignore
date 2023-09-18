@@ -10,7 +10,6 @@ verification-logs
 test_logs
 dbfiles
 test.js
-!README.md
 !LICENSE.md
 *.md
 logFlow*.json

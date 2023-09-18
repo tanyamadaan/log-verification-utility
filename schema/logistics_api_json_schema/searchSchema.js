@@ -7,7 +7,7 @@ module.exports = {
       properties: {
         domain: {
           type: "string",
-          const: "nic2004:60232"
+          const: "nic2004:60232",
         },
         country: {
           type: "string",
@@ -17,12 +17,11 @@ module.exports = {
         },
         action: {
           type: "string",
-          const: "search"
-        
+          const: "search",
         },
         core_version: {
           type: "string",
-          const:"1.1.0"
+          const: "1.1.0",
         },
         bap_id: {
           type: "string",
@@ -35,14 +34,23 @@ module.exports = {
         },
         message_id: {
           type: "string",
+          allOf: [
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            }
+          ],
         },
         timestamp: {
           type: "string",
-          format: "date-time"
+          format: "date-time",
         },
         ttl: {
           type: "string",
-          const: "PT30S"
+          const: "PT30S",
         },
       },
       required: [
@@ -70,7 +78,13 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
-                  enum: ["Express Delivery", "Standard Delivery", "Immediate Delivery","Same Day Delivery","Next Day Delivery"],
+                  enum: [
+                    "Express Delivery",
+                    "Standard Delivery",
+                    "Immediate Delivery",
+                    "Same Day Delivery",
+                    "Next Day Delivery",
+                  ],
                 },
               },
               required: ["id"],
@@ -91,12 +105,12 @@ module.exports = {
                           type: "array",
                           items: {
                             type: "string",
-                            format: "date-time"
+                            format: "date",
                           },
                         },
                         frequency: {
                           type: "string",
-                          format:"duration"
+                          format: "duration",
                         },
                         times: {
                           type: "array",
@@ -105,7 +119,7 @@ module.exports = {
                           },
                         },
                       },
-                      required:["holidays"]
+                      required: ["holidays"],
                     },
                     range: {
                       type: "object",
@@ -117,28 +131,26 @@ module.exports = {
                           type: "string",
                         },
                       },
-                     
                     },
                   },
-                  "oneOf": [
+                  oneOf: [
                     {
-                      "properties": {
-                        "schedule": {
-                          "type": "object",
-                          "required" : ["times", "frequency"]
-                        }
+                      properties: {
+                        schedule: {
+                          type: "object",
+                          required: ["times", "frequency"],
+                        },
                       },
-                      "required" : ["schedule"]
+                      required: ["schedule"],
                     },
                     {
-                      "type": "object",
-                      "required" : ["range"]
-                    }
+                      type: "object",
+                      required: ["range"],
+                    },
                   ],
-                  errorMessage: "Both range and schedule cannot be present in time"
-                  
+                  errorMessage:
+                    "Both range and schedule cannot be present in time",
                 },
-                
               },
             },
             fulfillment: {
@@ -156,8 +168,9 @@ module.exports = {
                       properties: {
                         gps: {
                           type: "string",
-                          pattern: "^(-?[0-9]{1,3}(?:\.[0-9]{1,15})?),( )*?(-?[0-9]{1,3}(?:\.[0-9]{1,15})?)$",
-                          errorMessage: "Incorrect gps value"
+                          pattern:
+                            "^(-?[0-9]{1,3}(?:.[0-9]{1,15})?),( )*?(-?[0-9]{1,3}(?:.[0-9]{1,15})?)$",
+                          errorMessage: "Incorrect gps value",
                         },
                         address: {
                           type: "object",
@@ -182,8 +195,9 @@ module.exports = {
                       properties: {
                         gps: {
                           type: "string",
-                          pattern: "^(-?[0-9]{1,3}(?:\.[0-9]{1,15})?),( )*?(-?[0-9]{1,3}(?:\.[0-9]{1,15})?)$",
-                          errorMessage: "Incorrect gps value"
+                          pattern:
+                            "^(-?[0-9]{1,3}(?:.[0-9]{1,15})?),( )*?(-?[0-9]{1,3}(?:.[0-9]{1,15})?)$",
+                          errorMessage: "Incorrect gps value",
                         },
                         address: {
                           type: "object",
@@ -203,6 +217,15 @@ module.exports = {
               },
               required: ["type", "start", "end"],
             },
+            payment: {
+              type: "object",
+              properties: {
+                "@ondc/org/collection_amount": {
+                  type: "string",
+                },
+              },
+              required: ["@ondc/org/collection_amount"],
+            },
             "@ondc/org/payload_details": {
               type: "object",
               properties: {
@@ -211,7 +234,7 @@ module.exports = {
                   properties: {
                     unit: {
                       type: "string",
-                      enum:["Kilogram","Gram"]
+                      enum: ["Kilogram", "Gram"],
                     },
                     value: {
                       type: "number",
@@ -227,7 +250,7 @@ module.exports = {
                       properties: {
                         unit: {
                           type: "string",
-                          enum:["centimeter", "meter"]
+                          enum: ["centimeter", "meter"],
                         },
                         value: {
                           type: "number",
@@ -240,7 +263,7 @@ module.exports = {
                       properties: {
                         unit: {
                           type: "string",
-                          enum:["centimeter", "meter"]
+                          enum: ["centimeter", "meter"],
                         },
                         value: {
                           type: "number",
@@ -253,7 +276,7 @@ module.exports = {
                       properties: {
                         unit: {
                           type: "string",
-                          enum:["centimeter", "meter"]
+                          enum: ["centimeter", "meter"],
                         },
                         value: {
                           type: "number",
@@ -266,10 +289,23 @@ module.exports = {
                 },
                 category: {
                   type: "string",
-                  enum: ["Grocery", "F&B", "Fashion", "BPC", "Electronics", "Home & Decor", "Pharma", "Agriculture", "Mobility"]
+                  enum: [
+                    "Grocery",
+                    "F&B",
+                    "Fashion",
+                    "BPC",
+                    "Electronics",
+                    "Home & Decor",
+                    "Pharma",
+                    "Agriculture",
+                    "Mobility",
+                  ],
                 },
-                dangerous_goods:{
-                  type:"boolean"
+                dangerous_goods: {
+                  type: "boolean"
+                  // const: "true",
+                  // errorMessage:
+                  //     "is an optional property and should be set when payload includes hazardous goods",
                 },
                 value: {
                   type: "object",
@@ -286,48 +322,40 @@ module.exports = {
               },
               required: ["weight", "category", "value"],
             },
-          }, 
-          required:["category","provider","fulfillment","@ondc/org/payload_details"],
-          "oneOf": [
-            {
-                properties: {
-                  fulfillment: {
-                    type: "object",
-                    properties: {
-                      type: {
-                        const: "CoD"
-                      }
-                    }
-                  },
-                  payment: {
-                    type: "object",
-                    properties: {
-                      "@ondc/org/collection_amount": {
-                        type: "string",
-                      },
-                    },
-                    required: ["@ondc/org/collection_amount"],
-                  },
-                },
-                required: ["payment"]
-            },
-            {
-              properties: {
-                fulfillment: {
-                  type: "object",
-                  properties: {
-                    type: {
-                      enum: ["Prepaid", "Reverse QC"]
-                    }
-                  }
-                }
-              }
-            }
+          },
+          required: [
+            "category",
+            "provider",
+            "fulfillment",
+            "@ondc/org/payload_details",
           ],
+          // if: {
+          //   properties: {
+          //     code: { const: "P2H2P" },
+          //   },
+          // },
+          // then: {
+          //   required: [
+          //     "/search/0/message/intent/@ondc~1org~1payload_details/dimensions",
+          //   ],
+          //   errorMessage:
+          //     "dimensions are required for inter-city shipments in /search",
+          // },
+          if: {
+            properties: {
+              fulfillment: { properties: { type: { const: "CoD" } } },
+            },
+          },
+          then: {
+            required: ["payment"],
+            errorMessage:
+              "Payment object is required for fulfillment type 'CoD'",
+          },
         },
       },
       required: ["intent"],
     },
   },
+
   required: ["context", "message"],
 };

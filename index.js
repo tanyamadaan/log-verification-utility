@@ -10,22 +10,19 @@ try {
     return;
   }
 
-  const domain = process.argv[2] || "retail";
+  // Setting default values in case arguments not passed
+  const domain = process.argv[2] || "logistics";
   const logpath = process.argv[3] || "./public/logs/";
 
-  fs.readdir(logpath, function (err, files) {
+  //Read Log directory
+  fs.readdir(logpath, (err, files) =>{
     try {
       if (err) {
         console.log(`Some error occurred while reading files from ${path}`);
       } else if (!files.length) {
         console.log(`${path} folder is empty!!`);
       } else {
-        files.forEach((file, i) => {
-          if (file.includes('Flow')) {
-            const flowpath = path.join(logpath, file);
-            validateLog(domain, flowpath);
-          }
-        }) 
+            validateLog(domain, logpath);
       }
     } catch (error) {
       console.log(`Error while reading logs folder`, error);

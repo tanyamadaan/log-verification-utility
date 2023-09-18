@@ -1,68 +1,95 @@
 const fs = require("fs");
-//const async = require("async");
 const path = require("path");
 const constants = require("./constants");
 
-//module.exports = function(directory, destination) {
-
-const sortMerge = (directory, destination) => {
-
+const sortMerge = (domain, directory, destination) => {
+  flowErrObj = {};
   try {
-      var mergedlogs = []
-    //   fs.readdir(directory, (err, files) => {
-    //     if (err)
-    //         console.log(err);
-        files = fs.readdirSync(directory);
-        
-        let map = constants.SORTED_INDEX
+    var mergedlogs = [];
+    files = fs.readdirSync(directory);
 
-        // Read files and create a single array of all files
-        files.map((item,indx)=>{
-           let data=fs.readFileSync(`${directory}/${item}`)
-           data=JSON.parse(data)
-           mergedlogs.push(data)
-        })
+    let map;
+    switch(domain) {
+      case 'logistics':
+        map = constants.LOG_SORTED_INDEX
+        break;
+      case 'b2b':
+        map = constants.B2B_SORTED_INDEX
+        break;
+    }
 
-        // Sort the merged files based on timestamp
-        function SortByTimestamp(a, b){
-            var aD = new Date(a.context.timestamp), bD = new Date(b.context.timestamp);
-            if (+aD  === +bD)
-                console.log("Temprered Timestamp")
-            return ((aD < bD) ? -1 : ((aD > bD) ? 1 : 0));
+    mergedlogs = files.reduce((acc, item) => {
+      try {
+        let data = fs.readFileSync(`${directory}/${item}`);
+        data = JSON.parse(data);
+        const context = data.context;
+        if (!context || !context.action) {
+          console.log(
+            `Error in file ${item}: Missing 'context' or 'action' property`
+          );
+          return acc; // Skip this data and continue with the next iteration
         }
-        sortedlogs = mergedlogs.sort(SortByTimestamp)
+        const { action } = data.context;
+        if (acc.hasOwnProperty(action)) {
+          acc[action].push(data);
+        } else {
+          acc[action] = [data];
+        }
+        return acc;
+      } catch (error) {
+        console.log(`Error in file ${item}`);
+        console.trace(error);
+      }
+    }, {});
 
-        // Validate the order of actions in logs
-        sortedlogs.forEach((element,i) => {
-            action = (element.context.action).replace('on_', '')
-            if (map.includes(action)) {
-                curAction = map.indexOf(action)
-                nextAction = map[curAction + 1]
-                nextIndex = sortedlogs.findIndex(x => x.context.action === nextAction)
-                if (i > nextIndex && !sortedlogs[i].context.action.includes("confirm")) {
-                    console.log("flow incorrect") // Addition - If on_init includes domain error, select call might be invoked post on_init.
-                                                    // Need to add this validation.
-                }
-            }
-            
-        });
-        //Write the joined results to destination
-        // fs.writeFile(destination, JSON.stringify(mergedlogs), (err) => {
-        //     if (err)
-        //      { console.log(err)
-        //         reject(err);}
-        fs.writeFileSync(destination, JSON.stringify(mergedlogs))
-        //});
-    // });
+    // Sort the arrays within each action based on context.timestamp
+    for (const action in mergedlogs) {
+      const array = mergedlogs[action];
+      if (array.length > 1) {
+        array.sort(
+          (a, b) =>
+            new Date(a.context.timestamp) - new Date(b.context.timestamp)
+        );
+      }
+    }
 
-} catch (err) {
-    console.log(`Error while running merging log files, ${err}`)
+    // Sort the mergedlogs object based on the first element of each array's context.timestamp
+    const sortedmergedlogs = {};
+    Object.keys(mergedlogs)
+      .sort(
+        (a, b) =>
+          new Date(mergedlogs[a][0].context.timestamp) -
+          new Date(mergedlogs[b][0].context.timestamp)
+      )
+      .forEach((key) => {
+        sortedmergedlogs[key] = mergedlogs[key];
+      });
+
+    // Assign the sorted data back to mergedlogs
+    mergedlogs = sortedmergedlogs;
+
+    Object.entries(mergedlogs).forEach(([action], i, entries) => {
+      const curAction = action;
+      if (map.includes(curAction)) {
+        const curIndex = map.indexOf(curAction);
+        if (i != curIndex) {
+          console.log(
+            `Flow incorrect- current action: ${action}, Current Index:${i}, Index in correct flow:${curIndex}`
+          );
+          flowErrObj[
+            i
+          ] = `Incorrect Flow as per context/timestamps - (${Object.keys(
+            mergedlogs
+          )})`;
+        }
+      }
+    });
+
+    fs.writeFileSync(destination, JSON.stringify(mergedlogs));
+    return flowErrObj;
+  } catch (err) {
+    console.log(`Error while running merging log files, ${err}`);
+    console.trace(err);
   }
-}
-module.exports = sortMerge
-// const cwd = __dirname
-// const destination = path.join(cwd, '../../test.json')
-// const directory = path.join(cwd, '../logs/Flow1')
-// //const directory = '/Users/tanyamadaan/Desktop/Log-Verification/reference-implementations/utilities/log-validation-utility/utils/logs/Flow1'
-
-// sortMerge(directory, destination)
+};
+module.exports = { sortMerge };

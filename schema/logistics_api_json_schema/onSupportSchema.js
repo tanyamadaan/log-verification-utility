@@ -1,4 +1,5 @@
 module.exports = {
+  $id: "http://example.com/schema/onSupportSchema",
   type: "object",
   properties: {
     context: {
@@ -13,6 +14,7 @@ module.exports = {
         },
         city: {
           type: "string",
+          const: { $data: "/search/0/context/city" },
         },
         action: {
           type: "string",
@@ -36,10 +38,26 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          format:"uuid"
+          const: { $data: "/search/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
+          allOf: [
+            {
+              const: { $data: "/support/0/context/message_id" },
+              errorMessage:
+                "Message ID should be same as /support: ${/support/0/context/message_id}",
+            },
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            }
+          ],
         },
         timestamp: {
           type: "string",
@@ -75,6 +93,18 @@ module.exports = {
         },
       },
       required: ["phone", "email", "uri"],
+    },
+  },
+  search: {
+    type: "array",
+    items: {
+      $ref: "searchSchema#",
+    },
+  },
+  on_search: {
+    type: "array",
+    items: {
+      $ref: "onSearchSchema#",
     },
   },
   required: ["context", "message"],

@@ -3,41 +3,25 @@ const _ = require("lodash");
 const dao = require("../dao/dao");
 const path = require("path");
 const { getObjValues } = require("./utils");
-const sortMerge = require("./mergeSort");
-const schemaValidate = require("./schemaVal");
+const {sortMerge} = require("./mergeSort");
+const Validate = require("./schemaVal");
 const flowVal = require("./retail/businessVal")
 const clean = require("./clean")
 
-//TAT in on_select = sumof(time to ship in /on_search and TAT by LSP in logistics /on_search)
-// If non-serviceable in /on_select, there should be domain-error
-
 const validateLogs = (domain, dirPath) => {
-  // const dirPath = path.join(__dirname, "test_logs");
 
   let msgIdSet = new Set();
   let ErrorObj = {};
-  flowId = dirPath.split('/').at(-1)
-  console.log(flowId)
-  flowError = ErrorObj[flowId] = {}
 
+  // Sort & Merge the logs
+  const mergefile = path.join(dirPath, '../merged.json')
+  ErrorObj["Flow Error"] = sortMerge(domain, dirPath, mergefile);
 
-  // Sort Merge
-  const mergefile = path.join(dirPath, 'test.json')
-  let merge = sortMerge(dirPath, mergefile)
-
-  // Schema Validation
-      let retailSchemaVal = schemaValidate(domain, mergefile, msgIdSet, flowError);
-  //let schemaVal = schemaValidate(mergefile, msgIdSet, flowError)
-
-  // Business Flows Validation
-  flowObj = flowError['Business Flows Validation'] = {}
-  let businessVal = flowVal(mergefile, flowObj)
-  
+  //  Log Validation
+   Validate(domain, mergefile, msgIdSet, ErrorObj);
 
   // Cleaning output report
-
   let log = clean(ErrorObj)
-  console.log(ErrorObj)
 
   // Drop DB
   try {
@@ -46,14 +30,18 @@ const validateLogs = (domain, dirPath) => {
   } catch (error) {
     console.log("Error while removing LMDB");
   }
+try {
+  // outputfile = `log${flowId}.json`
+  outputfile= 'log_report.json'
 
-  outputfile = `log${flowId}.json`
-
-  fs.writeFileSync(outputfile, JSON.stringify(ErrorObj, null, 2) , 'utf-8');
+  // let out = getObjValues(ErrorObj['Schema'])
+let out = JSON.stringify(ErrorObj,null,4)
+  fs.writeFileSync(outputfile, out , 'utf-8');
+} catch (error) {
+  console.log("!!ERROR writing output file",error)
+}
+ 
 
   console.log("Report Generated Successfully!!");
 };
-
 module.exports = { validateLogs };
-
-

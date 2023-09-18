@@ -103,7 +103,16 @@ const bpp_provider_days = [
   "1,2,3,4,5,6",
   "1,2,3,4,5,6,7",
 ];
-
+const categoriesMap = [
+  {
+    "Standard Delivery": [
+      "Immediate Delivery",
+      "Next Day Delivery",
+      "Same Day Delivery",
+    ],
+  },
+  { "Express Delivery": [] },
+];
 const grocery_categories_id = [
   "Fruits and Vegetables",
   "Masala & Seasoning",
@@ -175,7 +184,7 @@ const uuidCheck = (data) => {
 };
 
 const timestampCheck = (date) => {
-  console.log("***Timestamp Check Utils***");
+  //console.log("***Timestamp Check Utils***");
   let dateParsed = new Date(Date.parse(date));
   if (!isNaN(dateParsed)) {
     if (dateParsed.toISOString() != date) {
@@ -188,12 +197,59 @@ const timestampCheck = (date) => {
   }
 };
 
+function compareDates(dateString1, dateString2) {
+  const date1 = new Date(dateString1);
+  const date2 = new Date(dateString2);
+
+  const year1 = date1.getUTCFullYear();
+  const month1 = date1.getUTCMonth();
+  const day1 = date1.getUTCDate();
+
+  const year2 = date2.getUTCFullYear();
+  const month2 = date2.getUTCMonth();
+  const day2 = date2.getUTCDate();
+
+  if (
+    year1 > year2 ||
+    (year1 === year2 && month1 > month2) ||
+    (year1 === year2 && month1 === month2 && day1 > day2)
+  ) {
+    return true;
+  } else if (
+    year1 < year2 ||
+    (year1 === year2 && month1 < month2) ||
+    (year1 === year2 && month1 === month2 && day1 <= day2)
+  ) {
+    return false;
+  }
+}
+
+const hasTwoOrLessDecimalPlaces = (inputString) => {
+  const parts = inputString.split(".");
+
+  if (parts.length === 2) {
+    const decimalPart = parts[1];
+    return decimalPart.length <= 2;
+  } else {
+    return true; // No decimal part, automatically satisfies the condition
+  }
+};
+
 const getObjValues = (obj) => {
   let values = "";
+
   Object.values(obj).forEach((value) => {
-    values += value + "\n";
+    values += `- ${value}\n`;
   });
   return values;
+};
+
+const timeDiff = (time1, time2) => {
+  const dtime1 = new Date(time1);
+  const dtime2 = new Date(time2);
+
+  if (isNaN(dtime1 - dtime2)) return 0;
+  else return dtime1 - dtime2;
 };
 
 const isArrayEqual = (x, y) => {
@@ -206,6 +262,66 @@ const countDecimalDigits = (num) => {
   return num.toString().split(".")[1].length;
 };
 
+const isObjectEqual = (obj1, obj2, parentKey = "") => {
+  const typeOfObj1 = typeof obj1;
+  const typeOfObj2 = typeof obj2;
+
+  if (typeOfObj1 !== typeOfObj2) {
+    return [parentKey];
+  }
+
+  if (typeOfObj1 !== "object" || obj1 === null || obj2 === null) {
+    return obj1 === obj2 ? [] : [parentKey];
+  }
+
+  if (Array.isArray(obj1) && Array.isArray(obj2)) {
+    if (obj1.length !== obj2.length) {
+      return [parentKey];
+    }
+
+    const sortedObj1 = [...obj1].sort();
+    const sortedObj2 = [...obj2].sort();
+
+    for (let i = 0; i < sortedObj1.length; i++) {
+      const nestedKeys = isObjectEqual(
+        sortedObj1[i],
+        sortedObj2[i],
+        `${parentKey}[${i}]`
+      );
+      if (nestedKeys.length > 0) {
+        return nestedKeys;
+      }
+    }
+
+    return [];
+  }
+
+  const obj1Keys = Object.keys(obj1);
+  const obj2Keys = Object.keys(obj2);
+
+  const allKeys = [...new Set([...obj1Keys, ...obj2Keys])];
+
+  const notEqualKeys = [];
+
+  for (let key of allKeys) {
+    if (!obj2.hasOwnProperty(key) || !obj1.hasOwnProperty(key)) {
+      notEqualKeys.push(parentKey ? `${parentKey}/${key}` : key);
+      continue;
+    }
+
+    const nestedKeys = isObjectEqual(
+      obj1[key],
+      obj2[key],
+      parentKey ? `${parentKey}/${key}` : key
+    );
+
+    if (nestedKeys.length > 0) {
+      notEqualKeys.push(...nestedKeys);
+    }
+  }
+
+  return notEqualKeys;
+};
 module.exports = {
   uuidCheck,
   timestampCheck,
@@ -219,8 +335,13 @@ module.exports = {
   bpp_provider_days,
   cancellation_rid,
   getObjValues,
+  isObjectEqual,
   retailPaymentType,
   retailPymntTtl,
+  categoriesMap,
+  compareDates,
+  hasTwoOrLessDecimalPlaces,
+  timeDiff,
   taxNotInlcusive,
   isArrayEqual,
   countDecimalDigits,

@@ -57,6 +57,12 @@ const formatted_error = (errors) => {
   return error_json;
 };
 
+function isEndTimeGreater(data) {
+  const startTime = new Date(`2000-01-01T${data.start}:00Z`);
+  const endTime = new Date(`2000-01-01T${data.end}:00Z`);
+  return startTime < endTime
+}
+
 const validate_schema = (data, schema) => {
   let error_list = [];
   try {
@@ -76,7 +82,10 @@ const validate_schema = (data, schema) => {
       .addSchema(trackSchema)
       .addSchema(onTrackSchema)
       .addSchema(cancelSchema)
-      .addSchema(onCancelSchema);
+      .addSchema(onCancelSchema)
+      .addKeyword("isEndTimeGreater", {
+        validate: (schema, data) => isEndTimeGreater(data)
+      });
 
     validate = validate.compile(schema);
 

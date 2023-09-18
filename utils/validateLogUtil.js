@@ -15,7 +15,7 @@ const validateLogs = (domain, dirPath) => {
 
   // Sort & Merge the logs
   const mergefile = path.join(dirPath, '../merged.json')
-  ErrorObj["Flow Error"] = sortMerge(dirPath, mergefile);
+  ErrorObj["Flow Error"] = sortMerge(domain, dirPath, mergefile);
 
   //  Log Validation
    Validate(domain, mergefile, msgIdSet, ErrorObj);

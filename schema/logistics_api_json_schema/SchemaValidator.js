@@ -22,7 +22,7 @@ const path = require("path");
 const Ajv = require("ajv");
 const ajv = new Ajv({
   allErrors: true,
-  strict: "log",
+  strict: false,
   strictRequired: false,
   strictTypes: false,
   verbose: true,

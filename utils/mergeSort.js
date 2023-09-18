@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const constants = require("./constants");
 
-const sortMerge = (domain,directory, destination) => {
+const sortMerge = (domain, directory, destination) => {
   flowErrObj = {};
   try {
     var mergedlogs = [];

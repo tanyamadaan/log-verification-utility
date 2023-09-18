@@ -58,8 +58,8 @@ const formatted_error = (errors) => {
 };
 
 function isEndTimeGreater(data) {
-  const startTime = new Date(`2000-01-01T${data.start}:00Z`);
-  const endTime = new Date(`2000-01-01T${data.end}:00Z`);
+  const startTime = parseInt(data.start);
+  const endTime = parseInt(data.end);
   return startTime < endTime
 }
 

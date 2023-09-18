@@ -127,10 +127,10 @@ module.exports = {
                         end: {
                           type: "string",
                           pattern: "^(?:[01][0-9]|2[0-3])[0-5][0-9]$",
-                          isEndTimeGreater: true,
-                          errorMessage: 'The "end" time must be greater than the "start" time. Ref footnote 12 of v1.1 .'
-                        },
+                          },
                       },
+                      isEndTimeGreater: true,
+                      errorMessage: 'The "end" time must be greater than the "start" time. Ref footnote 12 of v1.1 .',
                       required: ["start", "end"],
                     },
                   },

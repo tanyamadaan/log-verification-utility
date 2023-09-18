@@ -211,6 +211,7 @@ module.exports = {
                           },
                           email: {
                             type: "string",
+                            format: "email"
                           },
                         },
                         required: ["phone"],
@@ -286,6 +287,7 @@ module.exports = {
                           },
                           email: {
                             type: "string",
+                            format: "email"
                           },
                         },
                         required: ["phone", "email"],

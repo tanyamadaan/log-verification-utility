@@ -3,11 +3,7 @@ package-lock.json
 *.env
 .vscode
 /public/logs/*.json
-<<<<<<< HEAD
 /public/test.json
-=======
-/public/*
->>>>>>> 608c6673cb29fd0461401c4d70704dc0c0c18d29
 verification-logs
 /utils/*.json
 /utils/*.txt
@@ -15,11 +11,7 @@ test_logs
 dbfiles
 test.js
 !LICENSE.md
-<<<<<<< HEAD
 *.md
 logFlow*.json
-=======
-logFlow*.json
 .DS_Store
->>>>>>> 608c6673cb29fd0461401c4d70704dc0c0c18d29
 log_report.json

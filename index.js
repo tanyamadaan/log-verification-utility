@@ -10,9 +10,11 @@ try {
     return;
   }
 
+  // Setting default values in case arguments not passed
   const domain = process.argv[2] || "logistics";
   const logpath = process.argv[3] || "./public/logs/";
 
+  //Read Log directory
   fs.readdir(logpath, (err, files) =>{
     try {
       if (err) {
@@ -20,12 +22,7 @@ try {
       } else if (!files.length) {
         console.log(`${path} folder is empty!!`);
       } else {
-        // files.forEach((file, i) => {
-        //   if (file.includes('Flow')) {
-        //     const flowpath = path.join(logpath, file);
             validateLog(domain, logpath);
-        //   }
-        // }) 
       }
     } catch (error) {
       console.log(`Error while reading logs folder`, error);

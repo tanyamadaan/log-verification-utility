@@ -7,7 +7,6 @@ module.exports = {
       properties: {
         domain: {
           type: "string",
-          const: "ONDC:RET10",
         },
         location: {
           type: "object",
@@ -57,9 +56,21 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/search/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
+          allOf: [
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            },
+          ]
         },
         timestamp: {
           type: "string",
@@ -111,6 +122,7 @@ module.exports = {
                 },
                 ttl: {
                   type: "string",
+                  format: "duration"
                 },
               },
               required: ["id", "locations"],
@@ -165,8 +177,7 @@ module.exports = {
                           type: "object",
                           properties: {
                             code: {
-                              type: "string",
-                              enum: ["BUYER_TERMS"],
+                              type: "string"
                             },
                           },
                           required: ["code"],
@@ -180,8 +191,7 @@ module.exports = {
                                 type: "object",
                                 properties: {
                                   code: {
-                                    type: "string",
-                                    enum: ["ITEM_REQ", "PACKAGING_REQ"],
+                                    type: "string"
                                   },
                                 },
                                 required: ["code"],
@@ -219,6 +229,8 @@ module.exports = {
                           properties: {
                             gps: {
                               type: "string",
+                              pattern: "^(-?[0-9]{1,3}(?:.[0-9]{6,15})?),( )*?(-?[0-9]{1,3}(?:.[0-9]{6,15})?)$",
+                              errorMessage: "Incorrect gps value",
                             },
                             area_code: {
                               type: "string",
@@ -373,7 +385,6 @@ module.exports = {
                       },
                     },
                   },
-
                   list: {
                     type: "array",
                     items: {
@@ -408,19 +419,9 @@ module.exports = {
         },
       },
       required: ["order"],
-    },
-    search: {
-      type: "array",
-      items: {
-        $ref: "searchSchema#",
-      },
-    },
-    on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
+      additionalProperties:false,
     },
   },
   required: ["context", "message"],
+  additionalProperties:false,
 };

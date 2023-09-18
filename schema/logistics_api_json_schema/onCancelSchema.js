@@ -37,9 +37,9 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: { $data: "/init/0/context/transaction_id" },
+          const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same as /init: ${/init/0/context/transaction_id}",
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -52,10 +52,9 @@ module.exports = {
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
             },
             {
-              not: {
-                const: { $data: "/confirm/0/context/message_id" },
-              },
-              errorMessage: "Message ID should be unique and not same as /confirm API",
+              const: { $data: "/cancel/0/context/message_id" },
+              errorMessage:
+                "Message ID should be same as /cancel: ${/cancel/0/context/message_id}",
             },
           ],
         },

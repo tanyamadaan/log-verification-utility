@@ -194,6 +194,7 @@ module.exports = {
                     properties: {
                       settlement_counterparty: {
                         type: "string",
+                        enum: ["seller-app", "buyer-app"],
                       },
                       settlement_phase: {
                         type: "string",
@@ -473,7 +474,7 @@ module.exports = {
               },
             },
           },
-          additionalProperties:false,
+          
           required: ["id", "state", "provider", "items"],
         },
       },

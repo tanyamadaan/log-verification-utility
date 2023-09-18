@@ -38,7 +38,9 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: { $data: "/init/0/context/transaction_id" },
+          const: { $data: "/search/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -54,13 +56,7 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            },
-            {
-              not: {
-                const: { $data: "/confirm/0/context/message_id" },
-              },
-              errorMessage: "Message ID should be unique",
-            },
+            }
           ],
         },
         timestamp: {
@@ -173,6 +169,43 @@ module.exports = {
                       },
                     },
                   },
+                  end: {
+                    type: "object",
+                    properties: {
+                      time: {
+                        type: "object",
+                        properties: {
+                          range: {
+                            type: "object",
+                            properties: {
+                              start: {
+                                type: "string",
+                              },
+                              end: {
+                                type: "string",
+                              },
+                            },
+                            required: ["start", "end"],
+                          },
+                        },
+                        required: ["range"],
+                      },
+                      instructions: {
+                        type: "object",
+                        properties: {
+                          short_desc: {
+                            type: "string",
+                          },
+                          images: {
+                            type: "array",
+                            items: {
+                              type: "string",
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
                   agent: {
                     type: "object",
                     properties: {
@@ -195,14 +228,15 @@ module.exports = {
                     const: { $data: "/on_confirm/0/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate"},
                   },
                 },
+                additionalProperties:false,
                 required: ["id", "type", "start"],
               },
             },
             created_at: {
               type: "string",
-              const: { $data: "/confirm/0/context/timestamp" },
+              const: { $data: "/confirm/0/message/order/created_at" },
               errorMessage:
-                "does not match confirm context timestamp - ${/confirm/0/context/timestamp}",
+                "mismatches in /confirm and /on_update",
             },
             updated_at: {
               type: "string",

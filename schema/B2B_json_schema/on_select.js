@@ -7,7 +7,6 @@ module.exports = {
       properties: {
         domain: {
           type: "string",
-          const: "ONDC:RET10",
         },
         location: {
           type: "object",
@@ -58,10 +57,25 @@ module.exports = {
         transaction_id: {
           type: "string",
           const: { $data: "/select/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/select/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
-          const: { $data: "/select/0/context/message_id" },
+          allOf: [
+            {
+              const: { $data: "/select/0/context/message_id" },
+              errorMessage:
+                "Message ID for on_action API should be same as action API: ${/select/0/context/message_id}",
+            },
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            },
+          ]
         },
         timestamp: {
           type: "string",
@@ -206,6 +220,7 @@ module.exports = {
                       },
                       "@ondc/org/title_type": {
                         type: "string",
+                        enum: ["item", "Discount", "Packing charges", "delivery ", "tax", "misc"]
                       },
                       price: {
                         type: "object",
@@ -302,6 +317,7 @@ module.exports = {
                 },
                 ttl: {
                   type: "string",
+                  format: "duration"
                 },
               },
               required: ["price", "breakup", "ttl"],
@@ -311,24 +327,6 @@ module.exports = {
         },
       },
       required: ["order"],
-    },
-    search: {
-      type: "array",
-      items: {
-        $ref: "searchSchema#",
-      },
-    },
-    on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
-    },
-    select: {
-      type: "array",
-      items: {
-        $ref: "selectSchema#",
-      },
     },
   },
   required: ["context", "message"],

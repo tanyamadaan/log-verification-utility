@@ -38,9 +38,9 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: { $data: "/init/0/context/transaction_id" },
+          const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same as /init: ${/init/0/context/transaction_id}",
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -48,7 +48,7 @@ module.exports = {
             {
               const: { $data: "/confirm/0/context/message_id" },
               errorMessage:
-                "Message ID should be same as /confirm: ${/confirm/0/context/message_id}",
+                "Message ID for on_action API should be same as action API: ${/confirm/0/context/message_id}",
             },
             {
               not: {
@@ -63,6 +63,12 @@ module.exports = {
               },
               errorMessage: "Message ID should be unique",
             },
+            {
+              not: {
+                const: { $data: "/search/0/context/message_id" },
+              },
+              errorMessage: "Message ID should be unique",
+            }
           ],
         },
         timestamp: {
@@ -167,7 +173,7 @@ module.exports = {
             },
             quote: {
               type: "object",
-              const: { $data: "/on_init/0/message/order/quote" },
+              const: { $data: "/confirm/0/message/order/quote" },
               errorMessage: "object mismatches in /confirm and /on_confirm.",
               properties: {
                 price: {
@@ -178,6 +184,10 @@ module.exports = {
                     },
                     value: {
                       type: "string",
+                      const: {
+                        $data: "/confirm/0/message/order/quote/price/value",
+                      },
+                      errorMessage: "mismatches in /on_confirm and /confirm.",
                     },
                   },
                   required: ["currency", "value"],
@@ -192,12 +202,14 @@ module.exports = {
                       },
                       "@ondc/org/title_type": {
                         type: "string",
+                        enum: ["Delivery Charge", "Tax"],
                       },
                       price: {
                         type: "object",
                         properties: {
                           currency: {
                             type: "string",
+                            const: "INR",
                           },
                           value: {
                             type: "string",
@@ -472,15 +484,15 @@ module.exports = {
             },
             created_at: {
               type: "string",
-              const: { $data: "/confirm/0/context/timestamp" },
+              const: { $data: "/confirm/0/message/order/created_at" },
               errorMessage:
-                "does not match confirm context timestamp - ${/confirm/0/context/timestamp}",
+                "mismatches in /confirm and /on_confirm",
             },
             updated_at: {
               type: "string",
               const: { $data: "3/context/timestamp" },
               errorMessage:
-                "does not match context timestamp - ${3/context/timestamp}",
+                "does not match context/timestamp - ${3/context/timestamp}",
             },
           },
           additionalProperties:false,

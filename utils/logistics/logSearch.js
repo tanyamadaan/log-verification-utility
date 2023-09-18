@@ -26,10 +26,7 @@ const checkSearch = (data, msgIdSet) => {
   } catch (error) {
     console.log(error);
   }
-
   dao.setValue("searchObj", search);
-
   return srchObj;
 };
-
 module.exports = checkSearch;

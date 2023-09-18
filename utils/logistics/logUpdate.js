@@ -18,17 +18,22 @@ const checkUpdate = (data, msgIdSet) => {
   let fulfillments = update.fulfillments;
 
   try {
-    console.log(`Checking if PCC code required in case of P2P shipments`);
+    console.log(`Checking if PCC code required in case of P2P/P2H2P shipments`);
 
     fulfillments.forEach((fulfillment) => {
+      
       if(fulfillment["@ondc/org/awb_no"] && p2h2p) awbNo= true;
       if (
         rts === "yes" &&
         !p2h2p &&
         !fulfillment?.start &&
-        !fulfillment?.start?.instructions[short_desc]
+        !fulfillment?.start?.instructions?.short_desc
       ) {
         updtObj.startErr = `/fulfillments/start is required when ready_to_ship = yes for P2P shipments`;
+      }
+      else if(rts === 'yes' && p2h2p && fulfillment?.start?.instructions?.short_desc){
+        
+        updtObj.instrctnsErr = `Pickup code is not required for P2H2P shipments as shipping label is provided by LSP`;
       }
     });
   } catch (error) {

@@ -2,10 +2,8 @@ const fs = require("fs");
 const _ = require("lodash");
 const dao = require("../../dao/dao");
 const utils = require("../utils");
-const { checkContext } = require("../../services/service");
 const constants = require("../constants");
 const validateSchema = require("../schemaValidation");
-
 const checkSelect = (select, ErrorObj) => {
   //list to store selected items
 

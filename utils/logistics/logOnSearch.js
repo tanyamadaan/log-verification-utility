@@ -2,6 +2,7 @@ const _ = require("lodash");
 const dao = require("../../dao/dao");
 const constants = require("../constants");
 const utils = require("../utils");
+
 const checkOnSearch = (data, msgIdSet) => {
   const onSrchObj = {};
   let onSearch = data;
@@ -108,5 +109,4 @@ const checkOnSearch = (data, msgIdSet) => {
 
   return onSrchObj;
 };
-
 module.exports = checkOnSearch;

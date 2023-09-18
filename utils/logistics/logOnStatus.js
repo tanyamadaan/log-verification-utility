@@ -16,18 +16,18 @@ const checkOnStatus = (data, msgIdSet) => {
   let fulfillments = on_status.fulfillments;
   let pickupTime, deliveryTime, RtoPickupTime, RtoDeliveredTime;
 
-  try {
-    console.log(
-      `Checking if message id is unique for different on_status apis`
-    );
-    if (msgIdSet.has(messageId)) {
-      onStatusObj.msgIdErr = `Message Id should be unique for different /on_status APIs`;
-    } else {
-      msgIdSet.add(messageId);
-    }
-  } catch (error) {
-    console.log(`Error checking message id in /on_status API`);
-  }
+  // try {
+  //   console.log(
+  //     `Checking if message id is unique for different on_status apis`
+  //   );
+  //   if (msgIdSet.has(messageId)) {
+  //     onStatusObj.msgIdErr = `Message Id should be unique for different /on_status APIs`;
+  //   } else {
+  //     msgIdSet.add(messageId);
+  //   }
+  // } catch (error) {
+  //   console.log(`Error checking message id in /on_status API`);
+  // }
 
   try {
     if (fulfillments.length > 1) {
@@ -72,6 +72,9 @@ const checkOnStatus = (data, msgIdSet) => {
 
           if (_.gt(pickupTime, contextTime)) {
             onStatusObj.tmstmpErr = `Pickup timestamp (fulfillments/start/time/timestamp) cannot be future dated for fulfillment state - ${ffState}`;
+          }
+          if (fulfillment?.end?.time?.timestamp) {
+            onStatusObj.delvryTimeErr = `Delivery timestamp (fulfillments/end/time/timestamp) cannot be provided for fulfillment state - ${ffState}`;
           }
         }
         if (ffState === "Out-for-delivery") {
@@ -163,6 +166,7 @@ const checkOnStatus = (data, msgIdSet) => {
         if (ffState === "RTO-Delivered" || ffState === "RTO-Disposed") {
           RtoDeliveredTime = fulfillment?.end?.time?.timestamp;
           console.log(dao.getValue("RtoPickupTime"));
+          
           if (!RtoDeliveredTime && ffState === "RTO-Delivered")
             onStatusObj.rtoDlvryTimeErr = `RTO Delivery timestamp (fulfillments/end/time/timestamp) is missing for fulfillment state - ${ffState}`;
           if (

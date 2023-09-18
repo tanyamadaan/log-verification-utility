@@ -38,6 +38,9 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/search/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -48,13 +51,7 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            },
-            {
-              not: {
-                const: { $data: "/search/0/context/message_id" },
-              },
-              errorMessage: "Message ID should be unique",
-            },
+            }
           ],
         },
         timestamp: {
@@ -63,7 +60,7 @@ module.exports = {
         },
         ttl: {
           type: "string",
-          const: "PT30S",
+          format: "duration"
         },
       },
       required: [
@@ -358,18 +355,19 @@ module.exports = {
                 },
                 email: {
                   type: "string",
+                  format:"email"
                 },
                 created_at: {
                   type: "string",
                   const: { $data: "4/context/timestamp" },
                   errorMessage:
-                    "created_at - ${4/context/timestamp} does not match context timestamp",
+                    "does not match context timestamp - ${4/context/timestamp} ",
                 },
                 updated_at: {
                   type: "string",
                   const: { $data: "4/context/timestamp" },
                   errorMessage:
-                    "updated_at - ${4/context/timestamp} does not match context timestamp",
+                    "does not match context timestamp - ${4/context/timestamp} ",
                 },
               },
               required: [

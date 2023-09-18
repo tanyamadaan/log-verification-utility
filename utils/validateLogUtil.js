@@ -8,38 +8,19 @@ const Validate = require("./schemaVal");
 const flowVal = require("./retail/businessVal")
 const clean = require("./clean")
 
-//TAT in on_select = sumof(time to ship in /on_search and TAT by LSP in logistics /on_search)
-// If non-serviceable in /on_select, there should be domain-error
-
 const validateLogs = (domain, dirPath) => {
-  // const dirPath = path.join(__dirname, "test_logs");
 
   let msgIdSet = new Set();
   let ErrorObj = {};
-  // flowId = dirPath.split('/').at(-1)
-  // console.log(flowId)
-  // flowError = ErrorObj[flowId] = {}
 
+  // Sort & Merge the logs
+  const mergefile = path.join(dirPath, '../merged.json')
+  ErrorObj["Flow Error"] = sortMerge(domain, dirPath, mergefile);
 
-  // Sort Merge
-  console.log(dirPath)
-  const mergefile = path.join(dirPath, '../test.json')
-  console.log(mergefile)
-   ErrorObj["Flow Error"] = sortMerge(dirPath, mergefile);
-  console.log("Merged File created")
-
-  //  Validation
-   Validate(domain, mergefile, msgIdSet,ErrorObj);
-
-  //let schemaVal = schemaValidate(mergefile, msgIdSet, flowError)
-
-  // Business Flows Validation
-  // flowObj = flowError['Business Flows Validation'] = {}
-  // let businessVal = flowVal(mergefile, flowObj)
-  
+  //  Log Validation
+   Validate(domain, mergefile, msgIdSet, ErrorObj);
 
   // Cleaning output report
-
   let log = clean(ErrorObj)
 
   // Drop DB
@@ -63,7 +44,4 @@ let out = JSON.stringify(ErrorObj,null,4)
 
   console.log("Report Generated Successfully!!");
 };
-
 module.exports = { validateLogs };
-
-

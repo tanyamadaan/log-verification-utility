@@ -38,9 +38,9 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: { $data: "/init/0/context/transaction_id" },
+          const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same as /init: ${/init/0/context/transaction_id}",
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -51,13 +51,7 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            },
-            {
-              not: {
-                const: { $data: "/init/0/context/message_id" },
-              },
-              errorMessage: "Message ID should be unique",
-            },
+            }
           ],
         },
         timestamp: {
@@ -186,7 +180,7 @@ module.exports = {
                       },
                     },
                     additionalProperties:false,
-                    required: ["instructions"],
+                    // required: ["instructions"],
                   },
                   end: {
                     type: "object",
@@ -217,7 +211,7 @@ module.exports = {
                       },
                     },
                     additionalProperties:false,
-                    required: ["instructions"],
+                    // required: ["instructions"],
                   },
                   "@ondc/org/ewaybillno": {
                     type: "string",
@@ -333,6 +327,7 @@ module.exports = {
                               },
                               value: {
                                 type: "number",
+                        
                               },
                             },
                             required: ["unit", "value"],
@@ -375,6 +370,8 @@ module.exports = {
                         },
                         value: {
                           type: "number",
+                          const: { $data: "/search/0/message/intent/@ondc~1org~1payload_details/weight/value" },
+                          errorMessage:"Payload weight mismatches in /search and /update"
                         },
                       },
                       required: ["unit", "value"],
@@ -389,7 +386,7 @@ module.exports = {
               type: "string",
               const: { $data: "3/context/timestamp" },
               errorMessage:
-                "updated_at does not match context timestamp - ${3/context/timestamp}",
+                "does not match context timestamp - ${3/context/timestamp}",
             },
           },
           required: ["id", "state", "items", "fulfillments", "updated_at"],

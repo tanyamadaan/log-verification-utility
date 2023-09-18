@@ -40,9 +40,27 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
+          const: { $data: "/search/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+
         },
         message_id: {
           type: "string",
+          allOf: [
+            {
+              const: { $data: "/search/0/context/message_id" },
+              errorMessage:
+                "Message ID for on_action API should be same as action API: ${/search/0/context/message_id}",
+            },
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            },
+          ]
         },
         timestamp: {
           type: "string",
@@ -301,7 +319,7 @@ module.exports = {
                     },
                   },
                 },
-                oneOf: [
+                if: 
                   {
                     properties: {
                       categories: {
@@ -318,23 +336,24 @@ module.exports = {
                       required: ["locations"],
                     },
                   },
-                  {
-                    not: {
-                      properties: {
-                        categories: {
-                          type: "array",
-                          items: {
-                            type: "object",
-                            properties: {
-                              id: { const: "Immediate Delivery" },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                ],
+                  // {
+                  //   not: {
+                  //     properties: {
+                  //       categories: {
+                  //         type: "array",
+                  //         items: {
+                  //           type: "object",
+                  //           properties: {
+                  //             id: { const: "Immediate Delivery" },
+                  //           },
+                  //         },
+                  //       },
+                  //     },
+                  //   },
+                  // },
+                else:{
                 required: ["id", "descriptor", "categories", "items"],
+                }
               },
             },
           },

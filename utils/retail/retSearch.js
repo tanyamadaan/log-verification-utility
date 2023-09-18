@@ -28,7 +28,6 @@ const checkSearch = (search, ErrorObj) => {
     }
 
     return ErrorObj
-    //dao.setValue("srchObj", srchObj);
   } catch (err) {
     if (err.code === "ENOENT") {
       console.log(`!!File not found for /${search.context.action} API!`);
@@ -40,5 +39,4 @@ const checkSearch = (search, ErrorObj) => {
     }
   }
 };
-
 module.exports = checkSearch;

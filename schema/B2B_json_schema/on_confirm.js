@@ -7,7 +7,6 @@ module.exports = {
       properties: {
         domain: {
           type: "string",
-          const: "ONDC:RET10",
         },
         location: {
           type: "object",
@@ -58,10 +57,25 @@ module.exports = {
         transaction_id: {
           type: "string",
           const: { $data: "/select/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/select/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
-          const: { $data: "/confirm/0/context/message_id" },
+          allOf: [
+            {
+              const: { $data: "/init/0/context/message_id" },
+              errorMessage:
+                "Message ID for on_action API should be same as action API: ${/init/0/context/message_id}",
+            },
+            {
+              not: {
+                const: { $data: "1/transaction_id" },
+              },
+              errorMessage:
+                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
+            },
+          ]
         },
         timestamp: {
           type: "string",
@@ -105,10 +119,11 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
-                  const: { $data: "/select/0/message/order/provider/id" },
+                  const: { $data: "/confirm/0/message/order/provider/id" },
                 },
                 locations: {
                   type: "array",
+                  const: { $data: "/confirm/0/message/order/provider/locations" },
                   items: {
                     type: "object",
                     properties: {
@@ -198,6 +213,14 @@ module.exports = {
                               },
                               value: {
                                 type: "string",
+                                anyOf: [
+                                  {
+                                    const: { $data: "/init/0/message/order/items/0/tags/0/list/0/value" },
+                                  },
+                                  {
+                                    const: { $data: "/init/0/message/order/items/0/tags/0/list/1/value" },
+                                  }
+                                ]
                               },
                             },
                             required: ["descriptor", "value"],
@@ -301,6 +324,7 @@ module.exports = {
                       properties: {
                         type: {
                           type: "string",
+                          enum: ["start", "end"],
                         },
                         location: {
                           type: "object",
@@ -319,6 +343,8 @@ module.exports = {
                             },
                             gps: {
                               type: "string",
+                              pattern: "^(-?[0-9]{1,3}(?:.[0-9]{6,15})?),( )*?(-?[0-9]{1,3}(?:.[0-9]{6,15})?)$",
+                              errorMessage: "Incorrect gps value",
                             },
                             address: {
                               type: "string",
@@ -398,19 +424,7 @@ module.exports = {
                           required: ["phone", "email"],
                         },
                       },
-                      if: { properties: { type: { const: "end" } } },
-                      then: {
-                        required: ["type", "location", "time", "contact"],
-                      },
-                      else: {
-                        required: [
-                          "type",
-                          "location",
-                          "time",
-                          "instructions",
-                          "contact",
-                        ],
-                      },
+                      required: ["type", "location", "time", "contact"],
                     },
                   },
                   rateable: {
@@ -451,6 +465,14 @@ module.exports = {
                               },
                               value: {
                                 type: "string",
+                                anyOf: [
+                                  {
+                                    const: { $data: "/init/0/message/order/fulfillments/0/tags/0/list/0/value" },
+                                  },
+                                  {
+                                    const: { $data: "/init/0/message/order/fulfillments/0/tags/0/list/1/value" },
+                                  }
+                                ]
                               },
                             },
                             if: {
@@ -547,30 +569,6 @@ module.exports = {
                       item: {
                         type: "object",
                         properties: {
-                          quantity: {
-                            type: "object",
-                            properties: {
-                              available: {
-                                type: "object",
-                                properties: {
-                                  count: {
-                                    type: "string",
-                                  },
-                                },
-                                required: ["count"],
-                              },
-                              maximum: {
-                                type: "object",
-                                properties: {
-                                  count: {
-                                    type: "string",
-                                  },
-                                },
-                                required: ["count"],
-                              },
-                            },
-                            required: ["available", "maximum"],
-                          },
                           price: {
                             type: "object",
                             properties: {
@@ -584,7 +582,7 @@ module.exports = {
                             required: ["currency", "value"],
                           },
                         },
-                        required: ["quantity", "price"],
+                        required: ["price"],
                       },
                     },
                     if: {
@@ -665,7 +663,7 @@ module.exports = {
                   },
                   collected_by: {
                     type: "string",
-                    enum:["BAP","BPP"]
+                    enum: ["BAP", "BPP"],
                   },
                   "@ondc/org/buyer_app_finder_fee_type": {
                     type: "string",
@@ -680,7 +678,7 @@ module.exports = {
                       properties: {
                         settlement_counterparty: {
                           type: "string",
-                          enum: ["BPP", "BAP"],
+                          enum: ["seller-app", "buyer-app"],
                         },
                         settlement_phase: {
                           type: "string",
@@ -801,14 +799,14 @@ module.exports = {
               format: "date-time",
               const: { $data: "/confirm/0/message/order/created_at" },
               errorMessage:
-                "order/created_at should remain same as in /confirm - ${/confirm/0/message/order/created_at}",
+                "should remain same as in /confirm - ${/confirm/0/message/order/created_at}",
             },
             updated_at: {
               type: "string",
               format: "date-time",
               const: { $data: "3/context/timestamp" },
               errorMessage:
-                "order/updated_at should be updated as per context/timestamp - ${3/context/timestamp}",
+                " should be updated as per context/timestamp - ${3/context/timestamp}",
             },
           },
           additionalProperties: false,
@@ -828,48 +826,6 @@ module.exports = {
         },
       },
       required: ["order"],
-    },
-    search: {
-      type: "array",
-      items: {
-        $ref: "searchSchema#",
-      },
-    },
-    on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
-    },
-    init: {
-      type: "array",
-      items: {
-        $ref: "initSchema#",
-      },
-    },
-    select: {
-      type: "array",
-      items: {
-        $ref: "selectSchema#",
-      },
-    },
-    on_select: {
-      type: "array",
-      items: {
-        $ref: "onSelectSchema#",
-      },
-    },
-    on_init: {
-      type: "array",
-      items: {
-        $ref: "onInitSchema#",
-      },
-    },
-    confirm: {
-      type: "array",
-      items: {
-        $ref: "confirmSchema#",
-      },
     },
   },
   required: ["context", "message"],

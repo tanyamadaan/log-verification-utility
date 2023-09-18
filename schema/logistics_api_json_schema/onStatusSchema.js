@@ -38,11 +38,12 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: { $data: "/init/0/context/transaction_id" },
+          const: { $data: "/search/0/context/transaction_id" },
+          errorMessage:
+                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
-          const: { $data: "/status/context/message_id" },
           allOf: [
             {
               not: {
@@ -50,13 +51,7 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            },
-            {
-              not: {
-                const: { $data: "/confirm/0/context/message_id" },
-              },
-              errorMessage: "Message ID should be unique",
-            },
+            }
           ],
         },
         timestamp: {
@@ -105,6 +100,7 @@ module.exports = {
                 id: {
                   type: "string",
                   const: { $data: "/init/0/message/order/provider/id" },
+                  errorMessage:"mismatches between /init and /on_status"
                 },
                 locations: {
                   type: "array",
@@ -388,12 +384,12 @@ module.exports = {
               properties: {
                 type: {
                   type: "string",
-                  const: { $data: "/on_confirm/0/message/order/payment/type" },
+                  const: { $data: "/on_init/0/message/order/payment/type" },
                 },
                 collected_by: {
                   type: "string",
                   const: {
-                    $data: "/on_confirm/0/message/order/payment/collected_by",
+                    $data: "/on_init/0/message/order/payment/collected_by",
                   },
                 },
                 "@ondc/org/settlement_details": {
@@ -456,6 +452,14 @@ module.exports = {
                       },
                     ],
                     required: ["settlement_counterparty", "settlement_type"],
+                  },
+                },
+              },
+              if: { properties: { type: { const: "ON-FULFILLMENT" } } },
+              then: {
+                properties: {
+                  collected_by: {
+                    const: "BPP",
                   },
                 },
               },
@@ -599,9 +603,9 @@ module.exports = {
             },
             created_at: {
               type: "string",
-              const: { $data: "/confirm/0/context/timestamp" },
+              const: { $data: "/confirm/0/message/order/created_at" },
               errorMessage:
-                "does not match confirm context timestamp - ${/confirm/0/context/timestamp}",
+                "mismatches in /confirm and /on_status",
             },
             updated_at: {
               type: "string"

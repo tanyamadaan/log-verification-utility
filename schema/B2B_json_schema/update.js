@@ -115,7 +115,7 @@ module.exports = {
             },
             items: {
               type: "array",
-              items: [
+              items: 
                 {
                   type: "object",
                   properties: {
@@ -140,11 +140,11 @@ module.exports = {
                   },
                   required: ["id", "quantity"],
                 },
-              ],
+              
             },
             payments: {
               type: "array",
-              items: [
+              items: 
                 {
                   type: "object",
                   properties: {
@@ -192,7 +192,7 @@ module.exports = {
                     },
                     "@ondc/org/settlement_details": {
                       type: "array",
-                      items: [
+                      items: 
                         {
                           type: "object",
                           properties: {
@@ -258,7 +258,7 @@ module.exports = {
                             "settlement_type",
                           ],
                         },
-                      ],
+                      
                     },
                   },
                   required: [
@@ -272,7 +272,7 @@ module.exports = {
                     "@ondc/org/buyer_app_finder_fee_amount",
                   ],
                 },
-              ],
+              
             },
           },
           additionalProperties:false,

@@ -18,24 +18,6 @@ const b2bVal = (element, action, msgIdSet) => {
     case "on_search":
       return checkOnSearch(element, msgIdSet);
 
-    case "init":
-      return checkInit(element, msgIdSet);
-
-    case "on_init":
-      return checkOnInit(element, msgIdSet);
-
-    case "confirm":
-      return checkConfirm(element, msgIdSet);
-
-    case "on_confirm":
-      return checkOnConfirm(element, msgIdSet);
-
-    case "update":
-      return checkUpdate(element,msgIdSet);
-
-    case "on_update":
-      return checkOnUpdate(element,msgIdSet)
-
     case "on_status":
       return checkOnStatus(element,msgIdSet)
   }

@@ -22,7 +22,7 @@ const path = require("path");
 const Ajv = require("ajv");
 const ajv = new Ajv({
   allErrors: true,
-  strict: "log",
+  strict: false,
   strictRequired: false,
   strictTypes: false,
   verbose: true,
@@ -57,6 +57,12 @@ const formatted_error = (errors) => {
   return error_json;
 };
 
+function isEndTimeGreater(data) {
+  const startTime = parseInt(data.start);
+  const endTime = parseInt(data.end);
+  return startTime < endTime
+}
+
 const validate_schema = (data, schema) => {
   let error_list = [];
   try {
@@ -76,7 +82,10 @@ const validate_schema = (data, schema) => {
       .addSchema(trackSchema)
       .addSchema(onTrackSchema)
       .addSchema(cancelSchema)
-      .addSchema(onCancelSchema);
+      .addSchema(onCancelSchema)
+      .addKeyword("isEndTimeGreater", {
+        validate: (schema, data) => isEndTimeGreater(data)
+      });
 
     validate = validate.compile(schema);
 

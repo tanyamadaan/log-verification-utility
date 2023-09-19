@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const constants = require("./constants");
 
-const sortMerge = (domain,directory, destination) => {
+const sortMerge = (domain, directory, destination) => {
   flowErrObj = {};
   try {
     var mergedlogs = [];
@@ -92,11 +92,4 @@ const sortMerge = (domain,directory, destination) => {
     console.trace(err);
   }
 };
-
 module.exports = { sortMerge };
-// const cwd = __dirname;
-// const destination = path.join(cwd, "./testCopy.json");
-// const directory = path.join(cwd, "../public/logs/flow4");
-// //const directory = '/Users/tanyamadaan/Desktop/Log-Verification/reference-implementations/utilities/log-validation-utility/utils/logs/Flow1'
-
-// sortMerge(directory, destination);

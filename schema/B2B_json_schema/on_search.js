@@ -62,24 +62,7 @@ module.exports = {
         },
         message_id: {
           type: "string",
-<<<<<<< HEAD
           const: { $data: "/search/0/context/message_id" },
-=======
-          allOf: [
-            {
-              const: { $data: "/search/0/context/message_id" },
-              errorMessage:
-                "Message ID for on_action API should be same as action API: ${/search/0/context/message_id}",
-            },
-            {
-              not: {
-                const: { $data: "1/transaction_id" },
-              },
-              errorMessage:
-                "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            },
-          ]
->>>>>>> 03f4c95b99485b2f81c5c91efca423d18487ce1b
         },
         timestamp: {
           type: "string",

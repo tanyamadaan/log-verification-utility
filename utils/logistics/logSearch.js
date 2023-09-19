@@ -4,8 +4,7 @@ const constants = require("../constants");
 const utils = require("../utils.js");
 const {reverseGeoCodingCheck} = require("../reverseGeoCoding")
 
-const checkSearch = (data, msgIdSet) => {
-  console.log("OLA OLA")
+const checkSearch = async (data, msgIdSet) => {
   let srchObj = {};
   let search = data;
   let contextTime = search.context.timestamp;
@@ -33,12 +32,26 @@ const checkSearch = (data, msgIdSet) => {
   } catch (error) {
     console.log(error);
   }
-  // try {
-  //   const [lat, long] = startLocation.gps.split(",")
-  //   await reverseGeoCodingCheck(long, lat)
-  // } catch (error) {
-  //   console.log(error)
-  // }
+
+  console.log("Checking Reverse Geocoding for `start` location in `fullfilment`")
+  try {
+    const [lat, long] = startLocation.gps.split(",")
+    const area_code = startLocation.address.area_code
+    const match = await reverseGeoCodingCheck(lat, long, area_code)
+    if(!match) srchObj['RGC-start'] = `Reverse Geocoding for \`start\` failed. Area Code ${area_code} not matching with ${lat}-${long} Lat-Long pair.`
+  } catch (error) {
+    console.log(error)
+  }
+
+  console.log("Checking Reverse Geocoding for `end` location in `fullfilment`")
+  try {
+    const [lat, long] = endLocation.gps.split(",")
+    const area_code = endLocation.address.area_code
+    const match = await reverseGeoCodingCheck(lat, long, area_code)
+    if(!match) srchObj['RGC-end'] = `Reverse Geocoding for \`end\` failed. Area Code ${area_code} not matching with ${lat}-${long} Lat-Long pair.`
+  } catch (error) {
+    console.log(error)
+  }
 
   dao.setValue("searchObj", search);
   return srchObj;

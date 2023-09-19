@@ -2,12 +2,19 @@ const _ = require("lodash");
 const dao = require("../../dao/dao");
 const constants = require("../constants");
 const utils = require("../utils.js");
+const {reverseGeoCodingCheck} = require("../reverseGeoCoding")
 
 const checkSearch = (data, msgIdSet) => {
+  console.log("OLA OLA")
   let srchObj = {};
   let search = data;
   let contextTime = search.context.timestamp;
   search = search.message.intent;
+
+  const {
+    start: { location: startLocation },
+    end: { location: endLocation },
+  } = data.message.intent.fulfillment;
 
   try {
     console.log(`Checking if holidays are in past date or not`);
@@ -26,6 +33,13 @@ const checkSearch = (data, msgIdSet) => {
   } catch (error) {
     console.log(error);
   }
+  // try {
+  //   const [lat, long] = startLocation.gps.split(",")
+  //   await reverseGeoCodingCheck(long, lat)
+  // } catch (error) {
+  //   console.log(error)
+  // }
+
   dao.setValue("searchObj", search);
   return srchObj;
 };

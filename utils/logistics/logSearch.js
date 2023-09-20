@@ -16,7 +16,7 @@ const checkSearch = async (data, msgIdSet) => {
   } = data.message.intent.fulfillment;
 
   try {
-    console.log(`[search]: Checking if holidays are in past date or not`);
+    console.log(`Checking if holidays are in past date or not`);
     let holidays = search?.provider?.time?.schedule?.holidays;
     if (holidays && holidays.length > 0) {
       holidays.forEach((holiday, i) => {
@@ -30,27 +30,27 @@ const checkSearch = async (data, msgIdSet) => {
       });
     }
   } catch (error) {
-    console.log("[search]: Error while checking holidays", error);
+    console.log("Error while checking holidays", error);
   }
 
-  console.log("[search]: Checking Reverse Geocoding for `start` location in `fullfilment`")
+  console.log("Checking Reverse Geocoding for `start` location in `fullfilment`")
   try {
     const [lat, long] = startLocation.gps.split(",")
     const area_code = startLocation.address.area_code
     const match = await reverseGeoCodingCheck(lat, long, area_code)
-    if(!match) srchObj['RGC-start-Err'] = `[search]: Reverse Geocoding for \`start\` failed. Area Code ${area_code} not matching with ${lat}-${long} Lat-Long pair.`
+    if(!match) srchObj['RGC-start-Err'] = `Reverse Geocoding for \`start\` failed. Area Code ${area_code} not matching with ${lat}-${long} Lat-Long pair.`
   } catch (error) {
-    console.log("[search]: Error in start location", error)
+    console.log("Error in start location", error)
   }
 
-  console.log("[search]: Checking Reverse Geocoding for `end` location in `fullfilment`")
+  console.log("Checking Reverse Geocoding for `end` location in `fullfilment`")
   try {
     const [lat, long] = endLocation.gps.split(",")
     const area_code = endLocation.address.area_code
     const match = await reverseGeoCodingCheck(lat, long, area_code)
-    if(!match) srchObj['RGC-end-Err'] = `[search]: Reverse Geocoding for \`end\` failed. Area Code ${area_code} not matching with ${lat}-${long} Lat-Long pair.`
+    if(!match) srchObj['RGC-end-Err'] = `Reverse Geocoding for \`end\` failed. Area Code ${area_code} not matching with ${lat}-${long} Lat-Long pair.`
   } catch (error) {
-    console.log("[search]: Error in end location",error)
+    console.log("Error in end location",error)
   }
   console.log("srchObj from search:", srchObj)
   dao.setValue("searchObj", search);

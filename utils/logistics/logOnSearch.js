@@ -12,7 +12,7 @@ const checkOnSearch = (data, msgIdSet) => {
 
   try {
     console.log(
-      `[on_search]: Checking TAT for category or item in ${constants.LOG_ONSEARCH} api`
+      `Checking TAT for category or item in ${constants.LOG_ONSEARCH} api`
     );
     if (onSearch.hasOwnProperty("bpp/providers")) {
       onSearch["bpp/providers"].forEach((provider) => {
@@ -30,7 +30,7 @@ const checkOnSearch = (data, msgIdSet) => {
     }
   } catch (error) {
     console.log(
-      `[on_search]: !!Error while fetching category and item TAT`,
+      `!!Error while fetching category and item TAT`,
       error
     );
   }
@@ -38,7 +38,7 @@ const checkOnSearch = (data, msgIdSet) => {
   //forward and backward shipment
   try {
     console.log(
-      `[on_search]: Checking forward and backward shipment in ${constants.LOG_ONSEARCH} api`
+      `Checking forward and backward shipment in ${constants.LOG_ONSEARCH} api`
     );
 
     if (onSearch["bpp/fulfillments"]) {
@@ -62,7 +62,7 @@ const checkOnSearch = (data, msgIdSet) => {
 
       if (hasForwardShipment && hasBackwardShipment) {
         console.log(
-          "[on_search]: Both forward and backward shipments are present."
+          "Both forward and backward shipments are present."
         );
       } else if (!hasForwardShipment) {
         onSrchObj.frwrdShpmnt = `Forward shipment (Prepaid or CoD) is missing in ${constants.LOG_ONSEARCH} api`;
@@ -72,14 +72,14 @@ const checkOnSearch = (data, msgIdSet) => {
     }
   } catch (error) {
     console.log(
-      `[on_search]: !!Error while checking forward/backward shipment in ${constants.LOG_ONSEARCH} api`,
+      `!!Error while checking forward/backward shipment in ${constants.LOG_ONSEARCH} api`,
       error
     );
   }
 
   try {
     console.log(
-      `[on_search]: Checking item fulfillment_id corresponding to one of the ids in bpp/fulfillments in ${constants.LOG_ONSEARCH} api`
+      `Checking item fulfillment_id corresponding to one of the ids in bpp/fulfillments in ${constants.LOG_ONSEARCH} api`
     );
     if (onSearch["bpp/providers"]) {
       let providers = onSearch["bpp/providers"];
@@ -107,14 +107,14 @@ const checkOnSearch = (data, msgIdSet) => {
     }
   } catch (error) {
     console.log(
-      `[on_search]: !!Error while checking fulfillment ids in /items in ${constants.LOG_ONSEARCH} api`,
+      `!!Error while checking fulfillment ids in /items in ${constants.LOG_ONSEARCH} api`,
       error
     );
   }
 
   // RGC checks on bpp/provider
 
-  console.log(`[on_search]: Checking Reverse Geocoding on bpp/providers`);
+  console.log(`Checking Reverse Geocoding on bpp/providers`);
   if (onSearch.hasOwnProperty("bpp/providers")) {
     onSearch["bpp/providers"].forEach((provider) => {
       if (provider.hasOwnProperty("locations")) {
@@ -126,9 +126,9 @@ const checkOnSearch = (data, msgIdSet) => {
               if (!match)
                 srchObj[
                   "bpp/provider:location:" + id + ":RGC"
-                ] = `[on_search]: Reverse Geocoding for location ID ${id} failed. Area Code ${area_code} not matching with ${lat}-${long} Lat-Long pair.`;
+                ] = `Reverse Geocoding for location ID ${id} failed. Area Code ${area_code} not matching with ${lat}-${long} Lat-Long pair.`;
             } catch (error) {
-              console.log("[on_search]: bpp/providers error: ", error);
+              console.log("bpp/providers error: ", error);
             }
           }
         );

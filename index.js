@@ -11,7 +11,7 @@ try {
   }
 
   // Setting default values in case arguments not passed
-  const domain = process.argv[2] || "logistics";
+  const domain = process.argv[2].toLowerCase() || "logistics";
   const logpath = process.argv[3] || "./public/logs/";
 
   //Read Log directory

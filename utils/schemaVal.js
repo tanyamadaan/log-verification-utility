@@ -12,7 +12,6 @@ const Validate = (domain, dirPath, msgIdSet, ErrorObj) => {
     let log = fs.readFileSync(dirPath);
     log = JSON.parse(log);
     count = 0;
-    domain = domain.toLowerCase();
 
     // Validating Schema
     try {

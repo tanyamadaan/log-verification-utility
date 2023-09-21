@@ -9,7 +9,7 @@ const {
   SERVER_LOG_DEST,
   ...constants
 } = require("../../utils/constants");
-const validateSchema = require("../../utils/schemaValidation")
+const validate_schema_for_domain_json = require("../../schema/main")
 const { logsUpload, logUpload } = require("../utils/fileHandler");
 
 router.get("/", (req, res) => {
@@ -17,19 +17,12 @@ router.get("/", (req, res) => {
 });
 
 router.post("/validate/single/:domain", logUpload, async (req, res) => {
+  if(!req.file) return res.status(403).json({msg: "Invalid or no file sent"})
   const domain = req.params.domain;
   if (!Object.keys(SUPPORTED_DOMAINS_SORTED_INDEX).includes(domain))
     return res.status(404).json({ msg: `Domain ${domain} not supported yet!` });
 
-  // Check ext
-  const extname = /json/.test(
-    path.extname(req.file.originalname).toLowerCase()
-  );
-  // Check mime
-  const mimetype = /json/.test(req.file.mimetype);
-  if (!(mimetype && extname))
-    req.status(403).json({ msg: "Invalid file type sent" });
-
+  
   const fileData = JSON.parse(req.file.buffer.toString());
 
   const destination = path.join(
@@ -51,7 +44,7 @@ router.post("/validate/single/:domain", logUpload, async (req, res) => {
     return res.status(500).json({msg: "Error occurred while storing file"})
   }
 
-  const schemaErrors = validateSchema(domain, fileData, {})
+  const schemaErrors = validate_schema_for_domain_json(domain, fileData, {})
   if(typeof schemaErrors === "string")  return res.json({ schemaErrors: {} });
   return res.json({schemaErrors})
 });

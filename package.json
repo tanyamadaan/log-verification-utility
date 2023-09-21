@@ -4,7 +4,7 @@
   "description": "Log Verification ONDC",
   "main": "index.js",
   "scripts": {
-    "server:dev": "nodemon ./server/server.js",
+    "server:dev": "nodemon ./server/server.js --ignore public/",
     "server:start": "node ./server/server.js",
     "verify:logistics": "node index.js logistics",
     "verify:retail": "node index.js retail",

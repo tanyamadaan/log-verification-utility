@@ -8,7 +8,7 @@ const Validate = require("./schemaVal");
 const flowVal = require("./retail/businessVal");
 const clean = require("./clean");
 
-const validateLogs = async (domain, dirPath) => {
+const validateLogs = async (domain, dirPath, outputDestination="") => {
   let msgIdSet = new Set();
   let ErrorObj = {};
 
@@ -32,7 +32,7 @@ const validateLogs = async (domain, dirPath) => {
   }
   try {
     // outputfile = `log${flowId}.json`
-    outputfile = "log_report.json";
+    outputfile = path.join(outputDestination,"log_report.json");
 
     // let out = getObjValues(ErrorObj['Schema'])
     let out = JSON.stringify(ErrorObj, null, 4);

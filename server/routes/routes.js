@@ -9,7 +9,8 @@ const {
   SERVER_LOG_DEST,
   ...constants
 } = require("../../utils/constants");
-const validate_schema_for_domain_json = require("../../schema/main")
+const validate_schema_for_domain_json = require("../../schema/main");
+const { validateLogs } = require("../../utils/validateLogUtil");
 const { logsUpload, logUpload } = require("../utils/fileHandler");
 
 router.get("/", (req, res) => {
@@ -17,21 +18,23 @@ router.get("/", (req, res) => {
 });
 
 router.post("/validate/single/:domain", logUpload, async (req, res) => {
-  if(!req.file) return res.status(403).json({msg: "Invalid or no file sent"})
+  if (!req.file)
+    return res.status(403).json({ msg: "Invalid or no file sent" });
   const domain = req.params.domain;
   if (!Object.keys(SUPPORTED_DOMAINS_SORTED_INDEX).includes(domain))
     return res.status(404).json({ msg: `Domain ${domain} not supported yet!` });
 
-  
   const fileData = JSON.parse(req.file.buffer.toString());
 
   const destination = path.join(
     __dirname,
     "../../",
     SERVER_LOG_DEST,
-    fileData.context.transaction_id
+    fileData.context.transaction_id,
+    "logs"
   );
-  const action = fileData.context.action
+  const dirExists = fs.existsSync(destination);
+  const action = fileData.context.action;
   try {
     fs.mkdirSync(destination, { recursive: true });
 
@@ -40,13 +43,23 @@ router.post("/validate/single/:domain", logUpload, async (req, res) => {
       JSON.stringify(fileData)
     );
   } catch (error) {
-    console.log(error)
-    return res.status(500).json({msg: "Error occurred while storing file"})
+    console.log(error);
+    return res.status(500).json({ msg: "Error occurred while storing file" });
   }
 
-  const individualSchemaErrors = validate_schema_for_domain_json(domain, {[action]: [fileData]})
+  const individualSchemaErrors = validate_schema_for_domain_json(domain, {
+    [action]: [fileData],
+  });
 
-  return res.json({individualSchemaErrors})
+  if (dirExists) {
+    var logReport = {};
+    validateLogs(domain, destination, path.join(destination, "..")).then(() => {
+      logReport = JSON.parse(fs.readFileSync(path.join(destination, "../log_report.json")).toString());
+      return res.json({ individualSchemaErrors, logReport });
+    });
+  } else {
+    return res.json({ individualSchemaErrors });
+  }
 });
 
 router.post("/validate/multiple/:domain", logsUpload, async (req, res) => {

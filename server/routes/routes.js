@@ -44,9 +44,9 @@ router.post("/validate/single/:domain", logUpload, async (req, res) => {
     return res.status(500).json({msg: "Error occurred while storing file"})
   }
 
-  const schemaErrors = validate_schema_for_domain_json(domain, fileData, {})
-  if(typeof schemaErrors === "string")  return res.json({ schemaErrors: {} });
-  return res.json({schemaErrors})
+  const individualSchemaErrors = validate_schema_for_domain_json(domain, {[action]: [fileData]})
+
+  return res.json({individualSchemaErrors})
 });
 
 router.post("/validate/multiple/:domain", logsUpload, async (req, res) => {

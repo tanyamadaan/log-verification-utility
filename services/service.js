@@ -8,7 +8,7 @@ const checkMessage = async (domain, element, action, msgIdSet) => {
     case "logistics":
       return logisticsVal(element, action, msgIdSet);
     case "b2b":
-      return b2bVal(element, msgIdSet);
+      return b2bVal(element, action, msgIdSet);
   }
   return busnsErr;
 };

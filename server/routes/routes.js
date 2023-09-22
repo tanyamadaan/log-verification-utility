@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const express = require("express");
 const router = express.Router();
-const { validateLog } = require("../../services/cbCheck.service");
 const {
   SUPPORTED_DOMAINS_SORTED_INDEX,
   FULL_ACTION_LIST,
@@ -78,14 +77,47 @@ router.post("/validate/multiple/:domain", logsUpload, async (req, res) => {
   )
     return res.status(400).json({ msg: "All files not detected" });
 
-  // console.log("FILES", req.files);
-  const log_generation_success =
-    (await validateLog(domain, SERVER_LOG_DEST)) && true;
-  return res.json({
-    domain,
-    files: Object.keys(req.files),
-    log_generation_success,
+  const firstFileData = JSON.parse(req.files[Object.keys(req.files)[0]][0].buffer.toString());
+  const destination = path.join(
+      __dirname,
+      "../../",
+      SERVER_LOG_DEST,
+      firstFileData.context.transaction_id,
+      "logs"
+    );
+  if(fs.existsSync(destination))
+  fs.rmdirSync(destination, {recursive: true})
+  // return res.status(403).json({msg: "Log Report for that Transaction ID already recorded."})
+
+  fs.mkdirSync(destination, { recursive: true });
+
+  for(file of Object.values(req.files)) {
+
+    const fileData = JSON.parse(file[0].buffer.toString());
+    const action = fileData.context.action;
+    fs.writeFileSync(
+      path.join(destination, action + ".json"),
+      JSON.stringify(fileData)
+    );
+  }
+
+  var logReport = {};
+  validateLogs(domain, destination, path.join(destination, "..")).then(() => {
+    logReport = JSON.parse(fs.readFileSync(path.join(destination, "../log_report.json")).toString());
+    return res.json({ logReport });
+  })
+  .catch((error) => {
+    console.log("Error", error)
+    return res.status(500).json({msg: "Error Occured during report generation"})
   });
+
+  // const log_generation_success =
+  //   (await validateLog(domain, destination)) && true;
+  // return res.json({
+  //   domain,
+  //   files: Object.keys(req.files),
+  //   log_generation_success,
+  // });
 });
 
 // router.post("/validateSchema/:path", (req, res) => {

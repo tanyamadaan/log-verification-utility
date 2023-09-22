@@ -19,22 +19,6 @@ const fs = require("fs");
 //const async = require("async");
 const path = require("path");
 
-const Ajv = require("ajv");
-const ajv = new Ajv({
-  allErrors: true,
-  strict: false,
-  strictRequired: false,
-  strictTypes: false,
-  verbose: true,
-  $data: true,
-});
-
-const addFormats = require("ajv-formats");
-//const masterSchemacopy = require("./masterSchemacopy");
-
-addFormats(ajv);
-require("ajv-errors")(ajv);
-
 const formatted_error = (errors) => {
   error_list = [];
   let status = "";
@@ -60,10 +44,26 @@ const formatted_error = (errors) => {
 function isEndTimeGreater(data) {
   const startTime = parseInt(data.start);
   const endTime = parseInt(data.end);
-  return startTime < endTime
+  return startTime < endTime;
 }
 
 const validate_schema = (data, schema) => {
+  const Ajv = require("ajv");
+  const ajv = new Ajv({
+    addUsedSchema: false,
+    allErrors: true,
+    strict: false,
+    strictRequired: false,
+    strictTypes: false,
+    verbose: true,
+    $data: true,
+  });
+
+  const addFormats = require("ajv-formats");
+  //const masterSchemacopy = require("./masterSchemacopy");
+
+  addFormats(ajv);
+  require("ajv-errors")(ajv);
   let error_list = [];
   try {
     validate = ajv
@@ -84,7 +84,7 @@ const validate_schema = (data, schema) => {
       .addSchema(cancelSchema)
       .addSchema(onCancelSchema)
       .addKeyword("isEndTimeGreater", {
-        validate: (schema, data) => isEndTimeGreater(data)
+        validate: (schema, data) => isEndTimeGreater(data),
       });
 
     validate = validate.compile(schema);

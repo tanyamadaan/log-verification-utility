@@ -16,6 +16,28 @@ router.get("/", (req, res) => {
   res.json({ msg: "Head over to /validate for route validation" });
 });
 
+router.post("/validate/local/single", async (req, res) => {
+  const { domain, path:filePath } = req.body;
+  if (!domain || !filePath)
+    return res
+      .status(400)
+      .json({ msg: 'Req Body needs to have "domain" and "path"' });
+
+  if (!Object.keys(SUPPORTED_DOMAINS_SORTED_INDEX).includes(domain))
+    return res.status(404).json({ msg: `Domain ${domain} not supported yet!` });
+  try {
+    const file = fs.readFileSync(path.join(filePath));
+
+    console.log("file", file);
+    return res.json({msg: "Req Processed"})
+  } catch (error) {
+    console.log("Error:", error)
+    if(error.code === "ENOENT") return res.status(400).json({msg:"File/Path does not exist"})
+    return res.status(500).json({msg:"Error occurred"})
+  }
+
+});
+
 router.post("/validate/single/:domain", logUpload, async (req, res) => {
   if (!req.file)
     return res.status(403).json({ msg: "Invalid or no file sent" });
@@ -53,7 +75,9 @@ router.post("/validate/single/:domain", logUpload, async (req, res) => {
   if (dirExists) {
     var logReport = {};
     validateLogs(domain, destination, path.join(destination, "..")).then(() => {
-      logReport = JSON.parse(fs.readFileSync(path.join(destination, "../log_report.json")).toString());
+      logReport = JSON.parse(
+        fs.readFileSync(path.join(destination, "../log_report.json")).toString()
+      );
       return res.json({ individualSchemaErrors, logReport });
     });
   } else {
@@ -77,22 +101,23 @@ router.post("/validate/multiple/:domain", logsUpload, async (req, res) => {
   )
     return res.status(400).json({ msg: "All files not detected" });
 
-  const firstFileData = JSON.parse(req.files[Object.keys(req.files)[0]][0].buffer.toString());
+  const firstFileData = JSON.parse(
+    req.files[Object.keys(req.files)[0]][0].buffer.toString()
+  );
   const destination = path.join(
-      __dirname,
-      "../../",
-      SERVER_LOG_DEST,
-      firstFileData.context.transaction_id,
-      "logs"
-    );
-  if(fs.existsSync(destination))
-  fs.rmdirSync(destination, {recursive: true})
+    __dirname,
+    "../../",
+    SERVER_LOG_DEST,
+    firstFileData.context.transaction_id,
+    "logs"
+  );
+  if (fs.existsSync(destination))
+    fs.rmdirSync(destination, { recursive: true });
   // return res.status(403).json({msg: "Log Report for that Transaction ID already recorded."})
 
   fs.mkdirSync(destination, { recursive: true });
 
-  for(file of Object.values(req.files)) {
-
+  for (file of Object.values(req.files)) {
     const fileData = JSON.parse(file[0].buffer.toString());
     const action = fileData.context.action;
     fs.writeFileSync(
@@ -102,14 +127,19 @@ router.post("/validate/multiple/:domain", logsUpload, async (req, res) => {
   }
 
   var logReport = {};
-  validateLogs(domain, destination, path.join(destination, "..")).then(() => {
-    logReport = JSON.parse(fs.readFileSync(path.join(destination, "../log_report.json")).toString());
-    return res.json({ logReport });
-  })
-  .catch((error) => {
-    console.log("Error", error)
-    return res.status(500).json({msg: "Error Occured during report generation"})
-  });
+  validateLogs(domain, destination, path.join(destination, ".."))
+    .then(() => {
+      logReport = JSON.parse(
+        fs.readFileSync(path.join(destination, "../log_report.json")).toString()
+      );
+      return res.json({ logReport });
+    })
+    .catch((error) => {
+      console.log("Error", error);
+      return res
+        .status(500)
+        .json({ msg: "Error Occured during report generation" });
+    });
 
   // const log_generation_success =
   //   (await validateLog(domain, destination)) && true;

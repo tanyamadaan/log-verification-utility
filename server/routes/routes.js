@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/validate/local/single", async (req, res) => {
-  const { domain, path:filePath } = req.body;
+  const { domain, path: filePath } = req.body;
   if (!domain || !filePath)
     return res
       .status(400)
@@ -27,15 +27,56 @@ router.post("/validate/local/single", async (req, res) => {
     return res.status(404).json({ msg: `Domain ${domain} not supported yet!` });
   try {
     const file = fs.readFileSync(path.join(filePath));
+    
+    const fileData = JSON.parse(file.toString());
+    
+    const action = fileData.context.action;
 
-    console.log("file", file);
-    return res.json({msg: "Req Processed"})
+    const individualSchemaErrors = validate_schema_for_domain_json(domain, {
+      [action]: [fileData],
+    });
+    const destination = path.join(
+      __dirname,
+      "../../",
+      SERVER_LOG_DEST,
+      domain,
+      fileData.context.transaction_id,
+      "logs"
+    );
+    const dirExists = fs.existsSync(destination);
+    try {
+      fs.mkdirSync(destination, { recursive: true });
+
+      fs.writeFileSync(
+        path.join(destination, action + ".json"),
+        JSON.stringify(fileData)
+      );
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ msg: "Error occurred while storing file" });
+    }
+
+    if (dirExists) {
+      var fullLogReport = {};
+      validateLogs(domain, destination, path.join(destination, "..")).then(
+        () => {
+          fullLogReport = JSON.parse(
+            fs
+              .readFileSync(path.join(destination, "../log_report.json"))
+              .toString()
+          );
+          return res.json({ individualSchemaErrors, fullLogReport });
+        }
+      );
+    } else {
+      return res.json({ individualSchemaErrors });
+    }
   } catch (error) {
-    console.log("Error:", error)
-    if(error.code === "ENOENT") return res.status(400).json({msg:"File/Path does not exist"})
-    return res.status(500).json({msg:"Error occurred"})
+    console.log("Error:", error);
+    if (error.code === "ENOENT")
+      return res.status(400).json({ msg: "File/Path does not exist" });
+    return res.status(500).json({ msg: "Error occurred" });
   }
-
 });
 
 router.post("/validate/single/:domain", logUpload, async (req, res) => {
@@ -51,6 +92,7 @@ router.post("/validate/single/:domain", logUpload, async (req, res) => {
     __dirname,
     "../../",
     SERVER_LOG_DEST,
+    domain,
     fileData.context.transaction_id,
     "logs"
   );
@@ -108,6 +150,7 @@ router.post("/validate/multiple/:domain", logsUpload, async (req, res) => {
     __dirname,
     "../../",
     SERVER_LOG_DEST,
+    domain,
     firstFileData.context.transaction_id,
     "logs"
   );

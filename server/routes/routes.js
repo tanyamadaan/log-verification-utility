@@ -27,9 +27,9 @@ router.post("/validate/local/single", async (req, res) => {
     return res.status(404).json({ msg: `Domain ${domain} not supported yet!` });
   try {
     const file = fs.readFileSync(path.join(filePath));
-    
+
     const fileData = JSON.parse(file.toString());
-    
+
     const action = fileData.context.action;
 
     const individualSchemaErrors = validate_schema_for_domain_json(domain, {
@@ -76,6 +76,52 @@ router.post("/validate/local/single", async (req, res) => {
     if (error.code === "ENOENT")
       return res.status(400).json({ msg: "File/Path does not exist" });
     return res.status(500).json({ msg: "Error occurred" });
+  }
+});
+
+router.post("/validate/local/multiple", async (req, res) => {
+  const { domain, dirPath } = req.body;
+  if (!domain || !dirPath)
+    return res
+      .status(400)
+      .json({ msg: 'Req Body needs to have "domain" and "dirPath"' });
+
+  if (!Object.keys(SUPPORTED_DOMAINS_SORTED_INDEX).includes(domain))
+    return res.status(404).json({ msg: `Domain ${domain} not supported yet!` });
+
+  try {
+    const files = fs.readdirSync(dirPath);
+    const firstFileData = fs.readFileSync(
+      path.join(
+        dirPath,
+        files.filter((filename) => filename.match(/\.json$/))[0]
+      )
+    );
+    console.log("First file", firstFileData)
+    try {
+      const destination = path.join(
+        __dirname,
+        "../../",
+        SERVER_LOG_DEST,
+        domain,
+        JSON.parse(firstFileData.toString()).context.transaction_id
+      );
+      fs.mkdirSync(destination, { recursive: true });
+      validateLogs(domain, dirPath, destination).then(() => {
+        logReport = JSON.parse(
+          fs.readFileSync(path.join(destination, "log_report.json")).toString()
+        );
+        return res.json({logReport });
+      });;
+    } catch (error) {
+      console.log("Error while reading first file data", error)
+      return res.status(500).json({msg: "Error occured while reading first log"})
+    }
+  } catch (error) {
+    console.log("Error", error);
+    return res
+      .status(500)
+      .json({ msg: "Error occurred while report generation" });
   }
 });
 

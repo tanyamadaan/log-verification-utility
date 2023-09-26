@@ -56,18 +56,6 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            },
-            {
-              not: {
-                const: { $data: "/init/0/context/message_id" },
-              },
-              errorMessage: "Message ID should be unique",
-            },
-            {
-              not: {
-                const: { $data: "/search/0/context/message_id" },
-              },
-              errorMessage: "Message ID should be unique",
             }
           ],
         },

@@ -40,7 +40,7 @@ module.exports = {
           type: "string",
           const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+            "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -56,7 +56,7 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            }
+            },
           ],
         },
         timestamp: {
@@ -220,29 +220,47 @@ module.exports = {
                   },
                   "@ondc/org/ewaybillno": {
                     type: "string",
-                    const: { $data: "/on_confirm/0/message/order/fulfillments/0/@ondc~1org~1ewaybillno" },
+                    const: {
+                      $data:
+                        "/on_confirm/0/message/order/fulfillments/0/@ondc~1org~1ewaybillno",
+                    },
                   },
                   "@ondc/org/ebnexpirydate": {
                     type: "string",
                     format: "date-time",
-                    const: { $data: "/on_confirm/0/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate"},
+                    const: {
+                      $data:
+                        "/on_confirm/0/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate",
+                    },
                   },
                 },
-                additionalProperties:false,
+                additionalProperties: false,
                 required: ["id", "type", "start"],
               },
             },
             created_at: {
               type: "string",
               const: { $data: "/confirm/0/message/order/created_at" },
-              errorMessage:
-                "mismatches in /confirm and /on_update",
+              errorMessage: "mismatches in /confirm and /on_update",
             },
             updated_at: {
               type: "string",
+              allOf: [
+                {
+                  not: {
+                    const: { $data: "/confirm/0/message/order/created_at" },
+                  },
+                  errorMessage:
+                    "should be greater than order/created_at ${3/context/timestamp} in /confirm",
+                },
+                // {
+                //   maximum: { $data: "3/context/timestamp" },
+                //   errorMessage: "should not be future dated w.r.t context/timestamp ${3/context/timestamp}",
+                // },
+              ],
             },
           },
-          additionalProperties:false,
+          additionalProperties: false,
           required: ["id", "state", "items", "fulfillments", "updated_at"],
 
           // oneOf: [

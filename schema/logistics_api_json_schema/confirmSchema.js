@@ -721,8 +721,7 @@ module.exports = {
               },
               required: [
                 "collected_by",
-                "type",
-                "@ondc/org/settlement_details",
+                "type"
               ],
             },
             "@ondc/org/linked_order": {

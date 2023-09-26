@@ -1,12 +1,18 @@
 {
     "Schema": {
-        "schemaErr0": "/init/0/message/order/billing/address/building cannot be equal to locality",
+        "schemaErr0": "/search/0/message/intent/fulfillment/end/location/gps cannot be equal to start/location/gps '\"12.910816, 77.546946\"'",
         "schemaErr1": "/on_status/2/message/order/quote/breakup/1 must have required property '@ondc/org/item_id'",
         "schemaErr2": "/on_status/3/message/order/quote/breakup/1 must have required property '@ondc/org/item_id'"
     },
     "Context": {
-        "on_init": {
-            "tmpstmp": "context/timestamp difference between on_init and init should be smaller than 1 sec"
+        "on_search_0": {
+            "tmpstmpErr": "context/timestamp difference between on_search and search should be smaller than 1 sec"
+        },
+        "on_init_0": {
+            "tmpstmpErr": "context/timestamp difference between on_init and init should be smaller than 1 sec"
+        },
+        "confirm_0": {
+            "msgIdErr": "Message Id cannot be same for different sets of APIs (LSP should send NACK)"
         }
     }
 }

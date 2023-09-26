@@ -1,1 +1,1083 @@
-{"search":[{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"search","core_version":"1.1.0","bap_id":"preprod.xpressbaazaar.com","bap_uri":"https://preprod.xpressbaazaar.com/logistics/v1/","transaction_id":"0227fc8c-8bf9-4deb-b8b2-c16bca5c58a7","message_id":"c88008d0-bfe4-4bae-a29a-15fc6db72ecc","timestamp":"2023-09-15T13:33:17.011Z","ttl":"PT30S"},"message":{"intent":{"category":{"id":"Standard Delivery"},"provider":{"time":{"days":"1,2,3,4,5,6,7","schedule":{"holidays":[]},"range":{"start":"1050","end":"2251"}}},"fulfillment":{"type":"Prepaid","start":{"location":{"gps":"12.903725,77.537639","address":{"area_code":"560061"}}},"end":{"location":{"gps":"12.9088400000001, 77.549113","address":{"area_code":"560061"}}}},"@ondc/org/payload_details":{"weight":{"unit":"Kilogram","value":1},"dimensions":{"length":{"unit":"centimeter","value":11},"breadth":{"unit":"centimeter","value":11},"height":{"unit":"centimeter","value":11}},"category":"Grocery","value":{"currency":"INR","value":"170"}}}}}],"on_search":[{"context":{"domain":"nic2004:60232","core_version":"1.1.0","bap_id":"preprod.xpressbaazaar.com","bap_uri":"https://preprod.xpressbaazaar.com/logistics/v1/","bpp_id":"preprod-bpp.iway.digiit.io","bpp_uri":"https://preprod-bpp.iway.digiit.io","city":"std:080","country":"IND","action":"on_search","transaction_id":"0227fc8c-8bf9-4deb-b8b2-c16bca5c58a7","message_id":"c88008d0-bfe4-4bae-a29a-15fc6db72ecc","timestamp":"2023-09-15T13:33:17.358Z"},"message":{"catalog":{"bpp/fulfillments":[{"id":"1","type":"Prepaid"},{"id":"2","type":"CoD"},{"id":"3","type":"RTO"},{"id":"4","type":"Reverse QC"}],"bpp/descriptor":{"name":"iway"},"bpp/providers":[{"id":"107-Account-DER-292","descriptor":{"name":"Iway Logistics & Delivery","short_desc":"Iway Logistics & Delivery","long_desc":"Iway Logistics & Delivery"},"categories":[{"id":"Next Day Delivery","time":{"label":"TAT","duration":"P1D"}},{"id":"Immediate Delivery","time":{"label":"TAT","duration":"PT45M"}},{"id":"Same Day Delivery","time":{"label":"TAT","duration":"PT6H"}}],"items":[{"id":"18","parent_item_id":"","category_id":"Next Day Delivery","fulfillment_id":"1","descriptor":{"code":"P2P","name":"Next Day Delivery","short_desc":"Next Day Delivery","long_desc":"Next Day Delivery"},"price":{"currency":"INR","value":"20.0"}},{"id":"rto-item-18","parent_item_id":"18","category_id":"Next Day Delivery","fulfillment_id":"3","descriptor":{"code":"P2P","name":"RTO quote","short_desc":"RTO quote","long_desc":"RTO quote"},"price":{"currency":"INR","value":"20.0"}},{"id":"19","parent_item_id":"","category_id":"Immediate Delivery","fulfillment_id":"1","descriptor":{"code":"P2P","name":"Immediate Delivery","short_desc":"Immediate Delivery","long_desc":"Immediate Delivery"},"price":{"currency":"INR","value":"20.0"}},{"id":"rto-item-19","parent_item_id":"19","category_id":"Immediate Delivery","fulfillment_id":"3","descriptor":{"code":"P2P","name":"RTO quote","short_desc":"RTO quote","long_desc":"RTO quote"},"price":{"currency":"INR","value":"20.0"}},{"id":"20","parent_item_id":"","category_id":"Same Day Delivery","fulfillment_id":"1","descriptor":{"code":"P2P","name":"Same Day Delivery","short_desc":"Same Day Delivery","long_desc":"Same Day Delivery"},"price":{"currency":"INR","value":"30.0"}},{"id":"rto-item-20","parent_item_id":"20","category_id":"Same Day Delivery","fulfillment_id":"3","descriptor":{"code":"P2P","name":"RTO quote","short_desc":"RTO quote","long_desc":"RTO quote"},"price":{"currency":"INR","value":"40.0"}}]}]}}}],"init":[{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"init","core_version":"1.1.0","bap_id":"preprod.xpressbaazaar.com","bap_uri":"https://preprod.xpressbaazaar.com/logistics/v1/","bpp_id":"preprod-bpp.iway.digiit.io","bpp_uri":"https://preprod-bpp.iway.digiit.io","transaction_id":"0227fc8c-8bf9-4deb-b8b2-c16bca5c58a7","message_id":"ba5ad0d1-c99d-4f22-8092-845be6d8fee9","timestamp":"2023-09-15T13:33:37.693Z","ttl":"PT30S"},"message":{"order":{"provider":{"id":"107-Account-DER-292"},"items":[{"id":"18","category_id":"Next Day Delivery","descriptor":{"code":"P2P"}}],"fulfillments":[{"id":"1","type":"Prepaid","start":{"location":{"gps":"12.903725,77.537639","address":{"name":"Yumfood","building":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","locality":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","city":"Bengaluru","state":"KA","country":"India","area_code":"560061"}},"contact":{"phone":"8923791501","email":"abcd.efgh@gmail.com"}},"end":{"location":{"gps":"12.9088400000001, 77.549113","address":{"name":"Saurav","building":"Near Grofers","locality":"hsr Layout","city":"Bengaluru","state":"Karnataka","country":"IND","area_code":"560061"}},"contact":{"phone":"7004498992","email":"saurav.kumar@ens.enterprises"}}}],"billing":{"name":"Yumfood","address":{"name":"Yumfood","building":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","locality":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","city":"Bengaluru","state":"KA","country":"India","area_code":"560061"},"tax_number":"07AAGFF2194N1Z1","phone":"8923791501","email":"abcd.efgh@gmail.com","created_at":"2023-09-15T13:33:37.693Z","updated_at":"2023-09-15T13:33:37.693Z"},"payment":{"@ondc/org/settlement_details":[]}}}}],"on_init":[{"context":{"domain":"nic2004:60232","core_version":"1.1.0","bap_id":"preprod.xpressbaazaar.com","bap_uri":"https://preprod.xpressbaazaar.com/logistics/v1/","bpp_id":"preprod-bpp.iway.digiit.io","bpp_uri":"https://preprod-bpp.iway.digiit.io","city":"std:080","country":"IND","action":"on_init","transaction_id":"0227fc8c-8bf9-4deb-b8b2-c16bca5c58a7","message_id":"ba5ad0d1-c99d-4f22-8092-845be6d8fee9","timestamp":"2023-09-15T13:33:38.943Z"},"message":{"order":{"provider":{"id":"107-Account-DER-292"},"items":[{"id":"18"}],"quote":{"price":{"currency":"INR","value":"20.0"},"breakup":[{"@ondc/org/item_id":"18","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"20.0"}}]},"payment":{"type":"ON-ORDER","collected_by":"BAP","@ondc/org/settlement_details":[]}}}}],"confirm":[{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"confirm","core_version":"1.1.0","bap_id":"preprod.xpressbaazaar.com","bap_uri":"https://preprod.xpressbaazaar.com/logistics/v1/","bpp_uri":"https://preprod-bpp.iway.digiit.io","bpp_id":"preprod-bpp.iway.digiit.io","transaction_id":"0227fc8c-8bf9-4deb-b8b2-c16bca5c58a7","message_id":"090cdf19-66a9-459a-89a0-145bfc2bc641","timestamp":"2023-09-15T13:33:44.085Z","ttl":"PT30S"},"message":{"order":{"id":"aaca54f0-6b9d-4623-a2c1-41b517a66185","state":"Created","provider":{"id":"107-Account-DER-292"},"items":[{"id":"18","category_id":"Next Day Delivery","descriptor":{"code":"P2P"}}],"quote":{"price":{"currency":"INR","value":"20.0"},"breakup":[{"@ondc/org/item_id":"18","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"20.0"}}]},"fulfillments":[{"id":"1","type":"Prepaid","start":{"person":{"name":"Yumfood"},"location":{"gps":"12.903725,77.537639","address":{"name":"Yumfood","building":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","locality":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","city":"Bengaluru","state":"KA","country":"India","area_code":"560061"}},"contact":{"phone":"8923791501","email":"abcd.efgh@gmail.com"},"instructions":{"short_desc":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml","long_desc":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml","images":["https://shikhar-cms.s3.ap-south-1.amazonaws.com/CMS-PROD-HERO/17216.png"]}},"end":{"person":{"name":"Saurav"},"location":{"gps":"12.9088400000001, 77.549113","address":{"name":"Saurav","building":"Near Grofers","locality":"hsr Layout","city":"Bengaluru","state":"Karnataka","country":"IND","area_code":"560061"}},"contact":{"phone":"7004498992","email":"saurav.kumar@ens.enterprises"},"instructions":{"short_desc":"drop package at security gate","long_desc":"drop package at security gate","additional_desc":{"content_type":"text/html","url":"https://docs.google.com/document/d/109QZntPo0zQeqh4Il2T__blfNduLBb9MIibGlqlH8PU/edit?usp=sharing"}}},"tags":{"@ondc/org/order_ready_to_ship":"no"}}],"billing":{"name":"Yumfood","address":{"name":"Yumfood","building":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","locality":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","city":"Bengaluru","state":"KA","country":"India","area_code":"560061"},"tax_number":"07AAGFF2194N1Z1","phone":"8923791501","email":"abcd.efgh@gmail.com","created_at":"2023-09-15T13:33:37.693Z","updated_at":"2023-09-15T13:33:37.693Z"},"payment":{"@ondc/org/collection_amount":"170","collected_by":"BAP","type":"ON-ORDER","@ondc/org/settlement_details":[]},"@ondc/org/linked_order":{"items":[{"category_id":"Grocery","descriptor":{"name":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml"},"quantity":{"count":1,"measure":{"unit":"Kilogram","value":1}},"price":{"currency":"INR","value":"160"}}],"provider":{"descriptor":{"name":"Yumfood"},"address":{"name":"Yumfood","street":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","locality":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","city":"Bengaluru","state":"KA","area_code":"560061"}},"order":{"id":"2023-09-15-168050","weight":{"unit":"Kilogram","value":1}}},"created_at":"2023-09-15T13:33:44.085Z","updated_at":"2023-09-15T13:33:44.085Z"}}}],"on_confirm":[{"context":{"domain":"nic2004:60232","core_version":"1.1.0","bap_id":"preprod.xpressbaazaar.com","bap_uri":"https://preprod.xpressbaazaar.com/logistics/v1/","bpp_id":"preprod-bpp.iway.digiit.io","bpp_uri":"https://preprod-bpp.iway.digiit.io","city":"std:080","country":"IND","action":"on_confirm","transaction_id":"0227fc8c-8bf9-4deb-b8b2-c16bca5c58a7","message_id":"090cdf19-66a9-459a-89a0-145bfc2bc641","timestamp":"2023-09-15T13:33:44.876Z"},"message":{"order":{"id":"aaca54f0-6b9d-4623-a2c1-41b517a66185","state":"Accepted","provider":{"id":"107-Account-DER-292"},"items":[{"id":"18","category_id":"Next Day Delivery","descriptor":{"code":"P2P"}}],"quote":{"price":{"currency":"INR","value":"20.0"},"breakup":[{"@ondc/org/item_id":"18","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"20.0"}}]},"fulfillments":[{"id":"1","type":"Prepaid","state":{"descriptor":{"code":"Pending"}},"tracking":true,"agent":{"name":"Peter","phone":"7438483828"},"vehicle":{"category":"TwoWheeler","size":"500.0000","registration":"TN56NS8282"}}],"billing":{"name":"Yumfood","address":{"name":"Yumfood","building":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","locality":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","city":"Bengaluru","state":"KA","country":"India","area_code":"560061"},"tax_number":"07AAGFF2194N1Z1","phone":"8923791501","email":"abcd.efgh@gmail.com","created_at":"2023-09-15T13:33:37.693Z","updated_at":"2023-09-15T13:33:37.693Z"},"created_at":"2023-09-15T13:33:44.085Z","updated_at":"2023-09-15T13:33:44.876Z"}}}],"update":[{"context":{"domain":"nic2004:60232","country":"IND","city":"std:080","action":"update","core_version":"1.1.0","bap_id":"preprod.xpressbaazaar.com","bap_uri":"https://preprod.xpressbaazaar.com/logistics/v1/","bpp_uri":"https://preprod-bpp.iway.digiit.io","bpp_id":"preprod-bpp.iway.digiit.io","transaction_id":"0227fc8c-8bf9-4deb-b8b2-c16bca5c58a7","message_id":"bfd350ec-24e9-40d0-8cd6-91e7c7760bb9","timestamp":"2023-09-15T13:34:07.770Z","ttl":"PT30S"},"message":{"update_target":"fulfillment","order":{"id":"aaca54f0-6b9d-4623-a2c1-41b517a66185","state":"Accepted","items":[{"id":"18","category_id":"Next Day Delivery","descriptor":{"code":"P2P"}}],"fulfillments":[{"id":"1","type":"Prepaid","tags":{"@ondc/org/order_ready_to_ship":"yes"},"start":{"instructions":{"short_desc":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml","long_desc":"040834","additional_desc":{"content_type":"image/x-png","url":"https://shikhar-cms.s3.ap-south-1.amazonaws.com/CMS-PROD-HERO/17216.png"}}}}],"@ondc/org/linked_order":{"items":[{"category_id":"Grocery","descriptor":{"name":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml"},"quantity":{"count":1,"measure":{"unit":"Kilogram","value":1}},"price":{"currency":"INR","value":"160"}}],"provider":{"descriptor":{"name":"Yumfood"},"address":{"name":"Yumfood","street":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","locality":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","city":"Bengaluru","state":"KA","area_code":"560061"}},"order":{"id":"2023-09-15-168050","weight":{"unit":"Kilogram","value":1}}},"updated_at":"2023-09-15T13:34:07.770Z"}}}],"on_update":[{"context":{"domain":"nic2004:60232","core_version":"1.1.0","bap_id":"preprod.xpressbaazaar.com","bap_uri":"https://preprod.xpressbaazaar.com/logistics/v1/","bpp_id":"preprod-bpp.iway.digiit.io","bpp_uri":"https://preprod-bpp.iway.digiit.io","city":"std:080","country":"IND","action":"on_update","transaction_id":"0227fc8c-8bf9-4deb-b8b2-c16bca5c58a7","message_id":"bfd350ec-24e9-40d0-8cd6-91e7c7760bb9","timestamp":"2023-09-15T13:34:08.494Z"},"message":{"order":{"id":"aaca54f0-6b9d-4623-a2c1-41b517a66185","state":"Accepted","items":[{"id":"18","category_id":"Next Day Delivery","descriptor":{"code":"P2P"}}],"fulfillments":[{"id":"1","type":"Prepaid","start":{"time":{"range":{"start":"2023-09-16T15:04:08.567Z","end":"2023-09-16T15:34:08.567Z"}},"instructions":{"short_desc":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml"}},"end":{"time":{"range":{"start":"2023-09-16T19:04:08.567Z","end":"2023-09-16T19:19:08.567Z"}}},"agent":{"name":"Peter","phone":"7438483828"}}],"updated_at":"2023-09-15T13:33:53.379Z"}}}],"on_status":[{"context":{"domain":"nic2004:60232","core_version":"1.1.0","bap_id":"preprod.xpressbaazaar.com","bap_uri":"https://preprod.xpressbaazaar.com/logistics/v1/","bpp_id":"preprod-bpp.iway.digiit.io","bpp_uri":"https://preprod-bpp.iway.digiit.io","city":"std:080","country":"IND","action":"on_status","transaction_id":"0227fc8c-8bf9-4deb-b8b2-c16bca5c58a7","message_id":"9cd6f47e-277d-4a0f-a752-545f91118060","timestamp":"2023-09-15T13:35:15.243Z"},"message":{"order":{"id":"aaca54f0-6b9d-4623-a2c1-41b517a66185","state":"In-progress","provider":{"id":"107-Account-DER-292"},"items":[{"id":"18","category_id":"Next Day Delivery","descriptor":{"code":"P2P"}}],"fulfillments":[{"type":"Prepaid","state":{"descriptor":{"code":"Order-picked-up"}},"tracking":true,"start":{"time":{"range":{"start":"2023-09-16T15:04:08.567Z","end":"2023-09-16T15:34:08.567Z"},"timestamp":"2023-09-15T13:35:15.243Z"},"instructions":{"name":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml","short_desc":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml","long_desc":"040834"}},"end":{"time":{"range":{"start":"2023-09-16T19:04:08.567Z","end":"2023-09-16T19:19:08.567Z"}}},"agent":{"name":"Peter","phone":"7438483828"},"vehicle":{"category":"TwoWheeler","size":"500.0000","registration":"TN56NS8282"}}],"quote":{"price":{"currency":"INR","value":"20.0"},"breakup":[{"@ondc/org/item_id":"18","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"20.0"}}]},"payment":{"type":"ON-ORDER","collected_by":"BAP","@ondc/org/settlement_details":[]},"billing":{"name":"Yumfood","address":{"name":"Yumfood","building":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","locality":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","city":"Bengaluru","state":"KA","country":"India","area_code":"560061"},"tax_number":"07AAGFF2194N1Z1","phone":"8923791501","email":"abcd.efgh@gmail.com"}}}},{"context":{"domain":"nic2004:60232","core_version":"1.1.0","bap_id":"preprod.xpressbaazaar.com","bap_uri":"https://preprod.xpressbaazaar.com/logistics/v1/","bpp_id":"preprod-bpp.iway.digiit.io","bpp_uri":"https://preprod-bpp.iway.digiit.io","city":"std:080","country":"IND","action":"on_status","transaction_id":"0227fc8c-8bf9-4deb-b8b2-c16bca5c58a7","message_id":"ee8c38a4-8adb-49b5-bd28-85df77f81559","timestamp":"2023-09-15T13:40:29.140Z"},"message":{"order":{"id":"aaca54f0-6b9d-4623-a2c1-41b517a66185","state":"In-progress","provider":{"id":"107-Account-DER-292"},"items":[{"id":"18","category_id":"Next Day Delivery","descriptor":{"code":"P2P"}}],"fulfillments":[{"type":"Prepaid","state":{"descriptor":{"code":"Out-for-delivery"}},"tracking":true,"start":{"time":{"range":{"start":"2023-09-16T15:04:08.567Z","end":"2023-09-16T15:34:08.567Z"},"timestamp":"2023-09-15T13:35:15.243Z"},"instructions":{"name":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml","short_desc":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml","long_desc":"040834"}},"end":{"time":{"range":{"start":"2023-09-16T19:04:08.567Z","end":"2023-09-16T19:19:08.567Z"}}},"agent":{"name":"Peter","phone":"7438483828"},"vehicle":{"category":"TwoWheeler","size":"500.0000","registration":"TN56NS8282"}}],"quote":{"price":{"currency":"INR","value":"20.0"},"breakup":[{"@ondc/org/item_id":"18","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"20.0"}}]},"payment":{"type":"ON-ORDER","collected_by":"BAP","@ondc/org/settlement_details":[]},"billing":{"name":"Yumfood","address":{"name":"Yumfood","building":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","locality":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","city":"Bengaluru","state":"KA","country":"India","area_code":"560061"},"tax_number":"07AAGFF2194N1Z1","phone":"8923791501","email":"abcd.efgh@gmail.com"}}}},{"context":{"domain":"nic2004:60232","core_version":"1.1.0","bap_id":"preprod.xpressbaazaar.com","bap_uri":"https://preprod.xpressbaazaar.com/logistics/v1/","bpp_id":"preprod-bpp.iway.digiit.io","bpp_uri":"https://preprod-bpp.iway.digiit.io","city":"std:080","country":"IND","action":"on_status","transaction_id":"0227fc8c-8bf9-4deb-b8b2-c16bca5c58a7","message_id":"3d8ebd08-1382-4628-a892-cce027cbd4e5","timestamp":"2023-09-15T13:41:40.116Z"},"message":{"order":{"id":"aaca54f0-6b9d-4623-a2c1-41b517a66185","state":"Cancelled","provider":{"id":"107-Account-DER-292"},"items":[{"id":"18","category_id":"Next Day Delivery","descriptor":{"code":"P2P"}}],"fulfillments":[{"type":"Prepaid","state":{"descriptor":{"code":"Cancelled"}},"tracking":true,"start":{"time":{"range":{"start":"2023-09-16T15:04:08.567Z","end":"2023-09-16T15:34:08.567Z"},"timestamp":"2023-09-15T13:35:15.243Z"},"instructions":{"name":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml","short_desc":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml","long_desc":"040834"}},"end":{"time":{"range":{"start":"2023-09-16T19:04:08.567Z","end":"2023-09-16T19:19:08.567Z"}}},"agent":{"name":"Peter","phone":"7438483828"},"vehicle":{"category":"TwoWheeler","size":"500.0000","registration":"TN56NS8282"}},{"type":"RTO","state":{"descriptor":{"code":"RTO-Initiated","name":"RTO-Initiated"}},"start":{"time":{"range":{"start":"2023-09-15T13:40:56.875Z","end":"2023-09-15T14:10:56.875Z"},"timestamp":"2023-09-15T13:40:57.160Z"}},"end":{"time":{"range":{"start":"2023-09-16T19:10:57.204Z","end":"2023-09-16T19:25:57.204Z"}}},"agent":{"name":"Peter","phone":"7438483828"}}],"quote":{"price":{"currency":"INR","value":"40.0"},"breakup":[{"@ondc/org/item_id":"18","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"20.0"}},{"title":"RTO charges","@ondc/org/title_type":"RTO Charge","price":{"currency":"INR","value":"20.0"}}]},"payment":{"type":"ON-ORDER","collected_by":"BAP","@ondc/org/settlement_details":[]},"billing":{"name":"Yumfood","address":{"name":"Yumfood","building":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","locality":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","city":"Bengaluru","state":"KA","country":"India","area_code":"560061"},"tax_number":"07AAGFF2194N1Z1","phone":"8923791501","email":"abcd.efgh@gmail.com"},"tags":{"cancellation_reason_id":"013"}}}},{"context":{"domain":"nic2004:60232","core_version":"1.1.0","bap_id":"preprod.xpressbaazaar.com","bap_uri":"https://preprod.xpressbaazaar.com/logistics/v1/","bpp_id":"preprod-bpp.iway.digiit.io","bpp_uri":"https://preprod-bpp.iway.digiit.io","city":"std:080","country":"IND","action":"on_status","transaction_id":"0227fc8c-8bf9-4deb-b8b2-c16bca5c58a7","message_id":"403fe260-0ed8-4397-a968-2a273630bbaf","timestamp":"2023-09-15T13:42:23.814Z"},"message":{"order":{"id":"aaca54f0-6b9d-4623-a2c1-41b517a66185","state":"Cancelled","provider":{"id":"107-Account-DER-292"},"items":[{"id":"18","category_id":"Next Day Delivery","descriptor":{"code":"P2P"}}],"fulfillments":[{"type":"Prepaid","state":{"descriptor":{"code":"Cancelled"}},"tracking":true,"start":{"time":{"range":{"start":"2023-09-16T15:04:08.567Z","end":"2023-09-16T15:34:08.567Z"},"timestamp":"2023-09-15T13:35:15.243Z"},"instructions":{"name":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml","short_desc":"Lux Body Wash Magical Spell with Black Orchids And Juniper Oil 245ml","long_desc":"040834"}},"end":{"time":{"range":{"start":"2023-09-16T19:04:08.567Z","end":"2023-09-16T19:19:08.567Z"}}},"agent":{"name":"Peter","phone":"7438483828"},"vehicle":{"category":"TwoWheeler","size":"500.0000","registration":"TN56NS8282"}},{"type":"RTO","state":{"descriptor":{"code":"RTO-Disposed","name":"RTO-Disposed"}},"start":{"time":{"range":{"start":"2023-09-15T13:40:56.875Z","end":"2023-09-15T14:10:56.875Z"},"timestamp":"2023-09-15T13:40:57.160Z"}},"end":{"time":{"range":{"start":"2023-09-16T19:10:57.204Z","end":"2023-09-16T19:25:57.204Z"},"timestamp":"2023-09-15T13:42:08.849Z"}},"agent":{"name":"Peter","phone":"7438483828"}}],"quote":{"price":{"currency":"INR","value":"40.0"},"breakup":[{"@ondc/org/item_id":"18","@ondc/org/title_type":"Delivery Charge","price":{"currency":"INR","value":"20.0"}},{"title":"RTO charges","@ondc/org/title_type":"RTO Charge","price":{"currency":"INR","value":"20.0"}}]},"payment":{"type":"ON-ORDER","collected_by":"BAP","@ondc/org/settlement_details":[]},"billing":{"name":"Yumfood","address":{"name":"Yumfood","building":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","locality":"89 Karishma hills ,Vinayaka Layout, Poornapragna Housing Society Layout","city":"Bengaluru","state":"KA","country":"India","area_code":"560061"},"tax_number":"07AAGFF2194N1Z1","phone":"8923791501","email":"abcd.efgh@gmail.com"},"tags":{"cancellation_reason_id":"013"}}}}],"on_cancel":[{"context":{"domain":"nic2004:60232","action":"on_cancel","core_version":"1.1.0","bap_id":"preprod.xpressbaazaar.com","bap_uri":"https://preprod.xpressbaazaar.com/logistics/v1/","bpp_id":"preprod-bpp.iway.digiit.io","bpp_uri":"https://preprod-bpp.iway.digiit.io","transaction_id":"0227fc8c-8bf9-4deb-b8b2-c16bca5c58a7","message_id":"59a7bb2c-c074-4455-864b-b64ac4271caf","city":"std:080","country":"IND","timestamp":"2023-09-15T13:40:56.763Z"},"message":{"order":{"id":"aaca54f0-6b9d-4623-a2c1-41b517a66185","state":"Cancelled","fulfillments":[{"id":"1","type":"Prepaid","state":{"descriptor":{"code":"Cancelled"}},"tags":{"cancellation_reason_id":"013"}}]}}}]}
+{
+  "search": [
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "country": "IND",
+        "city": "STD:080",
+        "action": "search",
+        "core_version": "1.1.0",
+        "bap_id": "preprodlogistics.ooga.shop",
+        "bap_uri": "https://preprodlogistics.ooga.shop",
+        "transaction_id": "5ffac26a-bca0-4afb-958b-960f2b4db9ff",
+        "message_id": "24814ad9-dc64-4276-a57c-0647dd7a5251",
+        "timestamp": "2023-09-22T05:38:02.574Z",
+        "ttl": "PT30S"
+      },
+      "message": {
+        "intent": {
+          "provider": {
+            "time": {
+              "range": { "start": "1000", "end": "2000" },
+              "days": "1,2,3,4,5,6",
+              "schedule": { "holidays": [] }
+            }
+          },
+          "fulfillment": {
+            "type": "Prepaid",
+            "start": {
+              "location": {
+                "gps": "12.910816, 77.546946",
+                "address": { "area_code": "560061" }
+              }
+            },
+            "end": {
+              "location": {
+                "gps": "12.910816, 77.546946",
+                "address": { "area_code": "560061" }
+              }
+            }
+          },
+          "category": { "id": "Immediate Delivery" },
+          "@ondc/org/payload_details": {
+            "weight": { "unit": "Kilogram", "value": 2 },
+            "dimensions": {
+              "length": { "value": 15, "unit": "centimeter" },
+              "breadth": { "value": 9, "unit": "centimeter" },
+              "height": { "value": 34, "unit": "centimeter" }
+            },
+            "category": "F&B",
+            "dangerous_goods": false,
+            "value": { "currency": "INR", "value": "240" }
+          }
+        }
+      }
+    }
+  ],
+  "on_search": [
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "core_version": "1.1.0",
+        "bap_id": "preprodlogistics.ooga.shop",
+        "bap_uri": "https://preprodlogistics.ooga.shop",
+        "bpp_id": "preprod-bpp.iway.digiit.io",
+        "bpp_uri": "https://preprod-bpp.iway.digiit.io",
+        "city": "STD:080",
+        "country": "IND",
+        "action": "on_search",
+        "transaction_id": "5ffac26a-bca0-4afb-958b-960f2b4db9ff",
+        "message_id": "24814ad9-dc64-4276-a57c-0647dd7a5251",
+        "timestamp": "2023-09-22T05:38:03.669Z"
+      },
+      "message": {
+        "catalog": {
+          "bpp/fulfillments": [
+            { "id": "1", "type": "Prepaid" },
+            { "id": "2", "type": "CoD" },
+            { "id": "3", "type": "RTO" },
+            { "id": "4", "type": "Reverse QC" }
+          ],
+          "bpp/descriptor": { "name": "iway" },
+          "bpp/providers": [
+            {
+              "id": "107-Account-DER-292",
+              "descriptor": {
+                "name": "Iway Logistics & Delivery",
+                "short_desc": "Iway Logistics & Delivery",
+                "long_desc": "Iway Logistics & Delivery"
+              },
+              "categories": [
+                {
+                  "id": "Immediate Delivery",
+                  "time": { "label": "TAT", "duration": "PT45M" }
+                }
+              ],
+              "items": [
+                {
+                  "id": "19",
+                  "parent_item_id": "",
+                  "category_id": "Immediate Delivery",
+                  "fulfillment_id": "1",
+                  "descriptor": {
+                    "code": "P2P",
+                    "name": "Immediate Delivery",
+                    "short_desc": "Immediate Delivery",
+                    "long_desc": "Immediate Delivery"
+                  },
+                  "price": { "currency": "INR", "value": "20.0" }
+                },
+                {
+                  "id": "rto-item-19",
+                  "parent_item_id": "19",
+                  "category_id": "Immediate Delivery",
+                  "fulfillment_id": "3",
+                  "descriptor": {
+                    "code": "P2P",
+                    "name": "RTO quote",
+                    "short_desc": "RTO quote",
+                    "long_desc": "RTO quote"
+                  },
+                  "price": { "currency": "INR", "value": "20.0" }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "init": [
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "country": "IND",
+        "city": "STD:080",
+        "action": "init",
+        "core_version": "1.1.0",
+        "bap_id": "preprodlogistics.ooga.shop",
+        "bap_uri": "https://preprodlogistics.ooga.shop",
+        "bpp_id": "preprod-bpp.iway.digiit.io",
+        "bpp_uri": "https://preprod-bpp.iway.digiit.io",
+        "transaction_id": "5ffac26a-bca0-4afb-958b-960f2b4db9ff",
+        "message_id": "24814ad9-dc64-4276-a57c-0647dd7a5251",
+        "timestamp": "2023-09-22T05:39:06.448Z",
+        "ttl": "PT30S"
+      },
+      "message": {
+        "order": {
+          "provider": { "id": "107-Account-DER-292" },
+          "items": [
+            {
+              "id": "19",
+              "category_id": "Immediate Delivery",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "billing": {
+            "name": "OOGASHOP",
+            "address": {
+              "name": "502",
+              "building": "Optum Inclave",
+              "locality": "Sector-53",
+              "city": "Gurugram",
+              "state": "Haryana",
+              "country": "India",
+              "area_code": "122002"
+            },
+            "email": "muktabh@paralleldots.com",
+            "phone": "9871764687",
+            "tax_number": "132425",
+            "created_at": "2023-09-22T05:39:06.448Z",
+            "updated_at": "2023-09-22T05:39:06.448Z"
+          },
+          "fulfillments": [
+            {
+              "id": "1",
+              "type": "Prepaid",
+              "start": {
+                "location": {
+                  "gps": "12.910816, 77.546946",
+                  "address": {
+                    "name": "My building #",
+                    "building": "My building name",
+                    "locality": "My street name",
+                    "city": "Bengaluru",
+                    "state": "Karnataka",
+                    "country": "India",
+                    "area_code": "560061"
+                  }
+                },
+                "contact": { "phone": "9625341429", "email": "raju@gmail.com" }
+              },
+              "end": {
+                "location": {
+                  "gps": "12.910816, 77.546946",
+                  "address": {
+                    "name": "My building #",
+                    "building": "My building name",
+                    "locality": "My street name",
+                    "city": "Bengaluru",
+                    "state": "Karnataka",
+                    "country": "India",
+                    "area_code": "560061"
+                  }
+                },
+                "contact": { "phone": "9625341429", "email": "aman@gmail.com" }
+              }
+            }
+          ],
+          "payment": { "@ondc/org/settlement_details": [] }
+        }
+      }
+    }
+  ],
+  "on_init": [
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "core_version": "1.1.0",
+        "bap_id": "preprodlogistics.ooga.shop",
+        "bap_uri": "https://preprodlogistics.ooga.shop",
+        "bpp_id": "preprod-bpp.iway.digiit.io",
+        "bpp_uri": "https://preprod-bpp.iway.digiit.io",
+        "city": "STD:080",
+        "country": "IND",
+        "action": "on_init",
+        "transaction_id": "5ffac26a-bca0-4afb-958b-960f2b4db9ff",
+        "message_id": "24814ad9-dc64-4276-a57c-0647dd7a5251",
+        "timestamp": "2023-09-22T05:39:07.569Z"
+      },
+      "message": {
+        "order": {
+          "provider": { "id": "107-Account-DER-292" },
+          "items": [{ "id": "19" }],
+          "quote": {
+            "price": { "currency": "INR", "value": "20.0" },
+            "breakup": [
+              {
+                "@ondc/org/item_id": "19",
+                "@ondc/org/title_type": "Delivery Charge",
+                "price": { "currency": "INR", "value": "20.0" }
+              }
+            ]
+          },
+          "payment": {
+            "type": "ON-ORDER",
+            "collected_by": "BAP",
+            "@ondc/org/settlement_details": []
+          }
+        }
+      }
+    }
+  ],
+  "confirm": [
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "country": "IND",
+        "city": "STD:080",
+        "action": "confirm",
+        "core_version": "1.1.0",
+        "bap_id": "preprodlogistics.ooga.shop",
+        "bap_uri": "https://preprodlogistics.ooga.shop",
+        "bpp_id": "preprod-bpp.iway.digiit.io",
+        "bpp_uri": "https://preprod-bpp.iway.digiit.io",
+        "transaction_id": "5ffac26a-bca0-4afb-958b-960f2b4db9ff",
+        "message_id": "24814ad9-dc64-4276-a57c-0647dd7a5251",
+        "timestamp": "2023-09-22T05:39:28.697Z",
+        "ttl": "PT30S"
+      },
+      "message": {
+        "order": {
+          "id": "3ac3b83e-a3ed-49bf-b367-95e2d966629a",
+          "state": "Created",
+          "provider": { "id": "107-Account-DER-292" },
+          "items": [
+            {
+              "id": "19",
+              "category_id": "Immediate Delivery",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "billing": {
+            "name": "OOGASHOP",
+            "address": {
+              "name": "502",
+              "building": "Optum Inclave",
+              "locality": "Sector-53",
+              "city": "Gurugram",
+              "state": "Haryana",
+              "country": "India",
+              "area_code": "122002"
+            },
+            "email": "muktabh@paralleldots.com",
+            "phone": "9871764687",
+            "tax_number": "132425",
+            "created_at": "2023-09-22T05:39:06.448Z",
+            "updated_at": "2023-09-22T05:39:06.448Z"
+          },
+          "fulfillments": [
+            {
+              "id": "1",
+              "type": "Prepaid",
+              "start": {
+                "location": {
+                  "gps": "12.910816, 77.546946",
+                  "address": {
+                    "name": "My building #",
+                    "building": "My building name",
+                    "locality": "My street name",
+                    "city": "Bengaluru",
+                    "state": "Karnataka",
+                    "country": "India",
+                    "area_code": "560061"
+                  }
+                },
+                "instructions": {
+                  "short_desc": "Deliver at door-step",
+                  "long_desc": "    17",
+                  "additional_desc": {
+                    "content_type": "text/html",
+                    "url": "https://preprodlogistics.ooga.shop/ondc-site-verification.html"
+                  }
+                },
+                "contact": { "phone": "9625341429", "email": "raju@gmail.com" },
+                "person": { "name": "Raju1" }
+              },
+              "end": {
+                "location": {
+                  "gps": "12.910816, 77.546946",
+                  "address": {
+                    "name": "My building #",
+                    "building": "My building name",
+                    "locality": "My street name",
+                    "city": "Bengaluru",
+                    "state": "Karnataka",
+                    "country": "India",
+                    "area_code": "560061"
+                  }
+                },
+                "instructions": {
+                  "short_desc": "Deliver at door-step",
+                  "long_desc": "      17",
+                  "additional_desc": {
+                    "content_type": "text/html",
+                    "url": "https://preprodlogistics.ooga.shop/ondc-site-verification.html"
+                  }
+                },
+                "contact": { "phone": "9625341429", "email": "aman@gmail.com" },
+                "person": { "name": "Aman1" }
+              },
+              "tags": { "@ondc/org/order_ready_to_ship": "no" }
+            }
+          ],
+          "quote": {
+            "price": { "currency": "INR", "value": "20.0" },
+            "breakup": [
+              {
+                "@ondc/org/item_id": "19",
+                "@ondc/org/title_type": "Delivery Charge",
+                "price": { "currency": "INR", "value": "20.0" }
+              }
+            ]
+          },
+          "payment": {
+            "type": "ON-ORDER",
+            "collected_by": "BAP",
+            "@ondc/org/settlement_details": [],
+            "@ondc/org/collection_amount": "0"
+          },
+          "created_at": "2023-09-22T05:39:28.697Z",
+          "updated_at": "2023-09-22T05:39:28.697Z",
+          "@ondc/org/linked_order": {
+            "items": [
+              {
+                "category_id": "F&B",
+                "quantity": {
+                  "count": 2,
+                  "measure": { "value": 2, "unit": "Kilogram" }
+                },
+                "descriptor": { "name": "Mustard Oil" },
+                "price": { "currency": "INR", "value": "240" }
+              }
+            ],
+            "provider": {
+              "descriptor": { "name": "Test Store" },
+              "address": {
+                "name": "My building #",
+                "building": "My building name",
+                "locality": "My street name",
+                "city": "Bengaluru",
+                "state": "Karnataka",
+                "country": "India",
+                "area_code": "560061"
+              }
+            },
+            "order": {
+              "id": "1234219",
+              "weight": { "value": 2, "unit": "Kilogram" }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "on_confirm": [
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "core_version": "1.1.0",
+        "bap_id": "preprodlogistics.ooga.shop",
+        "bap_uri": "https://preprodlogistics.ooga.shop",
+        "bpp_id": "preprod-bpp.iway.digiit.io",
+        "bpp_uri": "https://preprod-bpp.iway.digiit.io",
+        "city": "STD:080",
+        "country": "IND",
+        "action": "on_confirm",
+        "transaction_id": "5ffac26a-bca0-4afb-958b-960f2b4db9ff",
+        "message_id": "24814ad9-dc64-4276-a57c-0647dd7a5251",
+        "timestamp": "2023-09-22T05:39:29.411Z"
+      },
+      "message": {
+        "order": {
+          "id": "3ac3b83e-a3ed-49bf-b367-95e2d966629a",
+          "state": "Accepted",
+          "provider": { "id": "107-Account-DER-292" },
+          "items": [
+            {
+              "id": "19",
+              "category_id": "Immediate Delivery",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "quote": {
+            "price": { "currency": "INR", "value": "20.0" },
+            "breakup": [
+              {
+                "@ondc/org/item_id": "19",
+                "@ondc/org/title_type": "Delivery Charge",
+                "price": { "currency": "INR", "value": "20.0" }
+              }
+            ]
+          },
+          "fulfillments": [
+            {
+              "id": "1",
+              "type": "Prepaid",
+              "state": { "descriptor": { "code": "Pending" } },
+              "tracking": true,
+              "agent": { "name": "Peter", "phone": "7438483828" },
+              "vehicle": {
+                "category": "TwoWheeler",
+                "size": "500.0000",
+                "registration": "TN56NS8282"
+              }
+            }
+          ],
+          "billing": {
+            "name": "OOGASHOP",
+            "address": {
+              "name": "502",
+              "building": "Optum Inclave",
+              "locality": "Sector-53",
+              "city": "Gurugram",
+              "state": "Haryana",
+              "country": "India",
+              "area_code": "122002"
+            },
+            "tax_number": "132425",
+            "phone": "9871764687",
+            "email": "muktabh@paralleldots.com",
+            "created_at": "2023-09-22T05:39:06.448Z",
+            "updated_at": "2023-09-22T05:39:06.448Z"
+          },
+          "created_at": "2023-09-22T05:39:28.697Z",
+          "updated_at": "2023-09-22T05:39:29.411Z"
+        }
+      }
+    }
+  ],
+  "update": [
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "country": "IND",
+        "city": "STD:080",
+        "action": "update",
+        "core_version": "1.1.0",
+        "bap_id": "preprodlogistics.ooga.shop",
+        "bap_uri": "https://preprodlogistics.ooga.shop",
+        "bpp_id": "preprod-bpp.iway.digiit.io",
+        "bpp_uri": "https://preprod-bpp.iway.digiit.io",
+        "transaction_id": "5ffac26a-bca0-4afb-958b-960f2b4db9ff",
+        "message_id": "a613a184-90f5-4486-8ddb-d3d3545286d9",
+        "timestamp": "2023-09-22T05:40:17.193Z",
+        "ttl": "PT30S"
+      },
+      "message": {
+        "update_target": "fulfillment",
+        "order": {
+          "id": "3ac3b83e-a3ed-49bf-b367-95e2d966629a",
+          "state": "Accepted",
+          "items": [
+            {
+              "id": "19",
+              "category_id": "Immediate Delivery",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "fulfillments": [
+            {
+              "id": "1",
+              "type": "Prepaid",
+              "start": {
+                "instructions": {
+                  "short_desc": "Deliver at door-step",
+                  "long_desc": "    17",
+                  "additional_desc": {
+                    "content_type": "text/html",
+                    "url": "https://preprodlogistics.ooga.shop/ondc-site-verification.html"
+                  }
+                }
+              },
+              "tags": { "@ondc/org/order_ready_to_ship": "yes" }
+            }
+          ],
+          "updated_at": "2023-09-22T05:40:17.193Z",
+          "@ondc/org/linked_order": {
+            "items": [
+              {
+                "category_id": "F&B",
+                "quantity": {
+                  "count": 2,
+                  "measure": { "value": 2, "unit": "Kilogram" }
+                },
+                "descriptor": { "name": "Mustard Oil" },
+                "price": { "currency": "INR", "value": "240" }
+              }
+            ],
+            "order": {
+              "id": "1234219",
+              "weight": { "value": 2, "unit": "Kilogram" }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "on_update": [
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "core_version": "1.1.0",
+        "bap_id": "preprodlogistics.ooga.shop",
+        "bap_uri": "https://preprodlogistics.ooga.shop",
+        "bpp_id": "preprod-bpp.iway.digiit.io",
+        "bpp_uri": "https://preprod-bpp.iway.digiit.io",
+        "city": "STD:080",
+        "country": "IND",
+        "action": "on_update",
+        "transaction_id": "5ffac26a-bca0-4afb-958b-960f2b4db9ff",
+        "message_id": "a613a184-90f5-4486-8ddb-d3d3545286d9",
+        "timestamp": "2023-09-22T05:40:17.782Z"
+      },
+      "message": {
+        "order": {
+          "id": "3ac3b83e-a3ed-49bf-b367-95e2d966629a",
+          "state": "Accepted",
+          "items": [
+            {
+              "id": "19",
+              "category_id": "Immediate Delivery",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "fulfillments": [
+            {
+              "id": "1",
+              "type": "Prepaid",
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T11:20:17.860Z",
+                    "end": "2023-09-22T11:50:17.860Z"
+                  }
+                },
+                "instructions": { "short_desc": "Deliver at door-step" }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T11:55:17.860Z",
+                    "end": "2023-09-22T12:10:17.860Z"
+                  }
+                }
+              },
+              "agent": { "name": "Peter", "phone": "7438483828" }
+            }
+          ],
+          "updated_at": "2023-09-22T05:39:36.668Z"
+        }
+      }
+    }
+  ],
+  "on_status": [
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "core_version": "1.1.0",
+        "bap_id": "preprodlogistics.ooga.shop",
+        "bap_uri": "https://preprodlogistics.ooga.shop",
+        "bpp_id": "preprod-bpp.iway.digiit.io",
+        "bpp_uri": "https://preprod-bpp.iway.digiit.io",
+        "city": "STD:080",
+        "country": "IND",
+        "action": "on_status",
+        "transaction_id": "5ffac26a-bca0-4afb-958b-960f2b4db9ff",
+        "message_id": "a613a184-90f5-4486-8ddb-d3d3545286d9",
+        "timestamp": "2023-09-22T05:44:00.633Z"
+      },
+      "message": {
+        "order": {
+          "id": "3ac3b83e-a3ed-49bf-b367-95e2d966629a",
+          "state": "In-progress",
+          "provider": { "id": "107-Account-DER-292" },
+          "items": [
+            {
+              "id": "19",
+              "category_id": "Immediate Delivery",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "fulfillments": [
+            {
+              "type": "Prepaid",
+              "state": { "descriptor": { "code": "Order-picked-up" } },
+              "tracking": true,
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T11:20:17.860Z",
+                    "end": "2023-09-22T11:50:17.860Z"
+                  },
+                  "timestamp": "2023-09-22T05:44:00.633Z"
+                },
+                "instructions": {
+                  "name": "Deliver at door-step",
+                  "short_desc": "Deliver at door-step",
+                  "long_desc": "    17"
+                }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T11:55:17.860Z",
+                    "end": "2023-09-22T12:10:17.860Z"
+                  }
+                }
+              },
+              "agent": { "name": "Peter", "phone": "7438483828" },
+              "vehicle": {
+                "category": "TwoWheeler",
+                "size": "500.0000",
+                "registration": "TN56NS8282"
+              }
+            }
+          ],
+          "quote": {
+            "price": { "currency": "INR", "value": "20.0" },
+            "breakup": [
+              {
+                "@ondc/org/item_id": "19",
+                "@ondc/org/title_type": "Delivery Charge",
+                "price": { "currency": "INR", "value": "20.0" }
+              }
+            ]
+          },
+          "payment": {
+            "type": "ON-ORDER",
+            "collected_by": "BAP",
+            "@ondc/org/settlement_details": []
+          },
+          "billing": {
+            "name": "OOGASHOP",
+            "address": {
+              "name": "502",
+              "building": "Optum Inclave",
+              "locality": "Sector-53",
+              "city": "Gurugram",
+              "state": "Haryana",
+              "country": "India",
+              "area_code": "122002"
+            },
+            "tax_number": "132425",
+            "phone": "9871764687",
+            "email": "muktabh@paralleldots.com"
+          }
+        }
+      }
+    },
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "core_version": "1.1.0",
+        "bap_id": "preprodlogistics.ooga.shop",
+        "bap_uri": "https://preprodlogistics.ooga.shop",
+        "bpp_id": "preprod-bpp.iway.digiit.io",
+        "bpp_uri": "https://preprod-bpp.iway.digiit.io",
+        "city": "STD:080",
+        "country": "IND",
+        "action": "on_status",
+        "transaction_id": "5ffac26a-bca0-4afb-958b-960f2b4db9ff",
+        "message_id": "a613a184-90f5-4486-8ddb-d3d3545286d9",
+        "timestamp": "2023-09-22T05:47:52.069Z"
+      },
+      "message": {
+        "order": {
+          "id": "3ac3b83e-a3ed-49bf-b367-95e2d966629a",
+          "state": "In-progress",
+          "provider": { "id": "107-Account-DER-292" },
+          "items": [
+            {
+              "id": "19",
+              "category_id": "Immediate Delivery",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "fulfillments": [
+            {
+              "type": "Prepaid",
+              "state": { "descriptor": { "code": "Out-for-delivery" } },
+              "tracking": true,
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T11:20:17.860Z",
+                    "end": "2023-09-22T11:50:17.860Z"
+                  },
+                  "timestamp": "2023-09-22T05:44:00.633Z"
+                },
+                "instructions": {
+                  "name": "Deliver at door-step",
+                  "short_desc": "Deliver at door-step",
+                  "long_desc": "    17"
+                }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T11:55:17.860Z",
+                    "end": "2023-09-22T12:10:17.860Z"
+                  }
+                }
+              },
+              "agent": { "name": "Peter", "phone": "7438483828" },
+              "vehicle": {
+                "category": "TwoWheeler",
+                "size": "500.0000",
+                "registration": "TN56NS8282"
+              }
+            }
+          ],
+          "quote": {
+            "price": { "currency": "INR", "value": "20.0" },
+            "breakup": [
+              {
+                "@ondc/org/item_id": "19",
+                "@ondc/org/title_type": "Delivery Charge",
+                "price": { "currency": "INR", "value": "20.0" }
+              }
+            ]
+          },
+          "payment": {
+            "type": "ON-ORDER",
+            "collected_by": "BAP",
+            "@ondc/org/settlement_details": []
+          },
+          "billing": {
+            "name": "OOGASHOP",
+            "address": {
+              "name": "502",
+              "building": "Optum Inclave",
+              "locality": "Sector-53",
+              "city": "Gurugram",
+              "state": "Haryana",
+              "country": "India",
+              "area_code": "122002"
+            },
+            "tax_number": "132425",
+            "phone": "9871764687",
+            "email": "muktabh@paralleldots.com"
+          }
+        }
+      }
+    },
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "core_version": "1.1.0",
+        "bap_id": "preprodlogistics.ooga.shop",
+        "bap_uri": "https://preprodlogistics.ooga.shop",
+        "bpp_id": "preprod-bpp.iway.digiit.io",
+        "bpp_uri": "https://preprod-bpp.iway.digiit.io",
+        "city": "STD:080",
+        "country": "IND",
+        "action": "on_status",
+        "transaction_id": "5ffac26a-bca0-4afb-958b-960f2b4db9ff",
+        "message_id": "0b96dca8-1e52-4aa8-a1a7-890f4ce2cfb8",
+        "timestamp": "2023-09-22T05:51:21.272Z"
+      },
+      "message": {
+        "order": {
+          "id": "3ac3b83e-a3ed-49bf-b367-95e2d966629a",
+          "state": "Cancelled",
+          "provider": { "id": "107-Account-DER-292" },
+          "items": [
+            {
+              "id": "19",
+              "category_id": "Immediate Delivery",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "fulfillments": [
+            {
+              "type": "Prepaid",
+              "state": { "descriptor": { "code": "Cancelled" } },
+              "tracking": true,
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T11:20:17.860Z",
+                    "end": "2023-09-22T11:50:17.860Z"
+                  },
+                  "timestamp": "2023-09-22T05:44:00.633Z"
+                },
+                "instructions": {
+                  "name": "Deliver at door-step",
+                  "short_desc": "Deliver at door-step",
+                  "long_desc": "    17"
+                }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T11:55:17.860Z",
+                    "end": "2023-09-22T12:10:17.860Z"
+                  }
+                }
+              },
+              "agent": { "name": "Peter", "phone": "7438483828" },
+              "vehicle": {
+                "category": "TwoWheeler",
+                "size": "500.0000",
+                "registration": "TN56NS8282"
+              }
+            },
+            {
+              "type": "RTO",
+              "state": {
+                "descriptor": {
+                  "code": "RTO-Initiated",
+                  "name": "RTO-Initiated"
+                }
+              },
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T05:48:23.172Z",
+                    "end": "2023-09-22T06:18:23.172Z"
+                  },
+                  "timestamp": "2023-09-22T05:48:23.479Z"
+                }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T12:03:23.536Z",
+                    "end": "2023-09-22T12:18:23.536Z"
+                  }
+                }
+              },
+              "agent": { "name": "Peter", "phone": "7438483828" }
+            }
+          ],
+          "quote": {
+            "price": { "currency": "INR", "value": "40.0" },
+            "breakup": [
+              {
+                "@ondc/org/item_id": "19",
+                "@ondc/org/title_type": "Delivery Charge",
+                "price": { "currency": "INR", "value": "20.0" }
+              },
+              {
+                "title": "RTO charges",
+                "@ondc/org/title_type": "RTO Charge",
+                "price": { "currency": "INR", "value": "20.0" }
+              }
+            ]
+          },
+          "payment": {
+            "type": "ON-ORDER",
+            "collected_by": "BAP",
+            "@ondc/org/settlement_details": []
+          },
+          "billing": {
+            "name": "OOGASHOP",
+            "address": {
+              "name": "502",
+              "building": "Optum Inclave",
+              "locality": "Sector-53",
+              "city": "Gurugram",
+              "state": "Haryana",
+              "country": "India",
+              "area_code": "122002"
+            },
+            "tax_number": "132425",
+            "phone": "9871764687",
+            "email": "muktabh@paralleldots.com"
+          },
+          "tags": { "cancellation_reason_id": "013" }
+        }
+      }
+    },
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "core_version": "1.1.0",
+        "bap_id": "preprodlogistics.ooga.shop",
+        "bap_uri": "https://preprodlogistics.ooga.shop",
+        "bpp_id": "preprod-bpp.iway.digiit.io",
+        "bpp_uri": "https://preprod-bpp.iway.digiit.io",
+        "city": "STD:080",
+        "country": "IND",
+        "action": "on_status",
+        "transaction_id": "5ffac26a-bca0-4afb-958b-960f2b4db9ff",
+        "message_id": "0b96dca8-1e52-4aa8-a1a7-890f4ce2cfb8",
+        "timestamp": "2023-09-22T05:52:33.432Z"
+      },
+      "message": {
+        "order": {
+          "id": "3ac3b83e-a3ed-49bf-b367-95e2d966629a",
+          "state": "Cancelled",
+          "provider": { "id": "107-Account-DER-292" },
+          "items": [
+            {
+              "id": "19",
+              "category_id": "Immediate Delivery",
+              "descriptor": { "code": "P2P" }
+            }
+          ],
+          "fulfillments": [
+            {
+              "type": "Prepaid",
+              "state": { "descriptor": { "code": "Cancelled" } },
+              "tracking": true,
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T11:20:17.860Z",
+                    "end": "2023-09-22T11:50:17.860Z"
+                  },
+                  "timestamp": "2023-09-22T05:44:00.633Z"
+                },
+                "instructions": {
+                  "name": "Deliver at door-step",
+                  "short_desc": "Deliver at door-step",
+                  "long_desc": "    17"
+                }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T11:55:17.860Z",
+                    "end": "2023-09-22T12:10:17.860Z"
+                  }
+                }
+              },
+              "agent": { "name": "Peter", "phone": "7438483828" },
+              "vehicle": {
+                "category": "TwoWheeler",
+                "size": "500.0000",
+                "registration": "TN56NS8282"
+              }
+            },
+            {
+              "type": "RTO",
+              "state": {
+                "descriptor": { "code": "RTO-Disposed", "name": "RTO-Disposed" }
+              },
+              "start": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T05:48:23.172Z",
+                    "end": "2023-09-22T06:18:23.172Z"
+                  },
+                  "timestamp": "2023-09-22T05:48:23.479Z"
+                }
+              },
+              "end": {
+                "time": {
+                  "range": {
+                    "start": "2023-09-22T12:03:23.536Z",
+                    "end": "2023-09-22T12:18:23.536Z"
+                  },
+                  "timestamp": "2023-09-22T05:51:46.378Z"
+                }
+              },
+              "agent": { "name": "Peter", "phone": "7438483828" }
+            }
+          ],
+          "quote": {
+            "price": { "currency": "INR", "value": "40.0" },
+            "breakup": [
+              {
+                "@ondc/org/item_id": "19",
+                "@ondc/org/title_type": "Delivery Charge",
+                "price": { "currency": "INR", "value": "20.0" }
+              },
+              {
+                "title": "RTO charges",
+                "@ondc/org/title_type": "RTO Charge",
+                "price": { "currency": "INR", "value": "20.0" }
+              }
+            ]
+          },
+          "payment": {
+            "type": "ON-ORDER",
+            "collected_by": "BAP",
+            "@ondc/org/settlement_details": []
+          },
+          "billing": {
+            "name": "OOGASHOP",
+            "address": {
+              "name": "502",
+              "building": "Optum Inclave",
+              "locality": "Sector-53",
+              "city": "Gurugram",
+              "state": "Haryana",
+              "country": "India",
+              "area_code": "122002"
+            },
+            "tax_number": "132425",
+            "phone": "9871764687",
+            "email": "muktabh@paralleldots.com"
+          },
+          "tags": { "cancellation_reason_id": "013" }
+        }
+      }
+    }
+  ],
+  "on_cancel": [
+    {
+      "context": {
+        "domain": "nic2004:60232",
+        "core_version": "1.1.0",
+        "bap_id": "preprodlogistics.ooga.shop",
+        "bap_uri": "https://preprodlogistics.ooga.shop",
+        "bpp_id": "preprod-bpp.iway.digiit.io",
+        "bpp_uri": "https://preprod-bpp.iway.digiit.io",
+        "city": "STD:080",
+        "country": "IND",
+        "action": "on_cancel",
+        "transaction_id": "5ffac26a-bca0-4afb-958b-960f2b4db9ff",
+        "message_id": "0b96dca8-1e52-4aa8-a1a7-890f4ce2cfb8",
+        "timestamp": "2023-09-22T05:48:23.049Z"
+      },
+      "message": {
+        "order": {
+          "id": "3ac3b83e-a3ed-49bf-b367-95e2d966629a",
+          "state": "Cancelled",
+          "fulfillments": [
+            {
+              "id": "1",
+              "type": "Prepaid",
+              "state": { "descriptor": { "code": "Cancelled" } },
+              "tags": { "cancellation_reason_id": "013" }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

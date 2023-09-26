@@ -207,6 +207,15 @@ module.exports = {
                           type: "string",
                           pattern:
                             "^(-?[0-9]{1,3}(?:.[0-9]{1,15})?),( )*?(-?[0-9]{1,3}(?:.[0-9]{1,15})?)$",
+                            allOf: [
+                              {
+                                not: {
+                                  const: { $data: "3/start/location/gps" },
+                                },
+                                errorMessage:
+                                  "cannot be equal to start/location/gps '${3/start/location/gps}'",
+                              },
+                            ],
                           errorMessage: "Incorrect gps value",
                         },
                         address: {

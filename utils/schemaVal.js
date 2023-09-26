@@ -32,13 +32,13 @@ const Validate = (domain, dirPath, msgIdSet, ErrorObj) => {
         // Validating action context level checks
         try {
           if (!("Context" in ErrorObj)) ErrorObj["Context"] = {};
-          CntxtObj = ErrorObj["Context"];
+          // CntxtObj = ErrorObj["Context"];
           //console.log(`Validating timestamp for ${action} api`);
           if (action != "search") {
-            const ValCheck = checkContextVal(element, CntxtObj, msgIdSet);
-            if (ValCheck != "error") {
-              Object.assign(CntxtObj, ValCheck);
-            }
+            ErrorObj["Context"][`${action}_${i}`] = checkContextVal(element, msgIdSet,i);
+            // if (ValCheck != "error") {
+            //   Object.assign(CntxtObj, ValCheck);
+            // }
           } else {
             dao.setValue("tmpstmp", element.context.timestamp);
           }

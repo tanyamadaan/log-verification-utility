@@ -44,5 +44,6 @@ module.exports = Object.freeze({
    LOG_ONSTATUS: "on_status",
    LOG_SUPPORT: "support",
    LOG_ONSUPPORT: "on_support",
-
+   PCC: ['1', '2', '3', '4'], // Ref Footnote 98 of Logisticsv1.2 phase 1
+   DCC: ['1', '2', '3'] // Ref Footnote 101 of Logistics v1.2 phase 1
 });

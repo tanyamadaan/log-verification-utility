@@ -15,6 +15,8 @@ const cancelSchema = require("./v1.1/cancelSchema");
 const supportSchema = require("./v1.1/supportSchema");
 const trackSchema = require("./v1.1/trackSchema");
 
+const commonSchemaV1_2 = require("./v1.2/common/commonSchema")
+
 
 const masterSchema = require("./masterSchema");
 
@@ -86,7 +88,8 @@ const validate_schema = (data, schema) => {
       .addSchema(onCancelSchema)
       .addKeyword("isEndTimeGreater", {
         validate: (schema, data) => isEndTimeGreater(data),
-      });
+      })
+      .addSchema(commonSchemaV1_2);
 
     validate = validate.compile(schema);
 

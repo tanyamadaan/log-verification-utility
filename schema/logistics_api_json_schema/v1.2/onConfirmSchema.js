@@ -1,5 +1,6 @@
+const constants = require("../../../utils/constants");
 module.exports = {
-  $id: "http://example.com/schema/onConfirmSchema",
+  $id: "http://example.com/schema/onConfirmSchema/v1.2",
   type: "object",
   properties: {
     context: {
@@ -40,7 +41,7 @@ module.exports = {
           type: "string",
           const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+            "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -68,7 +69,7 @@ module.exports = {
                 const: { $data: "/search/0/context/message_id" },
               },
               errorMessage: "Message ID should be unique",
-            }
+            },
           ],
         },
         timestamp: {
@@ -119,7 +120,10 @@ module.exports = {
                     properties: {
                       id: {
                         type: "string",
-                        const: { $data: "/init/0/message/order/provider/locations/0/id" },
+                        const: {
+                          $data:
+                            "/init/0/message/order/provider/locations/0/id",
+                        },
                       },
                     },
                     required: ["id"],
@@ -153,16 +157,24 @@ module.exports = {
                     type: "string",
                     const: { $data: "/init/0/message/order/items/0/id" },
                   },
+                  fulfillment_id: {
+                    type: "string",
+                  },
                   category_id: {
                     type: "string",
-                    const: { $data: "/init/0/message/order/items/0/category_id" },
+                    const: {
+                      $data: "/init/0/message/order/items/0/category_id",
+                    },
                   },
                   descriptor: {
                     type: "object",
                     properties: {
                       code: {
                         type: "string",
-                        const: { $data: "/init/0/message/order/items/0/descriptor/code" },
+                        const: {
+                          $data:
+                            "/init/0/message/order/items/0/descriptor/code",
+                        },
                       },
                     },
                     required: ["code"],
@@ -202,7 +214,7 @@ module.exports = {
                       },
                       "@ondc/org/title_type": {
                         type: "string",
-                        enum: ["Delivery Charge", "Tax"],
+                        enum: constants.FULFILLMENT_TYPE,
                       },
                       price: {
                         type: "object",
@@ -263,58 +275,77 @@ module.exports = {
                   },
                   "@ondc/org/awb_no": {
                     type: "string",
-
                   },
                   tracking: {
                     type: "boolean",
                   },
                   start: {
                     type: "object",
-                    properties: {
-                      time: {
-                        type: "object",
+                    allOf: [
+                      {
                         properties: {
-                          range: {
+                          time: {
                             type: "object",
                             properties: {
-                              start: {
-                                type: "string",
-                              },
-                              end: {
-                                type: "string",
+                              range: {
+                                type: "object",
+                                properties: {
+                                  start: {
+                                    type: "string",
+                                    format: "date-time",
+                                  },
+                                  end: {
+                                    type: "string",
+                                    format: "date-time",
+                                  },
+                                },
+                                required: ["start", "end"],
                               },
                             },
-                            required: ["start", "end"],
+                            required: ["range"],
                           },
                         },
-                        required: ["range"],
+                        required: ["time"],
                       },
-                    },
-                    required: ["time"],
+                      {
+                        properties: {
+                          $ref: "http://example.com/schema/commonSchema/v1.2#addressFormat",
+                        },
+                      },
+                    ],
                   },
                   end: {
                     type: "object",
-                    properties: {
-                      time: {
-                        type: "object",
+                    allOf: [
+                      {
                         properties: {
-                          range: {
+                          time: {
                             type: "object",
                             properties: {
-                              start: {
-                                type: "string",
-                              },
-                              end: {
-                                type: "string",
+                              range: {
+                                type: "object",
+                                properties: {
+                                  start: {
+                                    type: "string",
+                                  },
+                                  end: {
+                                    type: "string",
+                                  },
+                                },
+                                required: ["start", "end"],
                               },
                             },
-                            required: ["start", "end"],
+                            required: ["range"],
                           },
                         },
-                        required: ["range"],
+                        required: ["time"],
                       },
-                    },
-                    required: ["time"],
+                      {
+                        properties: {
+                          $ref: "http://example.com/schema/commonSchema/v1.2#addressFormat",
+                        },
+                      },
+                    ],
                   },
                   agent: {
                     type: "object",
@@ -331,33 +362,18 @@ module.exports = {
                   vehicle: {
                     type: "object",
                     properties: {
-                      category: {
-                        type: "string",
-                      },
-                      size: {
-                        type: "string",
-                      },
                       registration: {
                         type: "string",
                       },
                     },
                     required: ["category", "size", "registration"],
                   },
-                  "@ondc/org/ewaybillno": {
-                    type: "string",
-                    const: { $data: "/confirm/0/message/order/fulfillments/0/@ondc~1org~1ewaybillno" },
-                   
-
-                  },
-                  "@ondc/org/ebnexpirydate": {
-                    type: "string",
-                    format: "date-time",
-                    const: { $data: "/confirm/0/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate"},
-                   
-                  },
                 },
                 required: ["id", "type", "state", "tracking"],
               },
+            },
+            tags: {
+              $ref: "http://example.com/schema/commonSchema/v1.2#tagsArray",
             },
             billing: {
               type: "object",
@@ -383,7 +399,8 @@ module.exports = {
                     building: {
                       type: "string",
                       const: {
-                        $data: "/confirm/0/message/order/billing/address/building",
+                        $data:
+                          "/confirm/0/message/order/billing/address/building",
                       },
                       errorMessage:
                         "mismatches in /billing in /confirm and /on_confirm",
@@ -391,7 +408,8 @@ module.exports = {
                     locality: {
                       type: "string",
                       const: {
-                        $data: "/confirm/0/message/order/billing/address/locality",
+                        $data:
+                          "/confirm/0/message/order/billing/address/locality",
                       },
                       errorMessage:
                         "mismatches in /billing in /confirm and /on_confirm",
@@ -415,7 +433,8 @@ module.exports = {
                     country: {
                       type: "string",
                       const: {
-                        $data: "/confirm/0/message/order/billing/address/country",
+                        $data:
+                          "/confirm/0/message/order/billing/address/country",
                       },
                       errorMessage:
                         "mismatches in /billing in /confirm and /on_confirm",
@@ -443,7 +462,9 @@ module.exports = {
                 },
                 tax_number: {
                   type: "string",
-                  const: { $data: "/confirm/0/message/order/billing/tax_number" },
+                  const: {
+                    $data: "/confirm/0/message/order/billing/tax_number",
+                  },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_confirm",
                 },
@@ -461,13 +482,17 @@ module.exports = {
                 },
                 created_at: {
                   type: "string",
-                  const: { $data: "/confirm/0/message/order/billing/created_at" },
+                  const: {
+                    $data: "/confirm/0/message/order/billing/created_at",
+                  },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_confirm",
                 },
                 updated_at: {
                   type: "string",
-                  const: { $data: "/confirm/0/message/order/billing/updated_at" },
+                  const: {
+                    $data: "/confirm/0/message/order/billing/updated_at",
+                  },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_confirm",
                 },
@@ -482,11 +507,252 @@ module.exports = {
                 "updated_at",
               ],
             },
+            payment: {
+              type: "object",
+              properties: {
+                "@ondc/org/collection_amount": {
+                  type: "string",
+                },
+                collected_by: {
+                  type: "string",
+                  const: {
+                    $data: "/on_init/0/message/order/payment/collected_by",
+                  },
+                  errorMessage:
+                    "mismatches in /payment in /on_init and /confirm",
+                },
+                type: {
+                  type: "string",
+                  enum: ["ON-FULFILLMENT", "POST-FULFILLMENT", "ON-ORDER"],
+                  const: {
+                    $data: "/on_init/0/message/order/payment/type",
+                  },
+                  errorMessage:
+                    "mismatches in /payment in /on_init and /confirm",
+                },
+                "@ondc/org/settlement_details": {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      settlement_counterparty: {
+                        type: "string",
+                      },
+                      settlement_type: {
+                        type: "string",
+                      },
+                      upi_address: {
+                        type: "string",
+                      },
+                      settlement_bank_account_no: {
+                        type: "string",
+                      },
+                      settlement_ifsc_code: {
+                        type: "string",
+                      },
+                    },
+                    allOf: [
+                      {
+                        if: {
+                          properties: {
+                            settlement_type: {
+                              const: "upi",
+                            },
+                          },
+                        },
+                        then: {
+                          required: ["upi_address"],
+                        },
+                      },
+                      {
+                        if: {
+                          properties: {
+                            settlement_type: {
+                              const: ["neft", "rtgs"],
+                            },
+                          },
+                        },
+                        then: {
+                          required: [
+                            "settlement_ifsc_code",
+                            "settlement_bank_account_no",
+                            "bank_name",
+                            "branch_name",
+                          ],
+                        },
+                      },
+                    ],
+                    required: ["settlement_counterparty", "settlement_type"],
+                  },
+                },
+              },
+              if: { properties: { type: { const: "ON-FULFILLMENT" } } },
+              then: {
+                properties: {
+                  collected_by: {
+                    const: "BPP",
+                  },
+                },
+              },
+              required: [
+                "collected_by",
+                "type",
+                "@ondc/org/settlement_details",
+              ],
+            },
+            "@ondc/org/linked_order": {
+              type: "object",
+              properties: {
+                items: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      category_id: {
+                        type: "string",
+                        enum: [
+                          "Grocery",
+                          "F&B",
+                          "Fashion",
+                          "BPC",
+                          "Electronics",
+                          "Home & Decor",
+                          "Pharma",
+                          "Agriculture",
+                          "Mobility",
+                        ],
+                      },
+                      descriptor: {
+                        type: "object",
+                        properties: {
+                          name: {
+                            type: "string",
+                          },
+                        },
+                        required: ["name"],
+                      },
+                      quantity: {
+                        type: "object",
+                        properties: {
+                          count: {
+                            type: "integer",
+                          },
+                          measure: {
+                            type: "object",
+                            properties: {
+                              unit: {
+                                type: "string",
+                              },
+                              value: {
+                                type: "number",
+                              },
+                            },
+                            required: ["unit", "value"],
+                          },
+                        },
+                        required: ["count", "measure"],
+                      },
+                      price: {
+                        type: "object",
+                        properties: {
+                          currency: {
+                            type: "string",
+                          },
+                          value: {
+                            type: "string",
+                          },
+                        },
+                        required: ["currency", "value"],
+                      },
+                    },
+                    required: [
+                      "category_id",
+                      "descriptor",
+                      "quantity",
+                      "price",
+                    ],
+                  },
+                },
+                provider: {
+                  type: "object",
+                  properties: {
+                    descriptor: {
+                      type: "object",
+                      properties: {
+                        name: {
+                          type: "string",
+                        },
+                      },
+                      required: ["name"],
+                    },
+                    address: {
+                      type: "object",
+                      properties: {
+                        name: {
+                          type: "string",
+                        },
+                        street: {
+                          type: "string",
+                        },
+                        locality: {
+                          type: "string",
+                        },
+                        city: {
+                          type: "string",
+                        },
+                        state: {
+                          type: "string",
+                        },
+                        area_code: {
+                          type: "string",
+                        },
+                      },
+
+                      required: [
+                        "name",
+                        "locality",
+                        "city",
+                        "state",
+                        "area_code",
+                      ],
+                    },
+                  },
+                  required: ["descriptor", "address"],
+                },
+                order: {
+                  type: "object",
+                  properties: {
+                    id: {
+                      type: "string",
+                    },
+                    weight: {
+                      type: "object",
+                      properties: {
+                        unit: {
+                          type: "string",
+                        },
+                        value: {
+                          type: "number",
+                          const: {
+                            $data:
+                              "/search/0/message/intent/@ondc~1org~1payload_details/weight/value",
+                          },
+                          errorMessage:
+                            "Payload weight mismatches in /search and /confirm",
+                        },
+                      },
+                      required: ["unit", "value"],
+                    },
+                  },
+                  required: ["id", "weight"],
+                },
+              },
+              required: ["items", "provider", "order"],
+            },
             created_at: {
               type: "string",
               const: { $data: "/confirm/0/message/order/created_at" },
-              errorMessage:
-                "mismatches in /confirm and /on_confirm",
+              errorMessage: "mismatches in /confirm and /on_confirm",
             },
             updated_at: {
               type: "string",
@@ -495,7 +761,7 @@ module.exports = {
                 "does not match context/timestamp - ${3/context/timestamp}",
             },
           },
-          additionalProperties:false,
+          additionalProperties: false,
           required: [
             "id",
             "state",

@@ -1,39 +1,25 @@
-const onConfirmSchema = require("./onConfirmSchema");
-const onInitSchema = require("./onInitSchema");
-const onSearchSchema = require("./onSearchSchema");
-const onTrackSchema = require("./onTrackSchema");
-const onSupportSchema = require("./onSupportSchema");
-const onStatusSchema = require("./onStatusSchema");
-const onCancelSchema = require("./onCancelSchema");
-const onUpdateSchema = require("./onUpdateSchema");
-const searchSchema = require("./searchSchema");
-const initSchema = require("./initSchema");
+const onConfirmSchema = require("./v1.1/onConfirmSchema");
+const onInitSchema = require("./v1.1/onInitSchema");
+const onSearchSchema = require("./v1.1/onSearchSchema");
+const onTrackSchema = require("./v1.1/onTrackSchema");
+const onSupportSchema = require("./v1.1/onSupportSchema");
+const onStatusSchema = require("./v1.1/onStatusSchema");
+const onCancelSchema = require("./v1.1/onCancelSchema");
+const onUpdateSchema = require("./v1.1/onUpdateSchema");
+const searchSchema = require("./v1.1/searchSchema");
+const initSchema = require("./v1.1/initSchema");
+const confirmSchema = require("./v1.1/confirmSchema");
+const statusSchema = require("./v1.1/statusSchema");
+const updateSchema = require("./v1.1/updateSchema");
+const cancelSchema = require("./v1.1/cancelSchema");
+const supportSchema = require("./v1.1/supportSchema");
+const trackSchema = require("./v1.1/trackSchema");
+
+
 const masterSchema = require("./masterSchema");
-const confirmSchema = require("./confirmSchema");
-const statusSchema = require("./statusSchema");
-const updateSchema = require("./updateSchema");
-const cancelSchema = require("./cancelSchema");
-const supportSchema = require("./supportSchema");
-const trackSchema = require("./trackSchema");
+
 const fs = require("fs");
 //const async = require("async");
-const path = require("path");
-
-const Ajv = require("ajv");
-const ajv = new Ajv({
-  allErrors: true,
-  strict: false,
-  strictRequired: false,
-  strictTypes: false,
-  verbose: true,
-  $data: true,
-});
-
-const addFormats = require("ajv-formats");
-//const masterSchemacopy = require("./masterSchemacopy");
-
-addFormats(ajv);
-require("ajv-errors")(ajv);
 
 const formatted_error = (errors) => {
   error_list = [];
@@ -60,10 +46,25 @@ const formatted_error = (errors) => {
 function isEndTimeGreater(data) {
   const startTime = parseInt(data.start);
   const endTime = parseInt(data.end);
-  return startTime < endTime
+  return startTime < endTime;
 }
 
 const validate_schema = (data, schema) => {
+  const Ajv = require("ajv");
+  const ajv = new Ajv({
+    allErrors: true,
+    strict: false,
+    strictRequired: false,
+    strictTypes: false,
+    verbose: true,
+    $data: true,
+  });
+
+  const addFormats = require("ajv-formats");
+  //const masterSchemacopy = require("./masterSchemacopy");
+
+  addFormats(ajv);
+  require("ajv-errors")(ajv);
   let error_list = [];
   try {
     validate = ajv
@@ -84,7 +85,7 @@ const validate_schema = (data, schema) => {
       .addSchema(cancelSchema)
       .addSchema(onCancelSchema)
       .addKeyword("isEndTimeGreater", {
-        validate: (schema, data) => isEndTimeGreater(data)
+        validate: (schema, data) => isEndTimeGreater(data),
       });
 
     validate = validate.compile(schema);

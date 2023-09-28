@@ -1,5 +1,5 @@
 module.exports = {
-  $id: "http://example.com/schema/onSupportSchema",
+  $id: "http://example.com/schema/onSupportSchema/v1.2",
   type: "object",
   properties: {
     context: {

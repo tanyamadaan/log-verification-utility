@@ -1,5 +1,6 @@
+const constants = require("../../../utils/constants")
 module.exports = {
-  $id: "http://example.com/schema/updateSchema",
+  $id: "http://example.com/schema/updateSchema/v1.2",
   type: "object",
   properties: {
     context: {
@@ -92,10 +93,6 @@ module.exports = {
               type: "string",
               const: { $data: "/confirm/message/order/id" },
             },
-            state: {
-              type: "string",
-              enum: ["Created", "Accepted", "In-progress"],
-            },
             items: {
               type: "array",
               items: {
@@ -142,41 +139,27 @@ module.exports = {
                   "@ondc/org/awb_no": {
                     type: "string",
                   },
-                  tags: {
-                    type: "object",
-                    properties: {
-                      "@ondc/org/order_ready_to_ship": {
-                        type: "string",
-                        enum: ["yes", "no"],
-                      },
-                    },
-                    required: ["@ondc/org/order_ready_to_ship"],
-                  },
                   start: {
                     type: "object",
                     properties: {
                       instructions: {
                         type: "object",
                         properties: {
+                          code: {
+                            type: "string",
+                            enum: constants.PCC
+                          },
+                          name: {
+                            type: "string"
+                          },
                           short_desc: {
                             type: "string",
                           },
                           long_desc: {
                             type: "string",
                           },
-                          additional_desc: {
-                            type: "object",
-                            properties: {
-                              content_type: {
-                                type: "string",
-                              },
-                              url: {
-                                type: "string",
-                              },
-                            },
-                            required: ["content_type", "url"],
-                          },
                         },
+                        required: ['code', 'name', 'short_desc', 'long_desc']
                       },
                     },
                     additionalProperties:false,
@@ -188,40 +171,29 @@ module.exports = {
                       instructions: {
                         type: "object",
                         properties: {
+                          code: {
+                            type: "string",
+                            enum: constants.DCC
+                          },
+                          name: {
+                            type: "string"
+                          },
                           short_desc: {
                             type: "string",
                           },
                           long_desc: {
                             type: "string",
                           },
-                          additional_desc: {
-                            type: "object",
-                            properties: {
-                              content_type: {
-                                type: "string",
-                              },
-                              url: {
-                                type: "string",
-                              },
-                            },
-                            required: ["content_type", "url"],
-                          },
                         },
-                        required: ["short_desc", "long_desc"],
+                        required: ["name", "code","short_desc", "long_desc"],
                       },
                     },
                     additionalProperties:false,
                     // required: ["instructions"],
                   },
-                  "@ondc/org/ewaybillno": {
-                    type: "string",
-                    const: { $data: "/confirm/0/message/order/fulfillments/0/@ondc~1org~1ewaybillno" },
-                  },
-                  "@ondc/org/ebnexpirydate": {
-                    type: "string",
-                    format: "date-time",
-                    const: { $data: "/confirm/0/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate"},
-                  },
+                  tags: {
+                    $ref: "http://example.com/schema/commonSchema/v1.2#tagsArray"
+                  }
                 },
                 additionalProperties:false,
                 required: ["id", "type", "tags"],
@@ -230,7 +202,7 @@ module.exports = {
                 //   properties: {
                 //     tags: {
                 //       properties: {
-                //         "@ondc/org/order_ready_to_ship": { const: "yes" },
+                //         "@ondc/org/order_ready_to_shiporder_ready_to_ship": { const: "yes" },
                 //       },
                 //     },
                 //   },
@@ -294,124 +266,14 @@ module.exports = {
               },
             },
             "@ondc/org/linked_order": {
-              type: "object",
-              properties: {
-                items: {
-                  type: "array",
-                  items: {
-                    type: "object",
-                    properties: {
-                      category_id: {
-                        type: "string",
-                      },
-                      descriptor: {
-                        type: "object",
-                        properties: {
-                          name: {
-                            type: "string",
-                          },
-                        },
-                        required: ["name"],
-                      },
-                      quantity: {
-                        type: "object",
-                        properties: {
-                          count: {
-                            type: "integer",
-                          },
-                          measure: {
-                            type: "object",
-                            properties: {
-                              unit: {
-                                type: "string",
-                              },
-                              value: {
-                                type: "number",
-                        
-                              },
-                            },
-                            required: ["unit", "value"],
-                          },
-                        },
-                        required: ["count", "measure"],
-                      },
-                      price: {
-                        type: "object",
-                        properties: {
-                          currency: {
-                            type: "string",
-                          },
-                          value: {
-                            type: "string",
-                          },
-                        },
-                        required: ["currency", "value"],
-                      },
-                    },
-                    required: [
-                      "category_id",
-                      "descriptor",
-                      "quantity",
-                      "price",
-                    ],
-                  },
-                },
-                order: {
-                  type: "object",
-                  properties: {
-                    id: {
-                      type: "string",
-                    },
-                    weight: {
-                      type: "object",
-                      properties: {
-                        unit: {
-                          type: "string",
-                        },
-                        value: {
-                          type: "number",
-                          const: { $data: "/search/0/message/intent/@ondc~1org~1payload_details/weight/value" },
-                          errorMessage:"Payload weight mismatches in /search and /update"
-                        },
-                      },
-                      required: ["unit", "value"],
-                    },
-                  },
-                  required: ["id", "weight"],
-                },
-              },
-              required: ["items", "order"],
-            },
-            updated_at: {
-              type: "string",
-              const: { $data: "3/context/timestamp" },
-              errorMessage:
-                "does not match context timestamp - ${3/context/timestamp}",
+              $ref: "http://example.com/schema/confirmSchema/v1.2#message/order/~0ondc~1org~1linked_order"
             },
           },
           required: ["id", "state", "items", "fulfillments", "updated_at"],
         },
       },
       required: ["update_target", "order"],
-    },
-    confirm: {
-      type: "array",
-      items: {
-        $ref: "confirmSchema#",
-      },
-    },
-    on_confirm: {
-      type: "array",
-      items: {
-        $ref: "onConfirmSchema#",
-      },
-    },
-    on_update: {
-      type: "array",
-      items: {
-        $ref: "onUpdateSchema#",
-      },
-    },
+    }
   },
   required: ["context", "message"],
 };

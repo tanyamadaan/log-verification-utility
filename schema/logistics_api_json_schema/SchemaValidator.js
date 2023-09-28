@@ -8,50 +8,20 @@ const onCancelSchema = require("./v1.1/onCancelSchema");
 const onUpdateSchema = require("./v1.1/onUpdateSchema");
 const searchSchema = require("./v1.1/searchSchema");
 const initSchema = require("./v1.1/initSchema");
-const masterSchema = require("./v1.1/masterSchema");
 const confirmSchema = require("./v1.1/confirmSchema");
 const statusSchema = require("./v1.1/statusSchema");
 const updateSchema = require("./v1.1/updateSchema");
 const cancelSchema = require("./v1.1/cancelSchema");
 const supportSchema = require("./v1.1/supportSchema");
 const trackSchema = require("./v1.1/trackSchema");
-const onConfirmSchema2 = require("./v1.2/onConfirmSchema");
-const onInitSchema2 = require("./v1.2/onInitSchema");
-const onSearchSchema2 = require("./v1.2/onSearchSchema");
-const onTrackSchema2 = require("./v1.2/onTrackSchema");
-const onSupportSchema2 = require("./v1.2/onSupportSchema");
-const onStatusSchema2 = require("./v1.2/onStatusSchema");
-const onCancelSchema2 = require("./v1.2/onCancelSchema");
-const onUpdateSchema2 = require("./v1.2/onUpdateSchema");
-const searchSchema2 = require("./v1.2/searchSchema2");
-const initSchema2 = require("./v1.2/initSchema");
-const masterSchema2 = require("./v1.2/masterSchema");
-const confirmSchema2 = require("./v1.2/confirmSchema");
-const statusSchema2 = require("./v1.2/statusSchema");
-const updateSchema2 = require("./v1.2/updateSchema");
-const cancelSchema2 = require("./v1.2/cancelSchema");
-const supportSchema2 = require("./v1.2/supportSchema");
-const trackSchema2 = require("./v1.2/trackSchema");
+
+const commonSchemaV1_2 = require("./v1.2/common/commonSchema")
+
+
+const masterSchema = require("./masterSchema");
 
 const fs = require("fs");
 //const async = require("async");
-const path = require("path");
-
-const Ajv = require("ajv");
-const ajv = new Ajv({
-  allErrors: true,
-  strict: false,
-  strictRequired: false,
-  strictTypes: false,
-  verbose: true,
-  $data: true,
-});
-
-const addFormats = require("ajv-formats");
-const masterSchemaCopy = require("./masterSchemacopy");
-
-addFormats(ajv);
-require("ajv-errors")(ajv);
 
 const formatted_error = (errors) => {
   error_list = [];
@@ -78,10 +48,25 @@ const formatted_error = (errors) => {
 function isEndTimeGreater(data) {
   const startTime = parseInt(data.start);
   const endTime = parseInt(data.end);
-  return startTime < endTime
+  return startTime < endTime;
 }
 
 const validate_schema = (data, schema) => {
+  const Ajv = require("ajv");
+  const ajv = new Ajv({
+    allErrors: true,
+    strict: false,
+    strictRequired: false,
+    strictTypes: false,
+    verbose: true,
+    $data: true,
+  });
+
+  const addFormats = require("ajv-formats");
+  //const masterSchemacopy = require("./masterSchemacopy");
+
+  addFormats(ajv);
+  require("ajv-errors")(ajv);
   let error_list = [];
   try {
     validate = ajv
@@ -118,8 +103,9 @@ const validate_schema = (data, schema) => {
       .addSchema(cancelSchema2)
       .addSchema(onCancelSchema2)
       .addKeyword("isEndTimeGreater", {
-        validate: (schema, data) => isEndTimeGreater(data)
-      });
+        validate: (schema, data) => isEndTimeGreater(data),
+      })
+      .addSchema(commonSchemaV1_2);
     
     validate = validate.compile(schema);
 

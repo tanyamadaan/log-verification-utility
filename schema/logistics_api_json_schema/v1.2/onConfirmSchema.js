@@ -1,5 +1,6 @@
+const constants = require("../../../utils/constants");
 module.exports = {
-  $id: "http://example.com/schema/onConfirmSchema",
+  $id: "http://example.com/schema/onConfirmSchema/v1.2",
   type: "object",
   properties: {
     context: {
@@ -40,7 +41,7 @@ module.exports = {
           type: "string",
           const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+            "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -56,7 +57,19 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            }
+            },
+            {
+              not: {
+                const: { $data: "/init/0/context/message_id" },
+              },
+              errorMessage: "Message ID should be unique",
+            },
+            {
+              not: {
+                const: { $data: "/search/0/context/message_id" },
+              },
+              errorMessage: "Message ID should be unique",
+            },
           ],
         },
         timestamp: {
@@ -107,7 +120,10 @@ module.exports = {
                     properties: {
                       id: {
                         type: "string",
-                        const: { $data: "/init/0/message/order/provider/locations/0/id" },
+                        const: {
+                          $data:
+                            "/init/0/message/order/provider/locations/0/id",
+                        },
                       },
                     },
                     required: ["id"],
@@ -141,16 +157,24 @@ module.exports = {
                     type: "string",
                     const: { $data: "/init/0/message/order/items/0/id" },
                   },
+                  fulfillment_id: {
+                    type: "string",
+                  },
                   category_id: {
                     type: "string",
-                    const: { $data: "/init/0/message/order/items/0/category_id" },
+                    const: {
+                      $data: "/init/0/message/order/items/0/category_id",
+                    },
                   },
                   descriptor: {
                     type: "object",
                     properties: {
                       code: {
                         type: "string",
-                        const: { $data: "/init/0/message/order/items/0/descriptor/code" },
+                        const: {
+                          $data:
+                            "/init/0/message/order/items/0/descriptor/code",
+                        },
                       },
                     },
                     required: ["code"],
@@ -190,7 +214,7 @@ module.exports = {
                       },
                       "@ondc/org/title_type": {
                         type: "string",
-                        enum: ["Delivery Charge", "Tax"],
+                        enum: constants.FULFILLMENT_TYPE,
                       },
                       price: {
                         type: "object",
@@ -251,58 +275,77 @@ module.exports = {
                   },
                   "@ondc/org/awb_no": {
                     type: "string",
-
                   },
                   tracking: {
                     type: "boolean",
                   },
                   start: {
                     type: "object",
-                    properties: {
-                      time: {
-                        type: "object",
+                    allOf: [
+                      {
                         properties: {
-                          range: {
+                          time: {
                             type: "object",
                             properties: {
-                              start: {
-                                type: "string",
-                              },
-                              end: {
-                                type: "string",
+                              range: {
+                                type: "object",
+                                properties: {
+                                  start: {
+                                    type: "string",
+                                    format: "date-time",
+                                  },
+                                  end: {
+                                    type: "string",
+                                    format: "date-time",
+                                  },
+                                },
+                                required: ["start", "end"],
                               },
                             },
-                            required: ["start", "end"],
+                            required: ["range"],
                           },
                         },
-                        required: ["range"],
+                        required: ["time"],
                       },
-                    },
-                    required: ["time"],
+                      {
+                        properties: {
+                          $ref: "http://example.com/schema/commonSchema/v1.2#addressFormat",
+                        },
+                      },
+                    ],
                   },
                   end: {
                     type: "object",
-                    properties: {
-                      time: {
-                        type: "object",
+                    allOf: [
+                      {
                         properties: {
-                          range: {
+                          time: {
                             type: "object",
                             properties: {
-                              start: {
-                                type: "string",
-                              },
-                              end: {
-                                type: "string",
+                              range: {
+                                type: "object",
+                                properties: {
+                                  start: {
+                                    type: "string",
+                                  },
+                                  end: {
+                                    type: "string",
+                                  },
+                                },
+                                required: ["start", "end"],
                               },
                             },
-                            required: ["start", "end"],
+                            required: ["range"],
                           },
                         },
-                        required: ["range"],
+                        required: ["time"],
                       },
-                    },
-                    required: ["time"],
+                      {
+                        properties: {
+                          $ref: "http://example.com/schema/commonSchema/v1.2#addressFormat",
+                        },
+                      },
+                    ],
                   },
                   agent: {
                     type: "object",
@@ -319,33 +362,18 @@ module.exports = {
                   vehicle: {
                     type: "object",
                     properties: {
-                      category: {
-                        type: "string",
-                      },
-                      size: {
-                        type: "string",
-                      },
                       registration: {
                         type: "string",
                       },
                     },
                     required: ["category", "size", "registration"],
                   },
-                  "@ondc/org/ewaybillno": {
-                    type: "string",
-                    const: { $data: "/confirm/0/message/order/fulfillments/0/@ondc~1org~1ewaybillno" },
-                   
-
-                  },
-                  "@ondc/org/ebnexpirydate": {
-                    type: "string",
-                    format: "date-time",
-                    const: { $data: "/confirm/0/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate"},
-                   
-                  },
                 },
                 required: ["id", "type", "state", "tracking"],
               },
+            },
+            tags: {
+              $ref: "http://example.com/schema/commonSchema/v1.2#tagsArray",
             },
             billing: {
               type: "object",
@@ -371,7 +399,8 @@ module.exports = {
                     building: {
                       type: "string",
                       const: {
-                        $data: "/confirm/0/message/order/billing/address/building",
+                        $data:
+                          "/confirm/0/message/order/billing/address/building",
                       },
                       errorMessage:
                         "mismatches in /billing in /confirm and /on_confirm",
@@ -379,7 +408,8 @@ module.exports = {
                     locality: {
                       type: "string",
                       const: {
-                        $data: "/confirm/0/message/order/billing/address/locality",
+                        $data:
+                          "/confirm/0/message/order/billing/address/locality",
                       },
                       errorMessage:
                         "mismatches in /billing in /confirm and /on_confirm",
@@ -403,7 +433,8 @@ module.exports = {
                     country: {
                       type: "string",
                       const: {
-                        $data: "/confirm/0/message/order/billing/address/country",
+                        $data:
+                          "/confirm/0/message/order/billing/address/country",
                       },
                       errorMessage:
                         "mismatches in /billing in /confirm and /on_confirm",
@@ -431,7 +462,9 @@ module.exports = {
                 },
                 tax_number: {
                   type: "string",
-                  const: { $data: "/confirm/0/message/order/billing/tax_number" },
+                  const: {
+                    $data: "/confirm/0/message/order/billing/tax_number",
+                  },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_confirm",
                 },
@@ -449,13 +482,17 @@ module.exports = {
                 },
                 created_at: {
                   type: "string",
-                  const: { $data: "/confirm/0/message/order/billing/created_at" },
+                  const: {
+                    $data: "/confirm/0/message/order/billing/created_at",
+                  },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_confirm",
                 },
                 updated_at: {
                   type: "string",
-                  const: { $data: "/confirm/0/message/order/billing/updated_at" },
+                  const: {
+                    $data: "/confirm/0/message/order/billing/updated_at",
+                  },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_confirm",
                 },
@@ -470,11 +507,16 @@ module.exports = {
                 "updated_at",
               ],
             },
+            payment: {
+              $ref: "/confirm/0/message/order/payment"
+            },
+            "@ondc/org/linked_order": {
+              $ref: "http://example.com/schema/confirmSchema/v1.2#message/order/~0ondc~1org~1linked_order"
+            },
             created_at: {
               type: "string",
               const: { $data: "/confirm/0/message/order/created_at" },
-              errorMessage:
-                "mismatches in /confirm and /on_confirm",
+              errorMessage: "mismatches in /confirm and /on_confirm",
             },
             updated_at: {
               type: "string",
@@ -483,7 +525,7 @@ module.exports = {
                 "does not match context/timestamp - ${3/context/timestamp}",
             },
           },
-          additionalProperties:false,
+          additionalProperties: false,
           required: [
             "id",
             "state",

@@ -98,10 +98,10 @@ const checkInit = (data, msgIdSet) => {
               itemkey
             ] = `Fulfillment id '${fulfillment.id}' for item with id '${item.id}' does not match with the catalog provided in /on_search`;
           } else {
-            let bppfulfillment = bppFulfillmentsArr.find(
+            let bppfulfillment = bppFulfillmentsArr?.find(
               (element) => element.id === fulfillment.id
             );
-            if (fulfillment.type !== bppfulfillment.type) {
+            if (fulfillment.type !== bppfulfillment?.type) {
               let itemkey = `flfillmentTypeErr${i}`;
               initObj[
                 itemkey

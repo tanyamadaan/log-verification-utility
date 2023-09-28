@@ -1,18 +1,28 @@
 {
     "Schema": {
-        "schemaErr0": "/search/0/message/intent/fulfillment/end/location/gps cannot be equal to start/location/gps '\"12.910816, 77.546946\"'",
-        "schemaErr1": "/on_status/2/message/order/quote/breakup/1 must have required property '@ondc/org/item_id'",
-        "schemaErr2": "/on_status/3/message/order/quote/breakup/1 must have required property '@ondc/org/item_id'"
+        "schemaErr0": "/init/0/message/order/items/0/fulfillment_id should be mapped to the id - \"4dc2982b-2594-47e2-9a68-2b860efa23ba\" in /fulfillments",
+        "schemaErr1": "/init/0/message/order/billing/address name + building + locality < 190 chars",
+        "schemaErr2": "/init/0/message/order/billing/tax_number should be valid",
+        "schemaErr3": "/init/0/message/order/payment/type should be same as in /search - \"ON-FULFILLMENT\"",
+        "schemaErr4": "/confirm/0/message/order must NOT have additional properties (tags)",
+        "schemaErr5": "/confirm/0/message/order/quote/breakup/1/@ondc~1org~1title_type must be equal to one of the allowed values (delivery,rto,reverseqc)",
+        "schemaErr6": "/confirm/0/message/order/quote object mismatches in /on_init and /confirm.",
+        "schemaErr7": "/confirm/0/message/order/fulfillments/0/start/location/gps does not match start location in search",
+        "schemaErr8": "/confirm/0/message/order/fulfillments/0/start/instructions/short_desc should be a 10 digit number",
+        "schemaErr9": "/confirm/0/message/order/fulfillments/0/start/instructions must match \"then\" schema",
+        "schemaErr10": "/confirm/0/message/order/fulfillments/0/end/instructions/short_desc is not required",
+        "schemaErr11": "/confirm/0/message/order/fulfillments/0/end/instructions must match \"then\" schema",
+        "schemaErr12": "/confirm/0/message/order/billing/tax_number mismatches in /billing in /init and /confirm"
     },
-    "Context": {
+    "Message": {
         "on_search_0": {
-            "tmpstmpErr": "context/timestamp difference between on_search and search should be smaller than 1 sec"
+            "fulfillmentIDerr": "fulfillment_id of /items/1 for /bpp/provider/0 does not match with the id in bpp/fulfillments in on_search api"
+        },
+        "init_0": {
+            "flfillmentErr0": "Fulfillment id '4dc2982b-2594-47e2-9a68-2b860efa23ba' for item with id 'express' does not match with the catalog provided in /on_search"
         },
         "on_init_0": {
-            "tmpstmpErr": "context/timestamp difference between on_init and init should be smaller than 1 sec"
-        },
-        "confirm_0": {
-            "msgIdErr": "Message Id cannot be same for different sets of APIs (LSP should send NACK)"
+            "priceArr0": "Quote price 5.25 for 'tax' does not match item price 57.75 in /on_search"
         }
     }
 }

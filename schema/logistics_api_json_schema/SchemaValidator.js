@@ -1,20 +1,38 @@
-const onConfirmSchema = require("./onConfirmSchema");
-const onInitSchema = require("./onInitSchema");
-const onSearchSchema = require("./onSearchSchema");
-const onTrackSchema = require("./onTrackSchema");
-const onSupportSchema = require("./onSupportSchema");
-const onStatusSchema = require("./onStatusSchema");
-const onCancelSchema = require("./onCancelSchema");
-const onUpdateSchema = require("./onUpdateSchema");
-const searchSchema = require("./searchSchema");
-const initSchema = require("./initSchema");
-const masterSchema = require("./masterSchema");
-const confirmSchema = require("./confirmSchema");
-const statusSchema = require("./statusSchema");
-const updateSchema = require("./updateSchema");
-const cancelSchema = require("./cancelSchema");
-const supportSchema = require("./supportSchema");
-const trackSchema = require("./trackSchema");
+const onConfirmSchema = require("./v1.1/onConfirmSchema");
+const onInitSchema = require("./v1.1/onInitSchema");
+const onSearchSchema = require("./v1.1/onSearchSchema");
+const onTrackSchema = require("./v1.1/onTrackSchema");
+const onSupportSchema = require("./v1.1/onSupportSchema");
+const onStatusSchema = require("./v1.1/onStatusSchema");
+const onCancelSchema = require("./v1.1/onCancelSchema");
+const onUpdateSchema = require("./v1.1/onUpdateSchema");
+const searchSchema = require("./v1.1/searchSchema");
+const initSchema = require("./v1.1/initSchema");
+const masterSchema = require("./v1.1/masterSchema");
+const confirmSchema = require("./v1.1/confirmSchema");
+const statusSchema = require("./v1.1/statusSchema");
+const updateSchema = require("./v1.1/updateSchema");
+const cancelSchema = require("./v1.1/cancelSchema");
+const supportSchema = require("./v1.1/supportSchema");
+const trackSchema = require("./v1.1/trackSchema");
+const onConfirmSchema2 = require("./v1.2/onConfirmSchema");
+const onInitSchema2 = require("./v1.2/onInitSchema");
+const onSearchSchema2 = require("./v1.2/onSearchSchema");
+const onTrackSchema2 = require("./v1.2/onTrackSchema");
+const onSupportSchema2 = require("./v1.2/onSupportSchema");
+const onStatusSchema2 = require("./v1.2/onStatusSchema");
+const onCancelSchema2 = require("./v1.2/onCancelSchema");
+const onUpdateSchema2 = require("./v1.2/onUpdateSchema");
+const searchSchema2 = require("./v1.2/searchSchema2");
+const initSchema2 = require("./v1.2/initSchema");
+const masterSchema2 = require("./v1.2/masterSchema");
+const confirmSchema2 = require("./v1.2/confirmSchema");
+const statusSchema2 = require("./v1.2/statusSchema");
+const updateSchema2 = require("./v1.2/updateSchema");
+const cancelSchema2 = require("./v1.2/cancelSchema");
+const supportSchema2 = require("./v1.2/supportSchema");
+const trackSchema2 = require("./v1.2/trackSchema");
+
 const fs = require("fs");
 //const async = require("async");
 const path = require("path");
@@ -30,7 +48,7 @@ const ajv = new Ajv({
 });
 
 const addFormats = require("ajv-formats");
-//const masterSchemacopy = require("./masterSchemacopy");
+const masterSchemaCopy = require("./masterSchemacopy");
 
 addFormats(ajv);
 require("ajv-errors")(ajv);
@@ -83,10 +101,26 @@ const validate_schema = (data, schema) => {
       .addSchema(onTrackSchema)
       .addSchema(cancelSchema)
       .addSchema(onCancelSchema)
+      .addSchema(searchSchema2)
+      .addSchema(onSearchSchema2)
+      .addSchema(initSchema2)
+      .addSchema(onInitSchema2)
+      .addSchema(confirmSchema2)
+      .addSchema(onConfirmSchema2)
+      .addSchema(updateSchema2)
+      .addSchema(onUpdateSchema2)
+      .addSchema(statusSchema2)
+      .addSchema(onStatusSchema2)
+      .addSchema(supportSchema2)
+      .addSchema(onSupportSchema2)
+      .addSchema(trackSchema2)
+      .addSchema(onTrackSchema2)
+      .addSchema(cancelSchema2)
+      .addSchema(onCancelSchema2)
       .addKeyword("isEndTimeGreater", {
         validate: (schema, data) => isEndTimeGreater(data)
       });
-
+    
     validate = validate.compile(schema);
 
     const valid = validate(data);
@@ -102,7 +136,7 @@ const validate_schema = (data, schema) => {
 };
 
 const validate_schema_master = (data) => {
-  error_list = validate_schema(data, masterSchema);
+  error_list = validate_schema(data, masterSchemaCopy);
   return formatted_error(error_list);
 };
 

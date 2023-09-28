@@ -1,5 +1,6 @@
+const constants = require("../../../utils/constants");
 module.exports = {
-  $id: "http://example.com/schema/confirmSchema",
+  $id: "http://example.com/schema/confirmSchema/v1.2",
   type: "object",
   properties: {
     context: {
@@ -22,7 +23,7 @@ module.exports = {
         },
         core_version: {
           type: "string",
-          const: "1.1.0",
+          const: "1.2.0",
         },
         bap_id: {
           type: "string",
@@ -40,7 +41,7 @@ module.exports = {
           type: "string",
           const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+            "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -112,21 +113,21 @@ module.exports = {
                 },
               },
               required: ["id"],
-              oneOf: [
-                {
-                  required: [
-                    "/on_search/0/message/catalog/bpp~1providers/0/locations",
-                    "locations",
-                  ],
-                },
-                {
-                  not: {
-                    required: [
-                      "/on_search/0/message/catalog/bpp~1providers/0/locations",
-                    ],
-                  },
-                },
-              ],
+              // oneOf: [
+              //   {
+              //     required: [
+              //       "/on_search/0/message/catalog/bpp~1providers/0/locations",
+              //       "locations",
+              //     ],
+              //   },
+              //   {
+              //     not: {
+              //       required: [
+              //         "/on_search/0/message/catalog/bpp~1providers/0/locations",
+              //       ],
+              //     },
+              //   },
+              // ],
             },
             items: {
               type: "array",
@@ -143,6 +144,12 @@ module.exports = {
                       $data: "/init/0/message/order/items/0/category_id",
                     },
                   },
+                  fulfillment_id: {
+                    type: "string",
+                    const: {
+                      $data: "/init/0/message/order/items/0/fulfillment_id",
+                    },
+                  },
                   descriptor: {
                     type: "object",
                     properties: {
@@ -157,57 +164,57 @@ module.exports = {
                     required: ["code"],
                   },
                 },
-                required: ["id", "category_id", "descriptor"],
-                anyOf: [
-                  {
-                    allOf: [
-                      {
-                        properties: {
-                          id: {
-                            const: {
-                              $data:
-                                "/on_search/0/message/catalog/bpp~1providers/0/items/0/id",
-                            },
-                          },
-                        },
-                      },
-                      {
-                        properties: {
-                          category_id: {
-                            const: {
-                              $data:
-                                "/on_search/0/message/catalog/bpp~1providers/0/items/0/category_id",
-                            },
-                          },
-                        },
-                      },
-                    ],
-                  },
-                  {
-                    allOf: [
-                      {
-                        properties: {
-                          id: {
-                            const: {
-                              $data:
-                                "/on_search/0/message/catalog/bpp~1providers/1/items/0/id",
-                            },
-                          },
-                        },
-                      },
-                      {
-                        properties: {
-                          category_id: {
-                            const: {
-                              $data:
-                                "/on_search/0/message/catalog/bpp~1providers/1/items/0/category_id",
-                            },
-                          },
-                        },
-                      },
-                    ],
-                  },
-                ],
+                required: ["id", "category_id", "descriptor", "fulfillment_id"],
+                // anyOf: [
+                //   {
+                //     allOf: [
+                //       {
+                //         properties: {
+                //           id: {
+                //             const: {
+                //               $data:
+                //                 "/on_search/0/message/catalog/bpp~1providers/0/items/0/id",
+                //             },
+                //           },
+                //         },
+                //       },
+                //       {
+                //         properties: {
+                //           category_id: {
+                //             const: {
+                //               $data:
+                //                 "/on_search/0/message/catalog/bpp~1providers/0/items/0/category_id",
+                //             },
+                //           },
+                //         },
+                //       },
+                //     ],
+                //   },
+                //   {
+                //     allOf: [
+                //       {
+                //         properties: {
+                //           id: {
+                //             const: {
+                //               $data:
+                //                 "/on_search/0/message/catalog/bpp~1providers/1/items/0/id",
+                //             },
+                //           },
+                //         },
+                //       },
+                //       {
+                //         properties: {
+                //           category_id: {
+                //             const: {
+                //               $data:
+                //                 "/on_search/0/message/catalog/bpp~1providers/1/items/0/category_id",
+                //             },
+                //           },
+                //         },
+                //       },
+                //     ],
+                //   },
+                // ],
               },
             },
             quote: {
@@ -241,7 +248,7 @@ module.exports = {
                       },
                       "@ondc/org/title_type": {
                         type: "string",
-                        enum: ["Delivery Charge", "Tax"],
+                        enum: constants.TITLE_TYPE,
                       },
                       price: {
                         type: "object",
@@ -298,6 +305,12 @@ module.exports = {
                         properties: {
                           gps: {
                             type: "string",
+                            const: {
+                              $data:
+                                "/search/0/message/intent/fulfillment/start/location/gps",
+                            },
+                            errorMessage:
+                              "does not match start location in search",
                           },
                           address: {
                             type: "object",
@@ -362,14 +375,42 @@ module.exports = {
                           long_desc: {
                             type: "string",
                           },
-                          images: {
-                            type: "array",
-                            items: {
-                              type: "string",
-                            },
+                          code: {
+                            type: "string",
+                            enum: constants.PCC_CODE,
                           },
                         },
-                        //required: ["long_desc", "images"],
+                        allOf: [
+                          {
+                            if: { properties: { code: { const: "1" } } },
+                            then: {
+                              properties: {
+                                short_desc: {
+                                  minLength: 10,
+                                  maxLength: 10,
+                                  pattern: "^[0-9]{10}$",
+                                  errorMessage: "should be a 10 digit number",
+                                },
+                              },
+                            },
+                          },
+                          {
+                            if: {
+                              properties: { code: { enum: ["2", "3", "4"] } },
+                            },
+                            then: {
+                              properties: {
+                                short_desc: {
+                                  maxLength: 6,
+                                  pattern: "^[0-9]{1,6}$",
+                                  errorMessage:
+                                    "should not be an empty string or have more than 6 digits",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                       
                       },
                     },
                     required: ["person", "location", "contact"],
@@ -391,6 +432,12 @@ module.exports = {
                         properties: {
                           gps: {
                             type: "string",
+                            const: {
+                              $data:
+                                "/search/0/message/intent/fulfillment/end/location/gps",
+                            },
+                            errorMessage:
+                              "does not match end location in search",
                           },
                           address: {
                             type: "object",
@@ -457,58 +504,45 @@ module.exports = {
                           long_desc: {
                             type: "string",
                           },
-                          additional_desc: {
-                            type: "object",
-                            properties: {
-                              content_type: {
-                                type: "string",
-                              },
-                              url: {
-                                type: "string",
-                              },
-                            },
-                            required: ["content_type", "url"],
+                          code: {
+                            type: "string",
+                            enum: constants.DCC_CODE,
                           },
                         },
-                        // required: [
-                        //   "long_desc",
-                        //   "additional_desc",
-                        // ],
+                        allOf: [
+                          {
+                            if: { properties: { code: { const: "3" } } },
+                            then: {
+                              properties: {
+                                short_desc: {
+                                  maxLength: 0,
+                                  errorMessage: "is not required",
+                                },
+                              },
+                            },
+                          },
+                          {
+                            if: {
+                              properties: { code: { enum: ["1", "2"] } },
+                            },
+                            then: {
+                              properties: {
+                                short_desc: {
+                                  maxLength: 6,
+                                  pattern: "^[0-9]{1,6}$",
+                                  errorMessage:
+                                    "should not be an empty string or have more than 6 digits",
+                                },
+                              },
+                            },
+                          },
+                        ],
                       },
                     },
                     required: ["person", "location", "contact"],
                   },
-
-                  "@ondc/org/ewaybillno": {
-                    type: "string",
-                  },
-                  "@ondc/org/ebnexpirydate": {
-                    type: "string",
-                    format: "date-time",
-                  },
-                  tags: {
-                    type: "object",
-                    properties: {
-                      "@ondc/org/order_ready_to_ship": {
-                        type: "string",
-                        enum: ["yes", "no"],
-                      },
-                    },
-                    // if: {
-                    //   properties: {
-                    //     "@ondc/org/order_ready_to_ship": { const: "yes" },
-                    //   },
-                    // },
-                    // then: {
-                    //   required: ["1/start/instructions"],
-                    //   errorMessage:
-                    //     "Pickup code (fulfillments/start/instructions), mandatory if order_ready_to_ship = yes in /confirm",
-                    // },
-
-                    required: ["@ondc/org/order_ready_to_ship"],
-                  },
                 },
-                required: ["id", "type", "start", "end", "tags"],
+                required: ["id", "type", "start", "end"],
               },
             },
             billing: {
@@ -645,7 +679,8 @@ module.exports = {
                   const: {
                     $data: "/on_init/0/message/order/payment/collected_by",
                   },
-                  errorMessage: "mismatches in /payment in /on_init and /confirm",
+                  errorMessage:
+                    "mismatches in /payment in /on_init and /confirm",
                 },
                 type: {
                   type: "string",
@@ -653,7 +688,8 @@ module.exports = {
                   const: {
                     $data: "/on_init/0/message/order/payment/type",
                   },
-                  errorMessage: "mismatches in /payment in /on_init and /confirm",
+                  errorMessage:
+                    "mismatches in /payment in /on_init and /confirm",
                 },
                 "@ondc/org/settlement_details": {
                   type: "array",
@@ -719,10 +755,7 @@ module.exports = {
                   },
                 },
               },
-              required: [
-                "collected_by",
-                "type"
-              ],
+              required: ["collected_by", "type"],
             },
             "@ondc/org/linked_order": {
               type: "object",
@@ -903,24 +936,6 @@ module.exports = {
         },
       },
       required: ["order"],
-    },
-    on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
-    },
-    init: {
-      type: "array",
-      items: {
-        $ref: "initSchema#",
-      },
-    },
-    on_init: {
-      type: "array",
-      items: {
-        $ref: "onInitSchema#",
-      },
     },
   },
   required: ["context", "message"],

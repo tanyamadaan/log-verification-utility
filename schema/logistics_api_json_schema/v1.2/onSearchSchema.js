@@ -1,7 +1,8 @@
 const { error } = require("ajv/dist/vocabularies/applicator/dependencies");
+const constants = require("../../../utils/constants");
 
 module.exports = {
-  $id: "http://example.com/schema/onSearchSchema",
+  $id: "http://example.com/schema/onSearchSchema/v1.2",
   type: "object",
   properties: {
     context: {
@@ -24,7 +25,7 @@ module.exports = {
         },
         core_version: {
           type: "string",
-          const: "1.1.0",
+          const: "1.2.0",
         },
         bap_id: {
           type: "string",
@@ -42,8 +43,7 @@ module.exports = {
           type: "string",
           const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
-
+            "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -60,7 +60,7 @@ module.exports = {
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
             },
-          ]
+          ],
         },
         timestamp: {
           type: "string",
@@ -88,22 +88,6 @@ module.exports = {
         catalog: {
           type: "object",
           properties: {
-            "bpp/fulfillments": {
-              type: "array",
-              items: {
-                type: "object",
-                properties: {
-                  id: {
-                    type: "string",
-                  },
-                  type: {
-                    type: "string",
-                    enum: ["Prepaid", "CoD", "RTO", "Reverse QC"],
-                  },
-                },
-                required: ["id", "type"],
-              },
-            },
             "bpp/descriptor": {
               type: "object",
               properties: {
@@ -143,6 +127,7 @@ module.exports = {
                       properties: {
                         id: {
                           type: "string",
+                          enum:constants.CATEGORY_ID
                         },
                         time: {
                           type: "object",
@@ -155,8 +140,12 @@ module.exports = {
                               type: "string",
                               format: "duration",
                             },
+                            timestamp:{
+                              type:"string",
+                              format:"date"
+                            }
                           },
-                          required: ["label", "duration"],
+                          required: ["label", "duration","timestamp"],
                         },
                       },
                       required: ["id"],
@@ -246,6 +235,7 @@ module.exports = {
                         },
                         category_id: {
                           type: "string",
+                          enum:constants.CATEGORY_ID
                         },
                         fulfillment_id: {
                           type: "string",
@@ -255,7 +245,7 @@ module.exports = {
                           properties: {
                             code: {
                               type: "string",
-                              enum: ["P2P", "P2H2P"],
+                              enum: constants.SHIPMENT_TYPE
                             },
                             name: {
                               type: "string",
@@ -303,7 +293,7 @@ module.exports = {
                             },
                             timestamp: {
                               type: "string",
-                              format: "date-time",
+                              format: "date",
                             },
                           },
                           required: ["label", "duration", "timestamp"],
@@ -318,57 +308,57 @@ module.exports = {
                       ],
                     },
                   },
+                  fulfillments: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        id: {
+                          type: "string",
+                        },
+                        type: {
+                          type: "string",
+                          enum: constants.FULFILLMENT_TYPE,
+                        },
+                      },
+                      required: ["id", "type"],
+                    },
+                  },
                 },
-                if: 
-                  {
-                    properties: {
-                      categories: {
-                        type: "array",
-                        items: {
-                          type: "object",
-                          properties: {
-                            id: { const: "Immediate Delivery" },
-                          },
+                if: {
+                  properties: {
+                    categories: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        properties: {
+                          id: { const: "Immediate Delivery" },
                         },
                       },
                     },
-                    not: {
-                      required: ["locations"],
-                    },
                   },
-                  // {
-                  //   not: {
-                  //     properties: {
-                  //       categories: {
-                  //         type: "array",
-                  //         items: {
-                  //           type: "object",
-                  //           properties: {
-                  //             id: { const: "Immediate Delivery" },
-                  //           },
-                  //         },
-                  //       },
-                  //     },
-                  //   },
-                  // },
-                else:{
-                required: ["id", "descriptor", "categories", "items"],
-                }
+                  not: {
+                    required: ["locations"],
+                  },
+                  errorMessage:
+                    "Locations is only required when shipment has to be dropped off at LSP location; not required for P2P",
+                },
+
+                required: [
+                  "id",
+                  "descriptor",
+                  "categories",
+                  "items",
+                  "fulfillments",
+                ],
               },
             },
           },
-          additionalProperties:false,
-          required: ["bpp/fulfillments", "bpp/descriptor", "bpp/providers"],
+          additionalProperties: false,
+          required: ["bpp/descriptor", "bpp/providers"],
         },
       },
       required: ["catalog"],
-    },
-  },
-
-  search: {
-    type: "array",
-    items: {
-      $ref: "searchSchema#",
     },
   },
 

@@ -1,5 +1,6 @@
+const constants = require("../../../utils/constants");
 module.exports = {
-  $id: "http://example.com/schema/initSchema",
+  $id: "http://example.com/schema/onInitSchema/v1.2",
   type: "object",
   properties: {
     context: {
@@ -18,11 +19,11 @@ module.exports = {
         },
         action: {
           type: "string",
-          const: "init",
+          const: "on_init",
         },
         core_version: {
           type: "string",
-          const: "1.1.0",
+          const: "1.2.0",
         },
         bap_id: {
           type: "string",
@@ -40,27 +41,28 @@ module.exports = {
           type: "string",
           const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+            "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
           allOf: [
+            {
+              const: { $data: "/init/0/context/message_id" },
+              errorMessage:
+                "Message ID for on_action API should be same as action API: ${/init/0/context/message_id}",
+            },
             {
               not: {
                 const: { $data: "1/transaction_id" },
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            }
+            },
           ],
         },
         timestamp: {
           type: "string",
           format: "date-time",
-        },
-        ttl: {
-          type: "string",
-          format: "duration"
         },
       },
       required: [
@@ -76,7 +78,6 @@ module.exports = {
         "transaction_id",
         "message_id",
         "timestamp",
-        "ttl",
       ],
     },
     message: {
@@ -90,22 +91,23 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
-                },
-                locations: {
-                  type: "array",
-                  items: {
-                    type: "object",
-                    properties: {
-                      id: {
-                        type: "string",
-                      },
-                    },
-                    required: ["id"],
-                  },
+                  const: { $data: "/init/0/message/order/provider/id" },
                 },
               },
               required: ["id"],
             },
+            provider_location: {
+              type: "object",
+              properties: {
+                id: {
+                  type: "string",
+                  const: {
+                    $data: "/init/0/message/order/provider/locations/0/id",
+                  },
+                },
+              },
+            },
+
             items: {
               type: "array",
               items: {
@@ -113,23 +115,71 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
+                    const: { $data: "/init/0/message/order/items/0/id" },
                   },
-                  category_id: {
+                  fulfillment_id: {
                     type: "string",
-                  },
-                  descriptor: {
-                    type: "object",
-                    properties: {
-                      code: {
-                        type: "string",
-                      },
+                    const: {
+                      $data: "/init/0/message/order/items/0/fulfillment_id",
                     },
-
-                    required: ["code"],
                   },
                 },
-                required: ["id", "category_id", "descriptor"],
+                required: ["id"],
               },
+            },
+            quote: {
+              type: "object",
+              properties: {
+                price: {
+                  type: "object",
+                  properties: {
+                    currency: {
+                      type: "string",
+                    },
+                    value: {
+                      type: "string",
+                    },
+                  },
+                  required: ["currency", "value"],
+                },
+                breakup: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      "@ondc/org/item_id": {
+                        type: "string",
+                      },
+                      "@ondc/org/title_type": {
+                        type: "string",
+                        enum: constants.TITLE_TYPE,
+                      },
+                      price: {
+                        type: "object",
+                        properties: {
+                          currency: {
+                            type: "string",
+                          },
+                          value: {
+                            type: "string",
+                          },
+                        },
+                        required: ["currency", "value"],
+                      },
+                    },
+                    required: [
+                      "@ondc/org/item_id",
+                      "@ondc/org/title_type",
+                      "price",
+                    ],
+                  },
+                },
+                ttl: {
+                  type: "string",
+                  format: "duration",
+                },
+              },
+              required: ["price", "breakup", "ttl"],
             },
             fulfillments: {
               type: "array",
@@ -141,7 +191,7 @@ module.exports = {
                   },
                   type: {
                     type: "string",
-                    enum: ["CoD", "Prepaid"],
+                    enum: constants.FULFILLMENT_TYPE,
                   },
                   start: {
                     type: "object",
@@ -208,7 +258,7 @@ module.exports = {
                           },
                           email: {
                             type: "string",
-                            format: "email"
+                            format: "email",
                           },
                         },
                         required: ["phone"],
@@ -238,13 +288,13 @@ module.exports = {
                                 type: "string",
                                 minLength: 3,
                                 not: { const: { $data: "1/locality" } },
-                                errorMessage:"cannot be equal to locality"
+                                errorMessage: "cannot be equal to locality",
                               },
                               building: {
                                 type: "string",
                                 minLength: 3,
                                 not: { const: { $data: "1/locality" } },
-                                errorMessage:"cannot be equal to locality"
+                                errorMessage: "cannot be equal to locality",
                               },
                               locality: {
                                 type: "string",
@@ -284,7 +334,7 @@ module.exports = {
                           },
                           email: {
                             type: "string",
-                            format: "email"
+                            format: "email",
                           },
                         },
                         required: ["phone", "email"],
@@ -293,94 +343,20 @@ module.exports = {
                     required: ["location", "contact"],
                   },
                 },
-                additionalProperties:false,
+                additionalProperties: false,
                 required: ["id", "type", "start", "end"],
               },
-            },
-            billing: {
-              type: "object",
-              properties: {
-                name: {
-                  type: "string",
-                },
-                address: {
-                  type: "object",
-                  properties: {
-                    name: {
-                      type: "string",
-                      minLength: 3,
-                      not: { const: { $data: "1/locality" } },
-                      errorMessage:"cannot be equal to locality"
-                      
-                    },
-                    building: {
-                      type: "string",
-                      minLength: 3,
-                      not: { const: { $data: "1/locality" } },
-                      errorMessage:"cannot be equal to locality"
-                    },
-                    locality: {
-                      type: "string",
-                      minLength: 3,
-                    },
-                    city: {
-                      type: "string",
-                    },
-                    state: {
-                      type: "string",
-                    },
-                    country: {
-                      type: "string",
-                    },
-                    area_code: {
-                      type: "string",
-                    },
-                  },
-                  additionalProperties: false,
-                  required: [
-                    "name",
-                    "building",
-                    "locality",
-                    "city",
-                    "state",
-                    "country",
-                    "area_code",
-                  ],
-                },
-                tax_number: {
-                  type: "string",
-                },
-                phone: {
-                  type: "string",
-                },
-                email: {
-                  type: "string",
-                  format:"email"
-                },
-                created_at: {
-                  type: "string",
-                  const: { $data: "4/context/timestamp" },
-                  errorMessage:
-                    "does not match context timestamp - ${4/context/timestamp} ",
-                },
-                updated_at: {
-                  type: "string",
-                  const: { $data: "4/context/timestamp" },
-                  errorMessage:
-                    "does not match context timestamp - ${4/context/timestamp} ",
-                },
-              },
-              required: [
-                "name",
-                "address",
-                "phone",
-                "created_at",
-                "updated_at",
-              ],
             },
             payment: {
               type: "object",
               properties: {
+                type: {
+                  type: "string",
+                  enum: ["ON-FULFILLMENT", "POST-FULFILLMENT", "ON-ORDER"],
+                },
+                collected_by: {
+                  type: "string",
+                },
                 "@ondc/org/settlement_details": {
                   type: "array",
                   items: {
@@ -391,7 +367,6 @@ module.exports = {
                       },
                       settlement_type: {
                         type: "string",
-                        enum: ["upi", "neft", "rtgs"],
                       },
                       beneficiary_name: {
                         type: "string",
@@ -435,35 +410,35 @@ module.exports = {
                         },
                       },
                     ],
-                    required: [
-                      "settlement_counterparty",
-                      "settlement_type",
-                    ],
+                    required: ["settlement_counterparty", "settlement_type"],
                   },
                 },
               },
-              required: ["@ondc/org/settlement_details"],
+              required: ["type", "collected_by"],
             },
           },
-          additionalProperties:false,
-          required: ["provider", "items", "fulfillments", "billing"]
+          additionalProperties: false,
+          required: ["provider", "items", "quote", "payment", "fulfillments"],
+          // anyOf: [
+          //   {
+          //     required: [
+          //       "/on_search/0/message/catalog/bpp~1providers/0/locations",
+          //       "provider_location",
+          //     ],
+          //     errorMessage:"provider/location is required in /init if it was returned in /on_search"
+          //   },
+          //   {
+          //     not: {
+          //       required: [
+          //         "/on_search/0/message/catalog/bpp~1providers/0/locations",
+          //       ],
+          //     },
+          //   },
+          // ],
         },
       },
       required: ["order"],
     },
-    search: {
-      type: "array",
-      items: {
-        $ref: "searchSchema#",
-      },
-    },
-    on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
-    },
-  
   },
   required: ["context", "message"],
 };

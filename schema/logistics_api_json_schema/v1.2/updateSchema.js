@@ -1,6 +1,6 @@
 const constants = require("../../../utils/constants")
 module.exports = {
-  $id: "http://example.com/schema/updateSchema",
+  $id: "http://example.com/schema/updateSchema/v1.2",
   type: "object",
   properties: {
     context: {
@@ -273,25 +273,7 @@ module.exports = {
         },
       },
       required: ["update_target", "order"],
-    },
-    confirm: {
-      type: "array",
-      items: {
-        $ref: "confirmSchema#",
-      },
-    },
-    on_confirm: {
-      type: "array",
-      items: {
-        $ref: "onConfirmSchema#",
-      },
-    },
-    on_update: {
-      type: "array",
-      items: {
-        $ref: "onUpdateSchema#",
-      },
-    },
+    }
   },
   required: ["context", "message"],
 };

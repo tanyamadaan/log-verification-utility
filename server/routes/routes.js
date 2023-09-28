@@ -97,7 +97,7 @@ router.post("/validate/local/multiple", async (req, res) => {
         files.filter((filename) => filename.match(/\.json$/))[0]
       )
     );
-    console.log("First file", firstFileData)
+    console.log("First file", JSON.parse(firstFileData.toString()))
     try {
       const destination = path.join(
         __dirname,
@@ -111,6 +111,8 @@ router.post("/validate/local/multiple", async (req, res) => {
         logReport = JSON.parse(
           fs.readFileSync(path.join(destination, "log_report.json")).toString()
         );
+        // copyFile is raising permission error.
+        // fs.copyFileSync(path.join(dirPath, "../", "merged.json"), destination)
         return res.json({logReport });
       });;
     } catch (error) {

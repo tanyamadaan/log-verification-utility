@@ -9,33 +9,35 @@ const sortMerge = (domain, directory, destination) => {
     files = fs.readdirSync(directory);
 
     let map;
-    switch(domain) {
-      case 'logistics':
-        map = constants.LOG_SORTED_INDEX
+    switch (domain) {
+      case "logistics":
+        map = constants.LOG_SORTED_INDEX;
         break;
-      case 'b2b':
-        map = constants.B2B_SORTED_INDEX
+      case "b2b":
+        map = constants.B2B_SORTED_INDEX;
         break;
     }
 
     mergedlogs = files.reduce((acc, item) => {
       try {
-        let data = fs.readFileSync(`${directory}/${item}`);
-        data = JSON.parse(data);
-        const context = data.context;
-        if (!context || !context.action) {
-          console.log(
-            `Error in file ${item}: Missing 'context' or 'action' property`
-          );
-          return acc; // Skip this data and continue with the next iteration
+        if (item.match(/\.json$/)) {
+          let data = fs.readFileSync(`${directory}/${item}`);
+          data = JSON.parse(data);
+          const context = data.context;
+          if (!context || !context.action) {
+            console.log(
+              `Error in file ${item}: Missing 'context' or 'action' property`
+            );
+            return acc; // Skip this data and continue with the next iteration
+          }
+          const { action } = data.context;
+          if (acc.hasOwnProperty(action)) {
+            acc[action].push(data);
+          } else {
+            acc[action] = [data];
+          }
+          return acc;
         }
-        const { action } = data.context;
-        if (acc.hasOwnProperty(action)) {
-          acc[action].push(data);
-        } else {
-          acc[action] = [data];
-        }
-        return acc;
       } catch (error) {
         console.log(`Error in file ${item}`);
         console.trace(error);

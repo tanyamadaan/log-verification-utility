@@ -87,12 +87,45 @@ module.exports = {
           properties: {
             id: {
               type: "string",
-              const: { $data: "/on_confirm/0/message/order/id" },
+              const: { $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/id" },
             },
             state: {
               type: "string",
               enum:["Cancelled"]
             },
+            cancellation: {
+              type: "object",
+              properties: {
+                cancelled_by: { type: "string"},
+                reason: {
+                  type: "object",
+                  properties: {
+                    id: {type: "string"}
+                  }
+                }
+              }
+            },
+            items: {
+              allOf: [
+                {
+                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/items"
+                },
+                {
+                  $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/items"
+                }
+              ]
+            },
+            quote: {
+              allOf: [
+                {
+                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/quote"
+                },
+                {
+                  $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/quote"
+                }
+              ]
+            },
+
             fulfillments: {
               type: "array",
               items: {
@@ -100,11 +133,11 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
-                    $data: "/on_confirm/0/message/order/fulfillments/0/id",
+                    $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/id",
                   },
                   type: {
                     type: "string",
-                    $data: "/on_confirm/0/message/order/fulfillments/0/type",
+                    $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/type",
                   },
                   state: {
                     type: "object",
@@ -122,53 +155,180 @@ module.exports = {
                     },
                     required: ["descriptor"],
                   },
-                  tags: {
+                  "@ondc/org/awb_no": {
+                    type: "string",
+                    const: {
+                        $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/@ondc~1org~1awb_no"
+                      },
+                  },
+                  tracking: {
+                    type: "boolean",
+                    const: {
+                        $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/tracking"
+                      },
+                  },
+                  start: {
+                    type: "object",
+                    allOf: [
+                      {
+                        properties: {
+                          time: {
+                            type: "object",
+                            properties: {
+                              range: {
+                                type: "object",
+                                properties: {
+                                  start: {
+                                    type: "string",
+                                    format: "date-time",
+                                  },
+                                  end: {
+                                    type: "string",
+                                    format: "date-time",
+                                  },
+                                },
+                                required: ["start", "end"],
+                              },
+                            },
+                            required: ["range"],
+                          },
+                          instructions: {
+                            type: "object",
+                            properties: {
+                              code: {
+                                type: "string"
+                              },
+                              short_desc: {
+                                type: string
+                              },
+                              long_desc: {
+                                type: "string"
+                              }
+                            }
+                          }
+                        },
+                        required: ["time", "instructions"],
+                      },
+                      {
+                        properties: {
+                          $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat/properties",
+                        },
+                      },
+                      {
+                        $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/start"
+                      }
+                    ],
+                  },
+                  
+                  end: {
+                    type: "object",
+                    allOf: [
+                      {
+                        properties: {
+                          time: {
+                            type: "object",
+                            properties: {
+                              range: {
+                                type: "object",
+                                properties: {
+                                  start: {
+                                    type: "string",
+                                    format: "date-time",
+                                  },
+                                  end: {
+                                    type: "string",
+                                    format: "date-time",
+                                  },
+                                },
+                                required: ["start", "end"],
+                              },
+                            },
+                            required: ["range"],
+                          },
+                          instructions: {
+                            type: "object",
+                            properties: {
+                              code: {
+                                type: "string"
+                              },
+                              short_desc: {
+                                type: string
+                              },
+                              long_desc: {
+                                type: "string"
+                              }
+                            }
+                          }
+                        },
+                        required: ["time", "instructions"],
+                      },
+                      {
+                        properties: {
+                          $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat/properties",
+                        },
+                      },
+                      {
+                        $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/end"
+                      }
+                    ],
+                  },
+                  agent: {
+                    type: "object",
+                    properties:{
+                      name: {
+                        type: "string"
+                      },
+                      phone: {
+                        type: "string"
+                      }
+                    },
+                    required: ["name",  "phone"]
+                  },
+                  vehicle: {
                     type: "object",
                     properties: {
-                      cancellation_reason_id: {
-                        type: "string",
-                      },
-                      "AWB no": {
-                        type: "string",
-                      },
+                      registration: {
+                        type: "string"
+                      }
                     },
-                    required: ["cancellation_reason_id"],
-                  },
+                    required: ["registration"]
+                  }
+
                 },
                 additionalProperties: false,
-                required: ["id", "type", "state", "tags"],
+                required: ["id", "type", "state", "tags","@ondc/org/awb_no", "tracking", "start", "end", "agent"],
               },
             },
+            billing: {
+              allOf: [
+                {$ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/billing"},
+                {$data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/billing"}
+              ]
+            },
+            payment: {
+              allOf: [
+                {$ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/payment"},
+                {$data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/payment"}
+              ]
+            },
+            "@ondc/org/linked_order": {
+              allOf: [
+                {$ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order"},
+                {
+                  $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order"
+                }
+              ]
+            },
+            updated_at: {
+              type: "string",
+              format: "date-time"
+            }
           },
           additionalProperties: false,
-          required: ["id", "state", "fulfillments"],
+          required: ["id", "state", "fulfillments", "billing", "payment", "@ondc/org/linked_order", "updated_at"],
         },
       },
       required: ["order"],
-    },
-  },
-  confirm: {
-    type: "array",
-    items: {
-      $ref: "confirmSchema#",
-    },
-  },
-  search: {
-    type: "array",
-    items: {
-      $ref: "searchSchema#",
-    },
-  },
-  init: {
-    type: "array",
-    items: {
-      $ref: "initSchema#",
-    },
-  },
-  on_search: {
-    type: "array",
-    items: {
-      $ref: "onSearchSchema#",
     },
   },
   required: ["context", "message"],

@@ -1,4 +1,4 @@
-const constants = require("../../../utils/constants")
+const constants = require("../../../utils/constants");
 module.exports = {
   $id: "http://example.com/schema/updateSchema/v1.2",
   type: "object",
@@ -15,7 +15,10 @@ module.exports = {
         },
         city: {
           type: "string",
-          const: { $data: "/on_search/0/context/city" },
+          const: {
+            $data:
+              "http://example.com/schema/onSearchSchema/v1.2#/properties/context/city",
+          },
         },
         action: {
           type: "string",
@@ -39,9 +42,12 @@ module.exports = {
         },
         transaction_id: {
           type: "string",
-          const: { $data: "/search/0/context/transaction_id" },
+          const: {
+            $data:
+              "http://example.com/schema/searchSchema/v1.2#/properties/context/transaction_id",
+          },
           errorMessage:
-                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+            "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -52,7 +58,7 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            }
+            },
           ],
         },
         timestamp: {
@@ -91,7 +97,10 @@ module.exports = {
           properties: {
             id: {
               type: "string",
-              const: { $data: "/confirm/message/order/id" },
+              const: {
+                $data:
+                  "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/id",
+              },
             },
             items: {
               type: "array",
@@ -100,12 +109,16 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
-                    const: { $data: "/confirm/message/order/items/0/id" },
+                    const: {
+                      $data:
+                        "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/items/0/id",
+                    },
                   },
                   category_id: {
                     type: "string",
                     const: {
-                      $data: "/confirm/message/order/items/0/category_id",
+                      $data:
+                        "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/items/0/category_id",
                     },
                   },
                   descriptor: {
@@ -115,7 +128,7 @@ module.exports = {
                         type: "string",
                         const: {
                           $data:
-                            "/confirm/message/order/items/0/descriptor/code",
+                            "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/items/0/descriptor/code",
                         },
                       },
                     },
@@ -147,10 +160,10 @@ module.exports = {
                         properties: {
                           code: {
                             type: "string",
-                            enum: constants.PCC
+                            enum: constants.PCC,
                           },
                           name: {
-                            type: "string"
+                            type: "string",
                           },
                           short_desc: {
                             type: "string",
@@ -159,10 +172,10 @@ module.exports = {
                             type: "string",
                           },
                         },
-                        required: ['code', 'name', 'short_desc', 'long_desc']
+                        required: ["code", "name", "short_desc", "long_desc"],
                       },
                     },
-                    additionalProperties:false,
+                    additionalProperties: false,
                     // required: ["instructions"],
                   },
                   end: {
@@ -173,10 +186,10 @@ module.exports = {
                         properties: {
                           code: {
                             type: "string",
-                            enum: constants.DCC
+                            enum: constants.DCC,
                           },
                           name: {
-                            type: "string"
+                            type: "string",
                           },
                           short_desc: {
                             type: "string",
@@ -185,17 +198,17 @@ module.exports = {
                             type: "string",
                           },
                         },
-                        required: ["name", "code","short_desc", "long_desc"],
+                        required: ["name", "code", "short_desc", "long_desc"],
                       },
                     },
-                    additionalProperties:false,
+                    additionalProperties: false,
                     // required: ["instructions"],
                   },
                   tags: {
-                    $ref: "http://example.com/schema/commonSchema/v1.2#tagsArray"
-                  }
+                    $ref: "http://example.com/schema/commonSchema/v1.2#/properties/tagsArray",
+                  },
                 },
-                additionalProperties:false,
+                additionalProperties: false,
                 required: ["id", "type", "tags"],
 
                 // if: {
@@ -266,14 +279,14 @@ module.exports = {
               },
             },
             "@ondc/org/linked_order": {
-              $ref: "http://example.com/schema/confirmSchema/v1.2#message/order/~0ondc~1org~1linked_order"
+              $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order",
             },
           },
           required: ["id", "state", "items", "fulfillments", "updated_at"],
         },
       },
       required: ["update_target", "order"],
-    }
+    },
   },
   required: ["context", "message"],
 };

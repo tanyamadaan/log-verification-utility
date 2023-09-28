@@ -92,5 +92,6 @@ module.exports = Object.freeze({
   SETTLEMENT_TYPE:["upi", "neft", "rtgs"],
   TITLE_TYPE:["delivery","rto","reverseqc"],
   PCC_CODE:["1","2","3","4"],
-  DCC_CODE:["1","2","3"]
+  DCC_CODE:["1","2","3"],
+  ORDER_STATE: ["Created", "Accepted", "Cancelled", "In-progress"]
 });

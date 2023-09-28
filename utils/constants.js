@@ -75,6 +75,7 @@ module.exports = Object.freeze({
     "Next Day Delivery",
   ],
   PAYMENT_TYPE:["ON-ORDER", "ON-FULFILLMENT", "POST-FULFILLMENT"],
+  PAYMENT_COLLECTEDBY:["BAP","BPP"],
   UNITS_WEIGHT : ["kilogram", "gram"],
   UNITS_DIMENSIONS:["centimeter", "meter"],
   CATEGORIES: [
@@ -92,5 +93,8 @@ module.exports = Object.freeze({
   SETTLEMENT_TYPE:["upi", "neft", "rtgs"],
   TITLE_TYPE:["delivery","rto","reverseqc"],
   PCC_CODE:["1","2","3","4"],
-  DCC_CODE:["1","2","3"]
+  DCC_CODE:["1","2","3"],
+  FULFILLMENT_TAGS_CODE:["state", "rto_action"],
+  FULFILLMENT_TAGS_LIST_CODE:["ready_to_ship", "return_to_origin"],
+  FULFILLMENT_TAGS_LIST_VALUE:["yes","no"]
 });

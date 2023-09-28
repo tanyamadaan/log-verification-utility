@@ -6,6 +6,7 @@ const utils = require("../utils");
 const checkOnSearch = (data, msgIdSet) => {
   const onSrchObj = {};
   let onSearch = data;
+  let core_version = onSearch.context.core_version;
   let search = dao.getValue("searchObj");
   let validFulfillmentIDs = new Set();
   onSearch = onSearch.message.catalog;
@@ -38,8 +39,15 @@ const checkOnSearch = (data, msgIdSet) => {
       `Checking forward and backward shipment in ${constants.LOG_ONSEARCH} api`
     );
 
-    if (onSearch["bpp/fulfillments"]) {
-      const fulfillments = onSearch["bpp/fulfillments"];
+    if (
+      onSearch["bpp/fulfillments"] ||
+      onSearch["bpp/providers"][0].fulfillments
+    ) {
+      const fulfillments =
+        core_version === "1.1.0"
+          ? onSearch["bpp/fulfillments"]
+          : onSearch["bpp/providers"][0].fulfillments;
+
       dao.setValue("bppFulfillmentsArr", fulfillments);
 
       let hasForwardShipment = false;
@@ -47,11 +55,11 @@ const checkOnSearch = (data, msgIdSet) => {
 
       for (const fulfillment of fulfillments) {
         validFulfillmentIDs.add(fulfillment.id);
-        if (fulfillment.type === "Prepaid" || fulfillment.type === "CoD") {
+        if (fulfillment.type === "Prepaid" || fulfillment.type === "CoD" || fulfillment.type === "Delivery") {
           hasForwardShipment = true;
         } else if (
           fulfillment.type === "RTO" ||
-          fulfillment.type === "Reverse QC"
+          fulfillment.type === "Reverse QC" || fulfillment.type === "Return"
         ) {
           hasBackwardShipment = true;
         }
@@ -60,9 +68,9 @@ const checkOnSearch = (data, msgIdSet) => {
       if (hasForwardShipment && hasBackwardShipment) {
         console.log("Both forward and backward shipments are present.");
       } else if (!hasForwardShipment) {
-        onSrchObj.frwrdShpmnt = `Forward shipment (Prepaid or CoD) is missing in ${constants.LOG_ONSEARCH} api`;
+        onSrchObj.frwrdShpmnt = `Forward shipment is missing in fulfillments in ${constants.LOG_ONSEARCH} api`;
       } else if (!hasBackwardShipment) {
-        onSrchObj.bkwrdshmpnt = `Backward shipment (RTO or Reverse QC) is missing in ${constants.LOG_ONSEARCH} api`;
+        onSrchObj.bkwrdshmpnt = `Backward shipment is missing in fulfillments in ${constants.LOG_ONSEARCH} api`;
       }
     }
   } catch (error) {
@@ -82,11 +90,11 @@ const checkOnSearch = (data, msgIdSet) => {
       providers.forEach((provider, i) => {
         let itemsArr = provider.items;
         const providerId = provider.id;
-    
+
         dao.setValue(`${providerId}itemsArr`, itemsArr);
         itemsArr.forEach((item, j) => {
           if (!validFulfillmentIDs.has(item.fulfillment_id)) {
-            onSrchObj.fulfillmentIDerr = `fulfillment_id of /items/${j} for /bpp/provider/${i} does not match with the id in bpp/fulfillments in ${constants.LOG_ONSEARCH} api`;
+            onSrchObj.fulfillmentIDerr = `fulfillment_id - ${item.fulfillment_id} of /items/${j} does not match with any id in fulfillments array in ${constants.LOG_ONSEARCH} api`;
           }
           if (
             item.descriptor.code === "P2H2P" &&

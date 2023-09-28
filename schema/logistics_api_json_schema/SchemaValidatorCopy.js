@@ -62,6 +62,15 @@ function isLengthValid(data) {
   );
 }
 
+function isFutureDated(data) {
+  const contextTime = new Date(data?.context?.timestamp);
+  const created_at = new Date(data?.message?.order?.created_at);
+  const updated_at = new Date(data?.message?.order?.updated_at);
+
+  if (created_at > contextTime || updated_at > contextTime) return true;
+  else return false;
+}
+
 const validate_schema = (data, schema) => {
   let error_list = [];
   try {
@@ -81,6 +90,9 @@ const validate_schema = (data, schema) => {
         validate: (schema, data) => isEndTimeGreater(data),
       })
       .addKeyword("isLengthValid", {
+        validate: (schema, data) => isLengthValid(data),
+      })
+      .addKeyword("isFutureDated", {
         validate: (schema, data) => isLengthValid(data),
       });
 

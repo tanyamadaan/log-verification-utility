@@ -287,6 +287,8 @@ module.exports = {
                   },
                   "@ondc/org/awb_no": {
                     type: "string",
+                    pattern: "^[0-9]{11,16}$",
+                    errorMessage: "should be 11-16 digits",
                   },
                   start: {
                     type: "object",
@@ -410,7 +412,6 @@ module.exports = {
                             },
                           },
                         ],
-                       
                       },
                     },
                     required: ["person", "location", "contact"],
@@ -541,8 +542,39 @@ module.exports = {
                     },
                     required: ["person", "location", "contact"],
                   },
+                  tags: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        code: {
+                          type: "string",
+                          enum: constants.FULFILLMENT_TAGS_CODE
+                        },
+                        list: {
+                          type: "array",
+                          items: {
+                            type: "object",
+                            properties: {
+                              code: {
+                                type: "string",
+                                enum: constants.FULFILLMENT_TAGS_LIST_CODE
+                              },
+                              value: {
+                                type: "string",
+                                enum: constants.FULFILLMENT_TAGS_LIST_VALUE,
+                              },
+                            },
+                            required: ["code", "value"],
+                          },
+                        },
+                      },
+                      required: ["code", "list"],
+                    },
+                  },
                 },
-                required: ["id", "type", "start", "end"],
+
+                required: ["id", "type", "start", "end", "tags"],
               },
             },
             billing: {
@@ -676,6 +708,7 @@ module.exports = {
                 },
                 collected_by: {
                   type: "string",
+                  enum:constants.PAYMENT_COLLECTEDBY,
                   const: {
                     $data: "/on_init/0/message/order/payment/collected_by",
                   },
@@ -684,7 +717,7 @@ module.exports = {
                 },
                 type: {
                   type: "string",
-                  enum: ["ON-FULFILLMENT", "POST-FULFILLMENT", "ON-ORDER"],
+                  enum: constants.PAYMENT_TYPE,
                   const: {
                     $data: "/on_init/0/message/order/payment/type",
                   },
@@ -767,17 +800,7 @@ module.exports = {
                     properties: {
                       category_id: {
                         type: "string",
-                        enum: [
-                          "Grocery",
-                          "F&B",
-                          "Fashion",
-                          "BPC",
-                          "Electronics",
-                          "Home & Decor",
-                          "Pharma",
-                          "Agriculture",
-                          "Mobility",
-                        ],
+                        enum: constants.CATEGORIES,
                       },
                       descriptor: {
                         type: "object",
@@ -799,6 +822,7 @@ module.exports = {
                             properties: {
                               unit: {
                                 type: "string",
+                                enum:constants.UNITS_WEIGHT
                               },
                               value: {
                                 type: "number",
@@ -848,9 +872,6 @@ module.exports = {
                         name: {
                           type: "string",
                         },
-                        street: {
-                          type: "string",
-                        },
                         locality: {
                           type: "string",
                         },
@@ -887,6 +908,7 @@ module.exports = {
                       properties: {
                         unit: {
                           type: "string",
+                          enum:constants.UNITS_WEIGHT
                         },
                         value: {
                           type: "number",
@@ -899,6 +921,51 @@ module.exports = {
                         },
                       },
                       required: ["unit", "value"],
+                    },
+                    dimensions: {
+                      type: "object",
+                      properties: {
+                        length: {
+                          type: "object",
+                          properties: {
+                            unit: {
+                              type: "string",
+                              enum: constants.UNITS_DIMENSIONS,
+                            },
+                            value: {
+                              type: "number",
+                            },
+                          },
+                          required: ["unit", "value"],
+                        },
+                        breadth: {
+                          type: "object",
+                          properties: {
+                            unit: {
+                              type: "string",
+                              enum: constants.UNITS_DIMENSIONS,
+                            },
+                            value: {
+                              type: "number",
+                            },
+                          },
+                          required: ["unit", "value"],
+                        },
+                        height: {
+                          type: "object",
+                          properties: {
+                            unit: {
+                              type: "string",
+                              enum: constants.UNITS_DIMENSIONS,
+                            },
+                            value: {
+                              type: "number",
+                            },
+                          },
+                          required: ["unit", "value"],
+                        },
+                      },
+                      required: ["length", "breadth", "height"],
                     },
                   },
                   required: ["id", "weight"],
@@ -937,6 +1004,8 @@ module.exports = {
       },
       required: ["order"],
     },
+    // isFutureDated : true,
+    // errorMessage : "order/created_at or order/updated_at cannot be future dated w.r.t context/timestamp"
   },
   required: ["context", "message"],
 };

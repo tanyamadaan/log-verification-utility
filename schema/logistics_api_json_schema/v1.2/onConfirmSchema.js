@@ -565,6 +565,9 @@ module.exports = {
             "billing",
             "created_at",
             "updated_at",
+            "@ondc/org/linked_order",
+            "billing",
+            "payment"
           ],
         },
       },

@@ -346,9 +346,155 @@ module.exports = {
                 required: ["id", "type", "start"],
               },
             },
+            billing: {
+              type: "object",
+              properties: {
+                name: {
+                  type: "string",
+                  const: { $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/name" },
+                  errorMessage:
+                    "mismatches in /billing in /confirm and /on_confirm",
+                },
+                address: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string",
+                      not: { const: { $data: "1/locality" } },
+                      const: {
+                        $data: "http://example.com/schema/confirmSchema/v1.2#/properties/0/message/order/billing/address/name",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
+                    },
+                    building: {
+                      type: "string",
+                      const: {
+                        $data:
+                          "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/address/building",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
+                    },
+                    locality: {
+                      type: "string",
+                      const: {
+                        $data:
+                          "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/address/locality",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
+                    },
+                    city: {
+                      type: "string",
+                      const: {
+                        $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/address/city",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
+                    },
+                    state: {
+                      type: "string",
+                      const: {
+                        $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/address/state",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
+                    },
+                    country: {
+                      type: "string",
+                      const: {
+                        $data:
+                          "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/address/country",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
+                    },
+                    area_code: {
+                      type: "string",
+                      const: {
+                        $data:
+                          "/confirm/0/message/order/billing/address/area code",
+                      },
+                      errorMessage:
+                        "mismatches in /billing in /confirm and /on_confirm",
+                    },
+                  },
+                  additionalProperties: false,
+                  required: [
+                    "name",
+                    "building",
+                    "locality",
+                    "city",
+                    "state",
+                    "country",
+                    "area_code",
+                  ],
+                },
+                tax_number: {
+                  type: "string",
+                  const: {
+                    $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/tax_number",
+                  },
+                  errorMessage:
+                    "mismatches in /billing in /confirm and /on_confirm",
+                },
+                phone: {
+                  type: "string",
+                  const: { $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/phone" },
+                  errorMessage:
+                    "mismatches in /billing in /confirm and /on_confirm",
+                },
+                email: {
+                  type: "string",
+                  const: { $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/email" },
+                  errorMessage:
+                    "mismatches in /billing in /confirm and /on_confirm",
+                },
+                created_at: {
+                  type: "string",
+                  const: {
+                    $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/created_at",
+                  },
+                  errorMessage:
+                    "mismatches in /billing in /confirm and /on_confirm",
+                },
+                updated_at: {
+                  type: "string",
+                  const: {
+                    $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/updated_at",
+                  },
+                  errorMessage:
+                    "mismatches in /billing in /confirm and /on_confirm",
+                },
+              },
+              additionalProperties: false,
+              required: [
+                "name",
+                "address",
+                "phone",
+                "tax_number",
+                "created_at",
+                "updated_at",
+              ],
+            },
+            payment: {
+              allOf: [
+                {$ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/payment"},
+                {$data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/payment"}
+              ]
+            },
+            "@ondc/org/linked_order": {
+              allOf: [
+                {$ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order"},
+                {
+                  $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order"
+                }
+              ]
+            },
             created_at: {
               type: "string",
-              const: { $data: "/confirm/0/message/order/created_at" },
+              const: { $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/created_at" },
               errorMessage: "mismatches in /confirm and /on_update",
             },
             updated_at: {
@@ -356,7 +502,7 @@ module.exports = {
             },
           },
           additionalProperties: false,
-          required: ["id", "state", "items", "fulfillments", "updated_at"],
+          required: ["id", "state", "items", "fulfillments", "updated_at", "@ondc/org/linked_order", "payment", "billing"],
 
           // oneOf: [
           //   {

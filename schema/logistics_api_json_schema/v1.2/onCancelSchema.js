@@ -1,3 +1,4 @@
+const { CANCELLATION_CODE } = require("../../../utils/constants");
 module.exports = {
   $id: "http://example.com/schema/onCancelSchema/v1.2",
   type: "object",
@@ -39,7 +40,7 @@ module.exports = {
           type: "string",
           const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+            "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -83,47 +84,52 @@ module.exports = {
       properties: {
         order: {
           type: "object",
-        
+
           properties: {
             id: {
               type: "string",
-              const: { $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/id" },
+              const: {
+                $data:
+                  "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/id",
+              },
             },
             state: {
               type: "string",
-              enum:["Cancelled"]
+              enum: ["Cancelled"],
             },
             cancellation: {
               type: "object",
               properties: {
-                cancelled_by: { type: "string"},
+                cancelled_by: { type: "string" },
                 reason: {
                   type: "object",
                   properties: {
-                    id: {type: "string"}
-                  }
-                }
-              }
+                    id: { type: "string", enum: CANCELLATION_CODE },
+                  },
+                },
+              },
             },
             items: {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/items"
+                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/items",
                 },
                 {
-                  $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/items"
-                }
-              ]
+                  $data:
+                    "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/items",
+                },
+              ],
             },
             quote: {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/quote"
+                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/quote",
                 },
                 {
-                  $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/quote"
-                }
-              ]
+                  $data:
+                    "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/quote",
+                },
+              ],
             },
 
             fulfillments: {
@@ -133,11 +139,13 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
-                    $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/id",
+                    $data:
+                      "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/id",
                   },
                   type: {
                     type: "string",
-                    $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/type",
+                    $data:
+                      "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/type",
                   },
                   state: {
                     type: "object",
@@ -147,7 +155,7 @@ module.exports = {
                         properties: {
                           code: {
                             type: "string",
-                            enum:["Cancelled"]
+                            enum: ["Cancelled"],
                           },
                         },
                         required: ["code"],
@@ -158,14 +166,16 @@ module.exports = {
                   "@ondc/org/awb_no": {
                     type: "string",
                     const: {
-                        $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/@ondc~1org~1awb_no"
-                      },
+                      $data:
+                        "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/@ondc~1org~1awb_no",
+                    },
                   },
                   tracking: {
                     type: "boolean",
                     const: {
-                        $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/tracking"
-                      },
+                      $data:
+                        "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/tracking",
+                    },
                   },
                   start: {
                     type: "object",
@@ -196,16 +206,16 @@ module.exports = {
                             type: "object",
                             properties: {
                               code: {
-                                type: "string"
+                                type: "string",
                               },
                               short_desc: {
-                                type: string
+                                type: string,
                               },
                               long_desc: {
-                                type: "string"
-                              }
-                            }
-                          }
+                                type: "string",
+                              },
+                            },
+                          },
                         },
                         required: ["time", "instructions"],
                       },
@@ -215,11 +225,12 @@ module.exports = {
                         },
                       },
                       {
-                        $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/start"
-                      }
+                        $data:
+                          "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/start",
+                      },
                     ],
                   },
-                  
+
                   end: {
                     type: "object",
                     allOf: [
@@ -249,16 +260,16 @@ module.exports = {
                             type: "object",
                             properties: {
                               code: {
-                                type: "string"
+                                type: "string",
                               },
                               short_desc: {
-                                type: string
+                                type: string,
                               },
                               long_desc: {
-                                type: "string"
-                              }
-                            }
-                          }
+                                type: "string",
+                              },
+                            },
+                          },
                         },
                         required: ["time", "instructions"],
                       },
@@ -268,64 +279,95 @@ module.exports = {
                         },
                       },
                       {
-                        $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/end"
-                      }
+                        $data:
+                          "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/end",
+                      },
                     ],
                   },
                   agent: {
                     type: "object",
-                    properties:{
+                    properties: {
                       name: {
-                        type: "string"
+                        type: "string",
                       },
                       phone: {
-                        type: "string"
-                      }
+                        type: "string",
+                      },
                     },
-                    required: ["name",  "phone"]
+                    required: ["name", "phone"],
                   },
                   vehicle: {
                     type: "object",
                     properties: {
                       registration: {
-                        type: "string"
-                      }
+                        type: "string",
+                      },
                     },
-                    required: ["registration"]
-                  }
-
+                    required: ["registration"],
+                  },
                 },
                 additionalProperties: false,
-                required: ["id", "type", "state", "tags","@ondc/org/awb_no", "tracking", "start", "end", "agent"],
+                required: [
+                  "id",
+                  "type",
+                  "state",
+                  "tags",
+                  "@ondc/org/awb_no",
+                  "tracking",
+                  "start",
+                  "end",
+                  "agent",
+                ],
               },
             },
             billing: {
               allOf: [
-                {$ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/billing"},
-                {$data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/billing"}
-              ]
+                {
+                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/billing",
+                },
+                {
+                  $data:
+                    "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/billing",
+                },
+              ],
             },
             payment: {
               allOf: [
-                {$ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/payment"},
-                {$data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/payment"}
-              ]
+                {
+                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/payment",
+                },
+                {
+                  $data:
+                    "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/payment",
+                },
+              ],
             },
             "@ondc/org/linked_order": {
               allOf: [
-                {$ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order"},
                 {
-                  $data: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order"
-                }
-              ]
+                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order",
+                },
+                {
+                  $data:
+                    "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order",
+                },
+              ],
             },
             updated_at: {
               type: "string",
-              format: "date-time"
-            }
+              format: "date-time",
+            },
           },
           additionalProperties: false,
-          required: ["id", "state", "fulfillments", "billing", "payment", "@ondc/org/linked_order", "updated_at"],
+          required: [
+            "id",
+            "state",
+            "fulfillments",
+            "billing",
+            "payment",
+            "@ondc/org/linked_order",
+            "updated_at",
+          ],
         },
       },
       required: ["order"],

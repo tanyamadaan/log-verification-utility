@@ -4,10 +4,10 @@ const {validate_schema_b2b_master} = require("./B2B_json_schema/schemaValidator"
 
 const fs = require("fs");
 
-const validate_schema_for_domain_json = (vertical, data) => {
+const validate_schema_for_domain_json = (vertical, data, version="v1.2") => {
   switch (vertical) {
     case "logistics":
-      res = validate_schema_master(data);
+      res = validate_schema_master(data, version);
       return res;
     case "b2b":
     res = validate_schema_b2b_master(data);

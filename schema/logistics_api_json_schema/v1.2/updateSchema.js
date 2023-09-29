@@ -26,7 +26,7 @@ module.exports = {
         },
         core_version: {
           type: "string",
-          const: "1.1.0",
+          const: "1.2.0",
         },
         bap_id: {
           type: "string",

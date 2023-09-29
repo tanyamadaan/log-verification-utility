@@ -1,25 +1,3 @@
-const onConfirmSchema = require("./v1.1/onConfirmSchema");
-const onInitSchema = require("./v1.1/onInitSchema");
-const onSearchSchema = require("./v1.1/onSearchSchema");
-const onTrackSchema = require("./v1.1/onTrackSchema");
-const onSupportSchema = require("./v1.1/onSupportSchema");
-const onStatusSchema = require("./v1.1/onStatusSchema");
-const onCancelSchema = require("./v1.1/onCancelSchema");
-const onUpdateSchema = require("./v1.1/onUpdateSchema");
-const searchSchema = require("./v1.1/searchSchema");
-const initSchema = require("./v1.1/initSchema");
-const confirmSchema = require("./v1.1/confirmSchema");
-const statusSchema = require("./v1.1/statusSchema");
-const updateSchema = require("./v1.1/updateSchema");
-const cancelSchema = require("./v1.1/cancelSchema");
-const supportSchema = require("./v1.1/supportSchema");
-const trackSchema = require("./v1.1/trackSchema");
-
-const commonSchemaV1_2 = require("./v1.2/common/commonSchema")
-
-
-const masterSchema = require("./masterSchema");
-
 const fs = require("fs");
 //const async = require("async");
 
@@ -51,7 +29,33 @@ function isEndTimeGreater(data) {
   return startTime < endTime;
 }
 
-const validate_schema = (data, schema) => {
+const loadSchema = (schemaType, version) => {
+  try {
+    return require(`./${version}/${schemaType}Schema.js`);
+  } catch (error) {
+    console.log("Error Occurred while importing", error);
+  }
+};
+
+const validate_schema = (data, schema, version) => {
+  const onConfirmSchema = loadSchema("onConfirm", version);
+  const onInitSchema = loadSchema("onInit", version);
+  const onSearchSchema = loadSchema("onSearch", version);
+  const onTrackSchema = loadSchema("onTrack", version);
+  const onSupportSchema = loadSchema("onSupport", version);
+  const onStatusSchema = loadSchema("onStatus", version);
+  const onCancelSchema = loadSchema("onCancel", version);
+  const onUpdateSchema = loadSchema("onUpdate", version);
+  const searchSchema = loadSchema("search", version);
+  const initSchema = loadSchema("init", version);
+  const confirmSchema = loadSchema("confirm", version);
+  const statusSchema = loadSchema("status", version);
+  const updateSchema = loadSchema("update", version);
+  const cancelSchema = loadSchema("cancel", version);
+  const supportSchema = loadSchema("support", version);
+  const trackSchema = loadSchema("track", version);
+
+  const commonSchemaV1_2 = require("./v1.2/common/commonSchema");
   const Ajv = require("ajv");
   const ajv = new Ajv({
     allErrors: true,
@@ -63,7 +67,6 @@ const validate_schema = (data, schema) => {
   });
 
   const addFormats = require("ajv-formats");
-  //const masterSchemacopy = require("./masterSchemacopy");
 
   addFormats(ajv);
   require("ajv-errors")(ajv);
@@ -86,27 +89,11 @@ const validate_schema = (data, schema) => {
       .addSchema(onTrackSchema)
       .addSchema(cancelSchema)
       .addSchema(onCancelSchema)
-      .addSchema(searchSchema2)
-      .addSchema(onSearchSchema2)
-      .addSchema(initSchema2)
-      .addSchema(onInitSchema2)
-      .addSchema(confirmSchema2)
-      .addSchema(onConfirmSchema2)
-      .addSchema(updateSchema2)
-      .addSchema(onUpdateSchema2)
-      .addSchema(statusSchema2)
-      .addSchema(onStatusSchema2)
-      .addSchema(supportSchema2)
-      .addSchema(onSupportSchema2)
-      .addSchema(trackSchema2)
-      .addSchema(onTrackSchema2)
-      .addSchema(cancelSchema2)
-      .addSchema(onCancelSchema2)
       .addKeyword("isEndTimeGreater", {
         validate: (schema, data) => isEndTimeGreater(data),
       })
       .addSchema(commonSchemaV1_2);
-    
+
     validate = validate.compile(schema);
 
     const valid = validate(data);
@@ -121,8 +108,9 @@ const validate_schema = (data, schema) => {
   return error_list;
 };
 
-const validate_schema_master = (data) => {
-  error_list = validate_schema(data, masterSchemaCopy);
+const validate_schema_master = (data, version) => {
+  const masterSchema = loadSchema("master", version);
+  error_list = validate_schema(data, masterSchema, version);
   return formatted_error(error_list);
 };
 

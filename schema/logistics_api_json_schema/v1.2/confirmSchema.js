@@ -549,7 +549,7 @@ module.exports = {
                       properties: {
                         code: {
                           type: "string",
-                          enum: constants.FULFILLMENT_TAGS_CODE
+                          enum: constants.FULFILLMENT_TAGS_CODE,
                         },
                         list: {
                           type: "array",
@@ -558,7 +558,7 @@ module.exports = {
                             properties: {
                               code: {
                                 type: "string",
-                                enum: constants.FULFILLMENT_TAGS_LIST_CODE
+                                enum: constants.FULFILLMENT_TAGS_LIST_CODE,
                               },
                               value: {
                                 type: "string",
@@ -708,7 +708,7 @@ module.exports = {
                 },
                 collected_by: {
                   type: "string",
-                  enum:constants.PAYMENT_COLLECTEDBY,
+                  enum: constants.PAYMENT_COLLECTEDBY,
                   const: {
                     $data: "/on_init/0/message/order/payment/collected_by",
                   },
@@ -822,7 +822,7 @@ module.exports = {
                             properties: {
                               unit: {
                                 type: "string",
-                                enum:constants.UNITS_WEIGHT
+                                enum: constants.UNITS_WEIGHT,
                               },
                               value: {
                                 type: "number",
@@ -908,7 +908,7 @@ module.exports = {
                       properties: {
                         unit: {
                           type: "string",
-                          enum:constants.UNITS_WEIGHT
+                          enum: constants.UNITS_WEIGHT,
                         },
                         value: {
                           type: "number",
@@ -1004,8 +1004,9 @@ module.exports = {
       },
       required: ["order"],
     },
-    // isFutureDated : true,
-    // errorMessage : "order/created_at or order/updated_at cannot be future dated w.r.t context/timestamp"
   },
+  isFutureDated: true,
+  errorMessage:
+    "order/created_at or order/updated_at cannot be future dated w.r.t context/timestamp",
   required: ["context", "message"],
 };

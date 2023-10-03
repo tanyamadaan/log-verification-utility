@@ -25,6 +25,7 @@ const ajv = new Ajv({
 
 const addFormats = require("ajv-formats");
 const { loadMasterSchema } = require("./masterSchemacopy");
+const { forEach } = require("lodash");
 
 addFormats(ajv);
 require("ajv-errors")(ajv);
@@ -58,8 +59,20 @@ function isEndTimeGreater(data) {
 }
 function isLengthValid(data) {
   return (
-    data?.name.length + data?.building.length + data?.locality.length > 190
+    data.name.length + data.building.length + data.locality.length > 190
   );
+}
+
+function isQuoteMatching(data) {
+  const quotePrice = parseFloat(data?.price?.value);
+  console.log(quotePrice);
+  const breakupArr = data.breakup;
+  let totalBreakup;
+  breakupArr.forEach((breakup) => {
+    totalBreakup += parseFloat(breakup?.price?.value);
+  });
+  if (quotePrice != totalBreakup) return false;
+  else return true;
 }
 
 function isFutureDated(data) {
@@ -93,7 +106,10 @@ const validate_schema = (data, schema) => {
         validate: (schema, data) => isLengthValid(data),
       })
       .addKeyword("isFutureDated", {
-        validate: (schema, data) => isLengthValid(data),
+        validate: (schema, data) => isFutureDated(data),
+      })
+      .addKeyword("isQuoteMatching", {
+        validate: (schema, data) => isQuoteMatching(data),
       });
 
     validate = validate.compile(schema);
@@ -112,7 +128,6 @@ const validate_schema = (data, schema) => {
 
 const validate_schema_master = (data) => {
   const masterSchemaCopy = loadMasterSchema(data);
-  console.log(masterSchemaCopy);
   error_list = validate_schema(data, masterSchemaCopy);
   return formatted_error(error_list);
 };

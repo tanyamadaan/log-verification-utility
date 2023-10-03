@@ -83,12 +83,10 @@ module.exports = {
       properties: {
         order_id: {
           type: "string",
-        },
-        callback_url: {
-          type: "string",
-        },
+          const: { $data: "/confirm/0/message/order/id" },
+        }
       },
-      required: ["order_id", "callback_url"],
+      required: ["order_id"],
     },
   },
   required: ["context", "message"],

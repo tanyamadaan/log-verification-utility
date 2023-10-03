@@ -179,7 +179,6 @@ module.exports = {
                   format: "duration",
                 },
               },
-              required: ["price", "breakup", "ttl"],
             },
             fulfillments: {
               type: "array",
@@ -213,16 +212,14 @@ module.exports = {
                             properties: {
                               name: {
                                 type: "string",
-                                minLength: 3,
+
                                 not: { const: { $data: "1/locality" } },
                               },
                               building: {
                                 type: "string",
-                                minLength: 3,
                               },
                               locality: {
                                 type: "string",
-                                minLength: 3,
                               },
                               city: {
                                 type: "string",
@@ -287,18 +284,15 @@ module.exports = {
                               name: {
                                 type: "string",
                                 minLength: 3,
-                                not: { const: { $data: "1/locality" } },
                                 errorMessage: "cannot be equal to locality",
                               },
                               building: {
                                 type: "string",
-                                minLength: 3,
                                 not: { const: { $data: "1/locality" } },
                                 errorMessage: "cannot be equal to locality",
                               },
                               locality: {
                                 type: "string",
-                                minLength: 3,
                               },
                               city: {
                                 type: "string",

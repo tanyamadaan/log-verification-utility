@@ -40,7 +40,7 @@ module.exports = {
           type: "string",
           const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+            "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -645,7 +645,8 @@ module.exports = {
                   const: {
                     $data: "/on_init/0/message/order/payment/collected_by",
                   },
-                  errorMessage: "mismatches in /payment in /on_init and /confirm",
+                  errorMessage:
+                    "mismatches in /payment in /on_init and /confirm",
                 },
                 type: {
                   type: "string",
@@ -653,7 +654,8 @@ module.exports = {
                   const: {
                     $data: "/on_init/0/message/order/payment/type",
                   },
-                  errorMessage: "mismatches in /payment in /on_init and /confirm",
+                  errorMessage:
+                    "mismatches in /payment in /on_init and /confirm",
                 },
                 "@ondc/org/settlement_details": {
                   type: "array",
@@ -719,10 +721,7 @@ module.exports = {
                   },
                 },
               },
-              required: [
-                "collected_by",
-                "type"
-              ],
+              required: ["collected_by", "type"],
             },
             "@ondc/org/linked_order": {
               type: "object",
@@ -903,24 +902,6 @@ module.exports = {
         },
       },
       required: ["order"],
-    },
-    on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
-    },
-    init: {
-      type: "array",
-      items: {
-        $ref: "initSchema#",
-      },
-    },
-    on_init: {
-      type: "array",
-      items: {
-        $ref: "onInitSchema#",
-      },
     },
   },
   required: ["context", "message"],

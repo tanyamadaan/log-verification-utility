@@ -40,7 +40,7 @@ module.exports = {
           type: "string",
           const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+            "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -51,7 +51,7 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            }
+            },
           ],
         },
         timestamp: {
@@ -60,7 +60,7 @@ module.exports = {
         },
         ttl: {
           type: "string",
-          format: "duration"
+          format: "duration",
         },
       },
       required: [
@@ -208,7 +208,7 @@ module.exports = {
                           },
                           email: {
                             type: "string",
-                            format: "email"
+                            format: "email",
                           },
                         },
                         required: ["phone"],
@@ -238,13 +238,13 @@ module.exports = {
                                 type: "string",
                                 minLength: 3,
                                 not: { const: { $data: "1/locality" } },
-                                errorMessage:"cannot be equal to locality"
+                                errorMessage: "cannot be equal to locality",
                               },
                               building: {
                                 type: "string",
                                 minLength: 3,
                                 not: { const: { $data: "1/locality" } },
-                                errorMessage:"cannot be equal to locality"
+                                errorMessage: "cannot be equal to locality",
                               },
                               locality: {
                                 type: "string",
@@ -284,7 +284,7 @@ module.exports = {
                           },
                           email: {
                             type: "string",
-                            format: "email"
+                            format: "email",
                           },
                         },
                         required: ["phone", "email"],
@@ -293,7 +293,7 @@ module.exports = {
                     required: ["location", "contact"],
                   },
                 },
-                additionalProperties:false,
+                additionalProperties: false,
                 required: ["id", "type", "start", "end"],
               },
             },
@@ -310,14 +310,13 @@ module.exports = {
                       type: "string",
                       minLength: 3,
                       not: { const: { $data: "1/locality" } },
-                      errorMessage:"cannot be equal to locality"
-                      
+                      errorMessage: "cannot be equal to locality",
                     },
                     building: {
                       type: "string",
                       minLength: 3,
                       not: { const: { $data: "1/locality" } },
-                      errorMessage:"cannot be equal to locality"
+                      errorMessage: "cannot be equal to locality",
                     },
                     locality: {
                       type: "string",
@@ -355,7 +354,7 @@ module.exports = {
                 },
                 email: {
                   type: "string",
-                  format:"email"
+                  format: "email",
                 },
                 created_at: {
                   type: "string",
@@ -435,35 +434,19 @@ module.exports = {
                         },
                       },
                     ],
-                    required: [
-                      "settlement_counterparty",
-                      "settlement_type",
-                    ],
+                    required: ["settlement_counterparty", "settlement_type"],
                   },
                 },
               },
               required: ["@ondc/org/settlement_details"],
             },
           },
-          additionalProperties:false,
-          required: ["provider", "items", "fulfillments", "billing"]
+          additionalProperties: false,
+          required: ["provider", "items", "fulfillments", "billing"],
         },
       },
       required: ["order"],
     },
-    search: {
-      type: "array",
-      items: {
-        $ref: "searchSchema#",
-      },
-    },
-    on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
-    },
-  
   },
   required: ["context", "message"],
 };

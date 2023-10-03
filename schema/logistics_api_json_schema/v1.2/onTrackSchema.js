@@ -1,3 +1,4 @@
+const constants = require("../../../utils/constants");
 module.exports = {
   $id: "http://example.com/schema/onTrackSchema/v1.2",
   type: "object",
@@ -22,7 +23,7 @@ module.exports = {
         },
         core_version: {
           type: "string",
-          const:"1.1.0"
+          const: "1.1.0",
         },
         bap_id: {
           type: "string",
@@ -40,7 +41,7 @@ module.exports = {
           type: "string",
           const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+            "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -56,12 +57,12 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            }
+            },
           ],
         },
         timestamp: {
           type: "string",
-          format:"date-time"
+          format: "date-time",
         },
       },
       required: [
@@ -85,30 +86,74 @@ module.exports = {
         tracking: {
           type: "object",
           properties: {
+            id: {
+              type: "string",
+              const: {
+                $data: "/init/0/message/order/items/0/fulfillment_id",
+              },
+            },
             url: {
               type: "string",
             },
+            location: {
+              type: "object",
+              properties: {
+                gps: {
+                  type: "string",
+                },
+                time: {
+                  type: "object",
+                  properties: {
+                    timestamp: {
+                      type: "string",
+                    },
+                  },
+                  required: ["timestamp"],
+                },
+                updated_at: {
+                  type: "string",
+                },
+              },
+              required: ["gps", "time", "updated_at"],
+            },
             status: {
               type: "string",
-              enum:["active","inactive"]
+              enum: constants.TRACKING_STATUS,
+            },
+            tags: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  code: {
+                    type: "string",
+                    enum: ["path"],
+                  },
+                  list: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        code: {
+                          type: "string",
+                          enum: ["lat_lng", "sequence"],
+                        },
+                        value: {
+                          type: "string",
+                        },
+                      },
+                      required: ["code", "value"],
+                    },
+                  },
+                },
+                required: ["code", "list"],
+              },
             },
           },
-          required: ["url", "status"],
+          required: ["id", "location", "status", "tags"],
         },
       },
       required: ["tracking"],
-    },
-  },
-  search: {
-    type: "array",
-    items: {
-      $ref: "searchSchema#",
-    },
-  },
-  on_search: {
-    type: "array",
-    items: {
-      $ref: "onSearchSchema#",
     },
   },
   required: ["context", "message"],

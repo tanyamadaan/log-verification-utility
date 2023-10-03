@@ -1,10 +1,12 @@
 {
+    "Context": {
+        "on_confirm_0": {
+            "tmpstmpErr": "context/timestamp difference between on_confirm and confirm should be smaller than 1 sec"
+        }
+    },
     "Message": {
-        "on_status_2": {
-            "pickupTimeErr": "Pickup timestamp (fulfillments/start/time/timestamp) cannot change for fulfillment state - Out-for-delivery"
-        },
-        "on_status_3": {
-            "pickupTimeErr": "Pickup timestamp (fulfillments/start/time/timestamp) cannot change for fulfillment state - Order-delivered"
+        "on_update_0": {
+            "updatedAtErr": "order/updated_at cannot be future dated w.r.t context/timestamp"
         }
     }
 }

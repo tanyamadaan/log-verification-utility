@@ -4,6 +4,11 @@ const constants = require("../constants");
 const utils = require("../utils");
 
 const checkInit = (data, msgIdSet) => {
+  const billing = data.message.order.billing
+  const billingAdd= billing.address
+  const len = billingAdd.name.length + billingAdd.building.length +billingAdd.locality.length
+  console.log(billingAdd.name.length,billingAdd.building.length,billingAdd.locality.length);
+  console.log("length",len);
   const initObj = {};
   let init = data;
   let p2h2p = false;

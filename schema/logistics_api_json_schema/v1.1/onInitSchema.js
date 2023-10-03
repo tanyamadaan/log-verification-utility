@@ -40,7 +40,7 @@ module.exports = {
           type: "string",
           const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+            "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -56,7 +56,7 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            }
+            },
           ],
         },
         timestamp: {
@@ -100,7 +100,9 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
-                  const: { $data: "/init/0/message/order/provider/locations/0/id" },
+                  const: {
+                    $data: "/init/0/message/order/provider/locations/0/id",
+                  },
                 },
               },
             },
@@ -237,7 +239,7 @@ module.exports = {
               required: ["type", "collected_by"],
             },
           },
-          additionalProperties:false,
+          additionalProperties: false,
           required: ["provider", "items", "quote", "payment"],
           // anyOf: [
           //   {
@@ -258,24 +260,6 @@ module.exports = {
         },
       },
       required: ["order"],
-    },
-    search: {
-      type: "array",
-      items: {
-        $ref: "searchSchema#",
-      },
-    },
-    init: {
-      type: "array",
-      items: {
-        $ref: "initSchema#",
-      },
-    },
-    on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
     },
   },
   required: ["context", "message"],

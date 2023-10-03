@@ -318,13 +318,11 @@ module.exports = {
                   properties: {
                     name: {
                       type: "string",
-
                       not: { const: { $data: "1/locality" } },
                       errorMessage: "cannot be equal to locality",
                     },
                     building: {
                       type: "string",
-
                       not: { const: { $data: "1/locality" } },
                       errorMessage: "cannot be equal to locality",
                     },

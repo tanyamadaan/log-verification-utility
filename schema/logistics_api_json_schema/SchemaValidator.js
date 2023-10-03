@@ -72,6 +72,7 @@ const validate_schema = (data, schema, version) => {
     strictTypes: false,
     verbose: true,
     $data: true,
+    schemaIs: 'id'
   });
 
   const addFormats = require("ajv-formats");
@@ -101,7 +102,6 @@ const validate_schema = (data, schema, version) => {
         validate: (schema, data) => isEndTimeGreater(data),
       })
       .addSchema(commonSchemaV1_2);
-    // console.log("ALL SCHEMAS", validate.getSchema("http://example.com/schema/onSearchSchema/v1.2").schema.properties.context)
 
     validate = validate.compile(schema);
 

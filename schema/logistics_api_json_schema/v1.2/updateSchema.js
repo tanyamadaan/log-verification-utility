@@ -16,8 +16,7 @@ module.exports = {
         city: {
           type: "string",
           const: {
-            $data:
-              "/on_search/0/context/properties/city",
+            $data: "/on_search/0/context/properties/city",
           },
         },
         action: {
@@ -43,8 +42,7 @@ module.exports = {
         transaction_id: {
           type: "string",
           const: {
-            $data:
-              "/search/0/context/transaction_id",
+            $data: "/search/0/context/transaction_id",
           },
           errorMessage:
             "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
@@ -98,8 +96,7 @@ module.exports = {
             id: {
               type: "string",
               const: {
-                $data:
-                  "/confirm/0/message/order/id",
+                $data: "/confirm/0/message/order/id",
               },
             },
             items: {
@@ -110,15 +107,13 @@ module.exports = {
                   id: {
                     type: "string",
                     const: {
-                      $data:
-                        "/confirm/0/message/order/items/0/id",
+                      $data: "/confirm/0/message/order/items/0/id",
                     },
                   },
                   category_id: {
                     type: "string",
                     const: {
-                      $data:
-                        "/confirm/0/message/order/items/0/category_id",
+                      $data: "/confirm/0/message/order/items/0/category_id",
                     },
                   },
                   descriptor: {
@@ -279,7 +274,7 @@ module.exports = {
               },
             },
             "@ondc/org/linked_order": {
-              $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order",
+              $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
             },
           },
           required: ["id", "state", "items", "fulfillments", "updated_at"],

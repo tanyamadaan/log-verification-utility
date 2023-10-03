@@ -92,6 +92,14 @@ module.exports = {
 					}
 				}
 			}
-		}
+		},
+    priceFormat: {
+      type: "object",
+      properties: {
+        currency: {type: "string"},
+        value: {type: "string"}
+      },
+      required: ["currency", "value"]
+    }
   },
 };

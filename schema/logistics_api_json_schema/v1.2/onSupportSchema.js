@@ -1,5 +1,5 @@
 module.exports = {
-  $id: "http://example.com/schema/trackSchema/v1.2",
+  $id: "http://example.com/schema/onSupportSchema/v1.2",
   type: "object",
   properties: {
     context: {
@@ -14,10 +14,11 @@ module.exports = {
         },
         city: {
           type: "string",
+          const: { $data: "/search/0/context/city" },
         },
         action: {
           type: "string",
-          const: "track",
+          const: "on_support",
         },
         core_version: {
           type: "string",
@@ -45,6 +46,11 @@ module.exports = {
           type: "string",
           allOf: [
             {
+              const: { $data: "/support/0/context/message_id" },
+              errorMessage:
+                "Message ID should be same as /support: ${/support/0/context/message_id}",
+            },
+            {
               not: {
                 const: { $data: "1/transaction_id" },
               },
@@ -56,10 +62,6 @@ module.exports = {
         timestamp: {
           type: "string",
           format:"date-time"
-        },
-        ttl: {
-          type: "string",
-          const: "PT30S"
         },
       },
       required: [
@@ -75,18 +77,34 @@ module.exports = {
         "transaction_id",
         "message_id",
         "timestamp",
-        "ttl",
       ],
     },
     message: {
       type: "object",
       properties: {
-        order_id: {
+        phone: {
           type: "string",
-          const: { $data: "/confirm/0/message/order/id" },
-        }
+        },
+        email: {
+          type: "string",
+        },
+        uri: {
+          type: "string",
+        },
       },
-      required: ["order_id"],
+      required: ["phone", "email", "uri"],
+    },
+  },
+  search: {
+    type: "array",
+    items: {
+      $ref: "searchSchema#",
+    },
+  },
+  on_search: {
+    type: "array",
+    items: {
+      $ref: "onSearchSchema#",
     },
   },
   required: ["context", "message"],

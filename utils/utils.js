@@ -322,6 +322,7 @@ const isObjectEqual = (obj1, obj2, parentKey = "") => {
 
   return notEqualKeys;
 };
+
 module.exports = {
   uuidCheck,
   timestampCheck,

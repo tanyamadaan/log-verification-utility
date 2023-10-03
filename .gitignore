@@ -12,5 +12,4 @@ test.js
 !LICENSE.md
 logFlow*.json
 .DS_Store
-log_report.json
-log_report2.md
+log_report*

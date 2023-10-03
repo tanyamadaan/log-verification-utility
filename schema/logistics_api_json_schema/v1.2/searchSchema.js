@@ -1,3 +1,4 @@
+const constants = require("../../../utils/constants");
 module.exports = {
   $id: "http://example.com/schema/searchSchema/v1.2",
   type: "object",
@@ -21,7 +22,7 @@ module.exports = {
         },
         core_version: {
           type: "string",
-          const: "1.1.0",
+          const: "1.2.0",
         },
         bap_id: {
           type: "string",
@@ -41,7 +42,7 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            }
+            },
           ],
         },
         timestamp: {
@@ -78,13 +79,7 @@ module.exports = {
               properties: {
                 id: {
                   type: "string",
-                  enum: [
-                    "Express Delivery",
-                    "Standard Delivery",
-                    "Immediate Delivery",
-                    "Same Day Delivery",
-                    "Next Day Delivery",
-                  ],
+                  enum: constants.CATEGORY_ID,
                 },
               },
               required: ["id"],
@@ -111,18 +106,6 @@ module.exports = {
                             format: "date",
                           },
                         },
-                        frequency: {
-                          type: "string",
-                          format: "duration",
-                        },
-                        times: {
-                          type: "array",
-                          items: {
-                            type: "string",
-                            pattern: "^(?:[01][0-9]|2[0-3])[0-5][0-9]$",
-                            errorMessage: "Must be a valid 24 hour time",
-                          },
-                        },
                       },
                       required: ["holidays"],
                     },
@@ -136,30 +119,15 @@ module.exports = {
                         end: {
                           type: "string",
                           pattern: "^(?:[01][0-9]|2[0-3])[0-5][0-9]$",
-                          },
+                        },
                       },
                       isEndTimeGreater: true,
-                      errorMessage: 'The "end" time must be greater than the "start" time. Ref footnote 12 of v1.1 .',
+                      errorMessage:
+                        'The "end" time must be greater than the "start" time. Ref footnote 12 of v1.1 .',
                       required: ["start", "end"],
                     },
                   },
-                  oneOf: [
-                    {
-                      properties: {
-                        schedule: {
-                          type: "object",
-                          required: ["times", "frequency"],
-                        },
-                      },
-                      required: ["schedule"],
-                    },
-                    {
-                      type: "object",
-                      required: ["range"],
-                    },
-                  ],
-                  errorMessage:
-                    "Both range and schedule cannot be present in time",
+                  required: ["days", "schedule", "range"],
                 },
               },
             },
@@ -168,7 +136,7 @@ module.exports = {
               properties: {
                 type: {
                   type: "string",
-                  enum: ["CoD", "Prepaid", "Reverse QC"],
+                  enum: constants.FULFILLMENT_TYPE,
                 },
                 start: {
                   type: "object",
@@ -207,6 +175,15 @@ module.exports = {
                           type: "string",
                           pattern:
                             "^(-?[0-9]{1,3}(?:.[0-9]{1,15})?),( )*?(-?[0-9]{1,3}(?:.[0-9]{1,15})?)$",
+                          allOf: [
+                            {
+                              not: {
+                                const: { $data: "3/start/location/gps" },
+                              },
+                              errorMessage:
+                                "cannot be equal to start/location/gps '${3/start/location/gps}'",
+                            },
+                          ],
                           errorMessage: "Incorrect gps value",
                         },
                         address: {
@@ -230,11 +207,44 @@ module.exports = {
             payment: {
               type: "object",
               properties: {
+                type: {
+                  type: "string",
+                  enum: constants.PAYMENT_TYPE,
+                },
                 "@ondc/org/collection_amount": {
                   type: "string",
                 },
               },
-              required: ["@ondc/org/collection_amount"],
+              required: ["type"],
+              // if: { properties: { type: { const: "ON-FULFILLMENT" } } },
+              // then: {
+              //   required: ["@ondc/org/collection_amount", "type"],
+              //   errorMessage:
+              //     "@ondc/org/collection_amount is required for payment type 'ON-FULFILLMENT'",
+              // },
+              // else: { required: ["type"] }
+              allOf: [
+                {
+                  if: {
+                    properties: { type: { const: "ON-FULFILLMENT" } },
+                  },
+                  then: {
+                    required: ["@ondc/org/collection_amount"],
+                  },
+                },
+                {
+                  if: {
+                    properties: {
+                      type: { enum: ["ON-ORDER", "POST-FULFILLMENT"] },
+                    },
+                  },
+                  then: {
+                    not: { required: ["@ondc/org/collection_amount"] },
+                    errorMessage:
+                      "@ondc/org/collection_amount is required only for payment/type 'ON-FULFILLMENT'",
+                  },
+                },
+              ],
             },
             "@ondc/org/payload_details": {
               type: "object",
@@ -244,7 +254,7 @@ module.exports = {
                   properties: {
                     unit: {
                       type: "string",
-                      enum: ["Kilogram", "Gram"],
+                      enum: constants.UNITS_WEIGHT,
                     },
                     value: {
                       type: "number",
@@ -260,7 +270,7 @@ module.exports = {
                       properties: {
                         unit: {
                           type: "string",
-                          enum: ["centimeter", "meter"],
+                          enum: constants.UNITS_DIMENSIONS,
                         },
                         value: {
                           type: "number",
@@ -273,7 +283,7 @@ module.exports = {
                       properties: {
                         unit: {
                           type: "string",
-                          enum: ["centimeter", "meter"],
+                          enum: constants.UNITS_DIMENSIONS,
                         },
                         value: {
                           type: "number",
@@ -286,7 +296,7 @@ module.exports = {
                       properties: {
                         unit: {
                           type: "string",
-                          enum: ["centimeter", "meter"],
+                          enum: constants.UNITS_DIMENSIONS,
                         },
                         value: {
                           type: "number",
@@ -299,23 +309,10 @@ module.exports = {
                 },
                 category: {
                   type: "string",
-                  enum: [
-                    "Grocery",
-                    "F&B",
-                    "Fashion",
-                    "BPC",
-                    "Electronics",
-                    "Home & Decor",
-                    "Pharma",
-                    "Agriculture",
-                    "Mobility",
-                  ],
+                  enum: constants.CATEGORIES,
                 },
                 dangerous_goods: {
                   type: "boolean",
-                  // const: "true",
-                  // errorMessage:
-                  //     "is an optional property and should be set when payload includes hazardous goods",
                 },
                 value: {
                   type: "object",
@@ -338,29 +335,8 @@ module.exports = {
             "provider",
             "fulfillment",
             "@ondc/org/payload_details",
+            "payment",
           ],
-          // if: {
-          //   properties: {
-          //     code: { const: "P2H2P" },
-          //   },
-          // },
-          // then: {
-          //   required: [
-          //     "/search/0/message/intent/@ondc~1org~1payload_details/dimensions",
-          //   ],
-          //   errorMessage:
-          //     "dimensions are required for inter-city shipments in /search",
-          // },
-          if: {
-            properties: {
-              fulfillment: { properties: { type: { const: "CoD" } } },
-            },
-          },
-          then: {
-            required: ["payment"],
-            errorMessage:
-              "Payment object is required for fulfillment type 'CoD'",
-          },
         },
       },
       required: ["intent"],

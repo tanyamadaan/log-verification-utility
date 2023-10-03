@@ -9,6 +9,8 @@ const checkInit = (data, msgIdSet) => {
   const len = billingAdd.name.length + billingAdd.building.length +billingAdd.locality.length
   console.log(billingAdd.name.length,billingAdd.building.length,billingAdd.locality.length);
   console.log("length",len);
+  if (billingAdd.name.length + billingAdd.building.length +billingAdd.locality.length > 190) return true
+  else false
   const initObj = {};
   let init = data;
   let p2h2p = false;

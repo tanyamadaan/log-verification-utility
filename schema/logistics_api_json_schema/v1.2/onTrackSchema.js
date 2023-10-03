@@ -99,17 +99,5 @@ module.exports = {
       required: ["tracking"],
     },
   },
-  search: {
-    type: "array",
-    items: {
-      $ref: "searchSchema#",
-    },
-  },
-  on_search: {
-    type: "array",
-    items: {
-      $ref: "onSearchSchema#",
-    },
-  },
   required: ["context", "message"],
 };

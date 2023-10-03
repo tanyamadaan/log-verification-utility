@@ -38,24 +38,32 @@ const loadSchema = (schemaType, version) => {
 };
 
 const validate_schema = (data, schema, version) => {
-  const onConfirmSchema = loadSchema("onConfirm", version);
-  const onInitSchema = loadSchema("onInit", version);
-  const onSearchSchema = loadSchema("onSearch", version);
-  const onTrackSchema = loadSchema("onTrack", version);
-  const onSupportSchema = loadSchema("onSupport", version);
-  const onStatusSchema = loadSchema("onStatus", version);
-  const onCancelSchema = loadSchema("onCancel", version);
-  const onUpdateSchema = loadSchema("onUpdate", version);
   const searchSchema = loadSchema("search", version);
+  const onSearchSchema = loadSchema("onSearch", version);
+
   const initSchema = loadSchema("init", version);
+  const onInitSchema = loadSchema("onInit", version);
+
   const confirmSchema = loadSchema("confirm", version);
-  const statusSchema = loadSchema("status", version);
+  const onConfirmSchema = loadSchema("onConfirm", version);
+
   const updateSchema = loadSchema("update", version);
-  const cancelSchema = loadSchema("cancel", version);
+  const onUpdateSchema = loadSchema("onUpdate", version);
+
+  const statusSchema = loadSchema("status", version);
+  const onStatusSchema = loadSchema("onStatus", version);
+
   const supportSchema = loadSchema("support", version);
+  const onSupportSchema = loadSchema("onSupport", version);
+
   const trackSchema = loadSchema("track", version);
+  const onTrackSchema = loadSchema("onTrack", version);
+
+  const cancelSchema = loadSchema("cancel", version);
+  const onCancelSchema = loadSchema("onCancel", version);
 
   const commonSchemaV1_2 = require("./v1.2/common/commonSchema");
+  
   const Ajv = require("ajv");
   const ajv = new Ajv({
     allErrors: true,
@@ -93,6 +101,7 @@ const validate_schema = (data, schema, version) => {
         validate: (schema, data) => isEndTimeGreater(data),
       })
       .addSchema(commonSchemaV1_2);
+    // console.log("ALL SCHEMAS", validate.getSchema("http://example.com/schema/onSearchSchema/v1.2").schema.properties.context)
 
     validate = validate.compile(schema);
 

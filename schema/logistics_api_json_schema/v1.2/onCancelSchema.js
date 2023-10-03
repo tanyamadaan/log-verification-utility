@@ -84,13 +84,12 @@ module.exports = {
       properties: {
         order: {
           type: "object",
-
           properties: {
             id: {
               type: "string",
               const: {
                 $data:
-                  "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/id",
+                  "/on_confirm/0/message/order/id",
               },
             },
             state: {
@@ -116,7 +115,7 @@ module.exports = {
                 },
                 {
                   $data:
-                    "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/items",
+                    "/on_confirm/0/message/items",
                 },
               ],
             },
@@ -127,7 +126,7 @@ module.exports = {
                 },
                 {
                   $data:
-                    "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/quote",
+                    "/on_confirm/0/message/quote",
                 },
               ],
             },
@@ -140,12 +139,12 @@ module.exports = {
                   id: {
                     type: "string",
                     $data:
-                      "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/id",
+                      "/on_confirm/0/message/order/fulfillments/0/id",
                   },
                   type: {
                     type: "string",
                     $data:
-                      "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/type",
+                      "/on_confirm/0/message/order/fulfillments/0/type",
                   },
                   state: {
                     type: "object",
@@ -167,14 +166,14 @@ module.exports = {
                     type: "string",
                     const: {
                       $data:
-                        "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/@ondc~1org~1awb_no",
+                        "/on_confirm/0/message/order/fulfillments/0/@ondc~1org~1awb_no",
                     },
                   },
                   tracking: {
                     type: "boolean",
                     const: {
                       $data:
-                        "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/tracking",
+                        "/on_confirm/0/message/order/fulfillments/0/tracking",
                     },
                   },
                   start: {
@@ -209,7 +208,7 @@ module.exports = {
                                 type: "string",
                               },
                               short_desc: {
-                                type: string,
+                                type: "string",
                               },
                               long_desc: {
                                 type: "string",
@@ -220,13 +219,11 @@ module.exports = {
                         required: ["time", "instructions"],
                       },
                       {
-                        properties: {
-                          $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat/properties",
-                        },
+                        $ref: "http://example.com/schema/commonSchema/v1.2#addressFormat",
                       },
                       {
                         $data:
-                          "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/start",
+                          "/on_confirm/0/message/order/fulfillments/0/start",
                       },
                     ],
                   },
@@ -263,7 +260,7 @@ module.exports = {
                                 type: "string",
                               },
                               short_desc: {
-                                type: string,
+                                type: "string",
                               },
                               long_desc: {
                                 type: "string",
@@ -274,13 +271,11 @@ module.exports = {
                         required: ["time", "instructions"],
                       },
                       {
-                        properties: {
-                          $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat/properties",
-                        },
+                        $ref: "http://example.com/schema/commonSchema/v1.2#addressFormat",
                       },
                       {
                         $data:
-                          "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/end",
+                          "/on_confirm/0/message/order/fulfillments/0/end",
                       },
                     ],
                   },
@@ -327,7 +322,7 @@ module.exports = {
                 },
                 {
                   $data:
-                    "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/billing",
+                    "/on_confirm/0/message/order/billing",
                 },
               ],
             },
@@ -338,7 +333,7 @@ module.exports = {
                 },
                 {
                   $data:
-                    "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/payment",
+                    "/on_confirm/0/message/order/payment",
                 },
               ],
             },
@@ -349,7 +344,7 @@ module.exports = {
                 },
                 {
                   $data:
-                    "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order",
+                    "/on_confirm/0/message/order/~0ondc~1org~1linked_order",
                 },
               ],
             },

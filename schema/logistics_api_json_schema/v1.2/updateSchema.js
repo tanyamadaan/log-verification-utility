@@ -17,7 +17,7 @@ module.exports = {
           type: "string",
           const: {
             $data:
-              "http://example.com/schema/onSearchSchema/v1.2#/properties/context/city",
+              "/on_search/0/context/properties/city",
           },
         },
         action: {
@@ -44,7 +44,7 @@ module.exports = {
           type: "string",
           const: {
             $data:
-              "http://example.com/schema/searchSchema/v1.2#/properties/context/transaction_id",
+              "/search/0/context/transaction_id",
           },
           errorMessage:
             "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
@@ -99,7 +99,7 @@ module.exports = {
               type: "string",
               const: {
                 $data:
-                  "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/id",
+                  "/confirm/0/message/order/id",
               },
             },
             items: {
@@ -111,14 +111,14 @@ module.exports = {
                     type: "string",
                     const: {
                       $data:
-                        "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/items/0/id",
+                        "/confirm/0/message/order/items/0/id",
                     },
                   },
                   category_id: {
                     type: "string",
                     const: {
                       $data:
-                        "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/items/0/category_id",
+                        "/confirm/0/message/order/items/0/category_id",
                     },
                   },
                   descriptor: {
@@ -128,7 +128,7 @@ module.exports = {
                         type: "string",
                         const: {
                           $data:
-                            "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/items/0/descriptor/code",
+                            "/confirm/0/message/order/items/0/descriptor/code",
                         },
                       },
                     },

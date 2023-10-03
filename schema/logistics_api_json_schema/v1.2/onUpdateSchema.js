@@ -17,7 +17,7 @@ module.exports = {
           type: "string",
           const: {
             $data:
-              "http://example.com/schema/searchSchema/v1.2#/properties/context/city",
+              "/confirm/0/context/city",
           },
         },
         action: {
@@ -44,7 +44,7 @@ module.exports = {
           type: "string",
           const: {
             $data:
-              "http://example.com/schema/searchSchema/v1.2#/properties/context/transaction_id",
+              "/search/0/context/transaction_id",
           },
           errorMessage:
             "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
@@ -55,7 +55,7 @@ module.exports = {
             {
               const: {
                 $data:
-                  "http://example.com/schema/updateSchema/v1.2#/properties/context/message_id",
+                  "/update/0/context/message_id",
               },
               errorMessage:
                 "Message ID should be same as /update: ${/update/0/context/message_id}",
@@ -99,7 +99,7 @@ module.exports = {
               type: "string",
               const: {
                 $data:
-                  "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/id",
+                  "/confirm/0/message/order/id",
               },
             },
             state: {
@@ -228,14 +228,17 @@ module.exports = {
                                 },
                                 required: ["start", "end"],
                               },
-                              timestamp: {type: "string", format: "date-time"}
+                              timestamp: {
+                                type: "string",
+                                format: "date-time",
+                              },
                             },
-                            required: ["range", timestamp],
+                            required: ["range", "timestamp"],
                           },
                           instructions: {
                             type: "object",
                             properties: {
-                              code: { type: "string"},
+                              code: { type: "string" },
                               short_desc: {
                                 type: "string",
                               },
@@ -249,16 +252,14 @@ module.exports = {
                                 },
                               },
                             },
-                            required: ["code", "short_desc", "image"]
+                            required: ["code", "short_desc", "image"],
                           },
                         },
                       },
                       {
-                        properties: {
-                          $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat/properties",
-                        },
-                      }
-                    ]
+                        $ref: "http://example.com/schema/commonSchema/v1.2#addressFormat",
+                      },
+                    ],
                   },
                   end: {
                     type: "object",
@@ -282,14 +283,17 @@ module.exports = {
                                 },
                                 required: ["start", "end"],
                               },
-                              timestamp: {type: "string", format: "date-time"}
+                              timestamp: {
+                                type: "string",
+                                format: "date-time",
+                              },
                             },
-                            required: ["range", timestamp],
+                            required: ["range", "timestamp"],
                           },
                           instructions: {
                             type: "object",
                             properties: {
-                              code: { type: "string"},
+                              code: { type: "string" },
                               short_desc: {
                                 type: "string",
                               },
@@ -303,16 +307,14 @@ module.exports = {
                                 },
                               },
                             },
-                            required: ["code", "short_desc", "image"]
+                            required: ["code", "short_desc", "image"],
                           },
                         },
                       },
                       {
-                        properties: {
-                          $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat/properties",
-                        },
-                      }
-                    ]
+                        $ref: "http://example.com/schema/commonSchema/v1.2#addressFormat",
+                      },
+                    ],
                   },
                   agent: {
                     type: "object",
@@ -330,7 +332,7 @@ module.exports = {
                     type: "string",
                     const: {
                       $data:
-                        "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/@ondc~1org~1ewaybillno",
+                        "/on_confirm/0/message/order/fulfillments/0/@ondc~1org~1ewaybillno",
                     },
                   },
                   "@ondc/org/ebnexpirydate": {
@@ -338,7 +340,7 @@ module.exports = {
                     format: "date-time",
                     const: {
                       $data:
-                        "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate",
+                        "/on_confirm/0/message/order/fulfillments/0/@ondc~1org~1ebnexpirydate",
                     },
                   },
                 },
@@ -351,7 +353,10 @@ module.exports = {
               properties: {
                 name: {
                   type: "string",
-                  const: { $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/name" },
+                  const: {
+                    $data:
+                      "/confirm/0/message/order/billing/name",
+                  },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_confirm",
                 },
@@ -362,53 +367,56 @@ module.exports = {
                       type: "string",
                       not: { const: { $data: "1/locality" } },
                       const: {
-                        $data: "http://example.com/schema/confirmSchema/v1.2#/properties/0/message/order/billing/address/name",
+                        $data:
+                          "/confirm/0/message/order/billing/address/name",
                       },
                       errorMessage:
-                        "mismatches in /billing in /confirm and /on_confirm",
+                        "mismatches in /billing in /confirm and /on_update",
                     },
                     building: {
                       type: "string",
                       const: {
                         $data:
-                          "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/address/building",
+                          "/confirm/0/message/order/billing/address/building",
                       },
                       errorMessage:
-                        "mismatches in /billing in /confirm and /on_confirm",
+                        "mismatches in /billing in /confirm and /on_update",
                     },
                     locality: {
                       type: "string",
                       const: {
                         $data:
-                          "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/address/locality",
+                          "/confirm/0/message/order/billing/address/locality",
                       },
                       errorMessage:
-                        "mismatches in /billing in /confirm and /on_confirm",
+                        "mismatches in /billing in /confirm and /on_update",
                     },
                     city: {
                       type: "string",
                       const: {
-                        $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/address/city",
+                        $data:
+                          "/confirm/0/message/order/billing/address/city",
                       },
                       errorMessage:
-                        "mismatches in /billing in /confirm and /on_confirm",
+                        "mismatches in /billing in /confirm and /on_update",
                     },
                     state: {
                       type: "string",
                       const: {
-                        $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/address/state",
+                        $data:
+                          "/confirm/0/message/order/billing/address/state",
                       },
                       errorMessage:
-                        "mismatches in /billing in /confirm and /on_confirm",
+                        "mismatches in /billing in /confirm and /on_update",
                     },
                     country: {
                       type: "string",
                       const: {
                         $data:
-                          "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/address/country",
+                          "/confirm/0/message/order/billing/address/country",
                       },
                       errorMessage:
-                        "mismatches in /billing in /confirm and /on_confirm",
+                        "mismatches in /billing in /confirm and /on_update",
                     },
                     area_code: {
                       type: "string",
@@ -417,7 +425,7 @@ module.exports = {
                           "/confirm/0/message/order/billing/address/area code",
                       },
                       errorMessage:
-                        "mismatches in /billing in /confirm and /on_confirm",
+                        "mismatches in /billing in /confirm and /on_update",
                     },
                   },
                   additionalProperties: false,
@@ -434,38 +442,47 @@ module.exports = {
                 tax_number: {
                   type: "string",
                   const: {
-                    $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/tax_number",
+                    $data:
+                      "/confirm/0/message/order/billing/tax_number",
                   },
                   errorMessage:
-                    "mismatches in /billing in /confirm and /on_confirm",
+                    "mismatches in /billing in /confirm and /on_update",
                 },
                 phone: {
                   type: "string",
-                  const: { $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/phone" },
+                  const: {
+                    $data:
+                      "/confirm/0/message/order/billing/phone",
+                  },
                   errorMessage:
-                    "mismatches in /billing in /confirm and /on_confirm",
+                    "mismatches in /billing in /confirm and /on_update",
                 },
                 email: {
                   type: "string",
-                  const: { $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/email" },
+                  const: {
+                    $data:
+                      "/confirm/0/message/order/billing/email",
+                  },
                   errorMessage:
-                    "mismatches in /billing in /confirm and /on_confirm",
+                    "mismatches in /billing in /confirm and /on_update",
                 },
                 created_at: {
                   type: "string",
                   const: {
-                    $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/created_at",
+                    $data:
+                      "/confirm/0/message/order/billing/created_at",
                   },
                   errorMessage:
-                    "mismatches in /billing in /confirm and /on_confirm",
+                    "mismatches in /billing in /confirm and /on_update",
                 },
                 updated_at: {
                   type: "string",
                   const: {
-                    $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/billing/updated_at",
+                    $data:
+                      "/confirm/0/message/order/billing/updated_at",
                   },
                   errorMessage:
-                    "mismatches in /billing in /confirm and /on_confirm",
+                    "mismatches in /billing in /confirm and /on_update",
                 },
               },
               additionalProperties: false,
@@ -480,21 +497,32 @@ module.exports = {
             },
             payment: {
               allOf: [
-                {$ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/payment"},
-                {$data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/payment"}
-              ]
+                {
+                  $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/payment",
+                },
+                {
+                  $data:
+                    "/confirm/0/message/order/payment",
+                },
+              ],
             },
             "@ondc/org/linked_order": {
               allOf: [
-                {$ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order"},
                 {
-                  $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order"
-                }
-              ]
+                  $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order",
+                },
+                {
+                  $data:
+                    "/confirm/0/message/order/~0ondc~1org~1linked_order",
+                },
+              ],
             },
             created_at: {
               type: "string",
-              const: { $data: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/created_at" },
+              const: {
+                $data:
+                  "/confirm/0/message/order/created_at",
+              },
               errorMessage: "mismatches in /confirm and /on_update",
             },
             updated_at: {
@@ -502,7 +530,16 @@ module.exports = {
             },
           },
           additionalProperties: false,
-          required: ["id", "state", "items", "fulfillments", "updated_at", "@ondc/org/linked_order", "payment", "billing"],
+          required: [
+            "id",
+            "state",
+            "items",
+            "fulfillments",
+            "updated_at",
+            "@ondc/org/linked_order",
+            "payment",
+            "billing",
+          ],
 
           // oneOf: [
           //   {

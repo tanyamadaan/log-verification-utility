@@ -95,17 +95,5 @@ module.exports = {
       required: ["phone", "email", "uri"],
     },
   },
-  search: {
-    type: "array",
-    items: {
-      $ref: "searchSchema#",
-    },
-  },
-  on_search: {
-    type: "array",
-    items: {
-      $ref: "onSearchSchema#",
-    },
-  },
   required: ["context", "message"],
 };

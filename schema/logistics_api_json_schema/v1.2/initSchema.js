@@ -357,7 +357,7 @@ module.exports = {
                 },
                 tax_number: {
                   type: "string",
-                  pattern: "/^[0-9]{2}[A-Z]{5}[0-9]{4}[1-9A-Z][0-9A-Z]$/",
+                  pattern: "^[0-9]{2}[A-Z]{5}[0-9]{4}[0-9A-Z]{4}$",
                   errorMessage: "should be valid",
                 },
                 phone: {

@@ -88,8 +88,7 @@ module.exports = {
             id: {
               type: "string",
               const: {
-                $data:
-                  "/on_confirm/0/message/order/id",
+                $data: "/on_confirm/0/message/order/id",
               },
             },
             state: {
@@ -111,22 +110,20 @@ module.exports = {
             items: {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/items",
+                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/properties/order/properties/items",
                 },
                 {
-                  $data:
-                    "/on_confirm/0/message/items",
+                  $data: "/on_confirm/0/message/items",
                 },
               ],
             },
             quote: {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/quote",
+                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/properties/order/properties/quote",
                 },
                 {
-                  $data:
-                    "/on_confirm/0/message/quote",
+                  $data: "/on_confirm/0/message/quote",
                 },
               ],
             },
@@ -138,13 +135,11 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
-                    $data:
-                      "/on_confirm/0/message/order/fulfillments/0/id",
+                    $data: "/on_confirm/0/message/order/fulfillments/0/id",
                   },
                   type: {
                     type: "string",
-                    $data:
-                      "/on_confirm/0/message/order/fulfillments/0/type",
+                    $data: "/on_confirm/0/message/order/fulfillments/0/type",
                   },
                   state: {
                     type: "object",
@@ -219,7 +214,7 @@ module.exports = {
                         required: ["time", "instructions"],
                       },
                       {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#addressFormat",
+                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat",
                       },
                       {
                         $data:
@@ -271,11 +266,10 @@ module.exports = {
                         required: ["time", "instructions"],
                       },
                       {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#addressFormat",
+                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat",
                       },
                       {
-                        $data:
-                          "/on_confirm/0/message/order/fulfillments/0/end",
+                        $data: "/on_confirm/0/message/order/fulfillments/0/end",
                       },
                     ],
                   },
@@ -318,33 +312,31 @@ module.exports = {
             billing: {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/billing",
+                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/properties/order/properties/billing",
                 },
                 {
-                  $data:
-                    "/on_confirm/0/message/order/billing",
+                  $data: "/on_confirm/0/message/order/billing",
                 },
               ],
             },
             payment: {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/payment",
+                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/properties/order/properties/payment",
                 },
                 {
-                  $data:
-                    "/on_confirm/0/message/order/payment",
+                  $data: "/on_confirm/0/message/order/payment",
                 },
               ],
             },
             "@ondc/org/linked_order": {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order",
+                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
                 },
                 {
                   $data:
-                    "/on_confirm/0/message/order/~0ondc~1org~1linked_order",
+                    "/on_confirm/0/message/order/@ondc~1org~1linked_order",
                 },
               ],
             },

@@ -122,7 +122,7 @@ module.exports = {
               },
               required: ["id"],
               if: {
-                $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/provider/locations",
+                $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/properties/order/properties/provider/properties/locations",
               },
               then: {
                 required: ["locations"],
@@ -257,7 +257,7 @@ module.exports = {
                         },
                       },
                       {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#addressFormat",
+                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat",
                       },
                     ],
                   },
@@ -312,7 +312,7 @@ module.exports = {
                         },
                       },
                       {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#addressFormat",
+                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat",
                       },
                     ],
                   },
@@ -498,7 +498,7 @@ module.exports = {
             payment: {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/payment",
+                  $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/properties/order/properties/payment",
                 },
                 {
                   $data:
@@ -509,11 +509,11 @@ module.exports = {
             "@ondc/org/linked_order": {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/order/~0ondc~1org~1linked_order",
+                  $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
                 },
                 {
                   $data:
-                    "/confirm/0/message/order/~0ondc~1org~1linked_order",
+                    "/confirm/0/message/order/@ondc~1org~1linked_order",
                 },
               ],
             },

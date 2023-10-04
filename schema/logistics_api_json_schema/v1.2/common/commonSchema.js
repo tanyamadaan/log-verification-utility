@@ -1,5 +1,5 @@
 module.exports = {
-  $id: "http://example.com/schema/commonSchema/v1.2",
+  $id: "http://example.com/schema/commonSchema",
   type: "object",
   properties: {
     addressFormat: {

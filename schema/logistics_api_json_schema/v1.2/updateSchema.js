@@ -1,6 +1,6 @@
 const constants = require("../../../utils/constants");
 module.exports = {
-  $id: "http://example.com/schema/updateSchema/v1.2",
+  $id: "http://example.com/schema/updateSchema",
   type: "object",
   properties: {
     context: {
@@ -200,7 +200,7 @@ module.exports = {
                     // required: ["instructions"],
                   },
                   tags: {
-                    $ref: "http://example.com/schema/commonSchema/v1.2#/properties/tagsArray",
+                    $ref: "commonSchema#/properties/tagsArray",
                   },
                 },
                 additionalProperties: false,
@@ -274,7 +274,7 @@ module.exports = {
               },
             },
             "@ondc/org/linked_order": {
-              $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
+              $ref: "confirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
             },
           },
           required: ["id", "state", "items", "fulfillments", "updated_at"],

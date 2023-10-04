@@ -1,6 +1,6 @@
 const constants = require("../../../utils/constants");
 module.exports = {
-  $id: "http://example.com/schema/onInitSchema/v1.2",
+  $id: "http://example.com/schema/onInitSchema",
   type: "object",
   properties: {
     context: {

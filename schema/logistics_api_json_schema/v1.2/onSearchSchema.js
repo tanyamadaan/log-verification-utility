@@ -2,7 +2,7 @@ const { error } = require("ajv/dist/vocabularies/applicator/dependencies");
 const constants = require("../../../utils/constants");
 
 module.exports = {
-  $id: "http://example.com/schema/onSearchSchema/v1.2",
+  $id: "http://example.com/schema/onSearchSchema",
   type: "object",
   properties: {
     context: {

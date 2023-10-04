@@ -1,5 +1,5 @@
 module.exports = {
-  $id: "http://example.com/schema/updateSchema/v1.1",
+  $id: "http://example.com/schema/updateSchema",
   type: "object",
   properties: {
     context: {
@@ -397,19 +397,19 @@ module.exports = {
     confirm: {
       type: "array",
       items: {
-        $ref: "http://example.com/schema/confirmSchema/v1.1#",
+        $ref: "http://example.com/schema/confirmSchema#",
       },
     },
     on_confirm: {
       type: "array",
       items: {
-        $ref: "http://example.com/schema/onConfirmSchema/v1.1#",
+        $ref: "http://example.com/schema/onConfirmSchema#",
       },
     },
     on_update: {
       type: "array",
       items: {
-        $ref: "http://example.com/schema/onUpdateSchema/v1.1#",
+        $ref: "http://example.com/schema/onUpdateSchema#",
       },
     },
   },

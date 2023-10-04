@@ -1,5 +1,5 @@
 module.exports = {
-  $id: "http://example.com/schema/confirmSchema/v1.1",
+  $id: "http://example.com/schema/confirmSchema",
   type: "object",
   properties: {
     context: {

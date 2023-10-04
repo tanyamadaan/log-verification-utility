@@ -1,6 +1,6 @@
 const { CANCELLATION_CODE } = require("../../../utils/constants");
 module.exports = {
-  $id: "http://example.com/schema/onCancelSchema/v1.2",
+  $id: "http://example.com/schema/onCancelSchema",
   type: "object",
   properties: {
     context: {
@@ -110,7 +110,7 @@ module.exports = {
             items: {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/properties/order/properties/items",
+                  $ref: "onConfirmSchema#/properties/message/properties/order/properties/items",
                 },
                 {
                   $data: "/on_confirm/0/message/items",
@@ -120,7 +120,7 @@ module.exports = {
             quote: {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/properties/order/properties/quote",
+                  $ref: "onConfirmSchema#/properties/message/properties/order/properties/quote",
                 },
                 {
                   $data: "/on_confirm/0/message/quote",
@@ -214,7 +214,7 @@ module.exports = {
                         required: ["time", "instructions"],
                       },
                       {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat",
+                        $ref: "commonSchema#/properties/addressFormat",
                       },
                       {
                         $data:
@@ -266,7 +266,7 @@ module.exports = {
                         required: ["time", "instructions"],
                       },
                       {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat",
+                        $ref: "commonSchema#/properties/addressFormat",
                       },
                       {
                         $data: "/on_confirm/0/message/order/fulfillments/0/end",
@@ -312,7 +312,7 @@ module.exports = {
             billing: {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/properties/order/properties/billing",
+                  $ref: "onConfirmSchema#/properties/message/properties/order/properties/billing",
                 },
                 {
                   $data: "/on_confirm/0/message/order/billing",
@@ -322,7 +322,7 @@ module.exports = {
             payment: {
               // allOf: [
               //   {
-              //     $ref: "/onConfirmSchema/v1.2#/properties/message/properties/order/properties/payment",
+              //     $ref: "/onConfirmSchema#/properties/message/properties/order/properties/payment",
               //   },
               //   {
               //     $data: "/on_confirm/0/message/order/payment",
@@ -330,15 +330,15 @@ module.exports = {
               // ],
             },
             "@ondc/org/linked_order": {
-              // allOf: [
-              //   {
-              //     $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
-              //   },
-              //   {
-              //     $data:
-              //       "/on_confirm/0/message/order/@ondc~1org~1linked_order",
-              //   },
-              // ],
+              allOf: [
+                {
+                  $ref: "onConfirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
+                },
+                {
+                  $data:
+                    "/on_confirm/0/message/order/@ondc~1org~1linked_order",
+                },
+              ],
             },
             updated_at: {
               type: "string",

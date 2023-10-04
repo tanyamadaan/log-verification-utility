@@ -1,5 +1,5 @@
 module.exports = {
-  $id: "http://example.com/schema/onSearchSchema/v1.1",
+  $id: "http://example.com/schema/onSearchSchema",
   type: "object",
   properties: {
     context: {

@@ -1,5 +1,5 @@
 module.exports = {
-  $id: "http://example.com/schema/onConfirmSchema/v1.1",
+  $id: "http://example.com/schema/onConfirmSchema",
   type: "object",
   properties: {
     context: {
@@ -502,31 +502,31 @@ module.exports = {
     search: {
       type: "array",
       items: {
-        $ref: "http://example.com/schema/searchSchema/v1.1#",
+        $ref: "http://example.com/schema/searchSchema#",
       },
     },
     on_search: {
       type: "array",
       items: {
-        $ref: "http://example.com/schema/onSearchSchema/v1.1#",
+        $ref: "http://example.com/schema/onSearchSchema#",
       },
     },
     init: {
       type: "array",
       items: {
-        $ref: "http://example.com/schema/initSchema/v1.1#",
+        $ref: "http://example.com/schema/initSchema#",
       },
     },
     on_init: {
       type: "array",
       items: {
-        $ref: "http://example.com/schema/onInitSchema/v1.1#",
+        $ref: "http://example.com/schema/onInitSchema#",
       },
     },
     confirm: {
       type: "array",
       items: {
-        $ref: "http://example.com/schema/confirmSchema/v1.1#",
+        $ref: "http://example.com/schema/confirmSchema#",
       },
     },
   },

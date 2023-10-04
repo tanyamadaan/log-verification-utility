@@ -1,6 +1,6 @@
 const constants = require("../../../utils/constants");
 module.exports = {
-  $id: "http://example.com/schema/onTrackSchema/v1.2",
+  $id: "http://example.com/schema/onTrackSchema",
   type: "object",
   properties: {
     context: {

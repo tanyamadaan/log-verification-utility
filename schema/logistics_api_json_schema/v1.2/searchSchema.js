@@ -1,6 +1,6 @@
 const constants = require("../../../utils/constants");
 module.exports = {
-  $id: "http://example.com/schema/searchSchema/v1.2",
+  $id: "http://example.com/schema/searchSchema",
   type: "object",
   properties: {
     context: {

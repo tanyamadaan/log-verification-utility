@@ -5,98 +5,98 @@ module.exports = {
     search: {
       type: "array",
       items: {
-        $ref: "searchSchema/v1.2#",
+        $ref: "searchSchema#",
       },
     },
     on_search: {
       type: "array",
       items: {
-        $ref: "onSearchSchema/v1.2#",
+        $ref: "onSearchSchema#",
       },
     },
     init: {
       type: "array",
       items: {
-        $ref: "initSchema/v1.2#",
+        $ref: "initSchema#",
       },
     },
     on_init: {
       type: "array",
       items: {
-        $ref: "onInitSchema/v1.2#",
+        $ref: "onInitSchema#",
       },
     },
     confirm: {
       type: "array",
       items: {
-        $ref: "confirmSchema/v1.2#",
+        $ref: "confirmSchema#",
       },
     },
     on_confirm: {
       type: "array",
       items: {
-        $ref: "onConfirmSchema/v1.2#",
+        $ref: "onConfirmSchema#",
       },
     },
     update: {
       type: "array",
       items: {
-        $ref: "updateSchema/v1.2#",
+        $ref: "updateSchema#",
       },
     },
     on_update: {
       type: "array",
       items: {
-        $ref: "onUpdateSchema/v1.2#",
+        $ref: "onUpdateSchema#",
       },
     },
     status: {
       type: "array",
       items: {
-        $ref: "statusSchema/v1.2#",
+        $ref: "statusSchema#",
       },
     },
 
     on_status: {
       type: "array",
       items: {
-        $ref: "onStatusSchema/v1.2#",
+        $ref: "onStatusSchema#",
       },
     },
     support: {
       type: "array",
       items: {
-        $ref: "supportSchema/v1.2#",
+        $ref: "supportSchema#",
       },
     },
     on_support: {
       type: "array",
       items: {
-        $ref: "onSupportSchema/v1.2#",
+        $ref: "onSupportSchema#",
       },
     },
     track: {
       type: "array",
       items: {
-        $ref: "trackSchema/v1.2#",
+        $ref: "trackSchema#",
       },
     },
     on_track: {
       type: "array",
       items: {
-        $ref: "onTrackSchema/v1.2#",
+        $ref: "onTrackSchema#",
       },
     },
     cancel: {
       type: "array",
       items: {
-        $ref: "cancelSchema/v1.2#",
+        $ref: "cancelSchema#",
       },
     },
     on_cancel: {
       type: "array",
       items: {
-        $ref: "onCancelSchema/v1.2#",
+        $ref: "onCancelSchema#",
       },
     },
   },

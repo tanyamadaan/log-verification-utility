@@ -1,6 +1,6 @@
 const { ORDER_STATE, TITLE_TYPE } = require("../../../utils/constants");
 module.exports = {
-  $id: "http://example.com/schema/onUpdateSchema/v1.2",
+  $id: "http://example.com/schema/onUpdateSchema",
   type: "object",
   properties: {
     context: {
@@ -122,7 +122,7 @@ module.exports = {
               },
               required: ["id"],
               if: {
-                $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/properties/order/properties/provider/properties/locations",
+                $ref: "confirmSchema#/properties/message/properties/order/properties/provider/properties/locations",
               },
               then: {
                 required: ["locations"],
@@ -156,7 +156,7 @@ module.exports = {
               type: "object",
               properties: {
                 price: {
-                  $ref: "http://example.com/schema/commonSchema/v1.2#/properties/priceFormat",
+                  $ref: "commonSchema#/properties/priceFormat",
                 },
                 breakup: {
                   type: "array",
@@ -169,7 +169,7 @@ module.exports = {
                         enum: TITLE_TYPE,
                       },
                       price: {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/priceFormat",
+                        $ref: "commonSchema#/properties/priceFormat",
                       },
                     },
                     required: [
@@ -257,7 +257,7 @@ module.exports = {
                         },
                       },
                       {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat",
+                        $ref: "commonSchema#/properties/addressFormat",
                       },
                     ],
                   },
@@ -312,7 +312,7 @@ module.exports = {
                         },
                       },
                       {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat",
+                        $ref: "commonSchema#/properties/addressFormat",
                       },
                     ],
                   },
@@ -498,7 +498,7 @@ module.exports = {
             payment: {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/properties/order/properties/payment",
+                  $ref: "confirmSchema#/properties/message/properties/order/properties/payment",
                 },
                 {
                   $data:
@@ -509,7 +509,7 @@ module.exports = {
             "@ondc/org/linked_order": {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
+                  $ref: "confirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
                 },
                 {
                   $data:

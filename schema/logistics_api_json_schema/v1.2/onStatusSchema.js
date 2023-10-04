@@ -5,7 +5,7 @@ const {
   FULFILLMENT_STATE,
 } = require("../../../utils/constants");
 module.exports = {
-  $id: "http://example.com/schema/onStatusSchema/v1.2",
+  $id: "http://example.com/schema/onStatusSchema",
   type: "object",
   properties: {
     context: {
@@ -180,7 +180,7 @@ module.exports = {
               type: "object",
               properties: {
                 price: {
-                  $ref: "http://example.com/schema/commonSchema/v1.2#/properties/priceFormat/properties",
+                  $ref: "commonSchema#/properties/priceFormat/properties",
                 },
                 breakup: {
                   type: "array",
@@ -195,7 +195,7 @@ module.exports = {
                         enum: TITLE_TYPE,
                       },
                       price: {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/priceFormat/properties",
+                        $ref: "commonSchema#/properties/priceFormat/properties",
                       },
                     },
                     required: [
@@ -290,7 +290,7 @@ module.exports = {
                         },
                       },
                       {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat",
+                        $ref: "commonSchema#/properties/addressFormat",
                       },
                     ],
 
@@ -347,7 +347,7 @@ module.exports = {
                         },
                       },
                       {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat",
+                        $ref: "commonSchema#/properties/addressFormat",
                       },
                     ],
 
@@ -614,7 +614,7 @@ module.exports = {
             "@ondc/org/linked_order": {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
+                  $ref: "confirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
                 },
                 {
                   $data:

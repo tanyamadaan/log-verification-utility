@@ -1,5 +1,5 @@
 module.exports = {
-  $id: "http://example.com/schema/trackSchema/v1.1",
+  $id: "http://example.com/schema/trackSchema",
   type: "object",
   properties: {
     context: {

@@ -1,6 +1,6 @@
 const constants = require("../../../utils/constants");
 module.exports = {
-  $id: "http://example.com/schema/onConfirmSchema/v1.2",
+  $id: "http://example.com/schema/onConfirmSchema",
   type: "object",
   properties: {
     context: {
@@ -223,7 +223,7 @@ module.exports = {
                 price: {
                   allOf: [
                     {
-                      $ref: "http://example.com/schema/commonSchema/v1.2#/properties/priceFormat",
+                      $ref: "commonSchema#/properties/priceFormat",
                     },
                     {
                       $data:
@@ -234,7 +234,7 @@ module.exports = {
                 breakup: {
                   allOf: [
                     {
-                      $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/properties/order/properties/quote/properties/breakup",
+                      $ref: "confirmSchema#/properties/message/properties/order/properties/quote/properties/breakup",
                     },
                     {
                       $data:
@@ -360,7 +360,7 @@ module.exports = {
                         required: ["time", "instructions"],
                       },
                       {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat",
+                        $ref: "commonSchema#/properties/addressFormat",
                       },
                     ],
                   },
@@ -405,7 +405,7 @@ module.exports = {
                         required: ["time", "instructions"],
                       },
                       {
-                        $ref: "http://example.com/schema/commonSchema/v1.2#/properties/addressFormat",
+                        $ref: "commonSchema#/properties/addressFormat",
                       },
                     ],
                   },
@@ -435,7 +435,7 @@ module.exports = {
               },
             },
             tags: {
-              $ref: "http://example.com/schema/commonSchema/v1.2#/properties/tagsArray",
+              $ref: "commonSchema#/properties/tagsArray",
             },
             billing: {
               type: "object",
@@ -587,7 +587,7 @@ module.exports = {
             payment: {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/properties/order/properties/payment",
+                  $ref: "confirmSchema#/properties/message/properties/order/properties/payment",
                 },
                 {
                   $data:
@@ -598,7 +598,7 @@ module.exports = {
             "@ondc/org/linked_order": {
               allOf: [
                 {
-                  $ref: "http://example.com/schema/confirmSchema/v1.2#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
+                  $ref: "confirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
                 },
                 {
                   $data:

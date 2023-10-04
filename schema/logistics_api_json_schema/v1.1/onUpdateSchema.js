@@ -317,49 +317,6 @@ module.exports = {
       },
       required: ["order"],
     },
-
-    search: {
-      type: "array",
-      items: {
-        $ref: "searchSchema#",
-      },
-    },
-    on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
-    },
-    init: {
-      type: "array",
-      items: {
-        $ref: "initSchema#",
-      },
-    },
-    on_init: {
-      type: "array",
-      items: {
-        $ref: "onInitSchema#",
-      },
-    },
-    confirm: {
-      type: "array",
-      items: {
-        $ref: "confirmSchema#",
-      },
-    },
-    on_confirm: {
-      type: "array",
-      items: {
-        $ref: "onConfirmSchema#",
-      },
-    },
-    update: {
-      type: "array",
-      items: {
-        $ref: "updateSchema#",
-      },
-    },
   },
   required: ["context", "message"],
 };

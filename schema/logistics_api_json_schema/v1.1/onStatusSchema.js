@@ -40,7 +40,7 @@ module.exports = {
           type: "string",
           const: { $data: "/search/0/context/transaction_id" },
           errorMessage:
-                "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
+            "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
         },
         message_id: {
           type: "string",
@@ -51,7 +51,7 @@ module.exports = {
               },
               errorMessage:
                 "Message ID should not be equal to transaction_id: ${1/transaction_id}",
-            }
+            },
           ],
         },
         timestamp: {
@@ -100,7 +100,7 @@ module.exports = {
                 id: {
                   type: "string",
                   const: { $data: "/init/0/message/order/provider/id" },
-                  errorMessage:"mismatches between /init and /on_status"
+                  errorMessage: "mismatches between /init and /on_status",
                 },
                 locations: {
                   type: "array",
@@ -604,14 +604,13 @@ module.exports = {
             created_at: {
               type: "string",
               const: { $data: "/confirm/0/message/order/created_at" },
-              errorMessage:
-                "mismatches in /confirm and /on_status",
+              errorMessage: "mismatches in /confirm and /on_status",
             },
             updated_at: {
-              type: "string"
+              type: "string",
             },
           },
-          additionalProperties:false,
+          additionalProperties: false,
           if: { properties: { state: { const: "Cancelled" } } },
           then: {
             required: [
@@ -623,7 +622,7 @@ module.exports = {
               "fulfillments",
               "payment",
               "billing",
-              "tags"
+              "tags",
             ],
           },
           else: {
@@ -641,42 +640,6 @@ module.exports = {
         },
       },
       required: ["order"],
-    },
-    search: {
-      type: "array",
-      items: {
-        $ref: "searchSchema#",
-      },
-    },
-    on_search: {
-      type: "array",
-      items: {
-        $ref: "onSearchSchema#",
-      },
-    },
-    init: {
-      type: "array",
-      items: {
-        $ref: "initSchema#",
-      },
-    },
-    on_init: {
-      type: "array",
-      items: {
-        $ref: "onInitSchema#",
-      },
-    },
-    confirm: {
-      type: "array",
-      items: {
-        $ref: "confirmSchema#",
-      },
-    },
-    status: {
-      type: "array",
-      items: {
-        $ref: "statusSchema#",
-      },
     },
   },
   required: ["context", "message"],

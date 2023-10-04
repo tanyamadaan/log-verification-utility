@@ -1,7 +1,6 @@
 const fs = require("fs");
 //const async = require("async");
 
-
 const formatted_error = (errors) => {
   error_list = [];
   let status = "";
@@ -28,6 +27,30 @@ function isEndTimeGreater(data) {
   const startTime = parseInt(data.start);
   const endTime = parseInt(data.end);
   return startTime < endTime;
+}
+
+function isFutureDated(data) {
+  const contextTime = data?.context?.timestamp;
+  const created_at = data?.message?.order?.created_at;
+  const updated_at = data?.message?.order?.updated_at;
+  if (created_at > contextTime || updated_at > contextTime) return false;
+  else return true;
+}
+function isQuoteMatching(data) {
+  const quotePrice = parseFloat(data?.price?.value);
+  const breakupArr = data.breakup;
+  let totalBreakup = 0;
+  breakupArr.forEach((breakup) => {
+    totalBreakup += parseFloat(breakup?.price?.value);
+  });
+  if (quotePrice != totalBreakup) return false;
+  else return true;
+}
+
+function isLengthValid(data) {
+  if (data.name.length + data.building.length + data.locality.length > 190)
+    return false;
+  else return true;
 }
 
 const loadSchema = (schemaType, version) => {
@@ -64,7 +87,7 @@ const validate_schema = (data, schema, version) => {
   const onCancelSchema = loadSchema("onCancel", version);
 
   const commonSchemaV1_2 = require("./v1.2/common/commonSchema");
-  
+
   const Ajv = require("ajv");
   const ajv = new Ajv({
     allErrors: true,
@@ -73,7 +96,7 @@ const validate_schema = (data, schema, version) => {
     strictTypes: false,
     verbose: true,
     $data: true,
-    schemaIs: 'id'
+    schemaIs: "id",
   });
 
   const addFormats = require("ajv-formats");
@@ -102,7 +125,16 @@ const validate_schema = (data, schema, version) => {
       .addKeyword("isEndTimeGreater", {
         validate: (schema, data) => isEndTimeGreater(data),
       })
-      .addSchema(commonSchemaV1_2);
+      .addSchema(commonSchemaV1_2)
+      .addKeyword("isQuoteMatching", {
+        validate: (schema, data) => isQuoteMatching(data),
+      })
+      .addKeyword("isFutureDated", {
+        validate: (schema, data) => isFutureDated(data),
+      })
+      .addKeyword("isLengthValid", {
+        validate: (schema, data) => isLengthValid(data),
+      });
 
     validate = validate.compile(schema);
 

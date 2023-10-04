@@ -13,3 +13,4 @@ test.js
 logFlow*.json
 .DS_Store
 log_report*
+/schema/logistics_api_json_schema/SchemaValidator_backup.js

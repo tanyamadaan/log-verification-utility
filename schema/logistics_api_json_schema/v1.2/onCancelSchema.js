@@ -320,25 +320,25 @@ module.exports = {
               ],
             },
             payment: {
-              allOf: [
-                {
-                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/properties/order/properties/payment",
-                },
-                {
-                  $data: "/on_confirm/0/message/order/payment",
-                },
-              ],
+              // allOf: [
+              //   {
+              //     $ref: "/onConfirmSchema/v1.2#/properties/message/properties/order/properties/payment",
+              //   },
+              //   {
+              //     $data: "/on_confirm/0/message/order/payment",
+              //   },
+              // ],
             },
             "@ondc/org/linked_order": {
-              allOf: [
-                {
-                  $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
-                },
-                {
-                  $data:
-                    "/on_confirm/0/message/order/@ondc~1org~1linked_order",
-                },
-              ],
+              // allOf: [
+              //   {
+              //     $ref: "http://example.com/schema/onConfirmSchema/v1.2#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
+              //   },
+              //   {
+              //     $data:
+              //       "/on_confirm/0/message/order/@ondc~1org~1linked_order",
+              //   },
+              // ],
             },
             updated_at: {
               type: "string",

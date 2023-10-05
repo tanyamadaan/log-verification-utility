@@ -206,6 +206,9 @@ module.exports = {
                   "@ondc/org/awb_no": {
                     type: "string",
                   },
+                  tracking: {
+                    type: "boolean"
+                  },
                   start: {
                     type: "object",
                     allOf: [
@@ -259,7 +262,8 @@ module.exports = {
                       {
                         $ref: "commonSchema#/properties/addressFormat",
                       },
-                    ],
+                    ],                    
+                    required: ["time"]
                   },
                   end: {
                     type: "object",
@@ -315,6 +319,7 @@ module.exports = {
                         $ref: "commonSchema#/properties/addressFormat",
                       },
                     ],
+                    required: ["time"]
                   },
                   agent: {
                     type: "object",
@@ -345,8 +350,8 @@ module.exports = {
                   },
                 },
                 additionalProperties: false,
-                required: ["id", "type", "start"],
-              },
+                required: ["id", "type", "start", "state", "tracking"],
+              }
             },
             billing: {
               type: "object",

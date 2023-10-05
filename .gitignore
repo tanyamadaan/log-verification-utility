@@ -1,4 +1,4 @@
-node_modules
+/node_modules
 package-lock.json
 *.env
 .vscode
@@ -12,5 +12,5 @@ test.js
 !LICENSE.md
 logFlow*.json
 .DS_Store
-log_report*
+/log_report*
 /schema/logistics_api_json_schema/SchemaValidator_backup.js

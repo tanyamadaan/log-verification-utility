@@ -120,10 +120,10 @@ module.exports = {
             quote: {
               allOf: [
                 {
-                  $ref: "onConfirmSchema#/properties/message/properties/order/properties/quote",
+                  $ref: "onUpdateSchema#/properties/message/properties/order/properties/quote",
                 },
                 {
-                  $data: "/on_confirm/0/message/quote",
+                  $data: "/on_update/0/message/quote",
                 },
               ],
             },

@@ -11,10 +11,11 @@ const clean = require("./clean");
 const validateLogs = async (domain, dirPath, outputDestination="") => {
   let msgIdSet = new Set();
   let ErrorObj = {};
-  if(outputDestination.length === 0) dirPath = outputDestination
+  if(outputDestination.length === 0) outputDestination = dirPath
 
   // Sort & Merge the logs
   const mergefile = path.join(dirPath, "../merged.json");
+  console.log("MERGE FILE PATH", mergefile)
   ErrorObj["Flow Error"] = sortMerge(domain, dirPath, mergefile);
 
   //  Log Validation

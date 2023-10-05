@@ -6,8 +6,10 @@ const sortMerge = (domain, directory, destination) => {
   flowErrObj = {};
   try {
     var mergedlogs = [];
+    console.log("HERE", directory)
     files = fs.readdirSync(directory);
-
+    console.log("HERE 2", directory)
+    
     let map;
     switch (domain) {
       case "logistics":

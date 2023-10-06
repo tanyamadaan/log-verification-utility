@@ -1,4 +1,9 @@
-const { PCC_CODE, DCC_CODE } = require("../../../utils/constants");
+const {
+  PCC_CODE,
+  DCC_CODE,
+  FULFILLMENT_TAGS_LIST_CODE,
+  FULFILLMENT_TAGS_LIST_VALUE,
+} = require("../../../utils/constants");
 module.exports = {
   $id: "http://example.com/schema/updateSchema",
   type: "object",
@@ -221,6 +226,7 @@ module.exports = {
                           },
                           short_desc: {
                             type: "string",
+                            maxLength: 6,
                           },
                           long_desc: {
                             type: "string",
@@ -233,7 +239,14 @@ module.exports = {
                     // required: ["instructions"],
                   },
                   tags: {
-                    $ref: "commonSchema#/properties/tagsArray",
+                    allOf: [
+                      {
+                        $ref: "commonSchema#/properties/tagsArray",
+                      },
+                      {
+                        $ref: "confirmSchema#/properties/message/properties/order/properties/fulfillments/items/properties/tags",
+                      },
+                    ],
                   },
                 },
                 additionalProperties: false,

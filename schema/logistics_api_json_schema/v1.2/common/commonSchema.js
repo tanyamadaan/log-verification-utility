@@ -69,6 +69,7 @@ module.exports = {
           required: ["phone", "email"],
         },
       },
+      required: ["person", "location", "contact"]
     },
 		tagsArray: {
 			type: "array",

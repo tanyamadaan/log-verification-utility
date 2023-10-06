@@ -322,7 +322,12 @@ module.exports = {
             "@ondc/org/linked_order": {
               $ref: "confirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
             },
+            updated_at: {
+              type: "string"
+            },
           },
+          isFutureDated: true,
+          errorMessage: "updated_at must not be future dated",
           required: ["id", "items", "fulfillments", "updated_at"],
         },
       },

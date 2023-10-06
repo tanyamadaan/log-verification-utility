@@ -1,4 +1,4 @@
-const { ORDER_STATE, TITLE_TYPE } = require("../../../utils/constants");
+const { ORDER_STATE, TITLE_TYPE, FULFILLMENT_STATE } = require("../../../utils/constants");
 module.exports = {
   $id: "http://example.com/schema/onUpdateSchema",
   type: "object",
@@ -198,7 +198,7 @@ module.exports = {
                       descriptor: {
                         type: "object",
                         properties: {
-                          code: { type: "string" },
+                          code: { type: "string" , enum: FULFILLMENT_STATE},
                         },
                       },
                     },
@@ -236,7 +236,7 @@ module.exports = {
                                 format: "date-time",
                               },
                             },
-                            required: ["range", "timestamp"],
+                            required: ["range"],
                           },
                           instructions: {
                             type: "object",
@@ -255,7 +255,7 @@ module.exports = {
                                 },
                               },
                             },
-                            required: ["code", "short_desc", "image"],
+                            required: ["code", "short_desc"],
                           },
                         },
                       },
@@ -292,7 +292,7 @@ module.exports = {
                                 format: "date-time",
                               },
                             },
-                            required: ["range", "timestamp"],
+                            required: ["range"],
                           },
                           instructions: {
                             type: "object",
@@ -311,7 +311,7 @@ module.exports = {
                                 },
                               },
                             },
-                            required: ["code", "short_desc", "image"],
+                            required: ["code", "short_desc"],
                           },
                         },
                       },

@@ -7,7 +7,7 @@ const validateSchema = require("./schemaValidation");
 const path = require("path");
 const checkContextVal = require("./ContextVal");
 
-const Validate = (domain, dirPath, msgIdSet, ErrorObj) => {
+const Validate = async (domain, dirPath, msgIdSet, ErrorObj) => {
   try {
     let log = fs.readFileSync(dirPath);
     log = JSON.parse(log);
@@ -26,9 +26,9 @@ const Validate = (domain, dirPath, msgIdSet, ErrorObj) => {
       console.log(`!!Error occurred while performing schema validation`, error);
     }
     contextObj = ErrorObj["Context"];
-    Object.entries(log).forEach(([action, elements]) => {
+    for(const [action, elements] of Object.entries(log)){
       // Validate schema for each element in the array associated with the action
-      elements.forEach((element, i) => {
+      for (const [i, element] of elements.entries()) {
         // Validating action context level checks
         try {
           if (!("Context" in ErrorObj)) ErrorObj["Context"] = {};
@@ -52,7 +52,7 @@ const Validate = (domain, dirPath, msgIdSet, ErrorObj) => {
         // Business validations
         try {
           if (!("Message" in ErrorObj)) ErrorObj["Message"] = {};
-          ErrorObj["Message"][`${action}_${i}`] = checkMessage(
+          ErrorObj["Message"][`${action}_${i}`] = await checkMessage(
             domain,
             element,
             action,
@@ -65,10 +65,10 @@ const Validate = (domain, dirPath, msgIdSet, ErrorObj) => {
             error
           );
         }
-      });
-    
+      }
+
       return ErrorObj;
-    });
+    }
   } catch (error) {
     console.log(error);
   }

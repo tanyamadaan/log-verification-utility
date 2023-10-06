@@ -32,10 +32,10 @@ const validateLogs = (domain, dirPath) => {
   }
 try {
   // outputfile = `log${flowId}.json`
-  outputfile= 'log_report.json'
+  outputfile= 'log_report.md'
 
-  // let out = getObjValues(ErrorObj['Schema'])
-let out = JSON.stringify(ErrorObj,null,4)
+  let out = getObjValues(ErrorObj['Schema'])
+// let out = JSON.stringify(ErrorObj,null,4)
   fs.writeFileSync(outputfile, out , 'utf-8');
 } catch (error) {
   console.log("!!ERROR writing output file",error)

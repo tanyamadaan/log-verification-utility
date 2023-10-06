@@ -363,7 +363,6 @@ module.exports = {
                         type: "string",
                       },
                     },
-                    required: ["name", "phone"],
                   },
                   vehicle: {
                     type: "object",

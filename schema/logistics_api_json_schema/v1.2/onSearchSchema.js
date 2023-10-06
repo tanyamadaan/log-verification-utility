@@ -288,8 +288,7 @@ module.exports = {
                             },
                             duration: {
                               type: "string",
-                              format: "duration",
-                              errorMessage: "${2/time/duration}",
+                              format: "duration"
                             },
                             timestamp: {
                               type: "string",

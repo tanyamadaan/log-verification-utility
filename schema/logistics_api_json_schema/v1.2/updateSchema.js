@@ -1,4 +1,4 @@
-const constants = require("../../../utils/constants");
+const { PCC_CODE, DCC_CODE } = require("../../../utils/constants");
 module.exports = {
   $id: "http://example.com/schema/updateSchema",
   type: "object",
@@ -155,7 +155,7 @@ module.exports = {
                         properties: {
                           code: {
                             type: "string",
-                            enum: constants.PCC,
+                            enum: PCC_CODE,
                           },
                           name: {
                             type: "string",
@@ -165,6 +165,39 @@ module.exports = {
                           },
                           long_desc: {
                             type: "string",
+                          },
+                        },
+                        if: {
+                          properties: {
+                            code: {
+                              const: "1",
+                            },
+                          },
+                        },
+                        then: {
+                          properties: {
+                            short_desc: {
+                              type: "string",
+                              minLength: 10,
+                              maxLength: 10,
+                            },
+                          },
+                        },
+                        else: {
+                          if: {
+                            properties: {
+                              code: {
+                                const: "2",
+                              },
+                            },
+                          },
+                          then: {
+                            properties: {
+                              short_desc: {
+                                type: "string",
+                                maxLength: 6,
+                              },
+                            },
                           },
                         },
                         required: ["code", "name", "short_desc", "long_desc"],
@@ -181,7 +214,7 @@ module.exports = {
                         properties: {
                           code: {
                             type: "string",
-                            enum: constants.DCC,
+                            enum: DCC_CODE,
                           },
                           name: {
                             type: "string",
@@ -277,7 +310,7 @@ module.exports = {
               $ref: "confirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
             },
           },
-          required: ["id", "state", "items", "fulfillments", "updated_at"],
+          required: ["id", "items", "fulfillments", "updated_at"],
         },
       },
       required: ["update_target", "order"],

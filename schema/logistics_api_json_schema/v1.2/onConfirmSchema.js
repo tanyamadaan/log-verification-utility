@@ -295,6 +295,123 @@ module.exports = {
                         },
                         required: ["registration"],
                       },
+
+                      start: {
+                        type: "object",
+                        allOf: [
+                          {
+                            properties: {
+                              time: {
+                                type: "object",
+                                properties: {
+                                  range: {
+                                    type: "object",
+                                    properties: {
+                                      start: {
+                                        type: "string",
+                                        minimum: {
+                                          $data: "7/context/timestamp",
+                                        },
+                                        errorMessage: "${7/context/timestamp}",
+                                      },
+                                      end: {
+                                        type: "string",
+                                      },
+                                    },
+                                    required: ["start", "end"],
+                                  },
+                                  timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                  },
+                                },
+                                required: ["range"],
+                              },
+                              instructions: {
+                                type: "object",
+                                properties: {
+                                  code: { type: "string" },
+                                  short_desc: {
+                                    type: "string",
+                                  },
+                                  long_desc: {
+                                    type: "string",
+                                  },
+                                  images: {
+                                    type: "array",
+                                    items: {
+                                      type: "string",
+                                    },
+                                  },
+                                },
+                                required: ["code", "short_desc"],
+                              },
+                            },
+                          },
+                          {
+                            $ref: "commonSchema#/properties/addressFormat",
+                          },
+                        ],
+                        required: ["time"],
+                      },
+                      end: {
+                        type: "object",
+                        allOf: [
+                          {
+                            properties: {
+                              time: {
+                                type: "object",
+                                properties: {
+                                  range: {
+                                    type: "object",
+                                    properties: {
+                                      start: {
+                                        type: "string",
+                                        minimum: {
+                                          $data: "7/context/timestamp",
+                                        },
+                                        errorMessage: "${7/context/timestamp}",
+                                      },
+                                      end: {
+                                        type: "string",
+                                      },
+                                    },
+                                    required: ["start", "end"],
+                                  },
+                                  timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                  },
+                                },
+                                required: ["range"],
+                              },
+                              instructions: {
+                                type: "object",
+                                properties: {
+                                  code: { type: "string" },
+                                  short_desc: {
+                                    type: "string",
+                                  },
+                                  long_desc: {
+                                    type: "string",
+                                  },
+                                  images: {
+                                    type: "array",
+                                    items: {
+                                      type: "string",
+                                    },
+                                  },
+                                },
+                                required: ["code", "short_desc"],
+                              },
+                            },
+                          },
+                          {
+                            $ref: "commonSchema#/properties/addressFormat",
+                          },
+                        ],
+                        required: ["time"],
+                      },
                     },
                   },
                   {

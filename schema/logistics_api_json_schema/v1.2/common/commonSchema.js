@@ -6,7 +6,12 @@ module.exports = {
       type: "object",
       properties: {
         person: {
-          type: "string",
+          type: "object",
+          properties: {
+            name: {
+              type: "string"
+            }
+          }
         },
         location: {
           type: "object",

@@ -975,15 +975,11 @@ module.exports = {
             },
             created_at: {
               type: "string",
-              const: { $data: "3/context/timestamp" },
-              errorMessage:
-                "created_at does not match context timestamp - ${3/context/timestamp}",
+              format:"date-time"
             },
             updated_at: {
               type: "string",
-              const: { $data: "3/context/timestamp" },
-              errorMessage:
-                "updated_at does not match context timestamp - ${3/context/timestamp}",
+              format: "date-time"
             },
           },
           additionalProperties: false,

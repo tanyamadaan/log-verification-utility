@@ -173,7 +173,6 @@ module.exports = {
                             properties: {
                               name: {
                                 type: "string",
-                                minLength: 3,
                                 not: { const: { $data: "1/locality" } },
                               },
                               building: {
@@ -197,6 +196,8 @@ module.exports = {
                                 type: "string",
                               },
                             },
+                            isLengthValid:true,
+                            errorMessage:"name + building + locality < 190 chars",
                             required: [
                               "name",
                               "building",
@@ -273,6 +274,8 @@ module.exports = {
                                 type: "string",
                               },
                             },
+                            isLengthValid:true,
+                            errorMessage:"name + building + locality < 190 chars",
                             required: [
                               "name",
                               "building",

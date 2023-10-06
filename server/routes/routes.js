@@ -82,8 +82,9 @@ router.get("/", (req, res) => {
 //   }
 // });
 
-router.post("/validate/local/multiple", async (req, res) => {
-  const { domain, dirPath } = req.body;
+router.post("/validate/local/multiple/:domain", async (req, res) => {
+  const { dirPath } = req.body;
+  const { domain } = req.params;
   if (!domain || !dirPath)
     return res
       .status(400)

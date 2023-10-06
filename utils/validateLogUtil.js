@@ -14,7 +14,7 @@ const validateLogs = async (domain, dirPath, outputDestination="") => {
   if(outputDestination.length === 0) outputDestination = dirPath
 
   // Sort & Merge the logs
-  const mergefile = path.join(dirPath, "../merged.json");
+  const mergefile = path.join(outputDestination, "merged.json");
   console.log("MERGE FILE PATH", mergefile)
   ErrorObj["Flow Error"] = sortMerge(domain, dirPath, mergefile);
 

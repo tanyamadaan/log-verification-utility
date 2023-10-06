@@ -286,13 +286,22 @@ module.exports = {
                         },
                         required: ["descriptor"],
                       },
+                      vehicle: {
+                        type: "object",
+                        properties: {
+                          registration: {
+                            type: "string",
+                          },
+                        },
+                        required: ["registration"],
+                      },
                     },
                   },
                   {
                     $ref: "confirmSchema#/properties/message/properties/order/properties/fulfillments/items",
                   },
                 ],
-              }
+              },
             },
             billing: {
               type: "object",

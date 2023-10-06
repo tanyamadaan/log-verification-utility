@@ -49,6 +49,8 @@ module.exports = {
                   type: "string",
                 },
               },
+              isLengthValid: true,
+              errorMessage: "name + building + locality < 190 chars",
             },
           },
           required: ["gps", "address"],

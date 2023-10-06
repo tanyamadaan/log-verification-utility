@@ -1,5 +1,9 @@
 const fs = require("fs");
 //const async = require("async");
+const { isLengthValid } = require("./v1.2/keywords/init");
+const { isQuoteMatching } = require("./v1.2/keywords/onInit");
+const { isFutureDated } = require("./v1.2/keywords/confirm");
+const { isEndTimeGreater } = require("./v1.2/keywords/search");
 
 const formatted_error = (errors) => {
   error_list = [];
@@ -22,36 +26,6 @@ const formatted_error = (errors) => {
   error_json = { errors: error_list, status: status };
   return error_json;
 };
-
-function isEndTimeGreater(data) {
-  const startTime = parseInt(data.start);
-  const endTime = parseInt(data.end);
-  return startTime < endTime;
-}
-
-function isFutureDated(data) {
-  const contextTime = data?.context?.timestamp;
-  const created_at = data?.message?.order?.created_at;
-  const updated_at = data?.message?.order?.updated_at;
-  if (created_at > contextTime || updated_at > contextTime) return false;
-  else return true;
-}
-function isQuoteMatching(data) {
-  const quotePrice = parseFloat(data?.price?.value);
-  const breakupArr = data.breakup;
-  let totalBreakup = 0;
-  breakupArr.forEach((breakup) => {
-    totalBreakup += parseFloat(breakup?.price?.value);
-  });
-  if (quotePrice != totalBreakup) return false;
-  else return true;
-}
-
-function isLengthValid(data) {
-  if (data.name.length + data.building.length + data.locality.length > 190)
-    return false;
-  else return true;
-}
 
 const loadSchema = (schemaType, version) => {
   try {

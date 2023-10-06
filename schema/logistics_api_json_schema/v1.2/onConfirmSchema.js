@@ -475,7 +475,6 @@ module.exports = {
                 "does not match context/timestamp - ${3/context/timestamp}",
             },
           },
-          additionalProperties: false,
           required: [
             "id",
             "state",

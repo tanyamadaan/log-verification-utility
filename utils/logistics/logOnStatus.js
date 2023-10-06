@@ -39,7 +39,7 @@ const checkOnStatus = (data, msgIdSet) => {
         `Comparing pickup and delivery timestamps for on_status_${ffState}`
       );
 
-      if (fulfillment.type === "Prepaid" || fulfillment.type === "CoD") {
+      if (fulfillment.type === "Prepaid" || fulfillment.type === "CoD" || fulfillment.type === "Delivery") {
         if (ffState === "Pending" || ffState === "Agent-assigned") {
           if (fulfillment?.start?.time?.timestamp) {
             onStatusObj.pickupTimeErr = `Pickup timestamp (fulfillments/start/time/timestamp) cannot be provided for fulfillment state - ${ffState}`;
@@ -66,6 +66,7 @@ const checkOnStatus = (data, msgIdSet) => {
           }
         }
         if (ffState === "Out-for-delivery") {
+        
           if (orderState !== "In-progress") {
             onStatusObj.ordrStatErr = `Order state should be 'In-progress' for fulfillment state - ${ffState}`;
           }
@@ -142,7 +143,7 @@ const checkOnStatus = (data, msgIdSet) => {
             }
           }
         }
-      } else if (fulfillment.type === "RTO") {
+      } else if (fulfillment.type === "RTO" || fulfillment.type === "Return") {
         if (orderState !== "Cancelled") {
           onStatusObj.ordrStatErr = `Order state should be 'Cancelled' for fulfillment state - ${ffState}`;
         }

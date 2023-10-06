@@ -382,6 +382,7 @@ module.exports = {
                             enum: constants.PCC_CODE,
                           },
                         },
+                        required: ["code", "short_desc"],
                         allOf: [
                           {
                             if: { properties: { code: { const: "1" } } },
@@ -510,6 +511,7 @@ module.exports = {
                             enum: constants.DCC_CODE,
                           },
                         },
+                        required: ["code", "short_desc"],
                         allOf: [
                           {
                             if: { properties: { code: { const: "3" } } },
@@ -982,7 +984,7 @@ module.exports = {
               format: "date-time"
             },
           },
-          additionalProperties: false,
+
           required: [
             "id",
             "state",

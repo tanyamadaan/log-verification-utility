@@ -339,7 +339,6 @@ module.exports = {
                     required: ["location", "contact"],
                   },
                 },
-                additionalProperties: false,
                 required: ["id", "type", "start", "end"],
               },
             },
@@ -413,7 +412,6 @@ module.exports = {
               required: ["type", "collected_by"],
             },
           },
-          additionalProperties: false,
           required: ["provider", "items", "quote", "payment", "fulfillments"],
           // anyOf: [
           //   {

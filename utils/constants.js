@@ -91,7 +91,7 @@ module.exports = Object.freeze({
   ],
   SHIPMENT_TYPE: ["P2P", "P2H2P"],
   SETTLEMENT_TYPE: ["upi", "neft", "rtgs"],
-  TITLE_TYPE: ["delivery", "rto", "reverseqc"],
+  TITLE_TYPE: ["delivery", "rto", "reverseqc","tax"],
   PCC_CODE: ["1", "2", "3", "4"],
   DCC_CODE: ["1", "2", "3"],
   FULFILLMENT_TAGS_CODE: ["state", "rto_action"],

@@ -333,6 +333,15 @@ module.exports = {
                     },
                     required: ["name", "phone"],
                   },
+                  vehicle: {
+                    type: "object",
+                    properties: {
+                      registration: {
+                        type: "string",
+                      },
+                    },
+                    required: ["registration"],
+                  },
                   "@ondc/org/ewaybillno": {
                     type: "string",
                     const: {

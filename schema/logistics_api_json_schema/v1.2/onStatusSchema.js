@@ -568,7 +568,6 @@ module.exports = {
                         "mismatches in /billing in /confirm and /on_status",
                     },
                   },
-                  additionalProperties: false,
                   required: [
                     "name",
                     "building",
@@ -607,8 +606,8 @@ module.exports = {
                     "mismatches in /billing in /confirm and /on_status",
                 },
               },
-              additionalProperties: false,
-              required: ["name", "address", "phone", "tax_number"],
+              
+              required: ["name", "address", "phone", "email","tax_number"],
             },
             "@ondc/org/linked_order": {
               allOf: [

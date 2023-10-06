@@ -29,7 +29,10 @@ const checkOnSearch = (data, msgIdSet) => {
       });
     }
   } catch (error) {
-    console.log(`!!Error while fetching category and item TAT`, error);
+    console.log(
+      `!!Error while fetching category and item TAT`,
+      error
+    );
   }
 
   //forward and backward shipment
@@ -58,7 +61,9 @@ const checkOnSearch = (data, msgIdSet) => {
       }
 
       if (hasForwardShipment && hasBackwardShipment) {
-        console.log("Both forward and backward shipments are present.");
+        console.log(
+          "Both forward and backward shipments are present."
+        );
       } else if (!hasForwardShipment) {
         onSrchObj.frwrdShpmnt = `Forward shipment (Prepaid or CoD) is missing in ${constants.LOG_ONSEARCH} api`;
       } else if (!hasBackwardShipment) {
@@ -82,7 +87,7 @@ const checkOnSearch = (data, msgIdSet) => {
       providers.forEach((provider, i) => {
         let itemsArr = provider.items;
         const providerId = provider.id;
-    
+
         dao.setValue(`${providerId}itemsArr`, itemsArr);
         itemsArr.forEach((item, j) => {
           if (!validFulfillmentIDs.has(item.fulfillment_id)) {
@@ -105,6 +110,30 @@ const checkOnSearch = (data, msgIdSet) => {
       `!!Error while checking fulfillment ids in /items in ${constants.LOG_ONSEARCH} api`,
       error
     );
+  }
+
+  // RGC checks on bpp/provider
+
+  console.log(`Checking Reverse Geocoding on bpp/providers`);
+  if (onSearch.hasOwnProperty("bpp/providers")) {
+    onSearch["bpp/providers"].forEach((provider) => {
+      if (provider.hasOwnProperty("locations")) {
+        provider.locations.forEach(
+          async ({ id, gps, address: { area_code } }) => {
+            try {
+              const [lat, long] = gps.split(",");
+              const match = await reverseGeoCodingCheck(lat, long, area_code);
+              if (!match)
+                srchObj[
+                  "bpp/provider:location:" + id + ":RGC"
+                ] = `Reverse Geocoding for location ID ${id} failed. Area Code ${area_code} not matching with ${lat}-${long} Lat-Long pair.`;
+            } catch (error) {
+              console.log("bpp/providers error: ", error);
+            }
+          }
+        );
+      }
+    });
   }
 
   return onSrchObj;

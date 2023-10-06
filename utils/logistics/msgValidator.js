@@ -9,7 +9,7 @@ const checkOnStatus = require("./logOnStatus");
 const checkSearch = require("./logSearch");
 const _ = require("lodash");
 
-const logisticsVal = (element, action, msgIdSet) => {
+const logisticsVal = async (element, action, msgIdSet) => {
   const busnsErr = {};
   switch (action) {
     case "search":

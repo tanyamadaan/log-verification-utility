@@ -8,12 +8,14 @@ const Validate = require("./schemaVal");
 const flowVal = require("./retail/businessVal");
 const clean = require("./clean");
 
-const validateLogs = async (domain, dirPath) => {
+const validateLogs = async (domain, dirPath, outputDestination="") => {
   let msgIdSet = new Set();
   let ErrorObj = {};
+  if(outputDestination.length === 0) outputDestination = dirPath
 
   // Sort & Merge the logs
-  const mergefile = path.join(dirPath, "../merged.json");
+  const mergefile = path.join(outputDestination, "merged.json");
+  console.log("MERGE FILE PATH", mergefile)
   ErrorObj["Flow Error"] = sortMerge(domain, dirPath, mergefile);
 
   //  Log Validation
@@ -32,7 +34,7 @@ const validateLogs = async (domain, dirPath) => {
   }
   try {
     // outputfile = `log${flowId}.json`
-    outputfile = "log_report.json";
+    outputfile = path.join(outputDestination,"log_report.json");
 
     // let out = getObjValues(ErrorObj['Schema'])
     let out = JSON.stringify(ErrorObj, null, 4);

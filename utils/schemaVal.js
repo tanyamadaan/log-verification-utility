@@ -11,7 +11,6 @@ const Validate = async (domain, dirPath, msgIdSet, ErrorObj) => {
   try {
     let log = fs.readFileSync(dirPath);
     log = JSON.parse(log);
-    count = 0;
 
     // Validating Schema
     try {
@@ -26,8 +25,7 @@ const Validate = async (domain, dirPath, msgIdSet, ErrorObj) => {
       console.log(`!!Error occurred while performing schema validation`, error);
     }
     contextObj = ErrorObj["Context"];
-    for(const [action, elements] of Object.entries(log)){
-      // Validate schema for each element in the array associated with the action
+    for (const [action, elements] of Object.entries(log)) {
       for (const [i, element] of elements.entries()) {
         // Validating action context level checks
         try {
@@ -35,7 +33,11 @@ const Validate = async (domain, dirPath, msgIdSet, ErrorObj) => {
           // CntxtObj = ErrorObj["Context"];
           //console.log(`Validating timestamp for ${action} api`);
           if (action != "search") {
-            ErrorObj["Context"][`${action}_${i}`] = checkContextVal(element, msgIdSet,i);
+            ErrorObj["Context"][`${action}_${i}`] = checkContextVal(
+              element,
+              msgIdSet,
+              i
+            );
             // if (ValCheck != "error") {
             //   Object.assign(CntxtObj, ValCheck);
             // }
@@ -66,9 +68,8 @@ const Validate = async (domain, dirPath, msgIdSet, ErrorObj) => {
           );
         }
       }
-
-      return ErrorObj;
     }
+    return ErrorObj;
   } catch (error) {
     console.log(error);
   }

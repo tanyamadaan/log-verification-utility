@@ -6,10 +6,9 @@ const sortMerge = (domain, directory, destination) => {
   flowErrObj = {};
   try {
     var mergedlogs = [];
-    console.log("HERE", directory)
+
     files = fs.readdirSync(directory);
-    console.log("HERE 2", directory)
-    
+
     let map;
     switch (domain) {
       case "logistics":
@@ -21,6 +20,10 @@ const sortMerge = (domain, directory, destination) => {
     }
 
     mergedlogs = files.reduce((acc, item) => {
+      // Skip processing if the file name matches "merged.json" or "log_report.json"
+      if (item === "merged.json" || item === "log_report.json") {
+        return acc;
+      }
       try {
         if (item.match(/\.json$/)) {
           let data = fs.readFileSync(`${directory}/${item}`);
@@ -33,11 +36,12 @@ const sortMerge = (domain, directory, destination) => {
             return acc; // Skip this data and continue with the next iteration
           }
           const { action } = data.context;
-          if (acc.hasOwnProperty(action)) {
-            acc[action].push(data);
-          } else {
-            acc[action] = [data];
+
+          if (!acc[action]) {
+            acc[action] = [];
           }
+
+          acc[action].push(data);
           return acc;
         }
       } catch (error) {

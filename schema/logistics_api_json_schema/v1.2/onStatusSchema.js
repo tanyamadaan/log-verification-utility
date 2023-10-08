@@ -633,7 +633,7 @@ module.exports = {
               "fulfillments",
               "payment",
               "billing",
-              "tags",
+              "cancellation"
             ],
           },
           else: {

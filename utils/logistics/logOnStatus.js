@@ -185,7 +185,7 @@ const checkOnStatus = (data, msgIdSet) => {
       }
     });
   } catch (error) {
-    console.log(`Error checking fulfillments/start in /update`);
+    console.log(`Error checking fulfillments/start in /on_status`);
   }
 
   return onStatusObj;

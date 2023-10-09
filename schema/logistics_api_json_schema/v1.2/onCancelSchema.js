@@ -301,8 +301,6 @@ module.exports = {
                   "type",
                   "state",
                   "tags",
-                  "@ondc/org/awb_no",
-                  "tracking",
                   "start",
                   "end",
                   "agent",

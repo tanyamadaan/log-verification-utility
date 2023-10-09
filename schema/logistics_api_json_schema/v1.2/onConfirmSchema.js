@@ -267,157 +267,367 @@ module.exports = {
               type: "array",
               items: {
                 type: "object",
-                $merge: [
-                  {
+                properties: {
+                  id: {
+                    type: "string",
+                    const: {
+                      $data: "/confirm/0/message/order/fulfillments/0/id",
+                    },
+                  },
+                  type: {
+                    type: "string",
+                    const: {
+                      $data: "/confirm/0/message/order/fulfillments/0/type",
+                    },
+                  },
+                  state: {
+                    type: "object",
                     properties: {
-                      state: {
+                      descriptor: {
                         type: "object",
                         properties: {
-                          descriptor: {
+                          code: {
+                            type: "string",
+                            const: "Pending",
+                          },
+                        },
+                        required: ["code"],
+                      },
+                    },
+                    required: ["descriptor"],
+                  },
+                  "@ondc/org/awb_no": {
+                    type: "string",
+                    pattern: "^[0-9]{11,16}$",
+                    errorMessage: "should be 11-16 digits",
+                    const: {
+                      $data:
+                        "/confirm/0/message/order/fulfillments/0/@ondc~1org~1awb_no",
+                    },
+                  },
+                  tracking: {
+                    type: "boolean",
+                  },
+                  start: {
+                    type: "object",
+                    properties: {
+                      person: {
+                        type: "object",
+                        properties: {
+                          name: {
+                            type: "string",
+                            const: {
+                              $data:
+                                "/confirm/0/message/order/fulfillments/0/start/person/name",
+                            },
+                          },
+                        },
+                        required: ["name"],
+                      },
+                      location: {
+                        type: "object",
+                        properties: {
+                          gps: {
+                            type: "string",
+                            const: {
+                              $data:
+                                "/confirm/0/message/order/fulfillments/0/start/location/gps",
+                            },
+                            errorMessage:
+                              "does not match start location in /confirm",
+                          },
+                          address: {
+                            allOf: [
+                              {
+                                type: "object",
+                                properties: {
+                                  name: {
+                                    type: "string",
+                                    minLength: 3,
+                                    not: { const: { $data: "1/locality" } },
+                                  },
+                                  building: {
+                                    type: "string",
+                                    minLength: 3,
+                                  },
+                                  locality: {
+                                    type: "string",
+                                    minLength: 3,
+                                  },
+                                  city: {
+                                    type: "string",
+                                  },
+                                  state: {
+                                    type: "string",
+                                  },
+                                  country: {
+                                    type: "string",
+                                  },
+                                  area_code: {
+                                    type: "string",
+                                  },
+                                },
+                                required: [
+                                  "name",
+                                  "building",
+                                  "locality",
+                                  "city",
+                                  "state",
+                                  "country",
+                                  "area_code",
+                                ],
+                              },
+                              {
+                                $data:
+                                  "/confirm/0/message/order/fulfillments/0/start/location/address",
+                              },
+                            ],
+                          },
+                        },
+                        required: ["gps", "address"],
+                      },
+                      contact: {
+                        allOf: [
+                          {
+                            type: "object",
+                            properties: {
+                              phone: {
+                                type: "string",
+                              },
+                              email: {
+                                type: "string",
+                              },
+                            },
+                            required: ["phone"],
+                          },
+                          {$data:
+                            "/confirm/0/message/order/fulfillments/0/start/contact",}
+                        ]
+                      },
+                      instructions: {
+                        type: "object",
+                        properties: {
+                          short_desc: {
+                            type: "string",
+                          },
+                          long_desc: {
+                            type: "string",
+                          },
+                          code: {
+                            type: "string",
+                            enum: constants.PCC_CODE,
+                          },
+                        },
+                        required: ["code", "short_desc"],
+                      },
+                      time: {
+                        type: "object",
+                        properties: {
+                          range: {
+                            type: "object",
+                            properties: {
+                              start: {
+                                type: "string",
+                                minimum: {
+                                  $data: "7/context/timestamp",
+                                },
+                                errorMessage: "${7/context/timestamp}",
+                              },
+                              end: {
+                                type: "string",
+                              },
+                            },
+                            required: ["start", "end"],
+                          },
+                        },
+                      },
+                    },
+                    required: ["person", "location", "contact", "time"],
+                  },
+                  
+                  end: {
+                    type: "object",
+                    properties: {
+                      person: {
+                        type: "object",
+                        properties: {
+                          name: {
+                            type: "string",
+                            const: {
+                              $data:
+                                "/confirm/0/message/order/fulfillments/0/end/person/name",
+                            },
+                          },
+                        },
+                        required: ["name"],
+                      },
+                      location: {
+                        type: "object",
+                        properties: {
+                          gps: {
+                            type: "string",
+                            const: {
+                              $data:
+                                "/confirm/0/message/order/fulfillments/0/end/location/gps",
+                            },
+                            errorMessage:
+                              "does not match start location in /confirm",
+                          },
+                          address: {
+                            allOf: [
+                              {
+                                type: "object",
+                                properties: {
+                                  name: {
+                                    type: "string",
+                                    minLength: 3,
+                                    not: { const: { $data: "1/locality" } },
+                                  },
+                                  building: {
+                                    type: "string",
+                                    minLength: 3,
+                                  },
+                                  locality: {
+                                    type: "string",
+                                    minLength: 3,
+                                  },
+                                  city: {
+                                    type: "string",
+                                  },
+                                  state: {
+                                    type: "string",
+                                  },
+                                  country: {
+                                    type: "string",
+                                  },
+                                  area_code: {
+                                    type: "string",
+                                  },
+                                },
+                                required: [
+                                  "name",
+                                  "building",
+                                  "locality",
+                                  "city",
+                                  "state",
+                                  "country",
+                                  "area_code",
+                                ],
+                              },
+                              {
+                                $data:
+                                  "/confirm/0/message/order/fulfillments/0/end/location/address",
+                              },
+                            ],
+                          },
+                        },
+                        required: ["gps", "address"],
+                      },
+                      contact: {
+                        allOf: [
+                          {
+                            type: "object",
+                            properties: {
+                              phone: {
+                                type: "string",
+                              },
+                              email: {
+                                type: "string",
+                              },
+                            },
+                            required: ["phone"],
+                          },
+                          {$data:
+                            "/confirm/0/message/order/fulfillments/0/end/contact",}
+                        ]
+                      },
+                      instructions: {
+                        type: "object",
+                        properties: {
+                          short_desc: {
+                            type: "string",
+                          },
+                          long_desc: {
+                            type: "string",
+                          },
+                          code: {
+                            type: "string",
+                            enum: constants.PCC_CODE,
+                          },
+                        },
+                        required: ["code", "short_desc"],
+                      },
+                      time: {
+                        type: "object",
+                        properties: {
+                          range: {
+                            type: "object",
+                            properties: {
+                              start: {
+                                type: "string",
+                                minimum: {
+                                  $data: "7/context/timestamp",
+                                },
+                                errorMessage: "${7/context/timestamp}",
+                              },
+                              end: {
+                                type: "string",
+                              },
+                            },
+                            required: ["start", "end"],
+                          },
+                        },
+                      },
+                    },
+                    required: ["person", "location", "contact", "time"],
+                  },
+                  agent: {
+                    type: "object",
+                    properties: {
+                      name: {type: "string"},
+                      phone: {type: "string"}
+                    }
+                  },
+                  vehicle: {
+                    type: "object",
+                    properties: {
+                      registration: {
+                        type: "string",
+                      },
+                    },
+                    required: ["registration"],
+                  },
+                  
+                  tags: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        code: {
+                          type: "string"
+                        },
+                        list: {
+                          type: "array",
+                          items: {
                             type: "object",
                             properties: {
                               code: {
                                 type: "string",
-                                const: "Pending",
+                                enum: constants.FULFILLMENT_TAGS_LIST_CODE,
+                              },
+                              value: {
+                                type: "string",
+                                enum: constants.FULFILLMENT_TAGS_LIST_VALUE,
                               },
                             },
-                            required: ["code"],
+                            required: ["code", "value"],
                           },
                         },
-                        required: ["descriptor"],
                       },
-                      vehicle: {
-                        type: "object",
-                        properties: {
-                          registration: {
-                            type: "string",
-                          },
-                        },
-                        required: ["registration"],
-                      },
-
-                      start: {
-                        type: "object",
-                        allOf: [
-                          {
-                            properties: {
-                              time: {
-                                type: "object",
-                                properties: {
-                                  range: {
-                                    type: "object",
-                                    properties: {
-                                      start: {
-                                        type: "string",
-                                        minimum: {
-                                          $data: "7/context/timestamp",
-                                        },
-                                        errorMessage: "${7/context/timestamp}",
-                                      },
-                                      end: {
-                                        type: "string",
-                                      },
-                                    },
-                                    required: ["start", "end"],
-                                  },
-                                  timestamp: {
-                                    type: "string",
-                                    format: "date-time",
-                                  },
-                                },
-                                required: ["range"],
-                              },
-                              instructions: {
-                                type: "object",
-                                properties: {
-                                  code: { type: "string" },
-                                  short_desc: {
-                                    type: "string",
-                                  },
-                                  long_desc: {
-                                    type: "string",
-                                  },
-                                  images: {
-                                    type: "array",
-                                    items: {
-                                      type: "string",
-                                    },
-                                  },
-                                },
-                                required: ["code", "short_desc"],
-                              },
-                            },
-                          },
-                          {
-                            $ref: "commonSchema#/properties/addressFormat",
-                          },
-                        ],
-                        required: ["time"],
-                      },
-                      end: {
-                        type: "object",
-                        allOf: [
-                          {
-                            properties: {
-                              time: {
-                                type: "object",
-                                properties: {
-                                  range: {
-                                    type: "object",
-                                    properties: {
-                                      start: {
-                                        type: "string",
-                                        minimum: {
-                                          $data: "7/context/timestamp",
-                                        },
-                                        errorMessage: "${7/context/timestamp}",
-                                      },
-                                      end: {
-                                        type: "string",
-                                      },
-                                    },
-                                    required: ["start", "end"],
-                                  },
-                                  timestamp: {
-                                    type: "string",
-                                    format: "date-time",
-                                  },
-                                },
-                                required: ["range"],
-                              },
-                              instructions: {
-                                type: "object",
-                                properties: {
-                                  code: { type: "string" },
-                                  short_desc: {
-                                    type: "string",
-                                  },
-                                  long_desc: {
-                                    type: "string",
-                                  },
-                                  images: {
-                                    type: "array",
-                                    items: {
-                                      type: "string",
-                                    },
-                                  },
-                                },
-                                required: ["code", "short_desc"],
-                              },
-                            },
-                          },
-                          {
-                            $ref: "commonSchema#/properties/addressFormat",
-                          },
-                        ],
-                        required: ["time"],
-                      },
+                      required: ["code", "list"],
                     },
                   },
-                  {
-                    $ref: "confirmSchema#/properties/message/properties/order/properties/fulfillments/items",
-                  },
-                ],
+                },
               },
             },
             billing: {

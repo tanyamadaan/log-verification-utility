@@ -10,6 +10,7 @@ const checkConfirm = (data, msgIdSet) => {
 
   confirm = confirm.message.order;
   let rts;
+  if(confirm.provider.locations) dao.setValue("confirm_locations", confirm.provider.locations)
 
   if (version === "1.1.0")
     rts = confirm?.fulfillments[0]?.tags["@ondc/org/order_ready_to_ship"];

@@ -296,17 +296,28 @@ module.exports = {
                   },
                 },
                 additionalProperties: false,
-                required: [
-                  "id",
-                  "type",
-                  "state",
-                  "tags",
-                  "@ondc/org/awb_no",
-                  "tracking",
-                  "start",
-                  "end",
-                  "agent",
-                ],
+                if: {
+                  properties: {
+                    type: {
+                      const: "RTO",
+                    },
+                  },
+                },
+                then: {
+                  required: ["id", "type", "state", "start"],
+                },
+                else: {
+                  required: [
+                    "id",
+                    "type",
+                    "state",
+                    "tags",
+                    "tracking",
+                    "start",
+                    "end",
+                    "agent",
+                  ],
+                },
               },
             },
             billing: {
@@ -335,8 +346,7 @@ module.exports = {
                   $ref: "onConfirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
                 },
                 {
-                  $data:
-                    "/on_confirm/0/message/order/@ondc~1org~1linked_order",
+                  $data: "/on_confirm/0/message/order/@ondc~1org~1linked_order",
                 },
               ],
             },

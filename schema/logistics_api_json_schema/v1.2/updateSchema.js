@@ -94,6 +94,7 @@ module.exports = {
       properties: {
         update_target: {
           type: "string",
+          const: "fulfillment",
         },
         order: {
           type: "object",
@@ -205,7 +206,7 @@ module.exports = {
                             },
                           },
                         },
-                        required: ["code","short_desc"],
+                        required: ["code", "short_desc"],
                       },
                     },
                     additionalProperties: false,
@@ -251,79 +252,20 @@ module.exports = {
                 },
                 additionalProperties: false,
                 required: ["id", "type", "tags"],
-
-                // if: {
-                //   properties: {
-                //     tags: {
-                //       properties: {
-                //         "@ondc/org/order_ready_to_shiporder_ready_to_ship": { const: "yes" },
-                //       },
-                //     },
-                //   },
-                // },
-                // then: {
-                //   required: ["0/start/instructions"],
-                //   errorMessage:
-                //     "start/instructions are required when ready_to_ship = yes",
-                // },
-
-                // if: {
-                //   properties: {
-                //     tags: {
-                //       properties: {
-                //         "@ondc/org/order_ready_to_ship": { const: "yes" },
-                //       },
-                //     },
-                //   },
-                // },
-                // then: {
-                //   required: [
-                //     "/on_update/message/order/fulfillments/0/start/time/range",
-                //     "/on_update/message/order/fulfillments/0/end/time/range",
-                //   ],
-                //   errorMessage:
-                //     "start and end time range is required when ready_to_ship=yes",
-                // },
-
-                // anyOf: [
-                //   {
-                //     properties: {
-                //       start: {
-                //         properties: {
-                //           instructions: {
-                //             required: ["short_desc"],
-                //           },
-                //         },
-                //       },
-                //       tags: {
-                //         properties: {
-                //           "@ondc/org/order_ready_to_ship": {
-                //             enum: ["yes"],
-                //           },
-                //         },
-                //       },
-                //     },
-                //     required: ["start"],
-                //   },
-                //   {
-                //     properties: {
-                //       tags: {
-                //         properties: {
-                //           "@ondc/org/order_ready_to_ship": {
-                //             enum: ["no"],
-                //           },
-                //         },
-                //       },
-                //     },
-                //   },
-                // ],
               },
             },
             "@ondc/org/linked_order": {
-              $ref: "confirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
+              allOf: [
+                {
+                  $ref: "confirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
+                },
+                {
+                  $data: "/confirm/0/message/order/@ondc~1org~1linked_order",
+                },
+              ],
             },
             updated_at: {
-              type: "string"
+              type: "string",
             },
           },
           isFutureDated: true,

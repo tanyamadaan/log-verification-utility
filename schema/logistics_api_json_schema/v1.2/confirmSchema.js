@@ -219,8 +219,6 @@ module.exports = {
             },
             quote: {
               type: "object",
-              const: { $data: "/on_init/0/message/order/quote" },
-              errorMessage: "object mismatches in /on_init and /confirm.",
               properties: {
                 price: {
                   type: "object",

@@ -216,11 +216,11 @@ module.exports = {
                                 properties: {
                                   start: {
                                     type: "string",
-                                    minimum: { $data: "7/context/timestamp" },
-                                    errorMessage: "${7/context/timestamp}",
+                                    format:"date-time"
                                   },
                                   end: {
                                     type: "string",
+                                    format:"date-time"
                                   },
                                 },
                                 required: ["start", "end"],
@@ -279,11 +279,11 @@ module.exports = {
                                 properties: {
                                   start: {
                                     type: "string",
-                                    minimum: { $data: "7/context/timestamp" },
-                                    errorMessage: "${7/context/timestamp}",
+                                    format:"date-time"
                                   },
                                   end: {
                                     type: "string",
+                                    format:"date-time"
                                   },
                                 },
                                 required: ["start", "end"],
@@ -413,57 +413,6 @@ module.exports = {
             "payment",
             "billing",
           ],
-
-          // oneOf: [
-          //   {
-          //     allOf: [
-          //       {
-          //         properties: {
-          //           items: {
-          //             type: "array",
-          //             items: {
-          //               type: "object",
-          //               properties: {
-          //                 descriptor: {
-          //                   properties: {
-          //                     code: { const: "P2H2P" },
-          //                   },
-          //                 },
-          //               },
-          //             },
-          //           },
-          //         },
-          //       },
-          //       {
-          //         properties: {
-          //           fulfillments: {
-          //             required: [
-          //               "@ondc/org/awb_no",
-          //               "start/instructions/images",
-          //             ],
-          //           },
-          //         },
-          //       }
-          //     ],
-          //   },
-          //   {
-          //     properties: {
-          //       items: {
-          //         type: "array",
-          //         items: {
-          //           type: "object",
-          //           properties: {
-          //             descriptor: {
-          //               properties: {
-          //                 code: { const: "P2P" },
-          //               },
-          //             },
-          //           },
-          //         },
-          //       },
-          //     },
-          //   },
-          // ],
         },
       },
       required: ["order"],

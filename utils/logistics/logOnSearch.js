@@ -133,7 +133,7 @@ const checkOnSearch = (data, msgIdSet) => {
               const [lat, long] = gps.split(",");
               const match = await reverseGeoCodingCheck(lat, long, area_code);
               if (!match)
-                srchObj[
+                onSrchObj[
                   "bpp/provider:location:" + id + ":RGC"
                 ] = `Reverse Geocoding for location ID ${id} failed. Area Code ${area_code} not matching with ${lat}-${long} Lat-Long pair.`;
             } catch (error) {

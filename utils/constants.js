@@ -123,7 +123,7 @@ module.exports = Object.freeze({
   FULFILLMENT_TAGS_LIST_CODE: ["ready_to_ship", "return_to_origin"],
   FULFILLMENT_TAGS_LIST_VALUE: ["yes", "no"],
   TRACKING_STATUS: ["active", "inactive"],
-  ORDER_STATE: ["Created", "Accepted", "Cancelled", "In-progress"],
+  ORDER_STATE: ["Created", "Accepted", "Cancelled", "In-progress","Completed"],
   CANCELLATION_CODE: [
     "001",
     "002",

@@ -109,8 +109,7 @@ module.exports = {
                 id: {
                   type: "string",
                   const: {
-                    $data:
-                      "/init/0/message/order/provider/id",
+                    $data: "/init/0/message/order/provider/id",
                   },
                   errorMessage: "mismatches between /init and /on_status",
                 },
@@ -141,22 +140,19 @@ module.exports = {
                   id: {
                     type: "string",
                     const: {
-                      $data:
-                        "/init/0/message/order/items/0/id",
+                      $data: "/init/0/message/order/items/0/id",
                     },
                   },
                   fulfillment_id: {
                     type: "string",
                     const: {
-                      $data:
-                        "/init/0/message/order/items/0/fulfillment_id",
+                      $data: "/init/0/message/order/items/0/fulfillment_id",
                     },
                   },
                   category_id: {
                     type: "string",
                     const: {
-                      $data:
-                        "/init/0/message/order/items/0/category_id",
+                      $data: "/init/0/message/order/items/0/category_id",
                     },
                   },
                   descriptor: {
@@ -252,9 +248,11 @@ module.exports = {
                                 properties: {
                                   start: {
                                     type: "string",
+                                    format:"date-time"
                                   },
                                   end: {
                                     type: "string",
+                                    format:"date-time"
                                   },
                                 },
                                 required: ["start", "end"],
@@ -309,9 +307,11 @@ module.exports = {
                                 properties: {
                                   start: {
                                     type: "string",
+                                    format:"date-time"
                                   },
                                   end: {
                                     type: "string",
+                                    format:"date-time"
                                   },
                                 },
                                 required: ["start", "end"],
@@ -400,20 +400,23 @@ module.exports = {
                 type: {
                   type: "string",
                   const: {
-                    $data:
-                      "/on_init/0/message/order/payment/type",
+                    $data: "/on_init/0/message/order/payment/type",
                   },
                 },
                 collected_by: {
                   type: "string",
                   const: {
-                    $data:
-                      "/on_init/0/message/order/payment/collected_by",
+                    $data: "/on_init/0/message/order/payment/collected_by",
                   },
                 },
                 time: {
-                  type: "string",
-                  format: "date-time",
+                  type: "object",
+                  properties: {
+                    timestamp: {
+                      type: "string",
+                      format: "date-time",
+                    },
+                  },
                 },
                 "@ondc/org/settlement_details": {
                   type: "array",
@@ -494,8 +497,7 @@ module.exports = {
                 name: {
                   type: "string",
                   const: {
-                    $data:
-                      "/confirm/0/message/order/billing/name",
+                    $data: "/confirm/0/message/order/billing/name",
                   },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_status",
@@ -507,8 +509,7 @@ module.exports = {
                       type: "string",
                       not: { const: { $data: "1/locality" } },
                       const: {
-                        $data:
-                          "/confirm/0/message/order/billing/address/name",
+                        $data: "/confirm/0/message/order/billing/address/name",
                       },
                       errorMessage:
                         "mismatches in /billing in /confirm and /on_status",
@@ -534,8 +535,7 @@ module.exports = {
                     city: {
                       type: "string",
                       const: {
-                        $data:
-                          "/confirm/0/message/order/billing/address/city",
+                        $data: "/confirm/0/message/order/billing/address/city",
                       },
                       errorMessage:
                         "mismatches in /billing in /confirm and /on_status",
@@ -543,8 +543,7 @@ module.exports = {
                     state: {
                       type: "string",
                       const: {
-                        $data:
-                          "/confirm/0/message/order/billing/address/state",
+                        $data: "/confirm/0/message/order/billing/address/state",
                       },
                       errorMessage:
                         "mismatches in /billing in /confirm and /on_status",
@@ -581,8 +580,7 @@ module.exports = {
                 tax_number: {
                   type: "string",
                   const: {
-                    $data:
-                      "/confirm/0/message/order/billing/tax_number",
+                    $data: "/confirm/0/message/order/billing/tax_number",
                   },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_status",
@@ -590,8 +588,7 @@ module.exports = {
                 phone: {
                   type: "string",
                   const: {
-                    $data:
-                      "/confirm/0/message/order/billing/phone",
+                    $data: "/confirm/0/message/order/billing/phone",
                   },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_status",
@@ -599,15 +596,14 @@ module.exports = {
                 email: {
                   type: "string",
                   const: {
-                    $data:
-                      "/confirm/0/message/order/billing/email",
+                    $data: "/confirm/0/message/order/billing/email",
                   },
                   errorMessage:
                     "mismatches in /billing in /confirm and /on_status",
                 },
               },
-              
-              required: ["name", "address", "phone", "email","tax_number"],
+
+              required: ["name", "address", "phone", "email", "tax_number"],
             },
             "@ondc/org/linked_order": {
               allOf: [
@@ -615,8 +611,7 @@ module.exports = {
                   $ref: "confirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
                 },
                 {
-                  $data:
-                    "/confirm/0/message/order/@ondc~1org~1linked_order",
+                  $data: "/confirm/0/message/order/@ondc~1org~1linked_order",
                 },
               ],
             },
@@ -633,7 +628,7 @@ module.exports = {
               "fulfillments",
               "payment",
               "billing",
-              "cancellation"
+              "cancellation",
             ],
           },
           else: {

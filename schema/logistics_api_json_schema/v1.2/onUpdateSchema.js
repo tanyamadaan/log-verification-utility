@@ -222,11 +222,11 @@ module.exports = {
                                 properties: {
                                   start: {
                                     type: "string",
-                                    minimum: { $data: "7/context/timestamp" },
-                                    errorMessage: "${7/context/timestamp}",
+                                    format:"date-time"
                                   },
                                   end: {
                                     type: "string",
+                                    format:"date-time"
                                   },
                                 },
                                 required: ["start", "end"],
@@ -255,7 +255,6 @@ module.exports = {
                                 },
                               },
                             },
-                            required: ["code", "short_desc"],
                           },
                         },
                       },
@@ -278,11 +277,11 @@ module.exports = {
                                 properties: {
                                   start: {
                                     type: "string",
-                                    minimum: { $data: "7/context/timestamp" },
-                                    errorMessage: "${7/context/timestamp}",
+                                    format:"date-time"
                                   },
                                   end: {
                                     type: "string",
+                                    format:"date-time"
                                   },
                                 },
                                 required: ["start", "end"],
@@ -311,7 +310,6 @@ module.exports = {
                                 },
                               },
                             },
-                            required: ["code", "short_desc"],
                           },
                         },
                       },
@@ -331,7 +329,6 @@ module.exports = {
                         type: "string",
                       },
                     },
-                    required: ["name", "phone"],
                   },
                   vehicle: {
                     type: "object",

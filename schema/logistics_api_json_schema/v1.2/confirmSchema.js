@@ -712,10 +712,10 @@ module.exports = {
                   type: "string",
                   const: {
                     $data:
-                      "/on_init/0/message/order/payment/@ondc~1org~1collection_amount",
+                      "/search/0/message/intent/payment/@ondc~1org~1collection_amount",
                   },
                   errorMessage:
-                    "mismatches in /payment from /on_init",
+                    "mismatches in /payment from /search",
                 },
                 collected_by: {
                   type: "string",

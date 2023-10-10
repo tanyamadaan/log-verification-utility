@@ -257,7 +257,14 @@ module.exports = {
             "@ondc/org/linked_order": {
               allOf: [
                 {
-                  $ref: "confirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
+                  $merge: {
+                    source: {
+                      $ref: "confirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
+                    },
+                    with: {
+                      required: ["items", "order"],
+                    },
+                  },
                 },
                 {
                   $data: "/confirm/0/message/order/@ondc~1org~1linked_order",
@@ -266,7 +273,7 @@ module.exports = {
             },
             updated_at: {
               type: "string",
-              format:"date-time"
+              format: "date-time",
             },
           },
           isFutureDated: true,

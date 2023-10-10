@@ -216,11 +216,11 @@ module.exports = {
                                 properties: {
                                   start: {
                                     type: "string",
-                                    format:"date-time"
+                                    format: "date-time",
                                   },
                                   end: {
                                     type: "string",
-                                    format:"date-time"
+                                    format: "date-time",
                                   },
                                 },
                                 required: ["start", "end"],
@@ -254,8 +254,9 @@ module.exports = {
                                 required: ["code", "short_desc"],
                               },
                               {
-                                $data: "/update/0/message/order/fulfillments/0/start/instructions"
-                              }
+                                $data:
+                                  "/update/0/message/order/fulfillments/0/start/instructions",
+                              },
                             ],
                           },
                         },
@@ -279,11 +280,11 @@ module.exports = {
                                 properties: {
                                   start: {
                                     type: "string",
-                                    format:"date-time"
+                                    format: "date-time",
                                   },
                                   end: {
                                     type: "string",
-                                    format:"date-time"
+                                    format: "date-time",
                                   },
                                 },
                                 required: ["start", "end"],
@@ -317,8 +318,9 @@ module.exports = {
                                 required: ["code", "short_desc"],
                               },
                               {
-                                $data: "/update/0/message/order/fulfillments/0/end/instructions"
-                              }
+                                $data:
+                                  "/update/0/message/order/fulfillments/0/end/instructions",
+                              },
                             ],
                           },
                         },
@@ -356,7 +358,6 @@ module.exports = {
                     },
                   },
                 },
-                additionalProperties: false,
                 required: ["id", "type", "start", "state", "tracking"],
               },
             },

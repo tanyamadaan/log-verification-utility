@@ -140,15 +140,9 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
-                    const: {
-                      $data: "/init/0/message/order/items/0/id",
-                    },
                   },
                   fulfillment_id: {
                     type: "string",
-                    const: {
-                      $data: "/init/0/message/order/items/0/fulfillment_id",
-                    },
                   },
                   category_id: {
                     type: "string",
@@ -417,19 +411,19 @@ module.exports = {
                   type: "string",
                   const: {
                     $data:
-                      "/on_init/0/message/order/payment/@ondc~1org~1collection_amount",
+                      "/on_confirm/0/message/order/payment/@ondc~1org~1collection_amount",
                   },
                 },
                 type: {
                   type: "string",
                   const: {
-                    $data: "/on_init/0/message/order/payment/type",
+                    $data: "/on_confirm/0/message/order/payment/type",
                   },
                 },
                 collected_by: {
                   type: "string",
                   const: {
-                    $data: "/on_init/0/message/order/payment/collected_by",
+                    $data: "/on_confirm/0/message/order/payment/collected_by",
                   },
                 },
                 time: {
@@ -471,35 +465,6 @@ module.exports = {
                         type: "string",
                       },
                     },
-                    allOf: [
-                      {
-                        if: {
-                          properties: {
-                            settlement_type: {
-                              const: "upi",
-                            },
-                          },
-                        },
-                        then: {
-                          required: ["upi_address"],
-                        },
-                      },
-                      {
-                        if: {
-                          properties: {
-                            settlement_type: {
-                              const: ["neft", "rtgs"],
-                            },
-                          },
-                        },
-                        then: {
-                          required: [
-                            "settlement_ifsc_code",
-                            "settlement_bank_account_no",
-                          ],
-                        },
-                      },
-                    ],
                     required: ["settlement_counterparty", "settlement_type"],
                   },
                 },

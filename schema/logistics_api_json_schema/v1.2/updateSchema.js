@@ -266,6 +266,7 @@ module.exports = {
             },
             updated_at: {
               type: "string",
+              format:"date-time"
             },
           },
           isFutureDated: true,

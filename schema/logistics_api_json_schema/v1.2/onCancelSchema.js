@@ -172,49 +172,53 @@ module.exports = {
                     },
                   },
                   start: {
-                    type: "object",
                     allOf: [
                       {
-                        properties: {
-                          time: {
+                        $merge: {
+                          source: {
+                            $ref: "commonSchema#/properties/addressFormat",
+                          },
+                          with: {
                             type: "object",
                             properties: {
-                              range: {
+                              time: {
                                 type: "object",
                                 properties: {
-                                  start: {
-                                    type: "string",
-                                    format: "date-time",
-                                  },
-                                  end: {
-                                    type: "string",
-                                    format: "date-time",
+                                  range: {
+                                    type: "object",
+                                    properties: {
+                                      start: {
+                                        type: "string",
+                                        format: "date-time",
+                                      },
+                                      end: {
+                                        type: "string",
+                                        format: "date-time",
+                                      },
+                                    },
+                                    required: ["start", "end"],
                                   },
                                 },
-                                required: ["start", "end"],
+                                required: ["range"],
+                              },
+                              instructions: {
+                                type: "object",
+                                properties: {
+                                  code: {
+                                    type: "string",
+                                  },
+                                  short_desc: {
+                                    type: "string",
+                                  },
+                                  long_desc: {
+                                    type: "string",
+                                  },
+                                },
                               },
                             },
-                            required: ["range"],
-                          },
-                          instructions: {
-                            type: "object",
-                            properties: {
-                              code: {
-                                type: "string",
-                              },
-                              short_desc: {
-                                type: "string",
-                              },
-                              long_desc: {
-                                type: "string",
-                              },
-                            },
+                            required: ["time", "instructions"],
                           },
                         },
-                        required: ["time", "instructions"],
-                      },
-                      {
-                        $ref: "commonSchema#/properties/addressFormat",
                       },
                       {
                         $data:
@@ -224,49 +228,53 @@ module.exports = {
                   },
 
                   end: {
-                    type: "object",
                     allOf: [
                       {
-                        properties: {
-                          time: {
+                        $merge: {
+                          source: {
+                            $ref: "commonSchema#/properties/addressFormat",
+                          },
+                          with: {
                             type: "object",
                             properties: {
-                              range: {
+                              time: {
                                 type: "object",
                                 properties: {
-                                  start: {
-                                    type: "string",
-                                    format: "date-time",
-                                  },
-                                  end: {
-                                    type: "string",
-                                    format: "date-time",
+                                  range: {
+                                    type: "object",
+                                    properties: {
+                                      start: {
+                                        type: "string",
+                                        format: "date-time",
+                                      },
+                                      end: {
+                                        type: "string",
+                                        format: "date-time",
+                                      },
+                                    },
+                                    required: ["start", "end"],
                                   },
                                 },
-                                required: ["start", "end"],
+                                required: ["range"],
+                              },
+                              instructions: {
+                                type: "object",
+                                properties: {
+                                  code: {
+                                    type: "string",
+                                  },
+                                  short_desc: {
+                                    type: "string",
+                                  },
+                                  long_desc: {
+                                    type: "string",
+                                  },
+                                },
                               },
                             },
-                            required: ["range"],
-                          },
-                          instructions: {
-                            type: "object",
-                            properties: {
-                              code: {
-                                type: "string",
-                              },
-                              short_desc: {
-                                type: "string",
-                              },
-                              long_desc: {
-                                type: "string",
-                              },
-                            },
+                            required: ["time", "instructions"],
                           },
                         },
-                        required: ["time", "instructions"],
-                      },
-                      {
-                        $ref: "commonSchema#/properties/addressFormat",
                       },
                       {
                         $data: "/on_confirm/0/message/order/fulfillments/0/end",
@@ -296,28 +304,51 @@ module.exports = {
                   },
                 },
                 additionalProperties: false,
-                if: {
-                  properties: {
-                    type: {
-                      const: "RTO",
+                allOf: [
+                  {
+                    if: {
+                      properties: {
+                        type: {
+                          const: "RTO",
+                        },
+                      },
+                    },
+                    then: {
+                      required: ["id", "type", "state", "start"],
+                    },
+                    else: {
+                      required: [
+                        "id",
+                        "type",
+                        "state",
+                        "tags",
+                        "tracking",
+                        "start",
+                        "end",
+                        "agent",
+                      ],
                     },
                   },
-                },
-                then: {
-                  required: ["id", "type", "state", "start"],
-                },
-                else: {
-                  required: [
-                    "id",
-                    "type",
-                    "state",
-                    "tags",
-                    "tracking",
-                    "start",
-                    "end",
-                    "agent",
-                  ],
-                },
+                  {
+                    if: {
+                      properties: {
+                        type: {
+                          const: "RTO",
+                        },
+                      },
+                    },
+                    then: {
+                      properties: {
+                        start: {
+                          required: ["time", "instructions"],
+                        },
+                        end: {
+                          required: ["time", "instructions"],
+                        },
+                      },
+                    },
+                  },
+                ],
               },
             },
             billing: {

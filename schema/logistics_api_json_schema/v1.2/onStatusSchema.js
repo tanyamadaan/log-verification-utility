@@ -236,9 +236,12 @@ module.exports = {
                     type: "boolean",
                   },
                   start: {
-                    type: "object",
-                    allOf: [
-                      {
+                    $merge: {
+                      source: {
+                        $ref: "commonSchema#/properties/addressFormat",
+                      },
+                      with: {
+                        type: "object",
                         properties: {
                           time: {
                             type: "object",
@@ -248,11 +251,11 @@ module.exports = {
                                 properties: {
                                   start: {
                                     type: "string",
-                                    format:"date-time"
+                                    format: "date-time",
                                   },
                                   end: {
                                     type: "string",
-                                    format:"date-time"
+                                    format: "date-time",
                                   },
                                 },
                                 required: ["start", "end"],
@@ -287,17 +290,16 @@ module.exports = {
                           },
                         },
                       },
-                      {
-                        $ref: "commonSchema#/properties/addressFormat",
-                      },
-                    ],
-
+                    },
                     required: ["time"],
                   },
                   end: {
-                    type: "object",
-                    allOf: [
-                      {
+                    $merge: {
+                      source: {
+                        $ref: "commonSchema#/properties/addressFormat",
+                      },
+                      with: {
+                        type: "object",
                         properties: {
                           time: {
                             type: "object",
@@ -307,11 +309,11 @@ module.exports = {
                                 properties: {
                                   start: {
                                     type: "string",
-                                    format:"date-time"
+                                    format: "date-time",
                                   },
                                   end: {
                                     type: "string",
-                                    format:"date-time"
+                                    format: "date-time",
                                   },
                                 },
                                 required: ["start", "end"],
@@ -346,11 +348,7 @@ module.exports = {
                           },
                         },
                       },
-                      {
-                        $ref: "commonSchema#/properties/addressFormat",
-                      },
-                    ],
-
+                    },
                     required: ["time"],
                   },
                   agent: {
@@ -380,11 +378,34 @@ module.exports = {
                     type: "string",
                   },
                 },
-                if: { properties: { type: { const: "Prepaid" } } },
-                then: { required: ["type", "state", "tracking"] },
-                else: {
-                  required: ["type", "state"],
-                },
+                allOf: [
+                  {
+                    if: { properties: { type: { const: "Prepaid" } } },
+                    then: { required: ["type", "state", "tracking"] },
+                    else: {
+                      required: ["type", "state"],
+                    },
+                  },
+                  {
+                    if: {
+                      properties: {
+                        type: {
+                          const: "RTO",
+                        },
+                      },
+                    },
+                    then: {
+                      properties: {
+                        start: {
+                          required: ["time", "instructions"],
+                        },
+                        end: {
+                          required: ["time", "instructions"],
+                        },
+                      },
+                    },
+                  },
+                ],
               },
             },
             payment: {

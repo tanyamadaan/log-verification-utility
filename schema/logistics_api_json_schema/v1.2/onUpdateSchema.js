@@ -374,10 +374,10 @@ module.exports = {
             payment: {
               allOf: [
                 {
-                  $ref: "confirmSchema#/properties/message/properties/order/properties/payment",
+                  $ref: "onConfirmSchema#/properties/message/properties/order/properties/payment",
                 },
                 {
-                  $data: "/confirm/0/message/order/payment",
+                  $data: "/on_confirm/0/message/order/payment",
                 },
               ],
             },

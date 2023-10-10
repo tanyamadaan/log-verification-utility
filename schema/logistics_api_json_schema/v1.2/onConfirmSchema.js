@@ -400,9 +400,11 @@ module.exports = {
                             },
                             required: ["phone"],
                           },
-                          {$data:
-                            "/confirm/0/message/order/fulfillments/0/start/contact",}
-                        ]
+                          {
+                            $data:
+                              "/confirm/0/message/order/fulfillments/0/start/contact",
+                          },
+                        ],
                       },
                       instructions: {
                         type: "object",
@@ -428,13 +430,11 @@ module.exports = {
                             properties: {
                               start: {
                                 type: "string",
-                                minimum: {
-                                  $data: "7/context/timestamp",
-                                },
-                                errorMessage: "${7/context/timestamp}",
+                                format:"date-time"
                               },
                               end: {
                                 type: "string",
+                                format:"date-time"
                               },
                             },
                             required: ["start", "end"],
@@ -444,7 +444,7 @@ module.exports = {
                     },
                     required: ["person", "location", "contact", "time"],
                   },
-                  
+
                   end: {
                     type: "object",
                     properties: {
@@ -537,9 +537,11 @@ module.exports = {
                             },
                             required: ["phone"],
                           },
-                          {$data:
-                            "/confirm/0/message/order/fulfillments/0/end/contact",}
-                        ]
+                          {
+                            $data:
+                              "/confirm/0/message/order/fulfillments/0/end/contact",
+                          },
+                        ],
                       },
                       instructions: {
                         type: "object",
@@ -565,13 +567,11 @@ module.exports = {
                             properties: {
                               start: {
                                 type: "string",
-                                minimum: {
-                                  $data: "7/context/timestamp",
-                                },
-                                errorMessage: "${7/context/timestamp}",
+                                format:"date-time",
                               },
                               end: {
                                 type: "string",
+                                format:"date-time"
                               },
                             },
                             required: ["start", "end"],
@@ -579,14 +579,14 @@ module.exports = {
                         },
                       },
                     },
-                    required: ["person", "location", "contact", "time"],
+                    required: ["person", "location", "contact"],
                   },
                   agent: {
                     type: "object",
                     properties: {
-                      name: {type: "string"},
-                      phone: {type: "string"}
-                    }
+                      name: { type: "string" },
+                      phone: { type: "string" },
+                    },
                   },
                   vehicle: {
                     type: "object",
@@ -597,14 +597,14 @@ module.exports = {
                     },
                     required: ["registration"],
                   },
-                  
+
                   tags: {
                     type: "array",
                     items: {
                       type: "object",
                       properties: {
                         code: {
-                          type: "string"
+                          type: "string",
                         },
                         list: {
                           type: "array",

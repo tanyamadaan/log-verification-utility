@@ -339,7 +339,6 @@ module.exports = {
                         type: "string",
                       },
                     },
-                    required: ["name", "phone"],
                   },
                   "@ondc/org/ewaybillno": {
                     type: "string",

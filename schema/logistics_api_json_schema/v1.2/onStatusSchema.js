@@ -1,3 +1,4 @@
+const constants = require("../../../utils/constants");
 const {
   ORDER_STATE,
   CANCELLATION_CODE,
@@ -169,7 +170,7 @@ module.exports = {
                     required: ["code"],
                   },
                 },
-                required: ["id", "category_id", "descriptor"],
+                required: ["id", "category_id", "descriptor","fulfillment_id"],
               },
             },
             quote: {
@@ -212,6 +213,7 @@ module.exports = {
                   id: { type: "string" },
                   type: {
                     type: "string",
+                    enum: constants.FULFILLMENT_TYPE
                   },
                   "@ondc/org/awb_no": {
                     type: "string",
@@ -380,7 +382,7 @@ module.exports = {
                     type: "string",
                   },
                 },
-                if: { properties: { type: { const: "Prepaid" } } },
+                if: { properties: { type: { const: "Delivery" } } },
                 then: { required: ["type", "state", "tracking"] },
                 else: {
                   required: ["type", "state"],

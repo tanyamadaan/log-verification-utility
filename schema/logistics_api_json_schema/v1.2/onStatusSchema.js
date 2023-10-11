@@ -256,7 +256,6 @@ module.exports = {
                             format: "date-time",
                           },
                         },
-                        required: ["range"],
                       },
                       instructions: {
                         code: { type: "string" },
@@ -349,7 +348,6 @@ module.exports = {
                         required: ["phone", "email"],
                       },
                     },
-                    required: ["time", "person", "location", "contact"],
                   },
                   end: {
                     type: "object",
@@ -376,7 +374,6 @@ module.exports = {
                             format: "date-time",
                           },
                         },
-                        required: ["range"],
                       },
                       instructions: {
                         code: { type: "string" },
@@ -469,7 +466,6 @@ module.exports = {
                         required: ["phone", "email"],
                       },
                     },
-                    required: ["time", "person", "location", "contact"],
                   },
                   agent: {
                     type: "object",
@@ -498,35 +494,29 @@ module.exports = {
                     type: "string",
                   },
                 },
-                allOf: [
-                  {
-                    if: { properties: { type: { const: "Prepaid" } } },
-                    then: { required: ["type", "state", "tracking"] },
-                    else: {
-                      required: ["type", "state"],
-                    },
-                  },
-                  {
-                    if: {
-                      properties: {
-                        type: {
-                          const: "RTO",
-                        },
-                      },
-                    },
-                    then: {
-                      properties: {
-                        start: {
-                          required: ["time"],
-                        },
 
-                        end: {
-                          required: ["time"],
-                        },
+                if: { properties: { type: { const: "Delivery" } } },
+                then: {
+                  properties: {
+                    start: {
+                      properties: {
+                        time: { required: ["range"] },
                       },
-                    }
+                      required: ["time", "person", "location", "contact"],
+                    },
+
+                    end: {
+                      properties: {
+                        time: { required: ["range"] },
+                      },
+                      required: ["time", "person", "location", "contact"],
+                    },
                   },
-                ],
+                  required: ["id", "type", "state", "tracking","start","end"],
+                },
+                else: {
+                  required: ["id", "type", "state","start"],
+                },
               },
             },
             payment: {

@@ -20,7 +20,7 @@ const checkOnUpdate = (data, msgIdSet) => {
   }
 
   if (locationsPresent) {
-    if (!_.isEqual(on_update.provider.locations, locationsPresent)) {
+    if (!_.isEqual(on_update?.provider?.locations, locationsPresent)) {
       onUpdtObj.locationsErr = `order/provider/locations mismatch between /confirm and /on_update`
     }
   }

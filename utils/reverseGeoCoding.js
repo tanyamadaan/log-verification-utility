@@ -36,7 +36,7 @@ const reverseGeoCodingCheck = async (lat, long, area_code) => {
       console.log(error);
     }
   }
-  return c > 1;
+  return c >= 1;
 };
 
 module.exports = { reverseGeoCodingCheck };

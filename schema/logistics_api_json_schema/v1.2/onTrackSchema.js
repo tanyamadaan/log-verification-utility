@@ -150,7 +150,7 @@ module.exports = {
               },
             },
           },
-          required: ["id", "location", "status", "tags"],
+          required: ["id", "location", "status"],
         },
       },
       required: ["tracking"],

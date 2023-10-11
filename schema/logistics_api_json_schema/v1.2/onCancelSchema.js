@@ -555,6 +555,14 @@ module.exports = {
                   ],
                 },
                 else: {
+                  properties: {
+                    start: {
+                      properties: {
+                        time: { required: ["timestamp"] },
+                      },
+                      required: ["time"],
+                    },
+                  },
                   required: ["id", "type", "state", "start"],
                 },
               },

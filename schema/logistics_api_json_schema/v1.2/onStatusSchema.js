@@ -512,10 +512,18 @@ module.exports = {
                       required: ["time", "person", "location", "contact"],
                     },
                   },
-                  required: ["id", "type", "state", "tracking","start","end"],
+                  required: ["id", "type", "state", "tracking", "start", "end"],
                 },
                 else: {
-                  required: ["id", "type", "state","start"],
+                  properties: {
+                    start: {
+                      properties: {
+                        time: { required: ["timestamp"] },
+                      },
+                      required: ["time"],
+                    },
+                  },
+                  required: ["id", "type", "state", "start"],
                 },
               },
             },

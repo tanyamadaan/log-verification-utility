@@ -258,6 +258,7 @@ module.exports = {
                     },
                     value: {
                       type: "number",
+                      minimum: 0
                     },
                   },
                   required: ["unit", "value"],
@@ -274,6 +275,7 @@ module.exports = {
                         },
                         value: {
                           type: "number",
+                          minimum: 0
                         },
                       },
                       required: ["unit", "value"],
@@ -287,6 +289,7 @@ module.exports = {
                         },
                         value: {
                           type: "number",
+                          minimum: 0
                         },
                       },
                       required: ["unit", "value"],
@@ -300,6 +303,7 @@ module.exports = {
                         },
                         value: {
                           type: "number",
+                          minimum: 0
                         },
                       },
                       required: ["unit", "value"],

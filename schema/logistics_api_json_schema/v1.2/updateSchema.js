@@ -242,9 +242,6 @@ module.exports = {
                   tags: {
                     allOf: [
                       {
-                        $ref: "commonSchema#/properties/tagsArray",
-                      },
-                      {
                         $ref: "confirmSchema#/properties/message/properties/order/properties/fulfillments/items/properties/tags",
                       },
                     ],

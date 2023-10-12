@@ -50,6 +50,10 @@ const sortMerge = (domain, directory, destination) => {
       }
     }, {});
 
+    let oldLogs = fs.readFileSync(destination, 'utf8');
+    oldLogs = oldLogs ? JSON.parse(oldLogs) : {};
+    mergedlogs = { ...oldLogs, ...mergedlogs };
+
     // Sort the arrays within each action based on context.timestamp
     for (const action in mergedlogs) {
       const array = mergedlogs[action];
@@ -93,10 +97,7 @@ const sortMerge = (domain, directory, destination) => {
       }
     });
     
-    let oldLogs = fs.readFileSync(destination, 'utf8');
-    oldLogs = oldLogs ? JSON.parse(oldLogs) : {};
-    const allLogs = { ...oldLogs, ...mergedlogs };
-    fs.writeFileSync(destination, JSON.stringify(allLogs));
+    fs.writeFileSync(destination, JSON.stringify(mergedlogs));
     return flowErrObj;
   } catch (err) {
     console.log(`Error while running merging log files, ${err}`);

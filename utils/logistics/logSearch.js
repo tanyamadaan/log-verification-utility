@@ -40,7 +40,7 @@ const checkSearch = async (data, msgIdSet) => {
     const [lat, long] = startLocation.gps.split(",")
     const area_code = startLocation.address.area_code
     const match = await reverseGeoCodingCheck(lat, long, area_code)
-    if(!match) srchObj['RGC-start-Err'] = `Reverse Geocoding for \`start\` failed. Area Code ${area_code} not matching with ${lat}-${long} Lat-Long pair.`
+    if(!match) srchObj['RGC-start-Err'] = `Reverse Geocoding for \`start\` failed. Area Code ${area_code} not matching with ${lat},${long} Lat-Long pair.`
   } catch (error) {
     console.log("Error in start location", error)
   }
@@ -62,7 +62,7 @@ const checkSearch = async (data, msgIdSet) => {
     const [lat, long] = endLocation.gps.split(",")
     const area_code = endLocation.address.area_code
     const match = await reverseGeoCodingCheck(lat, long, area_code)
-    if(!match) srchObj['RGC-end-Err'] = `Reverse Geocoding for \`end\` failed. Area Code ${area_code} not matching with ${lat}-${long} Lat-Long pair.`
+    if(!match) srchObj['RGC-end-Err'] = `Reverse Geocoding for \`end\` failed. Area Code ${area_code} not matching with ${lat},${long} Lat-Long pair.`
   } catch (error) {
     console.log("Error in end location",error)
   }

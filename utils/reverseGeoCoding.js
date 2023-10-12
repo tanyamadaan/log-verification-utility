@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * @param {string} lat The Latitude Coordinate upto 6 decimal place
  * @param {string } long The Longgitude Coordinate upto 6 decimal place
  * @param {string} area_code The Area Code to check the above lat-long pair against
@@ -12,7 +12,7 @@ const reverseGeoCodingCheck = async (lat, long, area_code) => {
     method: "GET",
   };
   try {
-    const res = await fetch(`https://apis.mapmyindia.com/advancedmaps/v1/${process.env.MAPPLS_API_KEY}/rev_geocode?lat=${lat}&lng=${long}`, requestOptions);
+    const res = await fetch(`https://apis.mappls.com/advancedmaps/v1/${process.env.MAPPLS_API_KEY}/rev_geocode?lat=${lat}&lng=${long}`, requestOptions);
     const response = await res.json();
     return response.results[0].pincode === area_code
   } catch (error) {

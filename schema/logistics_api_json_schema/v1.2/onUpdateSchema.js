@@ -1,4 +1,8 @@
-const { ORDER_STATE, TITLE_TYPE, FULFILLMENT_STATE } = require("../../../utils/constants");
+const {
+  ORDER_STATE,
+  TITLE_TYPE,
+  FULFILLMENT_STATE,
+} = require("../../../utils/constants");
 module.exports = {
   $id: "http://example.com/schema/onUpdateSchema",
   type: "object",
@@ -16,8 +20,7 @@ module.exports = {
         city: {
           type: "string",
           const: {
-            $data:
-              "/confirm/0/context/city",
+            $data: "/confirm/0/context/city",
           },
         },
         action: {
@@ -43,8 +46,7 @@ module.exports = {
         transaction_id: {
           type: "string",
           const: {
-            $data:
-              "/search/0/context/transaction_id",
+            $data: "/search/0/context/transaction_id",
           },
           errorMessage:
             "Transaction ID should be same across the transaction: ${/search/0/context/transaction_id}",
@@ -54,8 +56,7 @@ module.exports = {
           allOf: [
             {
               const: {
-                $data:
-                  "/update/0/context/message_id",
+                $data: "/update/0/context/message_id",
               },
               errorMessage:
                 "Message ID should be same as /update: ${/update/0/context/message_id}",
@@ -98,8 +99,7 @@ module.exports = {
             id: {
               type: "string",
               const: {
-                $data:
-                  "/confirm/0/message/order/id",
+                $data: "/confirm/0/message/order/id",
               },
             },
             state: {
@@ -121,12 +121,6 @@ module.exports = {
                 },
               },
               required: ["id"],
-              if: {
-                $ref: "confirmSchema#/properties/message/properties/order/properties/provider/properties/locations",
-              },
-              then: {
-                required: ["locations"],
-              },
             },
             items: {
               type: "array",
@@ -198,7 +192,7 @@ module.exports = {
                       descriptor: {
                         type: "object",
                         properties: {
-                          code: { type: "string" , enum: FULFILLMENT_STATE},
+                          code: { type: "string", enum: FULFILLMENT_STATE },
                         },
                       },
                     },
@@ -207,12 +201,12 @@ module.exports = {
                     type: "string",
                   },
                   tracking: {
-                    type: "boolean"
+                    type: "boolean",
                   },
                   start: {
-                    type: "object",
-                    allOf: [
-                      {
+                    $merge: {
+                      with: {
+                        type: "object",
                         properties: {
                           time: {
                             type: "object",
@@ -222,11 +216,11 @@ module.exports = {
                                 properties: {
                                   start: {
                                     type: "string",
-                                    format:"date-time"
+                                    format: "date-time",
                                   },
                                   end: {
                                     type: "string",
-                                    format:"date-time"
+                                    format: "date-time",
                                   },
                                 },
                                 required: ["start", "end"],
@@ -239,30 +233,38 @@ module.exports = {
                             required: ["range"],
                           },
                           instructions: {
-                            type: "object",
-                            properties: {
-                              code: { type: "string" },
-                              short_desc: {
-                                type: "string",
-                              },
-                              long_desc: {
-                                type: "string",
-                              },
-                              images: {
-                                type: "array",
-                                items: {
-                                  type: "string",
+                            allOf: [
+                              {
+                                type: "object",
+                                properties: {
+                                  code: { type: "string" },
+                                  short_desc: {
+                                    type: "string",
+                                  },
+                                  long_desc: {
+                                    type: "string",
+                                  },
+                                  images: {
+                                    type: "array",
+                                    items: {
+                                      type: "string",
+                                    },
+                                  },
                                 },
                               },
-                            },
+                              {
+                                $data:
+                                  "/update/0/message/order/fulfillments/0/start/instructions",
+                              },
+                            ],
                           },
                         },
                       },
-                      {
+                      source: {
                         $ref: "commonSchema#/properties/addressFormat",
                       },
-                    ],                    
-                    required: ["time"]
+                    },
+                    required: ["time"],
                   },
                   end: {
                     type: "object",
@@ -277,11 +279,11 @@ module.exports = {
                                 properties: {
                                   start: {
                                     type: "string",
-                                    format:"date-time"
+                                    format: "date-time",
                                   },
                                   end: {
                                     type: "string",
-                                    format:"date-time"
+                                    format: "date-time",
                                   },
                                 },
                                 required: ["start", "end"],
@@ -294,22 +296,31 @@ module.exports = {
                             required: ["range"],
                           },
                           instructions: {
-                            type: "object",
-                            properties: {
-                              code: { type: "string" },
-                              short_desc: {
-                                type: "string",
-                              },
-                              long_desc: {
-                                type: "string",
-                              },
-                              images: {
-                                type: "array",
-                                items: {
-                                  type: "string",
+                            allOf: [
+                              {
+                                type: "object",
+                                properties: {
+                                  code: { type: "string" },
+                                  short_desc: {
+                                    type: "string",
+                                  },
+                                  long_desc: {
+                                    type: "string",
+                                  },
+                                  images: {
+                                    type: "array",
+                                    items: {
+                                      type: "string",
+                                    },
+                                  },
                                 },
+                                required: ["code", "short_desc"],
                               },
-                            },
+                              {
+                                $data:
+                                  "/update/0/message/order/fulfillments/0/end/instructions",
+                              },
+                            ],
                           },
                         },
                       },
@@ -317,7 +328,7 @@ module.exports = {
                         $ref: "commonSchema#/properties/addressFormat",
                       },
                     ],
-                    required: ["time"]
+                    required: ["time"],
                   },
                   agent: {
                     type: "object",
@@ -329,15 +340,6 @@ module.exports = {
                         type: "string",
                       },
                     },
-                  },
-                  vehicle: {
-                    type: "object",
-                    properties: {
-                      registration: {
-                        type: "string",
-                      },
-                    },
-                    required: ["registration"],
                   },
                   "@ondc/org/ewaybillno": {
                     type: "string",
@@ -355,165 +357,26 @@ module.exports = {
                     },
                   },
                 },
-                additionalProperties: false,
                 required: ["id", "type", "start", "state", "tracking"],
-              }
+              },
             },
             billing: {
-              type: "object",
-              properties: {
-                name: {
-                  type: "string",
-                  const: {
-                    $data:
-                      "/confirm/0/message/order/billing/name",
-                  },
-                  errorMessage:
-                    "mismatches in /billing in /confirm and /on_confirm",
+              allOf: [
+                {
+                  $ref: "confirmSchema#/properties/message/properties/order/properties/billing",
                 },
-                address: {
-                  type: "object",
-                  properties: {
-                    name: {
-                      type: "string",
-                      not: { const: { $data: "1/locality" } },
-                      const: {
-                        $data:
-                          "/confirm/0/message/order/billing/address/name",
-                      },
-                      errorMessage:
-                        "mismatches in /billing in /confirm and /on_update",
-                    },
-                    building: {
-                      type: "string",
-                      const: {
-                        $data:
-                          "/confirm/0/message/order/billing/address/building",
-                      },
-                      errorMessage:
-                        "mismatches in /billing in /confirm and /on_update",
-                    },
-                    locality: {
-                      type: "string",
-                      const: {
-                        $data:
-                          "/confirm/0/message/order/billing/address/locality",
-                      },
-                      errorMessage:
-                        "mismatches in /billing in /confirm and /on_update",
-                    },
-                    city: {
-                      type: "string",
-                      const: {
-                        $data:
-                          "/confirm/0/message/order/billing/address/city",
-                      },
-                      errorMessage:
-                        "mismatches in /billing in /confirm and /on_update",
-                    },
-                    state: {
-                      type: "string",
-                      const: {
-                        $data:
-                          "/confirm/0/message/order/billing/address/state",
-                      },
-                      errorMessage:
-                        "mismatches in /billing in /confirm and /on_update",
-                    },
-                    country: {
-                      type: "string",
-                      const: {
-                        $data:
-                          "/confirm/0/message/order/billing/address/country",
-                      },
-                      errorMessage:
-                        "mismatches in /billing in /confirm and /on_update",
-                    },
-                    area_code: {
-                      type: "string",
-                      const: {
-                        $data:
-                          "/confirm/0/message/order/billing/address/area code",
-                      },
-                      errorMessage:
-                        "mismatches in /billing in /confirm and /on_update",
-                    },
-                  },
-                  additionalProperties: false,
-                  required: [
-                    "name",
-                    "building",
-                    "locality",
-                    "city",
-                    "state",
-                    "country",
-                    "area_code",
-                  ],
+                {
+                  $data: "/confirm/0/message/order/billing",
                 },
-                tax_number: {
-                  type: "string",
-                  const: {
-                    $data:
-                      "/confirm/0/message/order/billing/tax_number",
-                  },
-                  errorMessage:
-                    "mismatches in /billing in /confirm and /on_update",
-                },
-                phone: {
-                  type: "string",
-                  const: {
-                    $data:
-                      "/confirm/0/message/order/billing/phone",
-                  },
-                  errorMessage:
-                    "mismatches in /billing in /confirm and /on_update",
-                },
-                email: {
-                  type: "string",
-                  const: {
-                    $data:
-                      "/confirm/0/message/order/billing/email",
-                  },
-                  errorMessage:
-                    "mismatches in /billing in /confirm and /on_update",
-                },
-                created_at: {
-                  type: "string",
-                  const: {
-                    $data:
-                      "/confirm/0/message/order/billing/created_at",
-                  },
-                  errorMessage:
-                    "mismatches in /billing in /confirm and /on_update",
-                },
-                updated_at: {
-                  type: "string",
-                  const: {
-                    $data:
-                      "/confirm/0/message/order/billing/updated_at",
-                  },
-                  errorMessage:
-                    "mismatches in /billing in /confirm and /on_update",
-                },
-              },
-              additionalProperties: false,
-              required: [
-                "name",
-                "address",
-                "phone",
-                "tax_number",
-                "created_at",
-                "updated_at",
               ],
             },
             payment: {
               allOf: [
                 {
-                  $ref: "confirmSchema#/properties/message/properties/order/properties/payment",
+                  $ref: "onConfirmSchema#/properties/message/properties/order/properties/payment",
                 },
                 {
-                  $data:
-                    "/confirm/0/message/order/payment",
+                  $data: "/on_confirm/0/message/order/payment",
                 },
               ],
             },
@@ -523,16 +386,14 @@ module.exports = {
                   $ref: "confirmSchema#/properties/message/properties/order/properties/@ondc~1org~1linked_order",
                 },
                 {
-                  $data:
-                    "/confirm/0/message/order/@ondc~1org~1linked_order",
+                  $data: "/confirm/0/message/order/@ondc~1org~1linked_order",
                 },
               ],
             },
             created_at: {
               type: "string",
               const: {
-                $data:
-                  "/confirm/0/message/order/created_at",
+                $data: "/confirm/0/message/order/created_at",
               },
               errorMessage: "mismatches in /confirm and /on_update",
             },
@@ -551,57 +412,6 @@ module.exports = {
             "payment",
             "billing",
           ],
-
-          // oneOf: [
-          //   {
-          //     allOf: [
-          //       {
-          //         properties: {
-          //           items: {
-          //             type: "array",
-          //             items: {
-          //               type: "object",
-          //               properties: {
-          //                 descriptor: {
-          //                   properties: {
-          //                     code: { const: "P2H2P" },
-          //                   },
-          //                 },
-          //               },
-          //             },
-          //           },
-          //         },
-          //       },
-          //       {
-          //         properties: {
-          //           fulfillments: {
-          //             required: [
-          //               "@ondc/org/awb_no",
-          //               "start/instructions/images",
-          //             ],
-          //           },
-          //         },
-          //       }
-          //     ],
-          //   },
-          //   {
-          //     properties: {
-          //       items: {
-          //         type: "array",
-          //         items: {
-          //           type: "object",
-          //           properties: {
-          //             descriptor: {
-          //               properties: {
-          //                 code: { const: "P2P" },
-          //               },
-          //             },
-          //           },
-          //         },
-          //       },
-          //     },
-          //   },
-          // ],
         },
       },
       required: ["order"],

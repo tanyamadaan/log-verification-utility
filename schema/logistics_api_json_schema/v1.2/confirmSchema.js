@@ -300,6 +300,11 @@ module.exports = {
                         },
                         required: ["name"],
                       },
+                      duration: {
+                        type: "string",
+                        format: "duration",
+    
+                      },
                       location: {
                         type: "object",
                         properties: {
@@ -705,6 +710,12 @@ module.exports = {
               properties: {
                 "@ondc/org/collection_amount": {
                   type: "string",
+                  const: {
+                    $data:
+                      "/search/0/message/intent/payment/@ondc~1org~1collection_amount",
+                  },
+                  errorMessage:
+                    "mismatches in /payment from /search",
                 },
                 collected_by: {
                   type: "string",
@@ -975,11 +986,11 @@ module.exports = {
             },
             created_at: {
               type: "string",
-              format:"date-time"
+              format: "date-time",
             },
             updated_at: {
               type: "string",
-              format: "date-time"
+              format: "date-time",
             },
           },
 

@@ -76,31 +76,6 @@ module.exports = {
       },
       required: ["person", "location", "contact"]
     },
-		tagsArray: {
-			type: "array",
-			items: {
-				type: "object",
-				properties: {
-					code: {
-						type: "string"
-					},
-					list: {
-						type: "array",
-						items: {
-							type: "object",
-							properties: {
-								code: {
-									type: "string"
-								},
-								value: {
-									type: "string"
-								}
-							}
-						}
-					}
-				}
-			}
-		},
     priceFormat: {
       type: "object",
       properties: {

@@ -24,8 +24,8 @@ const checkOnStatus = (data, msgIdSet) => {
       );
       fulfillments.forEach((fulfillment) => {
         ffState = fulfillment?.state?.descriptor?.code;
-        if (fulfillment.type === "Prepaid" && ffState !== "Cancelled") {
-          onStatusObj.flflmntstErr = `In case of RTO, fulfillment with type 'Prepaid' needs to in 'Cancelled' state`;
+        if ((fulfillment.type === "Prepaid" || fulfillment.type === "Delivery") && ffState !== "Cancelled") {
+          onStatusObj.flflmntstErr = `In case of RTO, fulfillment with type 'Delivery/Prepaid' needs to in 'Cancelled' state`;
         }
       });
     }
@@ -147,7 +147,7 @@ const checkOnStatus = (data, msgIdSet) => {
         if (orderState !== "Cancelled") {
           onStatusObj.ordrStatErr = `Order state should be 'Cancelled' for fulfillment state - ${ffState}`;
         }
-        if (ffState === "RTO-Initiated") {
+        if (ffState === "RTO-Initiated" && fulfillment.type === "Prepaid" ) {
           RtoPickupTime = fulfillment?.start?.time?.timestamp;
           console.log(RtoPickupTime);
           if (RtoPickupTime) {
@@ -159,10 +159,9 @@ const checkOnStatus = (data, msgIdSet) => {
             onStatusObj.rtoPickupErr = `RTO Pickup (fulfillments/start/time/timestamp) time cannot be future dated for fulfillment state - ${ffState}`;
           }
         }
+      
         if (ffState === "RTO-Delivered" || ffState === "RTO-Disposed") {
           RtoDeliveredTime = fulfillment?.end?.time?.timestamp;
-          console.log(dao.getValue("RtoPickupTime"));
-
           if (!RtoDeliveredTime && ffState === "RTO-Delivered")
             onStatusObj.rtoDlvryTimeErr = `RTO Delivery timestamp (fulfillments/end/time/timestamp) is missing for fulfillment state - ${ffState}`;
           if (
@@ -185,7 +184,7 @@ const checkOnStatus = (data, msgIdSet) => {
       }
     });
   } catch (error) {
-    console.log(`Error checking fulfillments/start in /update`);
+    console.log(`Error checking fulfillments/start in /on_status`);
   }
 
   return onStatusObj;

@@ -1,3 +1,4 @@
+const constants = require("../../../utils/constants");
 const {
   ORDER_STATE,
   CANCELLATION_CODE,
@@ -139,15 +140,9 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
-                    const: {
-                      $data: "/init/0/message/order/items/0/id",
-                    },
                   },
                   fulfillment_id: {
                     type: "string",
-                    const: {
-                      $data: "/init/0/message/order/items/0/fulfillment_id",
-                    },
                   },
                   category_id: {
                     type: "string",
@@ -169,7 +164,7 @@ module.exports = {
                     required: ["code"],
                   },
                 },
-                required: ["id", "category_id", "descriptor"],
+                required: ["id", "category_id", "descriptor", "fulfillment_id"],
               },
             },
             quote: {
@@ -212,6 +207,7 @@ module.exports = {
                   id: { type: "string" },
                   type: {
                     type: "string",
+                    enum: constants.FULFILLMENT_TYPE,
                   },
                   "@ondc/org/awb_no": {
                     type: "string",
@@ -237,121 +233,239 @@ module.exports = {
                   },
                   start: {
                     type: "object",
-                    allOf: [
-                      {
+                    properties: {
+                      time: {
+                        type: "object",
                         properties: {
-                          time: {
+                          range: {
                             type: "object",
                             properties: {
-                              range: {
-                                type: "object",
-                                properties: {
-                                  start: {
-                                    type: "string",
-                                    format:"date-time"
-                                  },
-                                  end: {
-                                    type: "string",
-                                    format:"date-time"
-                                  },
-                                },
-                                required: ["start", "end"],
+                              start: {
+                                type: "string",
+                                format: "date-time",
                               },
-                              timestamp: {
+                              end: {
                                 type: "string",
                                 format: "date-time",
                               },
                             },
-                            required: ["range"],
+                            required: ["start", "end"],
                           },
-                          instructions: {
-                            code: { type: "string" },
-                            type: "object",
-                            properties: {
-                              name: {
-                                type: "string",
-                              },
-                              short_desc: {
-                                type: "string",
-                              },
-                              long_desc: {
-                                type: "string",
-                              },
-                              images: {
-                                type: "array",
-                                items: {
-                                  type: "string",
-                                },
-                              },
+                          timestamp: {
+                            type: "string",
+                            format: "date-time",
+                          },
+                        },
+                      },
+                      instructions: {
+                        code: { type: "string" },
+                        type: "object",
+                        properties: {
+                          name: {
+                            type: "string",
+                          },
+                          short_desc: {
+                            type: "string",
+                          },
+                          long_desc: {
+                            type: "string",
+                          },
+                          images: {
+                            type: "array",
+                            items: {
+                              type: "string",
                             },
                           },
                         },
                       },
-                      {
-                        $ref: "commonSchema#/properties/addressFormat",
+                      person: {
+                        type: "object",
+                        properties: {
+                          name: {
+                            type: "string",
+                          },
+                        },
                       },
-                    ],
-
-                    required: ["time"],
+                      location: {
+                        type: "object",
+                        properties: {
+                          gps: {
+                            type: "string",
+                            pattern:
+                              "^(-?[0-9]{1,3}(?:.[0-9]{6,15})?),( )*?(-?[0-9]{1,3}(?:.[0-9]{6,15})?)$",
+                            errorMessage: "Incorrect gps value",
+                          },
+                          address: {
+                            type: "object",
+                            properties: {
+                              name: {
+                                type: "string",
+                                minLength: 3,
+                                not: { const: { $data: "1/locality" } },
+                                errorMessage: "cannot be equal to locality",
+                              },
+                              building: {
+                                type: "string",
+                                minLength: 3,
+                                not: { const: { $data: "1/locality" } },
+                                errorMessage: "cannot be equal to locality",
+                              },
+                              locality: {
+                                type: "string",
+                                minLength: 3,
+                              },
+                              city: {
+                                type: "string",
+                              },
+                              state: {
+                                type: "string",
+                              },
+                              country: {
+                                type: "string",
+                              },
+                              area_code: {
+                                type: "string",
+                              },
+                            },
+                            isLengthValid: true,
+                            errorMessage:
+                              "name + building + locality < 190 chars",
+                          },
+                        },
+                        required: ["gps", "address"],
+                      },
+                      contact: {
+                        type: "object",
+                        properties: {
+                          phone: {
+                            type: "string",
+                          },
+                          email: {
+                            type: "string",
+                            format: "email",
+                          },
+                        },
+                        required: ["phone", "email"],
+                      },
+                    },
                   },
                   end: {
                     type: "object",
-                    allOf: [
-                      {
+                    properties: {
+                      time: {
+                        type: "object",
                         properties: {
-                          time: {
+                          range: {
                             type: "object",
                             properties: {
-                              range: {
-                                type: "object",
-                                properties: {
-                                  start: {
-                                    type: "string",
-                                    format:"date-time"
-                                  },
-                                  end: {
-                                    type: "string",
-                                    format:"date-time"
-                                  },
-                                },
-                                required: ["start", "end"],
+                              start: {
+                                type: "string",
+                                format: "date-time",
                               },
-                              timestamp: {
+                              end: {
                                 type: "string",
                                 format: "date-time",
                               },
                             },
-                            required: ["range"],
+                            required: ["start", "end"],
                           },
-                          instructions: {
-                            code: { type: "string" },
-                            type: "object",
-                            properties: {
-                              name: {
-                                type: "string",
-                              },
-                              short_desc: {
-                                type: "string",
-                              },
-                              long_desc: {
-                                type: "string",
-                              },
-                              images: {
-                                type: "array",
-                                items: {
-                                  type: "string",
-                                },
-                              },
+                          timestamp: {
+                            type: "string",
+                            format: "date-time",
+                          },
+                        },
+                      },
+                      instructions: {
+                        code: { type: "string" },
+                        type: "object",
+                        properties: {
+                          name: {
+                            type: "string",
+                          },
+                          short_desc: {
+                            type: "string",
+                          },
+                          long_desc: {
+                            type: "string",
+                          },
+                          images: {
+                            type: "array",
+                            items: {
+                              type: "string",
                             },
                           },
                         },
                       },
-                      {
-                        $ref: "commonSchema#/properties/addressFormat",
+                      person: {
+                        type: "object",
+                        properties: {
+                          name: {
+                            type: "string",
+                          },
+                        },
                       },
-                    ],
-
-                    required: ["time"],
+                      location: {
+                        type: "object",
+                        properties: {
+                          gps: {
+                            type: "string",
+                            pattern:
+                              "^(-?[0-9]{1,3}(?:.[0-9]{6,15})?),( )*?(-?[0-9]{1,3}(?:.[0-9]{6,15})?)$",
+                            errorMessage: "Incorrect gps value",
+                          },
+                          address: {
+                            type: "object",
+                            properties: {
+                              name: {
+                                type: "string",
+                                minLength: 3,
+                                not: { const: { $data: "1/locality" } },
+                                errorMessage: "cannot be equal to locality",
+                              },
+                              building: {
+                                type: "string",
+                                minLength: 3,
+                                not: { const: { $data: "1/locality" } },
+                                errorMessage: "cannot be equal to locality",
+                              },
+                              locality: {
+                                type: "string",
+                                minLength: 3,
+                              },
+                              city: {
+                                type: "string",
+                              },
+                              state: {
+                                type: "string",
+                              },
+                              country: {
+                                type: "string",
+                              },
+                              area_code: {
+                                type: "string",
+                              },
+                            },
+                            isLengthValid: true,
+                            errorMessage:
+                              "name + building + locality < 190 chars",
+                          },
+                        },
+                        required: ["gps", "address"],
+                      },
+                      contact: {
+                        type: "object",
+                        properties: {
+                          phone: {
+                            type: "string",
+                          },
+                          email: {
+                            type: "string",
+                            format: "email",
+                          },
+                        },
+                        required: ["phone", "email"],
+                      },
+                    },
                   },
                   agent: {
                     type: "object",
@@ -380,10 +494,36 @@ module.exports = {
                     type: "string",
                   },
                 },
-                if: { properties: { type: { const: "Prepaid" } } },
-                then: { required: ["type", "state", "tracking"] },
+
+                if: { properties: { type: { const: "Delivery" } } },
+                then: {
+                  properties: {
+                    start: {
+                      properties: {
+                        time: { required: ["range"] },
+                      },
+                      required: ["time", "person", "location", "contact"],
+                    },
+
+                    end: {
+                      properties: {
+                        time: { required: ["range"] },
+                      },
+                      required: ["time", "person", "location", "contact"],
+                    },
+                  },
+                  required: ["id", "type", "state", "tracking", "start", "end"],
+                },
                 else: {
-                  required: ["type", "state"],
+                  properties: {
+                    start: {
+                      properties: {
+                        time: { required: ["timestamp"] },
+                      },
+                      required: ["time"],
+                    },
+                  },
+                  required: ["id", "type", "state", "start"],
                 },
               },
             },
@@ -394,19 +534,19 @@ module.exports = {
                   type: "string",
                   const: {
                     $data:
-                      "/on_init/0/message/order/payment/@ondc~1org~1collection_amount",
+                      "/on_confirm/0/message/order/payment/@ondc~1org~1collection_amount",
                   },
                 },
                 type: {
                   type: "string",
                   const: {
-                    $data: "/on_init/0/message/order/payment/type",
+                    $data: "/on_confirm/0/message/order/payment/type",
                   },
                 },
                 collected_by: {
                   type: "string",
                   const: {
-                    $data: "/on_init/0/message/order/payment/collected_by",
+                    $data: "/on_confirm/0/message/order/payment/collected_by",
                   },
                 },
                 time: {
@@ -448,35 +588,6 @@ module.exports = {
                         type: "string",
                       },
                     },
-                    allOf: [
-                      {
-                        if: {
-                          properties: {
-                            settlement_type: {
-                              const: "upi",
-                            },
-                          },
-                        },
-                        then: {
-                          required: ["upi_address"],
-                        },
-                      },
-                      {
-                        if: {
-                          properties: {
-                            settlement_type: {
-                              const: ["neft", "rtgs"],
-                            },
-                          },
-                        },
-                        then: {
-                          required: [
-                            "settlement_ifsc_code",
-                            "settlement_bank_account_no",
-                          ],
-                        },
-                      },
-                    ],
                     required: ["settlement_counterparty", "settlement_type"],
                   },
                 },

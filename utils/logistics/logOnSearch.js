@@ -153,7 +153,7 @@ const checkOnSearch = (data, msgIdSet) => {
               if (!match)
                 onSrchObj[
                   "bpp/provider:location:" + id + ":RGC"
-                ] = `Reverse Geocoding for location ID ${id} failed. Area Code ${area_code} not matching with ${lat}-${long} Lat-Long pair.`;
+                ] = `Reverse Geocoding for location ID ${id} failed. Area Code ${area_code} not matching with ${lat},${long} Lat-Long pair.`;
             } catch (error) {
               console.log("bpp/providers error: ", error);
             }

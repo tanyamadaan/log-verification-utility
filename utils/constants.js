@@ -165,4 +165,5 @@ module.exports = Object.freeze({
     "RTO-Disposed",
     "Cancelled",
   ],
+  CANCELLATION_TAGS_LIST:["retry_count","rto_id","cancellation_reason_id","sub_reason_id","cancelled_by"]
 });

@@ -92,8 +92,11 @@ const sortMerge = (domain, directory, destination) => {
         }
       }
     });
-
-    fs.writeFileSync(destination, JSON.stringify(mergedlogs));
+    
+    let oldLogs = fs.readFileSync(destination, 'utf8');
+    oldLogs = oldLogs ? JSON.parse(oldLogs) : {};
+    const allLogs = { ...oldLogs, ...mergedlogs };
+    fs.writeFileSync(destination, JSON.stringify(allLogs));
     return flowErrObj;
   } catch (err) {
     console.log(`Error while running merging log files, ${err}`);

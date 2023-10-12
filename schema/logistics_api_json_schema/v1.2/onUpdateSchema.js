@@ -251,7 +251,6 @@ module.exports = {
                                     },
                                   },
                                 },
-                                required: ["code", "short_desc"],
                               },
                               {
                                 $data:

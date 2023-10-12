@@ -7,10 +7,11 @@ const checkConfirm = (data, msgIdSet) => {
   let cnfrmObj = {};
   let confirm = data;
   let version = confirm.context.core_version;
-
+  let onSearchProvArr = dao.getValue("providersArr");
   confirm = confirm.message.order;
   let rts;
-  if(confirm.provider.locations) dao.setValue("confirm_locations", confirm.provider.locations)
+  if (confirm.provider.locations && confirm.provider.locations.length > 1)
+    dao.setValue("confirm_locations", confirm.provider.locations);
 
   if (version === "1.1.0")
     rts = confirm?.fulfillments[0]?.tags["@ondc/org/order_ready_to_ship"];
@@ -27,6 +28,31 @@ const checkConfirm = (data, msgIdSet) => {
       }
     });
   }
+  let provId = confirm.provider.id;
+  let items = confirm.items;
+
+  try {
+    console.log(
+      `Comparing item duration and timestamp in /on_search and /confirm`
+    );
+    2;
+    items.forEach((item) => {
+      onSearchProvArr.forEach((provider) => {
+        if (provider.id === provId) {
+          const onSearchItemsObj = provider.items;
+          onSearchItemsObj.forEach((onSrchItem) => {
+            console.log(onSrchItem);
+            if (onSrchItem.id === item.id) {
+              if (onSrchItem?.time?.duration != item?.time?.duration)
+                cnfrmObj.itemDurationErr = `item duration does not match with the one provided in /on_search (LSP can send NACK)`;
+              if (onSrchItem?.time?.timestamp != item?.time?.timestamp)
+                cnfrmObj.itemTmstmpErr = `item timestamp does not match with the one provided in /on_search (LSP can send NACK)`;
+            }
+          });
+        }
+      });
+    });
+  } catch (error) {}
 
   dao.setValue("rts", rts);
   const cnfrmOrdrId = confirm.id;

@@ -50,7 +50,11 @@ const sortMerge = (domain, directory, destination) => {
       }
     }, {});
 
-    let oldLogs = fs.readFileSync(destination, 'utf8');
+    let oldLogs;
+    if(fs.existsSync(destination)){
+      oldLogs = fs.readFileSync(destination, 'utf8');
+    }
+    
     oldLogs = oldLogs ? JSON.parse(oldLogs) : {};
     mergedlogs = { ...oldLogs, ...mergedlogs };
 

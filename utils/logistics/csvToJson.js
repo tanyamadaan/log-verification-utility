@@ -1,10 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
- const convertCSVtoJson = async () => {
-    const data = fs.readFileSync(path.join(__dirname, 'pinToStd.csv'), 'utf8');
+ const convertCSVtoJson = async (fileName) => {
+    const data = fs.readFileSync(path.join(__dirname, fileName), 'utf8');
     let dataStr = data.split('\n');
-    // console.log(dataStr);
     let dataToStr = dataStr.map((elem) => {
         const elemArr = elem.split(',');
         const key = elemArr[0];
@@ -13,7 +12,6 @@ const path = require('path');
         return obj;
     });
 
-    console.log(dataToStr);
     const finalObj = {};
     dataToStr.forEach((elem) => {
         finalObj[Object.keys(elem)[0]] = elem[Object.keys(elem)[0]];

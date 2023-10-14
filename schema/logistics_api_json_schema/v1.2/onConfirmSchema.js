@@ -204,61 +204,55 @@ module.exports = {
             },
             quote: {
               type: "object",
-              const: {
-                $data: "/confirm/0/message/order/quote",
-              },
-              errorMessage: "object mismatches in /confirm and /on_confirm.",
               properties: {
                 price: {
-                  allOf: [
-                    {
-                      $ref: "commonSchema#/properties/priceFormat",
+                  type: "object",
+                  properties: {
+                    currency: {
+                      type: "string",
                     },
-                    {
-                      $data: "/confirm/0/message/order/quote/price",
+                    value: {
+                      type: "string",
+                      const: {
+                        $data: "/confirm/0/message/order/quote/price/value",
+                      },
+                      errorMessage: "mismatches from /confirm",
                     },
-                  ],
+                  },
+                  required: ["currency", "value"],
                 },
                 breakup: {
-                  allOf: [
-                    {
-                      $ref: "confirmSchema#/properties/message/properties/order/properties/quote/properties/breakup",
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      "@ondc/org/item_id": {
+                        type: "string",
+                      },
+                      "@ondc/org/title_type": {
+                        type: "string",
+                        enum: constants.TITLE_TYPE,
+                      },
+                      price: {
+                        type: "object",
+                        properties: {
+                          currency: {
+                            type: "string",
+                            const: "INR",
+                          },
+                          value: {
+                            type: "string",
+                          },
+                        },
+                        required: ["currency", "value"],
+                      },
                     },
-                    {
-                      $data: "/confirm/0/message/order/quote/breakup",
-                    },
-                  ],
-                  // type: "array",
-                  // items: {
-                  //   type: "object",
-                  //   properties: {
-                  //     "@ondc/org/item_id": {
-                  //       type: "string",
-                  //     },
-                  //     "@ondc/org/title_type": {
-                  //       type: "string",
-                  //       enum: constants.FULFILLMENT_TYPE,
-                  //     },
-                  //     price: {
-                  //       type: "object",
-                  //       properties: {
-                  //         currency: {
-                  //           type: "string",
-                  //           const: "INR",
-                  //         },
-                  //         value: {
-                  //           type: "string",
-                  //         },
-                  //       },
-                  //       required: ["currency", "value"],
-                  //     },
-                  //   },
-                  //   required: [
-                  //     "@ondc/org/item_id",
-                  //     "@ondc/org/title_type",
-                  //     "price",
-                  //   ],
-                  // },
+                    required: [
+                      "@ondc/org/item_id",
+                      "@ondc/org/title_type",
+                      "price",
+                    ],
+                  },
                 },
               },
               required: ["price", "breakup"],
@@ -430,11 +424,11 @@ module.exports = {
                             properties: {
                               start: {
                                 type: "string",
-                                format:"date-time"
+                                format: "date-time",
                               },
                               end: {
                                 type: "string",
-                                format:"date-time"
+                                format: "date-time",
                               },
                             },
                             required: ["start", "end"],
@@ -567,11 +561,11 @@ module.exports = {
                             properties: {
                               start: {
                                 type: "string",
-                                format:"date-time",
+                                format: "date-time",
                               },
                               end: {
                                 type: "string",
-                                format:"date-time"
+                                format: "date-time",
                               },
                             },
                             required: ["start", "end"],
@@ -628,6 +622,15 @@ module.exports = {
                     },
                   },
                 },
+                required: [
+                  "id",
+                  "type",
+                  "state",
+                  "start",
+                  "tracking",
+                  "end",
+                  "tags",
+                ],
               },
             },
             billing: {

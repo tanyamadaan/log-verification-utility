@@ -26,10 +26,10 @@ const checkContextVal = (payload, msgIdSet, i) => {
     }
     try {
       console.log(`Comparing Message Id of /${action}`);
-      if (!action.includes("on_")) {
+    if (!action.includes("on_") || action ==="on_status" || action ==="on_update") {
         if (msgIdSet.has(payload.context.message_id)) {
           Obj.msgIdErr =
-            "Message Id cannot be same for different sets of APIs (LSP should send NACK)";
+            "Message Id cannot be same for different sets of APIs";
         } else {
           msgIdSet.add(payload.context.message_id);
         }

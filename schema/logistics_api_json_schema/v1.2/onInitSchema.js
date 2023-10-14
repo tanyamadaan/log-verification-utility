@@ -124,7 +124,7 @@ module.exports = {
                     },
                   },
                 },
-                required: ["id"],
+                required: ["id", "fulfillment_id"],
               },
             },
             quote: {
@@ -180,7 +180,8 @@ module.exports = {
                 },
               },
               isQuoteMatching: true,
-              errorMessage : "price is not matching with the total breakup price"
+              errorMessage:
+                "price is not matching with the total breakup price",
             },
             fulfillments: {
               type: "array",
@@ -347,11 +348,13 @@ module.exports = {
               properties: {
                 type: {
                   type: "string",
-                  enum: ["ON-FULFILLMENT", "POST-FULFILLMENT", "ON-ORDER"],
+                  enum: constants.PAYMENT_TYPE,
                 },
                 collected_by: {
                   type: "string",
+                  enum: constants.PAYMENT_COLLECTEDBY,
                 },
+
                 "@ondc/org/settlement_details": {
                   type: "array",
                   items: {
@@ -409,6 +412,22 @@ module.exports = {
                   },
                 },
               },
+              if: {
+                properties: {
+                  type: { enum: ["ON-ORDER", "POST-FULFILLMENT"] },
+                },
+              },
+              then: {
+                properties: {
+                  collected_by: { const: "BAP" },
+                },
+              },
+              else: {
+                properties: {
+                  collected_by: { const: "BPP" },
+                },
+              },
+
               required: ["type", "collected_by"],
             },
           },

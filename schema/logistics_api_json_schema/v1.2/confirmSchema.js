@@ -303,7 +303,6 @@ module.exports = {
                       duration: {
                         type: "string",
                         format: "duration",
-    
                       },
                       location: {
                         type: "object",
@@ -574,8 +573,12 @@ module.exports = {
                           },
                         },
                       },
+
                       required: ["code", "list"],
                     },
+                    minItems: 2,
+                    errorMessage:
+                      "both 'state' and 'rto_action' tags are required",
                   },
                 },
 
@@ -714,8 +717,7 @@ module.exports = {
                     $data:
                       "/search/0/message/intent/payment/@ondc~1org~1collection_amount",
                   },
-                  errorMessage:
-                    "mismatches in /payment from /search",
+                  errorMessage: "mismatches in /payment from /search",
                 },
                 collected_by: {
                   type: "string",
@@ -928,7 +930,7 @@ module.exports = {
                               "/search/0/message/intent/@ondc~1org~1payload_details/weight/value",
                           },
                           errorMessage:
-                            "Payload weight mismatches in /search and /confirm",
+                            "Payload weight mismatches from /search",
                         },
                       },
                       required: ["unit", "value"],

@@ -37,20 +37,22 @@ const checkConfirm = (data, msgIdSet) => {
     );
     2;
     items.forEach((item) => {
-      onSearchProvArr.forEach((provider) => {
-        if (provider.id === provId) {
-          const onSearchItemsObj = provider.items;
-          onSearchItemsObj.forEach((onSrchItem) => {
-            console.log(onSrchItem);
-            if (onSrchItem.id === item.id) {
-              if (onSrchItem?.time?.duration != item?.time?.duration)
-                cnfrmObj.itemDurationErr = `item duration does not match with the one provided in /on_search (LSP can send NACK)`;
-              if (onSrchItem?.time?.timestamp != item?.time?.timestamp)
-                cnfrmObj.itemTmstmpErr = `item timestamp does not match with the one provided in /on_search (LSP can send NACK)`;
-            }
-          });
-        }
-      });
+      if (item.time) {
+        onSearchProvArr.forEach((provider) => {
+          if (provider.id === provId) {
+            const onSearchItemsObj = provider.items;
+            onSearchItemsObj.forEach((onSrchItem) => {
+              console.log(onSrchItem);
+              if (onSrchItem.id === item.id) {
+                if (onSrchItem?.time?.duration !== item?.time?.duration)
+                  cnfrmObj.itemDurationErr = `item duration does not match with the one provided in /on_search (LSP can send NACK)`;
+                if (onSrchItem?.time?.timestamp !== item?.time?.timestamp)
+                  cnfrmObj.itemTmstmpErr = `item timestamp does not match with the one provided in /on_search (LSP can send NACK)`;
+              }
+            });
+          }
+        });
+      }
     });
   } catch (error) {}
 
@@ -64,10 +66,10 @@ const checkConfirm = (data, msgIdSet) => {
   fulfillments.forEach((fulfillment) => {
     if (fulfillment["@ondc/org/awb_no"] && p2h2p) awbNo = true;
     if (
-      fulfillment?.tags["@ondc/org/order_ready_to_ship"] === "yes" &&
+      rts === "yes" &&
       !fulfillment?.start?.instructions?.short_desc
     ) {
-      cnfrmObj.instructionsErr = `PCC code is required in /fulfillments/start/instructions when ready_to_ship = 'yes'`;
+      cnfrmObj.instructionsErr = `fulfillments/start/instructions are required when ready_to_ship = 'yes'`;
     }
   });
 

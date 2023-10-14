@@ -85,10 +85,11 @@ const sortMerge = (domain, directory, destination) => {
             `Flow incorrect- current action: ${action}, Current Index:${i}, Index in correct flow:${curIndex}`
           );
           flowErrObj[
-            i
+            0
           ] = `Incorrect Flow as per context/timestamps - (${Object.keys(
             mergedlogs
           )})`;
+          
         }
       }
     });

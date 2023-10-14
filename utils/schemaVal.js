@@ -58,8 +58,7 @@ const Validate = async (domain, dirPath, msgIdSet, ErrorObj) => {
             domain,
             element,
             action,
-            msgIdSet,
-            domain
+            msgIdSet
           );
         } catch (error) {
           console.log(

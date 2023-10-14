@@ -861,7 +861,7 @@ module.exports = {
                               "/search/0/message/intent/@ondc~1org~1payload_details/weight/value",
                           },
                           errorMessage:
-                            "Payload weight mismatches in /search and /confirm",
+                            "Payload weight mismatches from /search",
                         },
                       },
                       required: ["unit", "value"],

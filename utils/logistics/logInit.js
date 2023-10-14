@@ -27,10 +27,10 @@ const checkInit = (data, msgIdSet) => {
     console.log(`Comparing provider object in /init and /on_search`);
     if (init.provider) {
       onSearchitemsArr = dao.getValue(`${init.provider.id}itemsArr`);
-      let providerObj = providersArr.filter(
+      let providerObj = providersArr?.filter(
         (prov) => prov.id === init.provider.id
       );
-      if (providerObj?.length < 1) {
+      if (!providerObj || providerObj?.length < 1) {
         initObj.prvdrErr = `Provider with id '${init.provider.id}' does not exist in the catalog provided in /on_search`;
       } else {
         if (
@@ -70,11 +70,11 @@ const checkInit = (data, msgIdSet) => {
     console.log(`Comparing item object in /init and /on_search`);
     let itemExists = false;
 
-    itemsArr.forEach((item, i) => {
+    itemsArr?.forEach((item, i) => {
       if (item.descriptor.code === "P2H2P") {
         p2h2p = true;
       }
-      onSearchitemsArr.forEach((element) => {
+      onSearchitemsArr?.forEach((element) => {
         if (item.id === element.id) itemExists = true;
         console.log(item.id, element.id);
       });

@@ -59,7 +59,7 @@ const checkOnStatus = (data, msgIdSet) => {
           }
 
           if (_.gt(pickupTime, contextTime)) {
-            onStatusObj.tmstmpErr = `Pickup timestamp (fulfillments/start/time/timestamp) cannot be future dated for fulfillment state - ${ffState}`;
+            onStatusObj.tmstmpErr = `Pickup timestamp (fulfillments/start/time/timestamp) cannot be future dated w.r.t context/timestamp for fulfillment state - ${ffState}`;
           }
           if (fulfillment?.end?.time?.timestamp) {
             onStatusObj.delvryTimeErr = `Delivery timestamp (fulfillments/end/time/timestamp) cannot be provided for fulfillment state - ${ffState}`;
@@ -105,7 +105,9 @@ const checkOnStatus = (data, msgIdSet) => {
           if (!deliveryTime) {
             onStatusObj.deliveryTimeErr = `Delivery timestamp (fulfillments/end/time/timestamp) is required for fulfillment state - ${ffState}`;
           }
-
+          if (_.gt(deliveryTime, contextTime)) {
+            onStatusObj.tmstmpErr = `Delivery timestamp (fulfillments/end/time/timestamp) cannot be future dated w.r.t context/timestamp for fulfillment state - ${ffState}`;
+          }
           if (_.gte(pickupTime, deliveryTime)) {
             onStatusObj.tmstmpErr = `Pickup timestamp (fulfillments/start/time/timestamp) cannot be greater than or equal to  delivery timestamp (fulfillments/end/time/timestamp) for fulfillment state - ${ffState}`;
           }

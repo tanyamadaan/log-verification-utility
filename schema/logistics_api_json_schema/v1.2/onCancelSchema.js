@@ -167,7 +167,7 @@ module.exports = {
               type: "object",
               properties: {
                 price: {
-                  $ref: "commonSchema#/properties/priceFormat/properties",
+                  $ref: "commonSchema#/properties/priceFormat",
                 },
                 breakup: {
                   type: "array",
@@ -182,7 +182,7 @@ module.exports = {
                         enum: TITLE_TYPE,
                       },
                       price: {
-                        $ref: "commonSchema#/properties/priceFormat/properties",
+                        $ref: "commonSchema#/properties/priceFormat",
                       },
                     },
                     required: [
@@ -206,6 +206,7 @@ module.exports = {
                   },
                   type: {
                     type: "string",
+                    enum: constants.FULFILLMENT_TYPE
                   },
                   state: {
                     type: "object",
@@ -215,7 +216,7 @@ module.exports = {
                         properties: {
                           code: {
                             type: "string",
-                            enum: ["Cancelled", "RTO-Initiated"],
+                            enum: ["Cancelled", "RTO-Initiated","RTO-Disposed"],
                           },
                         },
                         required: ["code"],
@@ -675,8 +676,6 @@ module.exports = {
               format: "date-time",
             },
           },
-          isFutureDated: true,
-          errorMessage: "created_at/updated_at must not be future dated",
           additionalProperties: false,
           required: [
             "id",
@@ -693,6 +692,9 @@ module.exports = {
       },
       required: ["order"],
     },
+    
   },
+  isFutureDated: true,
+  errorMessage: "created_at/updated_at must not be future dated",
   required: ["context", "message"],
 };

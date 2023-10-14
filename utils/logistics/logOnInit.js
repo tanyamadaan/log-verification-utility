@@ -33,7 +33,7 @@ const checkOnInit = (data, msgIdSet) => {
         }
         totalBreakup += parseFloat(breakup.price.value);
         
-        onSearchProvArr.forEach((provider) => {
+        onSearchProvArr?.forEach((provider) => {
          
           if (provider.id === provId) {
             provider?.items.forEach((item, i) => {

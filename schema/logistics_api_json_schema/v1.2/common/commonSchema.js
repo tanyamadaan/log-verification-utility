@@ -9,9 +9,9 @@ module.exports = {
           type: "object",
           properties: {
             name: {
-              type: "string"
-            }
-          }
+              type: "string",
+            },
+          },
         },
         location: {
           type: "object",
@@ -74,15 +74,15 @@ module.exports = {
           required: ["phone", "email"],
         },
       },
-      required: ["person", "location", "contact"]
+      required: ["person", "location", "contact"],
     },
     priceFormat: {
       type: "object",
       properties: {
-        currency: {type: "string"},
-        value: {type: "string"}
+        currency: { type: "string" },
+        value: { type: "string" },
       },
-      required: ["currency", "value"]
-    }
+      required: ["currency", "value"],
+    },
   },
 };

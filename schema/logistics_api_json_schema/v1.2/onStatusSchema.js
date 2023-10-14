@@ -171,7 +171,7 @@ module.exports = {
               type: "object",
               properties: {
                 price: {
-                  $ref: "commonSchema#/properties/priceFormat/properties",
+                  $ref: "commonSchema#/properties/priceFormat",
                 },
                 breakup: {
                   type: "array",
@@ -186,7 +186,7 @@ module.exports = {
                         enum: TITLE_TYPE,
                       },
                       price: {
-                        $ref: "commonSchema#/properties/priceFormat/properties",
+                        $ref: "commonSchema#/properties/priceFormat",
                       },
                     },
                     required: [
@@ -725,6 +725,16 @@ module.exports = {
                   $data: "/confirm/0/message/order/@ondc~1org~1linked_order",
                 },
               ],
+            },
+            created_at: {
+              type: "string",
+              const: {
+                $data: "/confirm/0/message/order/created_at",
+              },
+              errorMessage: "mismatches in /confirm and /on_update",
+            },
+            updated_at: {
+              type: "string",
             },
           },
           additionalProperties: false,

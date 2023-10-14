@@ -25,7 +25,7 @@ const checkOnCancel = (data, msgIdSet) => {
       fulfillments.forEach((fulfillment) => {
         ffState = fulfillment?.state?.descriptor?.code;
         if ((fulfillment.type === "Prepaid" || fulfillment.type === "Delivery") && ffState !== "Cancelled") {
-          onCancelObj.flflmntstErr = `In case of RTO, fulfillment with type 'Delivery/Prepaid' needs to in 'Cancelled' state`;
+          onCancelObj.flflmntstErr = `In case of RTO, fulfillment with type '${fulfillment.type}' needs to be 'Cancelled'`;
         }
       });
     }
@@ -46,9 +46,7 @@ const checkOnCancel = (data, msgIdSet) => {
             onCancelObj.ordrStatErr = `Order state should be 'Cancelled' for fulfillment state - ${ffState}`;
           }
           if (fulfillments.length > 1) {
-            if (!dao.getValue("pickupTime")) {
-              onCancelObj.msngPickupState = `/on_status call for Fulfillment state - 'Order-picked-up' missing`;
-            } else if (!fulfillment.start.time.timestamp) {
+            if (!fulfillment.start.time.timestamp) {
               onCancelObj.msngPickupTimeErr = `Pickup timestamp (fulfillments/start/time/timestamp) is missing for fulfillment state - ${ffState}`;
             }
           }

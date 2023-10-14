@@ -119,7 +119,7 @@ module.exports = Object.freeze({
   TITLE_TYPE: ["delivery", "rto", "reverseqc","tax"],
   PCC_CODE: ["1", "2", "3", "4"],
   DCC_CODE: ["1", "2", "3"],
-  FULFILLMENT_TAGS_CODE: ["state", "rto_action"],
+  FULFILLMENT_TAGS_CODE: ["state", "rto_action","weather_check"],
   FULFILLMENT_TAGS_LIST_CODE: ["ready_to_ship", "return_to_origin"],
   FULFILLMENT_TAGS_LIST_VALUE: ["yes", "no"],
   TRACKING_STATUS: ["active", "inactive"],

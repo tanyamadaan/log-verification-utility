@@ -22,7 +22,6 @@ const checkOnConfirm = (data, msgIdSet) => {
    
       if (rts === "yes" && !fulfillment?.start?.time?.range) {
        
-        console.log("inside");
         onCnfrmObj.strtRangeErr = `start/time/range is required in /fulfillments when ready_to_ship = yes in /confirm`;
       }
       if (rts === "yes" && !fulfillment?.end?.time?.range) {

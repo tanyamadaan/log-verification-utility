@@ -10,6 +10,7 @@ const {
 } = require("../../utils/constants");
 const validate_schema_for_domain_json = require("../../schema/main");
 const { validateLogs } = require("../../utils/validateLogUtil");
+const readLogFiles = require("../../utils/logistics/readLogFiles");
 // const { logsUpload, logUpload } = require("../utils/fileHandler");
 
 router.get("/", (req, res) => {
@@ -17,7 +18,6 @@ router.get("/", (req, res) => {
 });
 
 // /validate/flow/:domain
-
 
 // router.post("/validate/local/single", async (req, res) => {
 //   const { domain, path: filePath } = req.body;
@@ -82,52 +82,30 @@ router.get("/", (req, res) => {
 //   }
 // });
 
-router.post("/validate/local/multiple/:domain", async (req, res) => {
-  const { dirPath } = req.body;
-  const { domain } = req.params;
-  if (!domain || !dirPath)
-    return res
-      .status(400)
-      .json({ msg: 'Req Body needs to have "domain" and "dirPath"' });
-
-  if (!Object.keys(SUPPORTED_DOMAINS_SORTED_INDEX).includes(domain))
-    return res.status(404).json({ msg: `Domain ${domain} not supported yet!` });
-
+router.post("/validate/:domain", async (req, res) => {
   try {
-    const files = fs.readdirSync(dirPath);
-    const firstFileData = fs.readFileSync(
-      path.join(
-        dirPath,
-        files.filter((filename) => filename.match(/\.json$/))[0]
-      )
+    const { logPath } = req.body;
+    const { domain } = req.params;
+
+    /* -------- Input validation ------- */
+    if (!logPath)
+      return res.status(400).json({ msg: 'Req Body needs to have "logPath"' });
+
+    if (!Object.keys(SUPPORTED_DOMAINS_SORTED_INDEX).includes(domain))
+      return res
+        .status(404)
+        .json({ msg: `Domain ${domain} not supported yet!` });
+
+    /* ------ End of Input validation ------- */
+
+    const destination = await readLogFiles(domain, logPath);
+    await validateLogs(domain, logPath, destination);
+    const logReport = JSON.parse(
+      fs.readFileSync(path.join(destination, "log_report.json")).toString()
     );
-    console.log("First file", JSON.parse(firstFileData.toString()))
-    try {
-      const destination = path.join(
-        __dirname,
-        "../../",
-        SERVER_LOG_DEST,
-        domain,
-        JSON.parse(firstFileData.toString()).context.transaction_id
-      );
-      fs.mkdirSync(destination, { recursive: true });
-      validateLogs(domain, dirPath, destination).then(() => {
-        logReport = JSON.parse(
-          fs.readFileSync(path.join(destination, "log_report.json")).toString()
-        );
-        // copyFile is raising permission error.
-        // fs.copyFileSync(path.join(dirPath, "../", "merged.json"), destination)
-        return res.json({logReport });
-      });;
-    } catch (error) {
-      console.log("Error while reading first file data", error)
-      return res.status(500).json({msg: "Error occured while reading first log"})
-    }
+    return res.json({ logReport });
   } catch (error) {
-    console.log("Error", error);
-    return res
-      .status(500)
-      .json({ msg: "Error occurred while report generation" });
+    return res.status(500).json({ msg: "Error occurred while report generation" });
   }
 });
 

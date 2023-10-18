@@ -127,7 +127,6 @@ module.exports = {
                       required: ["start", "end"],
                     },
                   },
-                  required: ["days", "schedule", "range"],
                 },
               },
             },
@@ -332,7 +331,6 @@ module.exports = {
           },
           required: [
             "category",
-            "provider",
             "fulfillment",
             "@ondc/org/payload_details",
             "payment",

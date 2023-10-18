@@ -18,7 +18,7 @@ const checkOnCancel = (data, msgIdSet) => {
 
 
   try {
-    if (fulfillments.length > 1) {
+    if (fulfillments?.length > 1) {
       console.log(
         `Checking for a valid 'Cancelled' fulfillment state for type 'Delivery' in case of RTO`
       );

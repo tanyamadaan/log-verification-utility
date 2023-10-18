@@ -46,11 +46,6 @@ module.exports = {
           type: "string",
           allOf: [
             {
-              const: { $data: "/update/0/context/message_id" },
-              errorMessage:
-                "Message ID should be same as /update: ${/update/0/context/message_id}",
-            },
-            {
               not: {
                 const: { $data: "1/transaction_id" },
               },

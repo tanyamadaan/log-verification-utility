@@ -344,7 +344,6 @@ module.exports = {
           },
           required: [
             "category",
-            "provider",
             "fulfillment",
             "@ondc/org/payload_details",
           ],

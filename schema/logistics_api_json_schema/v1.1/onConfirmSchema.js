@@ -161,8 +161,6 @@ module.exports = {
             },
             quote: {
               type: "object",
-              const: { $data: "/confirm/0/message/order/quote" },
-              errorMessage: "object mismatches in /confirm and /on_confirm.",
               properties: {
                 price: {
                   type: "object",

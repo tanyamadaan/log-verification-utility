@@ -240,11 +240,35 @@ module.exports = {
                     // required: ["instructions"],
                   },
                   tags: {
-                    allOf: [
-                      {
-                        $ref: "confirmSchema#/properties/message/properties/order/properties/fulfillments/items/properties/tags",
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        code: {
+                          type: "string",
+                          enum: ["state"]
+                        },
+                        list: {
+                          type: "array",
+                          items: {
+                            type: "object",
+                            properties: {
+                              code: {
+                                type: "string",
+                                enum: ["ready_to_ship"]
+                              },
+                              value: {
+                                type: "string",
+                                enum: ["yes","no"]
+                              },
+                            },
+                            required: ["code", "value"],
+                          },
+                        },
                       },
-                    ],
+
+                      required: ["code", "list"],
+                    },
                   },
                 },
                 additionalProperties: false,

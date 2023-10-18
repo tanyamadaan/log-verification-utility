@@ -455,12 +455,19 @@ module.exports = {
                   },
                 },
               },
-              if: { properties: { type: { const: "ON-FULFILLMENT" } } },
+              if: {
+                properties: {
+                  type: { enum: ["ON-ORDER", "POST-FULFILLMENT"] },
+                },
+              },
               then: {
                 properties: {
-                  collected_by: {
-                    const: "BPP",
-                  },
+                  collected_by: { const: "BAP" },
+                },
+              },
+              else: {
+                properties: {
+                  collected_by: { const: "BPP" },
                 },
               },
               required: ["type", "collected_by"],

@@ -8,6 +8,7 @@ const checkOnSearch = (data, msgIdSet) => {
   const onSrchObj = {};
   let onSearch = data;
   let core_version = onSearch.context.core_version;
+  let timestamp = onSearch.context.timestamp;
   let search = dao.getValue("searchObj");
   let validFulfillmentIDs = new Set();
   onSearch = onSearch.message.catalog;
@@ -21,11 +22,27 @@ const checkOnSearch = (data, msgIdSet) => {
         provider.categories.forEach((category) => {
           const catName = category.id;
           const categoryTime = category.time;
+          const currentDate = timestamp.split('T')[0];
+          const dateObj = new Date(currentDate);
+          const nextDate = new Date(dateObj.setDate(dateObj.getDate() + 1)).toISOString().split('T')[0];
+          if((catName == 'Same Day Delivery' || catName == 'Immediate Delivery') && categoryTime.timestamp != currentDate){
+            onSrchObj.TAT = `For Same Day Delivery/Immediate Delivery, TAT date should be the same date i.e. ${currentDate}`
+          }
+          if(catName == 'Next Day Delivery' && categoryTime.timestamp != nextDate){
+            onSrchObj.TAT = `For Next Day Delivery, TAT date should be the next date i.e. ${nextDate}`
+          }
           provider.items.forEach((item) => {
             const catId = item.category_id;
             const itemTime = item.time;
             if (catName === catId && !categoryTime && !itemTime)
               onSrchObj.TAT = `Either Category level TAT or Item level TAT should be given in ${constants.LOG_ONSEARCH} api for category "${catName}"`;
+
+            if((catId == 'Same Day Delivery' || catId == 'Immediate Delivery') && itemTime.timestamp != currentDate){
+              onSrchObj.TAT = `For Same Day Delivery/Immediate Delivery, TAT date should be the same date i.e. ${currentDate}`
+            }
+            if(catId == 'Next Day Delivery' && itemTime.timestamp != nextDate){
+              onSrchObj.TAT = `For Next Day Delivery, TAT date should be the next date i.e. ${nextDate}`
+            }  
           });
         });
       });
@@ -36,6 +53,7 @@ const checkOnSearch = (data, msgIdSet) => {
       error
     );
   }
+
 
   //forward and backward shipment
   try {

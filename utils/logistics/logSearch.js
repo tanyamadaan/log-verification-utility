@@ -1,4 +1,6 @@
 const _ = require("lodash");
+const fs = require("fs");
+const path = require("path");
 const dao = require("../../dao/dao");
 const constants = require("../constants");
 const utils = require("../utils.js");
@@ -41,6 +43,18 @@ const checkSearch = async (data, msgIdSet) => {
     if(!match) srchObj['RGC-start-Err'] = `Reverse Geocoding for \`start\` failed. Area Code ${area_code} not matching with ${lat},${long} Lat-Long pair.`
   } catch (error) {
     console.log("Error in start location", error)
+  }
+
+  // check for context cityCode and fulfillment start location
+  try {
+    const pinToStd = JSON.parse(fs.readFileSync(path.join(__dirname,'pinToStd.json'), 'utf8'));
+    const stdCode = data.context.city.split(':')[1];
+    const area_code = startLocation?.address?.area_code;
+    if(pinToStd[area_code] && pinToStd[area_code] != stdCode){
+      srchObj['CityCode-Err'] = `CityCode ${stdCode} should match the city for the fulfillment start location ${area_code}, ${pinToStd[area_code]}`;
+    }
+  } catch (err) {
+    console.error("Error in city code check: ", err.message);
   }
 
   console.log("Checking Reverse Geocoding for `end` location in `fullfilment`")

@@ -146,6 +146,9 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
+                    const: {
+                      $data: "/init/0/message/order/items/0/fulfillment_id",
+                    },
                   },
                   type: {
                     type: "string",

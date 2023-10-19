@@ -18,7 +18,7 @@ const checkInit = (data, msgIdSet) => {
     console.log(`Comparing provider object in /init and /on_search`);
     if (init.provider) {
       onSearchitemsArr = dao.getValue(`${init.provider.id}itemsArr`);
-      let providerObj = providersArr.filter(
+      let providerObj = providersArr?.filter(
         (prov) => prov.id === init.provider.id
       );
       if (providerObj?.length < 1) {
@@ -33,20 +33,23 @@ const checkInit = (data, msgIdSet) => {
         } else if (init?.provider?.locations) {
           let providerLocArr = init.provider.locations;
           let providerLocExists = false;
-          providerLocArr.forEach((location, i) => {
-            providerObj[0]?.locations?.forEach((element) => {
-              console.log(location.id, element.id);
 
-              if (location.id === element.id) providerLocExists = true;
+          if (providerLocArr) {
+            providerLocArr.forEach((location, i) => {
+              providerObj[0]?.locations?.forEach((element) => {
+                console.log(location.id, element.id);
+
+                if (location.id === element.id) providerLocExists = true;
+              });
+              if (!providerLocExists) {
+                let itemkey = `providerLocErr${i}`;
+                initObj[
+                  itemkey
+                ] = `Provider location with id '${location.id}' does not exist in the catalog provided in /on_search`;
+              }
+              providerLocExists = false;
             });
-            if (!providerLocExists) {
-              let itemkey = `providerLocErr${i}`;
-              initObj[
-                itemkey
-              ] = `Provider location with id '${location.id}' does not exist in the catalog provided in /on_search`;
-            }
-            providerLocExists = false;
-          });
+          }
         }
       }
     }
@@ -79,10 +82,7 @@ const checkInit = (data, msgIdSet) => {
       itemExists = false;
     });
   } catch (error) {
-    console.log(
-      `!!Error while checking items array in /on_init API`,
-      error
-    );
+    console.log(`!!Error while checking items array in /on_init API`, error);
   }
 
   return initObj;

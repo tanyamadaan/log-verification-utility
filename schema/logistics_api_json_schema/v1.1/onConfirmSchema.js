@@ -276,7 +276,7 @@ module.exports = {
                         required: ["range"],
                       },
                     },
-                    required: ["time"],
+                  
                   },
                   end: {
                     type: "object",
@@ -300,7 +300,7 @@ module.exports = {
                         required: ["range"],
                       },
                     },
-                    required: ["time"],
+                    
                   },
                   agent: {
                     type: "object",

@@ -31,6 +31,8 @@ npm i
 ```code
 MAPPLS_API_KEY=<api_key_value>
 ```
+To get the api_key, refer to this link: https://developer.mappls.com/mapping/reverse-geocoding-api
+
 3. Start the server with the following command:
 
 ```sh
@@ -41,21 +43,28 @@ The server will be up and running at `http://localhost:3000`
 4. The server provides an HTTP endpoint for log file verification:
 
 ```code
-http://localhost:3000/validate/:domainName
+http://localhost:3000/validate/<domainName>
 ```
 
-Send a POST request to the endpoint with the following parameters:
-
+5. Send a POST request to the endpoint with the following parameters:
 ```code
-logPath: `The path to the directory containing the log files`
+logPath: <The path to the directory containing the log files>
 ```
-Example user cURL:
+6. Example using Postman:
+```
+Url: http://localhost:3000/validate/logistics
+Request body json: {
+    "logPath": "Documents/projects/v1.2.0-logs/Ref-logistics-app/flow2"
+}
+```
+
+7. Example user cURL:
 
 ```
 curl -X POST -d "logPath=/path/to/log/files" http://localhost:3000/validate/logistics
 ```
 
-5. Upon successful validation, the server will respond with a log report in JSON format. The log report will indicate any errors found in the log files.
+8. Upon successful validation, the server will respond with a log report in JSON format. The log report will indicate any errors found in the log files.
 
 _Notes:_
 

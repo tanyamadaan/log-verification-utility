@@ -4,7 +4,8 @@
 
 The tool is a NODE.js based server to check the conformance and compliance of the API logs for [logistics](https://docs.google.com/document/d/10GpEuKZE2g96DFJT3HKq6wIEMhPC-kkMZhXNn2jHHXc/edit?pli=1) and [B2B](https://github.com/ONDC-Official/ONDC-RET-Specifications) based on the examples in the API Contract.
 
-The Log Verification Server is a tool designed to validate log files for the [logistics](https://docs.google.com/document/d/10GpEuKZE2g96DFJT3HKq6wIEMhPC-kkMZhXNn2jHHXc/edit?pli=1) and [B2B](https://github.com/ONDC-Official/ONDC-RET-Specifications) domains. It offers an endpoint that allows users to submit a directory path containing log files for verification. The server then responds with a log report, indicating any errors found in the log files.
+The Log Verification Server is a tool designed to validate log files. It offers an endpoint that allows users to submit a directory path containing log files for verification. The directory can have single log file or all the log files for the complete flow.
+The server responds with a log report, indicating any errors found in the log files.
 
 ### Tech
 
@@ -46,11 +47,26 @@ The server will be up and running at `http://localhost:3000`
 http://localhost:3000/validate/<domainName>
 ```
 
+Example endpoint for Logistics
+
+```
+**http://localhost:3000/validate/logistics**
+```
+
+Example endpoint for B2B
+
+```
+**http://localhost:3000/validate/b2b**
+```
+
 5. Send a POST request to the endpoint with the following parameters:
+
 ```code
 logPath: <The path to the directory containing the log files>
 ```
+
 6. Example using Postman:
+
 ```
 Url: http://localhost:3000/validate/logistics
 Request body json: {

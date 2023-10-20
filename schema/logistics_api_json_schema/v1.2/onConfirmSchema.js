@@ -255,6 +255,7 @@ module.exports = {
                   },
                 },
               },
+              additionalProperties:false,
               required: ["price", "breakup"],
             },
             fulfillments: {

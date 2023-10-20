@@ -23,7 +23,7 @@ module.exports = {
         },
         core_version: {
           type: "string",
-          const:"1.2.0"
+          const: "1.2.0",
         },
         bap_id: {
           type: "string",
@@ -114,6 +114,7 @@ module.exports = {
                   type: "string",
                 },
               },
+
               required: ["gps", "time", "updated_at"],
             },
             status: {
@@ -127,7 +128,7 @@ module.exports = {
                 properties: {
                   code: {
                     type: "string",
-                    enum: ["path"],
+                    enum: constants.TRACK_TAGS_CODE,
                   },
                   list: {
                     type: "array",
@@ -136,7 +137,7 @@ module.exports = {
                       properties: {
                         code: {
                           type: "string",
-                          enum: ["lat_lng", "sequence"],
+                          enum: constants.TRACK_TAGS_LIST_CODE,
                         },
                         value: {
                           type: "string",
@@ -156,5 +157,8 @@ module.exports = {
       required: ["tracking"],
     },
   },
+  isTrackingFutureDated: true,
+  errorMessage:
+    "time/timestamp or updated_at in /location cannot be future dated w.r.t context/timestamp",
   required: ["context", "message"],
 };

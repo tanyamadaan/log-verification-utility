@@ -179,6 +179,7 @@ module.exports = {
                   format: "duration",
                 },
               },
+              required:["price","breakup","ttl"],
               isQuoteMatching: true,
               errorMessage:
                 "price is not matching with the total breakup price",

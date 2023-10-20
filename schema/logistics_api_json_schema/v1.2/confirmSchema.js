@@ -513,7 +513,7 @@ module.exports = {
                             enum: constants.DCC_CODE,
                           },
                         },
-                        required: ["code", "short_desc"],
+                        required: ["code"],
                         allOf: [
                           {
                             if: { properties: { code: { const: "3" } } },
@@ -539,6 +539,7 @@ module.exports = {
                                     "should not be an empty string or have more than 6 digits",
                                 },
                               },
+                              required: ["short_desc"],
                             },
                           },
                         ],

@@ -342,6 +342,7 @@ module.exports = {
                    
                   },
                 },
+                additionalProperties:false,
                 required: ["id", "type", "state", "tracking"],
               },
             },

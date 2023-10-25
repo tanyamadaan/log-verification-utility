@@ -27,7 +27,7 @@ cd log-verification-utility
 npm i
 ```
 
-2. Set up the .env file with the following configuration:
+2. Set up the .env file in root directory with the following configuration:
 
 ```code
 MAPPLS_API_KEY=<api_key_value>

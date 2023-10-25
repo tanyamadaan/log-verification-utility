@@ -31,6 +31,7 @@ npm i
 
 ```code
 MAPPLS_API_KEY=<api_key_value>
+PORT=<port>
 ```
 To get the api_key, refer to this link: https://developer.mappls.com/mapping/reverse-geocoding-api
 

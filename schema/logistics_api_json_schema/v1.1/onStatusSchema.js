@@ -192,7 +192,7 @@ module.exports = {
                       },
                     },
                     required: [
-                      "@ondc/org/item_id",
+                      
                       "@ondc/org/title_type",
                       "price",
                     ],

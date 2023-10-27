@@ -1,3 +1,4 @@
+const constants = require("../../../utils/constants");
 const {
   ORDER_STATE,
   TITLE_TYPE,
@@ -231,28 +232,52 @@ module.exports = {
                             required: ["range"],
                           },
                           instructions: {
+                            type: "object",
+                            properties: {
+                              code: {
+                                type: "string",
+                                enum: constants.PCC_CODE,
+                              },
+                              name: {
+                                type: "string",
+                              },
+                              short_desc: {
+                                type: "string",
+                              },
+                              long_desc: {
+                                type: "string",
+                              },
+                            },
+                           
+                            required: ["code", "short_desc"],
                             allOf: [
                               {
-                                type: "object",
-                                properties: {
-                                  code: { type: "string" },
-                                  short_desc: {
-                                    type: "string",
-                                  },
-                                  long_desc: {
-                                    type: "string",
-                                  },
-                                  images: {
-                                    type: "array",
-                                    items: {
-                                      type: "string",
+                                if: { properties: { code: { const: "1" } } },
+                                then: {
+                                  properties: {
+                                    short_desc: {
+                                      minLength: 10,
+                                      maxLength: 10,
+                                      pattern: "^[0-9]{10}$",
+                                      errorMessage: "should be a 10 digit number",
                                     },
                                   },
                                 },
                               },
                               {
-                                $data:
-                                  "/update/0/message/order/fulfillments/0/start/instructions",
+                                if: {
+                                  properties: { code: { enum: ["2", "3", "4"] } },
+                                },
+                                then: {
+                                  properties: {
+                                    short_desc: {
+                                      maxLength: 6,
+                                      pattern: "^[0-9]{1,6}$",
+                                      errorMessage:
+                                        "should not be an empty string or have more than 6 digits",
+                                    },
+                                  },
+                                },
                               },
                             ],
                           },
@@ -294,29 +319,50 @@ module.exports = {
                             required: ["range"],
                           },
                           instructions: {
+                            type: "object",
+                            properties: {
+                              code: {
+                                type: "string",
+                                enum: constants.DCC_CODE,
+                              },
+                              name: {
+                                type: "string",
+                              },
+                              short_desc: {
+                                type: "string",
+                              },
+                              long_desc: {
+                                type: "string",
+                              },
+                            },
+                            required: ["code"],
                             allOf: [
                               {
-                                type: "object",
-                                properties: {
-                                  code: { type: "string" },
-                                  short_desc: {
-                                    type: "string",
-                                  },
-                                  long_desc: {
-                                    type: "string",
-                                  },
-                                  images: {
-                                    type: "array",
-                                    items: {
-                                      type: "string",
+                                if: { properties: { code: { const: "3" } } },
+                                then: {
+                                  properties: {
+                                    short_desc: {
+                                      maxLength: 0,
+                                      errorMessage: "is not required",
                                     },
                                   },
                                 },
-                                required: ["code", "short_desc"],
                               },
                               {
-                                $data:
-                                  "/update/0/message/order/fulfillments/0/end/instructions",
+                                if: {
+                                  properties: { code: { enum: ["1", "2"] } },
+                                },
+                                then: {
+                                  properties: {
+                                    short_desc: {
+                                      maxLength: 6,
+                                      pattern: "^[0-9]{1,6}$",
+                                      errorMessage:
+                                        "should not be an empty string or have more than 6 digits",
+                                    },
+                                  },
+                                  required: ["short_desc"],
+                                },
                               },
                             ],
                           },

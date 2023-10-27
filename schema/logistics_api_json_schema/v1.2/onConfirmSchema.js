@@ -467,7 +467,7 @@ module.exports = {
                         },
                       },
                     },
-                    required: ["person", "location", "contact", "time"],
+                    required: ["person", "location", "contact"],
                   },
 
                   end: {

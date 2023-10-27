@@ -416,6 +416,36 @@ module.exports = {
                           },
                         },
                         required: ["code", "short_desc"],
+                        allOf: [
+                          {
+                            if: { properties: { code: { const: "1" } } },
+                            then: {
+                              properties: {
+                                short_desc: {
+                                  minLength: 10,
+                                  maxLength: 10,
+                                  pattern: "^[0-9]{10}$",
+                                  errorMessage: "should be a 10 digit number",
+                                },
+                              },
+                            },
+                          },
+                          {
+                            if: {
+                              properties: { code: { enum: ["2", "3", "4"] } },
+                            },
+                            then: {
+                              properties: {
+                                short_desc: {
+                                  maxLength: 6,
+                                  pattern: "^[0-9]{1,6}$",
+                                  errorMessage:
+                                    "should not be an empty string or have more than 6 digits",
+                                },
+                              },
+                            },
+                          },
+                        ],
                       },
                       time: {
                         type: "object",
@@ -549,10 +579,39 @@ module.exports = {
                           },
                           code: {
                             type: "string",
-                            enum: constants.PCC_CODE,
+                            enum: constants.DCC_CODE,
                           },
                         },
-                        required: ["code", "short_desc"],
+                        required: ["code"],
+                        allOf: [
+                          {
+                            if: { properties: { code: { const: "3" } } },
+                            then: {
+                              properties: {
+                                short_desc: {
+                                  maxLength: 0,
+                                  errorMessage: "is not required",
+                                },
+                              },
+                            },
+                          },
+                          {
+                            if: {
+                              properties: { code: { enum: ["1", "2"] } },
+                            },
+                            then: {
+                              properties: {
+                                short_desc: {
+                                  maxLength: 6,
+                                  pattern: "^[0-9]{1,6}$",
+                                  errorMessage:
+                                    "should not be an empty string or have more than 6 digits",
+                                },
+                              },
+                              required: ["short_desc"],
+                            },
+                          },
+                        ],
                       },
                       time: {
                         type: "object",

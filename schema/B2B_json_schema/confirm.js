@@ -361,7 +361,7 @@ module.exports = {
                               type: "string",
                             },
                           },
-                          required: ["phone", "email"],
+                          required: ["phone"],
                         },
                         customer: {
                           type: "object",

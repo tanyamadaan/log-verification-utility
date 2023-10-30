@@ -473,7 +473,7 @@ module.exports = {
                       },
                       "@ondc/org/title_type": {
                         type: "string",
-                        enum: ["item", "Discount", "Packing charges", "delivery ", "tax", "misc"]
+                        enum: ["item", "discount", "packing", "delivery", "tax", "misc"]
                       },
                       price: {
                         type: "object",

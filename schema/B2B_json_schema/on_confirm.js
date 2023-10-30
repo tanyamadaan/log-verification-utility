@@ -421,7 +421,7 @@ module.exports = {
                               type: "string",
                             },
                           },
-                          required: ["phone", "email"],
+                          required: ["phone"],
                         },
                       },
                       required: ["type", "location", "time", "contact"],

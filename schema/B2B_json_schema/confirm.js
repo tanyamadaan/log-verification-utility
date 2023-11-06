@@ -763,5 +763,8 @@ module.exports = {
       required: ["order"],
     },
   },
+  isFutureDated: true,
+  errorMessage:
+    "order/created_at or order/updated_at cannot be future dated w.r.t context/timestamp",
   required: ["context", "message"],
 };

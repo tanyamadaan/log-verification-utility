@@ -4,7 +4,7 @@ const constants = require("../constants");
 const utils = require("../utils");
 const {reverseGeoCodingCheck} = require("../reverseGeoCoding")
 
-const checkOnSearch = (data, msgIdSet) => {
+const checkOnSearch = async (data, msgIdSet) => {
   const onSrchObj = {};
   let onSearch = data;
   let core_version = onSearch.context.core_version;
@@ -145,25 +145,29 @@ const checkOnSearch = (data, msgIdSet) => {
 
   console.log(`Checking Reverse Geocoding on bpp/providers`);
   if (onSearch.hasOwnProperty("bpp/providers")) {
-    onSearch["bpp/providers"].forEach((provider) => {
+    const providers = onSearch["bpp/providers"];
+    for (let i = 0; i < providers.length; i++) {
+      const provider = providers[i];
       if (provider.hasOwnProperty("locations")) {
-        provider.locations.forEach(
-          async ({ id, gps, address: { area_code } }) => {
-            try {
-              const [lat, long] = gps.split(",");
-              const match = await reverseGeoCodingCheck(lat, long, area_code);
-              if (!match)
-                onSrchObj[
-                  "bpp/provider:location:" + id + ":RGC"
-                ] = `Reverse Geocoding for location ID ${id} failed. Area Code ${area_code} not matching with ${lat},${long} Lat-Long pair.`;
-            } catch (error) {
-              console.log("bpp/providers error: ", error);
+        const locations = provider.locations;
+        for (let j = 0; j < locations.length; j++) {
+          const { id, gps, address: { area_code } } = locations[j];
+          try {
+            const [lat, long] = gps.split(",");
+            const match = await reverseGeoCodingCheck(lat, long, area_code);
+            if (!match) {
+              onSrchObj[
+                "bpp/provider:location:" + id + ":RGC"
+              ] = `Reverse Geocoding for location ID ${id} failed. Area Code ${area_code} not matching with ${lat},${long} Lat-Long pair.`;
             }
+          } catch (error) {
+            console.log("bpp/providers error: ", error);
           }
-        );
+        }
       }
-    });
+    }
   }
+  
 
   return onSrchObj;
 };

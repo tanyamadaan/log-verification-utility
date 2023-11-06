@@ -336,6 +336,8 @@ module.exports = {
                     },
                   },
                   additionalProperties: false,
+                  isLengthValid:true,
+                            errorMessage:"name + building + locality < 190 chars",
                   required: [
                     "name",
                     "building",

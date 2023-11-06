@@ -248,7 +248,7 @@ module.exports = {
                                 type: "string",
                               },
                             },
-                           
+
                             required: ["code", "short_desc"],
                             allOf: [
                               {
@@ -259,14 +259,17 @@ module.exports = {
                                       minLength: 10,
                                       maxLength: 10,
                                       pattern: "^[0-9]{10}$",
-                                      errorMessage: "should be a 10 digit number",
+                                      errorMessage:
+                                        "should be a 10 digit number",
                                     },
                                   },
                                 },
                               },
                               {
                                 if: {
-                                  properties: { code: { enum: ["2", "3", "4"] } },
+                                  properties: {
+                                    code: { enum: ["2", "3", "4"] },
+                                  },
                                 },
                                 then: {
                                   properties: {
@@ -308,7 +311,7 @@ module.exports = {
                                     type: "string",
                                     format: "date-time",
                                   },
-                                },
+                                },  
                                 required: ["start", "end"],
                               },
                               timestamp: {

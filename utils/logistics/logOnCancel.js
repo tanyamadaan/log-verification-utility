@@ -16,6 +16,12 @@ const checkOnCancel = (data, msgIdSet) => {
   let fulfillments = on_cancel.fulfillments;
   let  RtoPickupTime;
 
+  const created_at =on_cancel.created_at;
+  const updated_at= on_cancel.updated_at;
+
+  if(created_at>contextTime || updated_at>contextTime){
+    onCancelObj.crtdAtTimeErr = `order/created_at or updated_at should not be future dated w.r.t context/timestamp`
+  }
 
   try {
     if (fulfillments?.length > 1) {

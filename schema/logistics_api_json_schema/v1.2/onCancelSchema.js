@@ -209,7 +209,7 @@ module.exports = {
                   },
                   type: {
                     type: "string",
-                    enum: constants.FULFILLMENT_TYPE
+                    enum: constants.FULFILLMENT_TYPE,
                   },
                   state: {
                     type: "object",
@@ -219,7 +219,11 @@ module.exports = {
                         properties: {
                           code: {
                             type: "string",
-                            enum: ["Cancelled", "RTO-Initiated","RTO-Disposed"],
+                            enum: [
+                              "Cancelled",
+                              "RTO-Initiated",
+                              "RTO-Disposed",
+                            ],
                           },
                         },
                         required: ["code"],
@@ -236,10 +240,6 @@ module.exports = {
                   },
                   tracking: {
                     type: "boolean",
-                    const: {
-                      $data:
-                        "/on_confirm/0/message/order/fulfillments/0/tracking",
-                    },
                   },
                   start: {
                     type: "object",
@@ -259,7 +259,7 @@ module.exports = {
                                 format: "date-time",
                               },
                             },
-                            required: ["start", "end"],
+                            required: ["start"],
                           },
                           timestamp: {
                             type: "string",
@@ -378,7 +378,7 @@ module.exports = {
                                 format: "date-time",
                               },
                             },
-                            required: ["start", "end"],
+                            required: ["start"],
                           },
                           timestamp: {
                             type: "string",
@@ -555,7 +555,7 @@ module.exports = {
                     "tracking",
                     "agent",
                     "vehicle",
-                    "tags",
+                    "tags"
                   ],
                 },
                 else: {
@@ -695,9 +695,8 @@ module.exports = {
       },
       required: ["order"],
     },
-    
   },
-  isFutureDated: true,
-  errorMessage: "created_at/updated_at must not be future dated",
+  // isFutureDated: true,
+  // errorMessage: "order/created_at or order/updated_at cannot be future dated w.r.t context/timestamp",
   required: ["context", "message"],
 };

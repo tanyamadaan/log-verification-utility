@@ -15,7 +15,7 @@ const { isLengthValid } = require("./keywords/init");
 const { isQuoteMatching } = require("./keywords/onInit");
 const { isFutureDated } = require("./keywords/confirm");
 const { isEndTimeGreater } = require("./keywords/search");
-const { isTrackingFutureDated } = require("./keywords/on_track");
+
 const fs = require("fs");
 //const async = require("async");
 const path = require("path");
@@ -81,9 +81,6 @@ const validate_schema = (data, schema) => {
       })
       .addKeyword("isLengthValid", {
         validate: (schema, data) => isLengthValid(data),
-      })
-      .addKeyword("isTrackingFutureDated", {
-        validate: (schema, data) => isTrackingFutureDated(data),
       });
 
     validate = validate.compile(schema);

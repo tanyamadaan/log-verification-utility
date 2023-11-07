@@ -14,6 +14,13 @@ const checkOnConfirm = (data, msgIdSet) => {
   let rts = dao.getValue("rts");
   let p2h2p = dao.getValue("p2h2p")
   let awbNo= dao.getValue("awbNo");
+
+  if (on_confirm?.updated_at > contextTimestamp) {
+    onCnfrmObj.updatedAtErr = `order/updated_at cannot be future dated w.r.t context/timestamp`;
+  }
+  if (on_confirm?.created_at > contextTimestamp) {
+    onCnfrmObj.createdAtErr = `order/created_at cannot be future dated w.r.t context/timestamp`;
+  }
   try {
     console.log(`checking start and end time range in fulfillments`);
     fulfillments.forEach((fulfillment) => {

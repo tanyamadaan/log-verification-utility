@@ -10,6 +10,14 @@ const checkConfirm = (data, msgIdSet) => {
   let onSearchProvArr = dao.getValue("providersArr");
   confirm = confirm.message.order;
   let rts;
+
+  if (confirm?.updated_at > contextTimestamp) {
+    cnfrmObj.updatedAtErr = `order/updated_at cannot be future dated w.r.t context/timestamp`;
+  }
+  if (confirm?.created_at > contextTimestamp) {
+    cnfrmObj.createdAtErr = `order/created_at cannot be future dated w.r.t context/timestamp`;
+  }
+
   if (confirm.provider.locations && confirm.provider.locations.length > 1)
     dao.setValue("confirm_locations", confirm.provider.locations);
 
@@ -42,7 +50,6 @@ const checkConfirm = (data, msgIdSet) => {
           if (provider.id === provId) {
             const onSearchItemsObj = provider.items;
             onSearchItemsObj.forEach((onSrchItem) => {
-            
               if (onSrchItem.id === item.id) {
                 if (onSrchItem?.time?.duration !== item?.time?.duration)
                   cnfrmObj.itemDurationErr = `item duration does not match with the one provided in /on_search (LSP can send NACK)`;
@@ -65,10 +72,7 @@ const checkConfirm = (data, msgIdSet) => {
   let p2h2p = dao.getValue("p2h2p");
   fulfillments.forEach((fulfillment) => {
     if (fulfillment["@ondc/org/awb_no"] && p2h2p) awbNo = true;
-    if (
-      rts === "yes" &&
-      !fulfillment?.start?.instructions?.short_desc
-    ) {
+    if (rts === "yes" && !fulfillment?.start?.instructions?.short_desc) {
       cnfrmObj.instructionsErr = `fulfillments/start/instructions are required when ready_to_ship = 'yes'`;
     }
   });

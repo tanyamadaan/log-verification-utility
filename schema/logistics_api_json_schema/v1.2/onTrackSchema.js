@@ -106,12 +106,14 @@ module.exports = {
                   properties: {
                     timestamp: {
                       type: "string",
+                      format: "date-time",
                     },
                   },
                   required: ["timestamp"],
                 },
                 updated_at: {
                   type: "string",
+                  format: "date-time",
                 },
               },
 
@@ -119,7 +121,7 @@ module.exports = {
             },
             status: {
               type: "string",
-              enum: constants.TRACKING_STATUS,
+              enum: ["active"],
             },
             tags: {
               type: "array",
@@ -157,8 +159,8 @@ module.exports = {
       required: ["tracking"],
     },
   },
-  isTrackingFutureDated: true,
-  errorMessage:
-    "time/timestamp or updated_at in /location cannot be future dated w.r.t context/timestamp",
+  // isTrackingFutureDated: true,
+  // errorMessage:
+  //   "time/timestamp or updated_at in /location cannot be future dated w.r.t context/timestamp",
   required: ["context", "message"],
 };

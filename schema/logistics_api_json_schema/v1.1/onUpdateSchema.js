@@ -95,15 +95,23 @@ module.exports = {
                 properties: {
                   id: {
                     type: "string",
+                    const: { $data: "/init/0/message/order/items/0/id" },
                   },
                   category_id: {
                     type: "string",
+                    const: {
+                      $data: "/init/0/message/order/items/0/category_id",
+                    },
                   },
                   descriptor: {
                     type: "object",
                     properties: {
                       code: {
                         type: "string",
+                        const: {
+                          $data:
+                            "/init/0/message/order/items/0/descriptor/code",
+                        },
                       },
                     },
                   },

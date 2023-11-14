@@ -29,7 +29,7 @@ const checkOnUpdate = (data, msgIdSet) => {
       `Checking if start and end time range required in /on_update api`
     );
     fulfillments.forEach((fulfillment) => {
-      const ffState = fulfillment.state.descriptor.code
+      const ffState = fulfillment?.state?.descriptor?.code
       if (fulfillment["@ondc/org/awb_no"]) {
         awbNo = true;
       }

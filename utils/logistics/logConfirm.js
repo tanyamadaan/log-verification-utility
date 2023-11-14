@@ -6,6 +6,7 @@ const utils = require("../utils.js");
 const checkConfirm = (data, msgIdSet) => {
   let cnfrmObj = {};
   let confirm = data;
+  const contextTimestamp= confirm.context.timestamp
   let version = confirm.context.core_version;
   let onSearchProvArr = dao.getValue("providersArr");
   confirm = confirm.message.order;

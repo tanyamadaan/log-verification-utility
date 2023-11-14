@@ -243,8 +243,6 @@ module.exports = {
                               building: {
                                 type: "string",
                                 minLength: 3,
-                                not: { const: { $data: "1/locality" } },
-                                errorMessage: "cannot be equal to locality",
                               },
                               locality: {
                                 type: "string",

@@ -269,7 +269,7 @@ module.exports = {
                   const: { $data: "/init/0/message/order/billing/phone" },
                 },
               },
-              additionalProperties: false,
+              
               required: ["name", "address", "state", "city", "tax_id", "phone"],
             },
             fulfillments: {

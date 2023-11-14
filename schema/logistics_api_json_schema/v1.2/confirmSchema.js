@@ -408,7 +408,7 @@ module.exports = {
                               properties: {
                                 short_desc: {
                                   maxLength: 6,
-                                  pattern: "^[0-9]{1,6}$",
+                                  pattern: "^[a-zA-Z0-9]{1,6}$",
                                   errorMessage:
                                     "should not be an empty string or have more than 6 digits",
                                 },
@@ -535,7 +535,7 @@ module.exports = {
                               properties: {
                                 short_desc: {
                                   maxLength: 6,
-                                  pattern: "^[0-9]{1,6}$",
+                                  pattern: "^[a-zA-Z0-9]{1,6}$",
                                   errorMessage:
                                     "should not be an empty string or have more than 6 digits",
                                 },

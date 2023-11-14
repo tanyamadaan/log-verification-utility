@@ -8,7 +8,7 @@ const constants = require("../constants");
 const checkOnConfirm = (data, msgIdSet) => {
   let on_confirm = data;
   const onCnfrmObj = {};
-
+  const contextTimestamp= on_confirm.context.timestamp
   on_confirm = on_confirm.message.order;
   let fulfillments = on_confirm.fulfillments;
   let rts = dao.getValue("rts");

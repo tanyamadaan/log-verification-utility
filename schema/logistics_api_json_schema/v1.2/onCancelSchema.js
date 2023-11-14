@@ -546,17 +546,7 @@ module.exports = {
                       required: ["time", "person", "location", "contact"],
                     },
                   },
-                  required: [
-                    "id",
-                    "type",
-                    "state",
-                    "start",
-                    "end",
-                    "tracking",
-                    "agent",
-                    "vehicle",
-                    "tags"
-                  ],
+                  required: ["id", "type", "state", "start", "end", "tracking"],
                 },
                 else: {
                   properties: {
@@ -680,6 +670,31 @@ module.exports = {
             },
           },
           additionalProperties: false,
+
+          // if: {
+          //   properties: {
+          //     cancellation: {
+          //       properties: {
+          //         reason: {
+          //           properties: {
+          //             id: {
+          //               enum: ["011", "012", "013", "014", "015"],
+          //             },
+          //           },
+          //         },
+          //       },
+          //     },
+          //   },
+          // },
+          // then: {
+          //   properties: {
+          //     fulfillments: {
+          //       required: ["tags"],
+          //       errorMessage: "tags required when RTO is triggered",
+          //     },
+          //   },
+          // },
+
           required: [
             "id",
             "state",

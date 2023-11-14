@@ -252,18 +252,21 @@ module.exports = {
                             properties: {
                               start: {
                                 type: "string",
-                                format: "date-time",
+                                pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+                                errorMessage:"should be in RFC 3339 (YYYY-MM-DDTHH:MN:SS.MSSZ) Format"
                               },
                               end: {
                                 type: "string",
-                                format: "date-time",
+                                pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+                                errorMessage:"should be in RFC 3339 (YYYY-MM-DDTHH:MN:SS.MSSZ) Format"
                               },
                             },
                             required: ["start"],
                           },
                           timestamp: {
                             type: "string",
-                            format: "date-time",
+                            pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+                            errorMessage:"should be in RFC 3339 (YYYY-MM-DDTHH:MN:SS.MSSZ) Format"
                           },
                         },
                       },
@@ -371,18 +374,21 @@ module.exports = {
                             properties: {
                               start: {
                                 type: "string",
-                                format: "date-time",
+                                pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+                                errorMessage:"should be in RFC 3339 (YYYY-MM-DDTHH:MN:SS.MSSZ) Format"
                               },
                               end: {
                                 type: "string",
-                                format: "date-time",
+                                pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+                                errorMessage:"should be in RFC 3339 (YYYY-MM-DDTHH:MN:SS.MSSZ) Format"
                               },
                             },
                             required: ["start"],
                           },
                           timestamp: {
                             type: "string",
-                            format: "date-time",
+                            pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+                            errorMessage:"should be in RFC 3339 (YYYY-MM-DDTHH:MN:SS.MSSZ) Format"
                           },
                         },
                       },

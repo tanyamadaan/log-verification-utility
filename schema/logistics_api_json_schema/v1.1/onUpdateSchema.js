@@ -147,11 +147,13 @@ module.exports = {
                             properties: {
                               start: {
                                 type: "string",
-                                minimum: { $data: "7/context/timestamp" },
-                                errorMessage: "${7/context/timestamp}",
+                                pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+                                errorMessage:"should be in RFC 3339 (YYYY-MM-DDTHH:MN:SS.MSSZ) Format"
                               },
                               end: {
                                 type: "string",
+                                pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+                                errorMessage:"should be in RFC 3339 (YYYY-MM-DDTHH:MN:SS.MSSZ) Format"
                               },
                             },
                             required: ["start", "end"],
@@ -186,9 +188,13 @@ module.exports = {
                             properties: {
                               start: {
                                 type: "string",
+                                pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+                                errorMessage:"should be in RFC 3339 (YYYY-MM-DDTHH:MN:SS.MSSZ) Format"
                               },
                               end: {
                                 type: "string",
+                                pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+                                errorMessage:"should be in RFC 3339 (YYYY-MM-DDTHH:MN:SS.MSSZ) Format"
                               },
                             },
                             required: ["start", "end"],

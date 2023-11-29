@@ -221,8 +221,7 @@ module.exports = {
                             type: "string",
                             enum: [
                               "Cancelled",
-                              "RTO-Initiated",
-                              "RTO-Disposed",
+                              "RTO-Initiated"
                             ],
                           },
                         },

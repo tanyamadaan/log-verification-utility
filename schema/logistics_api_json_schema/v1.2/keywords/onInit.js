@@ -6,6 +6,7 @@ module.exports = {
     breakupArr.forEach((breakup) => {
       totalBreakup += parseFloat(breakup?.price?.value);
     });
+    // console.log(quotePrice,totalBreakup);
     if (quotePrice != totalBreakup) return false;
     else return true;
   },

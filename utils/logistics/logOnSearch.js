@@ -112,6 +112,7 @@ const checkOnSearch = async (data, msgIdSet) => {
           fulfillment.type === "Return"
         ) {
           hasBackwardShipment = true;
+          if (fulfillment.type === "RTO") dao.setValue("rtoID", fulfillment.id);
         }
       }
 
@@ -196,7 +197,7 @@ const checkOnSearch = async (data, msgIdSet) => {
           }
         }
       }
-      dao.setValue("providerLoc",providerLoc)
+      dao.setValue("providerLoc", providerLoc);
     }
   }
 

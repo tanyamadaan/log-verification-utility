@@ -7,6 +7,7 @@ const checkOnCancel = (data, msgIdSet) => {
   let onCancelObj = {};
   let on_cancel = data;
   let contextTime = on_cancel.context.timestamp;
+  let version = on_cancel.context.core_version;
   let messageId = on_cancel.context.message_id;
 
   on_cancel = on_cancel.message.order;
@@ -14,13 +15,13 @@ const checkOnCancel = (data, msgIdSet) => {
   let orderState = on_cancel.state;
   let items = on_cancel.items;
   let fulfillments = on_cancel.fulfillments;
-  let  RtoPickupTime;
+  let RtoPickupTime;
 
-  const created_at =on_cancel.created_at;
-  const updated_at= on_cancel.updated_at;
+  const created_at = on_cancel.created_at;
+  const updated_at = on_cancel.updated_at;
 
-  if(created_at>contextTime || updated_at>contextTime){
-    onCancelObj.crtdAtTimeErr = `order/created_at or updated_at should not be future dated w.r.t context/timestamp`
+  if (created_at > contextTime || updated_at > contextTime) {
+    onCancelObj.crtdAtTimeErr = `order/created_at or updated_at should not be future dated w.r.t context/timestamp`;
   }
 
   try {
@@ -30,7 +31,10 @@ const checkOnCancel = (data, msgIdSet) => {
       );
       fulfillments.forEach((fulfillment) => {
         ffState = fulfillment?.state?.descriptor?.code;
-        if ((fulfillment.type === "Prepaid" || fulfillment.type === "Delivery") && ffState !== "Cancelled") {
+        if (
+          (fulfillment.type === "Prepaid" || fulfillment.type === "Delivery") &&
+          ffState !== "Cancelled"
+        ) {
           onCancelObj.flflmntstErr = `In case of RTO, fulfillment with type '${fulfillment.type}' needs to be 'Cancelled'`;
         }
       });
@@ -45,8 +49,11 @@ const checkOnCancel = (data, msgIdSet) => {
         `Comparing pickup and delivery timestamps for on_cancel_${ffState}`
       );
 
-      if (fulfillment.type === "Prepaid" || fulfillment.type === "CoD" || fulfillment.type === "Delivery") {
-       
+      if (
+        fulfillment.type === "Prepaid" ||
+        fulfillment.type === "CoD" ||
+        fulfillment.type === "Delivery"
+      ) {
         if (ffState === "Cancelled") {
           if (orderState !== "Cancelled") {
             onCancelObj.ordrStatErr = `Order state should be 'Cancelled' for fulfillment state - ${ffState}`;
@@ -67,11 +74,33 @@ const checkOnCancel = (data, msgIdSet) => {
               onCancelObj.pickupTimeErr = `Pickup timestamp (fulfillments/start/time/timestamp) cannot change for fulfillment state - ${ffState}`;
             }
           }
-    
+          console.log('comparing RTO fulfillment id with /on_search');
+          //checking RTO id matching with /on_search
+          if (version === "1.2.0") {
+            let fulTags = fulfillment?.tags;
+            let rtoID;
+            fulTags.forEach((tag) => {
+              if (tag.code === "rto_event") {
+                const lists = tag.list;
+                lists.forEach((list) => {
+                  if (list.code === "rto_id") {
+                    rtoID = list.value;
+                    if (rtoID !== dao.getValue("rtoID")) {
+                      onCancelObj.rtoIdTagsErr = `rto_id '${rtoID}' in fulfillments/tags does not match with the one provided in on_search '${dao.getValue("rtoID")}' in /fulfillments`;
+                    }
+                  }
+                });
+              }
+            });
+          }
         }
       } else if (fulfillment.type === "RTO" || fulfillment.type === "Return") {
         if (orderState !== "Cancelled") {
           onCancelObj.ordrStatErr = `Order state should be 'Cancelled' for fulfillment state - ${ffState}`;
+        }
+        console.log(fulfillment.id,dao.getValue("rtoID"));
+        if(fulfillment.id!==dao.getValue("rtoID")){
+          onCancelObj.rtoIdErr = `RTO id - '${fulfillment.id}' of fulfillment type 'RTO' does not match with the one provided in on_search '${dao.getValue("rtoID")}' in /fulfillments`;
         }
         if (ffState === "RTO-Initiated") {
           RtoPickupTime = fulfillment?.start?.time?.timestamp;

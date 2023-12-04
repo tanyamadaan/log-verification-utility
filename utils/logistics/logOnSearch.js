@@ -12,7 +12,7 @@ const checkOnSearch = async (data, msgIdSet) => {
   let search = dao.getValue("searchObj");
   let validFulfillmentIDs = new Set();
   onSearch = onSearch.message.catalog;
-
+ let avgPickupTime;
   try {
     console.log(
       `Checking TAT for category or item in ${constants.LOG_ONSEARCH} api`
@@ -59,14 +59,14 @@ const checkOnSearch = async (data, msgIdSet) => {
             if (
               (catId == "Same Day Delivery" || catId == "Immediate Delivery") &&
               itemTimestamp &&
-              itemTimestamp != currentDate
+              itemTimestamp != currentDate && item?.parent_item_id?.length<1
             ) {
               onSrchObj.itemTAT = `For Same Day Delivery/Immediate Delivery, TAT date should be the same date i.e. ${currentDate}`;
             }
             if (
               catId == "Next Day Delivery" &&
               itemTimestamp &&
-              itemTimestamp != nextDate
+              itemTimestamp != nextDate && item?.parent_item_id?.length<1
             ) {
               onSrchObj.itemTAT = `For Next Day Delivery, TAT date should be the next date i.e. ${nextDate}`;
             }
@@ -106,6 +106,8 @@ const checkOnSearch = async (data, msgIdSet) => {
           fulfillment.type === "Delivery"
         ) {
           hasForwardShipment = true;
+          avgPickupTime= fulfillment?.start?.time?.duration
+          dao.setValue("avgPickupTime",avgPickupTime)
         } else if (
           fulfillment.type === "RTO" ||
           fulfillment.type === "Reverse QC" ||

@@ -72,6 +72,11 @@ const checkConfirm = (data, msgIdSet) => {
 
   let p2h2p = dao.getValue("p2h2p");
   fulfillments.forEach((fulfillment) => {
+    let avgPickupTime= fulfillment.start.time.duration;
+
+    if(avgPickupTime!==dao.getValue("avgPickupTime")){
+      cnfrmObj.avgPckupErr=`Average Pickup Time mismatches from the one provided in /on_search`
+    }
     if (fulfillment["@ondc/org/awb_no"] && p2h2p) awbNo = true;
     if (rts === "yes" && !fulfillment?.start?.instructions?.short_desc) {
       cnfrmObj.instructionsErr = `fulfillments/start/instructions are required when ready_to_ship = 'yes'`;

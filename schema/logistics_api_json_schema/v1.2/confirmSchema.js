@@ -303,7 +303,7 @@ module.exports = {
                       },
                       duration: {
                         type: "string",
-                        format: "duration",
+                        format: "duration"
                       },
                       location: {
                         type: "object",

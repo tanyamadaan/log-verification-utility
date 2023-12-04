@@ -233,6 +233,7 @@ module.exports = {
                   },
                   tracking: {
                     type: "boolean",
+                  
                   },
                   start: {
                     type: "object",

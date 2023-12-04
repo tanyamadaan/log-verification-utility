@@ -16,7 +16,10 @@ const checkOnStatus = (data, msgIdSet) => {
   let fulfillments = on_status.fulfillments;
   let pickupTime, deliveryTime, RtoPickupTime, RtoDeliveredTime;
 
-
+  let categoryId;
+  items.forEach((item) => {
+    categoryId = item.category_id;
+  });
   try {
     if (fulfillments?.length > 1) {
       console.log(
@@ -24,7 +27,10 @@ const checkOnStatus = (data, msgIdSet) => {
       );
       fulfillments.forEach((fulfillment) => {
         ffState = fulfillment?.state?.descriptor?.code;
-        if ((fulfillment.type === "Prepaid" || fulfillment.type === "Delivery") && ffState !== "Cancelled") {
+        if (
+          (fulfillment.type === "Prepaid" || fulfillment.type === "Delivery") &&
+          ffState !== "Cancelled"
+        ) {
           onStatusObj.flflmntstErr = `In case of RTO, fulfillment with type 'Delivery/Prepaid' needs to in 'Cancelled' state`;
         }
       });
@@ -39,7 +45,17 @@ const checkOnStatus = (data, msgIdSet) => {
         `Comparing pickup and delivery timestamps for on_status_${ffState}`
       );
 
-      if (fulfillment.type === "Prepaid" || fulfillment.type === "CoD" || fulfillment.type === "Delivery") {
+      if (
+        fulfillment.type === "Prepaid" ||
+        fulfillment.type === "CoD" ||
+        fulfillment.type === "Delivery"
+      ) {
+        if (
+          categoryId === "Immediate Delivery" &&
+          fulfillment.tracking !== true
+        ) {
+          onStatusObj.trckErr = `tracking should be enabled (true) for hyperlocal (Immediate Delivery)`;
+        }
         if (ffState === "Pending" || ffState === "Agent-assigned") {
           if (fulfillment?.start?.time?.timestamp) {
             onStatusObj.pickupTimeErr = `Pickup timestamp (fulfillments/start/time/timestamp) cannot be provided for fulfillment state - ${ffState}`;
@@ -66,7 +82,6 @@ const checkOnStatus = (data, msgIdSet) => {
           }
         }
         if (ffState === "Out-for-delivery") {
-        
           if (orderState !== "In-progress") {
             onStatusObj.ordrStatErr = `Order state should be 'In-progress' for fulfillment state - ${ffState}`;
           }
@@ -92,7 +107,7 @@ const checkOnStatus = (data, msgIdSet) => {
           deliveryTime = fulfillment?.end?.time?.timestamp;
 
           dao.setValue("deliveryTime", deliveryTime);
-           if (!fulfillment?.start?.time?.timestamp) {
+          if (!fulfillment?.start?.time?.timestamp) {
             {
               onStatusObj.pickupTimeErr = `Pickup timestamp (fulfillments/start/time/timestamp) is missing for fulfillment state - ${ffState}`;
             }
@@ -149,7 +164,7 @@ const checkOnStatus = (data, msgIdSet) => {
         if (orderState !== "Cancelled") {
           onStatusObj.ordrStatErr = `Order state should be 'Cancelled' for fulfillment state - ${ffState}`;
         }
-        if (ffState === "RTO-Initiated" && fulfillment.type === "Prepaid" ) {
+        if (ffState === "RTO-Initiated" && fulfillment.type === "Prepaid") {
           RtoPickupTime = fulfillment?.start?.time?.timestamp;
           console.log(RtoPickupTime);
           if (RtoPickupTime) {
@@ -161,7 +176,7 @@ const checkOnStatus = (data, msgIdSet) => {
             onStatusObj.rtoPickupErr = `RTO Pickup (fulfillments/start/time/timestamp) time cannot be future dated for fulfillment state - ${ffState}`;
           }
         }
-      
+
         if (ffState === "RTO-Delivered" || ffState === "RTO-Disposed") {
           RtoDeliveredTime = fulfillment?.end?.time?.timestamp;
           if (!RtoDeliveredTime && ffState === "RTO-Delivered")

@@ -122,6 +122,7 @@ module.exports = {
             status: {
               type: "string",
               enum: ["active"],
+              errorMessage: `should be 'active' if tracking is enabled`
             },
             tags: {
               type: "array",

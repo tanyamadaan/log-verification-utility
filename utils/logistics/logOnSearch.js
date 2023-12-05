@@ -59,14 +59,14 @@ const checkOnSearch = async (data, msgIdSet) => {
             if (
               (catId == "Same Day Delivery" || catId == "Immediate Delivery") &&
               itemTimestamp &&
-              itemTimestamp != currentDate && item?.parent_item_id?.length<1
+              itemTimestamp != currentDate 
             ) {
               onSrchObj.itemTAT = `For Same Day Delivery/Immediate Delivery, TAT date should be the same date i.e. ${currentDate}`;
             }
             if (
               catId == "Next Day Delivery" &&
               itemTimestamp &&
-              itemTimestamp != nextDate && item?.parent_item_id?.length<1
+              itemTimestamp != nextDate 
             ) {
               onSrchObj.itemTAT = `For Next Day Delivery, TAT date should be the next date i.e. ${nextDate}`;
             }

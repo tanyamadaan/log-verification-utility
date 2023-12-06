@@ -15,6 +15,16 @@ const checkOnStatus = (data, msgIdSet) => {
   let items = on_status.items;
   let fulfillments = on_status.fulfillments;
   let pickupTime, deliveryTime, RtoPickupTime, RtoDeliveredTime;
+  let paymentStatus = on_status?.payment?.status;
+
+  if (on_status.state === "Complete" && payment.type === "ON-FULFILLMENT") {
+    if (paymentStatus !== "PAID") {
+      onStatusObj.pymntStatusErr = `Payment status should be 'PAID' once the order is complete for payment type 'ON-FULFILLMENT'`;
+    }
+    if (!on_status?.payment?.time) {
+      onStatusObj.pymntTimeErr = `Payment time should be recorded once the order is complete for payment type 'ON-FULFILLMENT'`;
+    }
+  }
 
   let categoryId;
   items.forEach((item) => {
@@ -138,7 +148,9 @@ const checkOnStatus = (data, msgIdSet) => {
               onStatusObj.msngPickupTimeErr = `Pickup timestamp (fulfillments/start/time/timestamp) is missing for fulfillment state - ${ffState}`;
             }
           }
-
+          if(fulfillment.tracking===true){
+            onStatusObj.trackErr=`fulfillment tracking can be disabled (false) after the fulfillment is 'Cancelled`
+          }
           if (fulfillment.start.time.timestamp && dao.getValue("pickupTime")) {
             if (
               !_.isEqual(

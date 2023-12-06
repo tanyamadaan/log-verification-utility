@@ -63,7 +63,9 @@ const checkOnCancel = (data, msgIdSet) => {
               onCancelObj.msngPickupTimeErr = `Pickup timestamp (fulfillments/start/time/timestamp) is missing for fulfillment state - ${ffState}`;
             }
           }
-
+          if(fulfillment.tracking===true){
+            onStatusObj.trackErr=`fulfillment tracking can be disabled (false) after the fulfillment is 'Cancelled`
+          }
           if (fulfillment.start.time.timestamp && dao.getValue("pickupTime")) {
             if (
               !_.isEqual(
